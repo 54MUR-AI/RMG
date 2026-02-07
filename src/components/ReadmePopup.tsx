@@ -44,7 +44,7 @@ export default function ReadmePopup({ title, readmeUrl, onClose }: ReadmePopupPr
       onClick={handleClose}
     >
       <div 
-        className={`relative max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl shadow-2xl shadow-samurai-red/50 transform transition-all duration-300 overflow-hidden flex flex-col ${
+        className={`relative max-w-4xl w-full h-[95vh] bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl shadow-2xl shadow-samurai-red/50 transform transition-all duration-300 overflow-hidden flex flex-col ${
           isVisible ? 'scale-100' : 'scale-95'
         }`}
         onClick={(e) => e.stopPropagation()}
