@@ -1,4 +1,4 @@
-import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Hammer, Lock, Info, Brain } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, Github, Zap, Flame, Hammer, Lock, Info, Brain } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
 import KatanaIcon from '../components/KatanaIcon'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
