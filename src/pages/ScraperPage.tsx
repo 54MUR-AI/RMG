@@ -16,12 +16,12 @@ export default function ScraperPage() {
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <a
-              href="https://scraper-app.onrender.com"
+              href="https://scraper-app-w6xu.onrender.com/docs"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
             >
-              Launch App
+              Launch API Docs
             </a>
             <a
               href="https://github.com/54MUR-AI/scraper"
@@ -107,15 +107,15 @@ python main.py scrape "https://example.com" --no-summary`}
         </div>
 
         <div className="bg-white rounded-xl p-8 shadow-lg">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Live Application</h2>
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Interactive API Documentation</h2>
           <p className="text-gray-600 mb-6">
-            Try the Scraper web interface directly below. Note: First load may take ~30 seconds as the free tier spins up.
+            Try the Scraper API directly below using the interactive Swagger UI. Note: First load may take ~30 seconds as the free tier spins up.
           </p>
           <div className="relative w-full" style={{ paddingBottom: '75%' }}>
             <iframe
-              src="https://scraper-app.onrender.com"
+              src="https://scraper-app-w6xu.onrender.com/docs"
               className="absolute top-0 left-0 w-full h-full border-2 border-gray-200 rounded-lg"
-              title="Scraper Application"
+              title="Scraper API Documentation"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             />
           </div>

@@ -200,7 +200,7 @@ export default function Home() {
                     <ArrowRight className="ml-2 group-hover/btn:translate-x-1 transition-transform" size={20} />
                   </Link>
                   <a
-                    href="https://scraper-app.onrender.com"
+                    href="https://scraper-app-w6xu.onrender.com/docs"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-red text-white rounded-xl font-bold hover:bg-samurai-red-dark transition-all flame-glow"
