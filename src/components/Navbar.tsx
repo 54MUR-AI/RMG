@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Flame } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Navbar() {
@@ -13,7 +13,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="group">
+            <Link to="/" className="flex items-center space-x-3 group">
+              <div className="w-16 h-16 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
+                <Flame className="text-samurai-red animate-flame-flicker" size={56} />
+              </div>
               <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA</span>
             </Link>
           </div>
