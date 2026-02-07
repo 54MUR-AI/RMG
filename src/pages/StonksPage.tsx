@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import AppInfoPopup from '../components/AppInfoPopup'
+import ReadmePopup from '../components/ReadmePopup'
 
 export default function StonksPage() {
   const [showPopup, setShowPopup] = useState(true)
@@ -8,24 +8,13 @@ export default function StonksPage() {
     window.scrollTo(0, 0)
   }, [])
 
-  const features = [
-    'Advanced ML models: LSTM, Transformer, WaveNet, Graph Neural Networks',
-    'Real-time market data processing with technical indicators',
-    'Portfolio optimization with modern portfolio theory algorithms',
-    'Automated rebalancing and risk management',
-    'Production infrastructure with Docker containerization',
-    'Comprehensive testing and security scanning',
-  ]
-
   return (
     <div className="min-h-screen bg-samurai-black relative">
-      {/* Info Popup */}
+      {/* README Popup */}
       {showPopup && (
-        <AppInfoPopup
+        <ReadmePopup
           title="STONKS"
-          description="Smart Trading Options for Novices & Knowledgeable Speculators"
-          features={features}
-          githubUrl="https://github.com/54MUR-AI/stonks"
+          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/stonks/main/README.md"
           onClose={() => setShowPopup(false)}
         />
       )}

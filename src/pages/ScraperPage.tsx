@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import AppInfoPopup from '../components/AppInfoPopup'
+import ReadmePopup from '../components/ReadmePopup'
 
 export default function ScraperPage() {
   const [showPopup, setShowPopup] = useState(true)
@@ -8,24 +8,13 @@ export default function ScraperPage() {
     window.scrollTo(0, 0)
   }, [])
 
-  const features = [
-    'Multi-source scraping: Articles, YouTube videos, PDFs, and web pages',
-    'AI-powered summarization with GPT-4, Claude, or HuggingFace',
-    'Automatic key points extraction from content',
-    'Batch processing for multiple URLs at once',
-    'Beautiful web interface with real-time results',
-    'Enhanced anti-bot detection bypass for major news sites',
-  ]
-
   return (
     <div className="min-h-screen bg-samurai-black relative">
-      {/* Info Popup */}
+      {/* README Popup */}
       {showPopup && (
-        <AppInfoPopup
+        <ReadmePopup
           title="SCRP"
-          description="Smart Content Retrieval & Processing - AI-powered content extraction"
-          features={features}
-          githubUrl="https://github.com/54MUR-AI/scraper"
+          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md"
           onClose={() => setShowPopup(false)}
         />
       )}
