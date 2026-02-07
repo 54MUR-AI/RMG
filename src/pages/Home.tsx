@@ -353,7 +353,7 @@ export default function Home() {
               href="#arsenal"
               className="group inline-flex items-center justify-center px-12 py-5 border-2 border-white text-white rounded-xl font-black text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105"
             >
-              <Sword className="mr-3 group-hover:rotate-12 transition-transform" size={28} />
+              <KatanaIcon size={28} className="mr-3 group-hover:rotate-12 transition-transform" />
               VIEW ARSENAL
             </a>
           </div>
