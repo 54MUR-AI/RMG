@@ -487,45 +487,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Epic CTA Section */}
-      <section className="py-32 gradient-bg text-white relative overflow-hidden">
-        <div className="absolute inset-0 pattern-bg opacity-10"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-samurai-red rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
-        
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-          <Flame className="w-16 h-16 text-white mx-auto mb-8 animate-flame-flicker" />
-          
-          <h2 className="text-5xl md:text-6xl font-black mb-8 neon-text">
-            JOIN THE BATTLE
-          </h2>
-          
-          <div className="h-1 w-32 bg-gradient-to-r from-transparent via-white to-transparent mx-auto mb-8"></div>
-          
-          <p className="text-2xl mb-12 text-gray-200 leading-relaxed">
-            Explore our open-source arsenal and forge your own path with our tools.
-            <br />
-            <span className="text-samurai-steel-light">The code is yours to wield.</span>
-          </p>
-          
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link
-              to="/discord"
-              className="group inline-flex items-center justify-center px-12 py-5 bg-white text-samurai-red rounded-xl font-black text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
-            >
-              <DiscordIcon size={28} className="mr-3 group-hover:rotate-12 transition-transform text-samurai-red" />
-              ENTER THE DOJO
-            </Link>
-            <a
-              href="#arsenal"
-              className="group inline-flex items-center justify-center px-12 py-5 border-2 border-white text-white rounded-xl font-black text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105"
-            >
-              <KatanaIcon size={28} className="mr-3 group-hover:rotate-12 transition-transform" />
-              VIEW ARSENAL
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* README Popup */}
       {readmePopup && (
         <ReadmePopup
