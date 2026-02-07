@@ -23,14 +23,15 @@ export default function InfoPopup({ title, features, icon, thumbnail, onClose }:
 
   return (
     <div 
-      className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 overflow-y-auto"
+      className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
       onClick={onClose}
+      style={{ alignItems: 'center', justifyContent: 'center' }}
     >
       <div 
-        className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl max-w-2xl w-full my-8 relative"
+        className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col relative overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-steel-dark p-4 sm:p-6 flex items-center justify-between gap-3 z-10">
+        <div className="flex-shrink-0 bg-samurai-grey-darker border-b-2 border-samurai-steel-dark p-4 sm:p-6 flex items-center justify-between gap-3 rounded-t-2xl">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-12 h-12 sm:w-16 sm:h-16 steel-texture rounded-2xl flex items-center justify-center flex-shrink-0">
               {icon}
@@ -46,7 +47,7 @@ export default function InfoPopup({ title, features, icon, thumbnail, onClose }:
           </button>
         </div>
         
-        <div className="p-4 sm:p-6 max-h-[70vh] overflow-y-auto">
+        <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
           {/* Thumbnail Preview */}
           <div className="mb-6 rounded-xl overflow-hidden border-2 border-samurai-steel-dark">
             <img 
