@@ -11,7 +11,7 @@ export default function ScraperPage() {
             </div>
           </div>
           <h1 className="text-6xl font-black text-samurai-red mb-4 uppercase neon-text tracking-wider">Web Scraper & Summarizer</h1>
-          <p className="text-xl text-samurai-grey-light max-w-3xl mx-auto font-semibold">
+          <p className="text-xl text-white/90 max-w-3xl mx-auto font-semibold">
             Beautiful web interface for scraping and summarizing any web content with AI
           </p>
           <div className="mt-8 flex justify-center gap-4">
@@ -38,24 +38,24 @@ export default function ScraperPage() {
         <div className="grid md:grid-cols-3 gap-8 mb-12">
           <div className="bg-samurai-black-light border-2 border-samurai-red/30 rounded-xl p-8 shadow-lg shadow-samurai-red/20 text-center">
             <FileText className="text-samurai-red mb-4 mx-auto animate-flame-flicker" size={48} />
-            <h3 className="text-xl font-bold text-gray-100 mb-2 uppercase">Articles</h3>
-            <p className="text-samurai-grey-light">
+            <h3 className="text-xl font-bold text-white mb-2 uppercase">Articles</h3>
+            <p className="text-white/80">
               Scrape Medium, Substack, blogs, and news sites with intelligent content extraction
             </p>
           </div>
 
           <div className="bg-samurai-black-light border-2 border-samurai-red/30 rounded-xl p-8 shadow-lg shadow-samurai-red/20 text-center">
             <Video className="text-samurai-red mb-4 mx-auto animate-flame-flicker" size={48} />
-            <h3 className="text-xl font-bold text-gray-100 mb-2 uppercase">Videos</h3>
-            <p className="text-samurai-grey-light">
+            <h3 className="text-xl font-bold text-white mb-2 uppercase">Videos</h3>
+            <p className="text-white/80">
               Extract YouTube transcripts and analyze video content automatically
             </p>
           </div>
 
           <div className="bg-samurai-black-light border-2 border-samurai-red/30 rounded-xl p-8 shadow-lg shadow-samurai-red/20 text-center">
             <FileType className="text-samurai-red mb-4 mx-auto animate-flame-flicker" size={48} />
-            <h3 className="text-xl font-bold text-gray-100 mb-2 uppercase">PDFs</h3>
-            <p className="text-samurai-grey-light">
+            <h3 className="text-xl font-bold text-white mb-2 uppercase">PDFs</h3>
+            <p className="text-white/80">
               Parse PDF documents, research papers, and reports with ease
             </p>
           </div>
@@ -64,12 +64,12 @@ export default function ScraperPage() {
         <div className="bg-samurai-black-lighter border-2 border-samurai-red rounded-2xl p-8 mb-12 shadow-lg shadow-samurai-red/20">
           <div className="flex items-center mb-6">
             <Sparkles className="text-samurai-red mr-3 animate-flame-flicker" size={32} />
-            <h2 className="text-3xl font-bold text-gray-100 uppercase neon-text">AI-Powered Features</h2>
+            <h2 className="text-3xl font-bold text-white uppercase neon-text">AI-Powered Features</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-bold text-samurai-red mb-2 uppercase">Multiple AI Providers</h4>
-              <ul className="space-y-1 text-samurai-grey-light">
+              <ul className="space-y-1 text-white/80">
                 <li>• OpenAI GPT-4</li>
                 <li>• Anthropic Claude</li>
                 <li>• Ollama (Local models)</li>
@@ -79,7 +79,7 @@ export default function ScraperPage() {
             </div>
             <div>
               <h4 className="font-bold text-samurai-red mb-2 uppercase">Smart Processing</h4>
-              <ul className="space-y-1 text-samurai-grey-light">
+              <ul className="space-y-1 text-white/80">
                 <li>• Automatic summarization</li>
                 <li>• Key points extraction</li>
                 <li>• Batch processing</li>
@@ -91,11 +91,11 @@ export default function ScraperPage() {
         </div>
 
         <div className="bg-samurai-black-light border-2 border-samurai-red/30 rounded-xl p-8 shadow-lg shadow-samurai-red/20 mb-12">
-          <h2 className="text-3xl font-bold text-gray-100 mb-6 uppercase">How to Use</h2>
+          <h2 className="text-3xl font-bold text-white mb-6 uppercase">How to Use</h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h4 className="font-bold text-samurai-red mb-3 uppercase">Web Interface</h4>
-              <ul className="space-y-2 text-samurai-grey-light">
+              <ul className="space-y-2 text-white/80">
                 <li>1. Enter any URL in the search box</li>
                 <li>2. Click "Scrape & Summarize"</li>
                 <li>3. View AI-generated summary with key points</li>
@@ -118,8 +118,8 @@ python main.py batch urls.txt`}
         </div>
 
         <div className="bg-samurai-black-light border-2 border-samurai-red/30 rounded-xl p-8 shadow-lg shadow-samurai-red/20">
-          <h2 className="text-3xl font-bold text-gray-100 mb-4 uppercase">Live Web Application</h2>
-          <p className="text-samurai-grey-light mb-6">
+          <h2 className="text-3xl font-bold text-white mb-4 uppercase">Live Web Application</h2>
+          <p className="text-white/80 mb-6">
             Try the Scraper web interface directly below. Enter any URL to scrape and get an AI-powered summary. Note: First load may take ~30 seconds as the free tier spins up.
           </p>
           <div className="relative w-full" style={{ paddingBottom: '75%' }}>

@@ -22,7 +22,7 @@ export default function FloatingEmbers() {
         left: Math.random() * 100,
         delay: Math.random() * 5,
         duration: 8 + Math.random() * 7,
-        size: 2 + Math.random() * 4
+        size: 4 + Math.random() * 6
       })
     }
     
@@ -30,7 +30,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-50">
       {embers.map((ember) => (
         <div
           key={ember.id}
@@ -39,14 +39,16 @@ export default function FloatingEmbers() {
             left: `${ember.left}%`,
             animationDelay: `${ember.delay}s`,
             animationDuration: `${ember.duration}s`,
+            zIndex: 50,
           }}
         >
           <div
-            className="rounded-full bg-samurai-red opacity-70 blur-sm animate-ember-flicker"
+            className="rounded-full bg-samurai-red blur-[1px] animate-ember-flicker"
             style={{
               width: `${ember.size}px`,
               height: `${ember.size}px`,
-              boxShadow: `0 0 ${ember.size * 2}px rgba(230, 57, 70, 0.8)`,
+              opacity: 0.9,
+              boxShadow: `0 0 ${ember.size * 3}px rgba(230, 57, 70, 1), 0 0 ${ember.size * 6}px rgba(230, 57, 70, 0.6)`,
             }}
           />
         </div>
