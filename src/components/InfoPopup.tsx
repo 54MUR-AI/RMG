@@ -12,29 +12,37 @@ interface InfoPopupProps {
 
 export default function InfoPopup({ title, features, icon, thumbnail, onClose }: InfoPopupProps) {
   useEffect(() => {
-    // Lock body scroll when popup is open
+    // Save current scroll position
+    const scrollY = window.scrollY
+    
+    // Lock body scroll
     document.body.style.overflow = 'hidden'
     document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY}px`
     document.body.style.width = '100%'
     
-    // Cleanup: restore scroll when popup closes
+    // Cleanup: restore scroll
     return () => {
       document.body.style.overflow = ''
       document.body.style.position = ''
+      document.body.style.top = ''
       document.body.style.width = ''
+      window.scrollTo(0, scrollY)
     }
   }, [])
 
   return (
     <div 
-      className="bg-black/90 backdrop-blur-sm z-[9999]"
+      className="bg-black/90 backdrop-blur-sm"
       onClick={onClose}
       style={{ 
         position: 'fixed',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: '100vw',
+        height: '100vh',
+        zIndex: 9999,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -42,8 +50,12 @@ export default function InfoPopup({ title, features, icon, thumbnail, onClose }:
       }}
     >
       <div 
-        className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col overflow-hidden"
+        className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl w-full flex flex-col overflow-hidden"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          maxWidth: '48rem',
+          maxHeight: '90vh'
+        }}
       >
         <div className="flex-shrink-0 bg-samurai-grey-darker border-b-2 border-samurai-steel-dark p-4 sm:p-6 flex items-center justify-between gap-3 rounded-t-2xl">
           <div className="flex items-center gap-3 min-w-0">
