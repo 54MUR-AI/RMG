@@ -12,10 +12,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-samurai-black relative">
-      {/* Floating embers - spans entire page */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
-        <FloatingEmbers />
-      </div>
+      {/* Floating embers - fixed to viewport */}
+      <FloatingEmbers />
       
       {/* Epic Hero Section with Parallax */}
       <section className="gradient-bg text-white py-16 sm:py-24 md:py-32 relative overflow-hidden">
