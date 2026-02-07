@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Sword, Shield, Gamepad2 } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Shield, Gamepad2 } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
+import KatanaIcon from '../components/KatanaIcon'
 
 export default function Home() {
   return (
@@ -57,7 +58,7 @@ export default function Home() {
                 className="group inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 border-2 border-white text-white rounded-xl font-bold text-base sm:text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] touch-manipulation"
               >
                 View Arsenal
-                <Sword className="ml-3 group-hover:rotate-12 transition-transform" size={24} />
+                <KatanaIcon size={24} className="ml-3 group-hover:rotate-12 transition-transform" />
               </a>
             </div>
           </div>
@@ -79,7 +80,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-20">
             <div className="inline-block mb-4">
-              <Sword className="w-12 h-12 text-samurai-red mx-auto animate-flame-flicker" />
+              <KatanaIcon size={48} className="text-samurai-red mx-auto animate-flame-flicker" />
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 neon-text">
               THE ARSENAL
