@@ -31,7 +31,7 @@ export default function FloatingEmbers() {
         drift: -30 + Math.random() * 60, // Random horizontal drift -30 to +30
         rotation: Math.random() * 360, // Random rotation
         opacity: 0.6 + Math.random() * 0.3, // Varying opacity
-        horizontalMeander: -50 + Math.random() * 100, // Random horizontal meandering -50 to +50
+        horizontalMeander: -80 + Math.random() * 160, // Random horizontal meandering -80 to +80
         meanderSpeed: 2 + Math.random() * 3 // Random meander speed
       })
     }

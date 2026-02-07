@@ -74,17 +74,17 @@ export default function ReadmePopup({ title, readmeUrl, onClose }: ReadmePopupPr
                   h1: ({node, ...props}) => <h1 className="text-4xl font-black text-samurai-red mb-4 uppercase" {...props} />,
                   h2: ({node, ...props}) => <h2 className="text-3xl font-bold text-white mt-8 mb-4" {...props} />,
                   h3: ({node, ...props}) => <h3 className="text-2xl font-bold text-white mt-6 mb-3" {...props} />,
-                  p: ({node, ...props}) => <p className="text-white/80 mb-4 leading-relaxed" {...props} />,
-                  ul: ({node, ...props}) => <ul className="list-disc list-inside text-white/80 mb-4 space-y-2" {...props} />,
-                  ol: ({node, ...props}) => <ol className="list-decimal list-inside text-white/80 mb-4 space-y-2" {...props} />,
-                  li: ({node, ...props}) => <li className="text-white/80" {...props} />,
+                  p: ({node, ...props}) => <p className="text-white mb-4 leading-relaxed text-base" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc list-inside text-white mb-4 space-y-2 ml-4" {...props} />,
+                  ol: ({node, ...props}) => <ol className="list-decimal list-inside text-white mb-4 space-y-2 ml-4" {...props} />,
+                  li: ({node, ...props}) => <li className="text-white" {...props} />,
                   code: ({node, inline, ...props}: any) => 
                     inline ? 
-                      <code className="bg-samurai-black px-2 py-1 rounded text-samurai-red font-mono text-sm" {...props} /> :
-                      <code className="block bg-samurai-black p-4 rounded-lg text-white/90 font-mono text-sm overflow-x-auto mb-4" {...props} />,
-                  pre: ({node, ...props}) => <pre className="bg-samurai-black p-4 rounded-lg overflow-x-auto mb-4" {...props} />,
-                  a: ({node, ...props}) => <a className="text-samurai-red hover:text-samurai-red-dark underline" {...props} />,
-                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-samurai-red pl-4 italic text-white/70 my-4" {...props} />,
+                      <code className="bg-black/60 px-2 py-1 rounded text-samurai-red font-mono text-sm border border-samurai-red/30" {...props} /> :
+                      <code className="block bg-black/60 p-4 rounded-lg text-white font-mono text-sm overflow-x-auto mb-4 border border-samurai-red/30" {...props} />,
+                  pre: ({node, ...props}) => <pre className="bg-black/60 p-4 rounded-lg overflow-x-auto mb-4 border border-samurai-red/30" {...props} />,
+                  a: ({node, ...props}) => <a className="text-samurai-red hover:text-white underline font-semibold" {...props} />,
+                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-samurai-red pl-4 italic text-white/90 my-4" {...props} />,
                 }}
               >
                 {content}
