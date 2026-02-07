@@ -18,8 +18,8 @@ export default function ScraperPage() {
       {/* Info Popup */}
       {showPopup && (
         <AppInfoPopup
-          title="Web Scraper & Summarizer"
-          description="Beautiful web interface for scraping and summarizing any web content with AI"
+          title="SCRPR"
+          description="Smart Content Retrieval & Processing Relay - AI-powered content extraction"
           features={features}
           githubUrl="https://github.com/54MUR-AI/scraper"
           onClose={() => setShowPopup(false)}
