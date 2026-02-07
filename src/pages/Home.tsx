@@ -109,7 +109,7 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'OMNI' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('OMNI'), transition: 'order 0s' }}
+              style={{ order: window.innerWidth >= 1024 ? getCardOrder('OMNI') : 0, transition: 'order 0s' }}
               onClick={() => setFeaturedCard('OMNI')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -182,7 +182,7 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'SCRP' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('SCRP'), transition: 'order 0s' }}
+              style={{ order: window.innerWidth >= 1024 ? getCardOrder('SCRP') : 0, transition: 'order 0s' }}
               onClick={() => setFeaturedCard('SCRP')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -252,7 +252,7 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'LDGR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('LDGR'), transition: 'order 0s' }}
+              style={{ order: window.innerWidth >= 1024 ? getCardOrder('LDGR') : 0, transition: 'order 0s' }}
               onClick={() => setFeaturedCard('LDGR')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -322,7 +322,7 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'WSPR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('WSPR'), transition: 'order 0s' }}
+              style={{ order: window.innerWidth >= 1024 ? getCardOrder('WSPR') : 0, transition: 'order 0s' }}
               onClick={() => setFeaturedCard('WSPR')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -392,7 +392,7 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'STONKS' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('STONKS'), transition: 'order 0s' }}
+              style={{ order: window.innerWidth >= 1024 ? getCardOrder('STONKS') : 0, transition: 'order 0s' }}
               onClick={() => setFeaturedCard('STONKS')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
