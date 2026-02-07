@@ -111,7 +111,7 @@ export default function FloatingEmbers() {
           className="absolute bottom-0"
           style={{
             left: `${ember.left}%`,
-            animation: `floatEmber${ember.id} ${ember.duration}s ease-in-out ${ember.delay}s infinite`,
+            animation: `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`,
             zIndex: 0,
           }}
         >
