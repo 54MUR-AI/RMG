@@ -18,29 +18,29 @@ export default function CrossedKatanasIcon({
       <g transform="rotate(-45 50 50)">
         {/* Blade */}
         <path 
-          d="M 48 20 L 48 75 L 52 75 L 52 20 Z" 
+          d="M 47 20 L 47 75 L 53 75 L 53 20 Z" 
           fill="currentColor"
           opacity="0.9"
         />
         {/* Blade tip */}
         <path 
-          d="M 48 20 L 50 15 L 52 20 Z" 
+          d="M 47 20 L 50 15 L 53 20 Z" 
           fill="currentColor"
         />
         {/* Guard (tsuba) */}
         <rect 
-          x="45" 
+          x="44" 
           y="74" 
-          width="10" 
-          height="3" 
+          width="12" 
+          height="4" 
           fill="currentColor"
           rx="1"
         />
         {/* Handle (tsuka) */}
         <rect 
-          x="47" 
-          y="77" 
-          width="6" 
+          x="46" 
+          y="78" 
+          width="8" 
           height="12" 
           fill="currentColor"
           opacity="0.8"
@@ -49,8 +49,8 @@ export default function CrossedKatanasIcon({
         {/* Pommel */}
         <circle 
           cx="50" 
-          cy="90" 
-          r="2" 
+          cy="91" 
+          r="2.5" 
           fill="currentColor"
         />
       </g>
@@ -59,29 +59,29 @@ export default function CrossedKatanasIcon({
       <g transform="rotate(45 50 50)">
         {/* Blade */}
         <path 
-          d="M 48 20 L 48 75 L 52 75 L 52 20 Z" 
+          d="M 47 20 L 47 75 L 53 75 L 53 20 Z" 
           fill="currentColor"
           opacity="0.9"
         />
         {/* Blade tip */}
         <path 
-          d="M 48 20 L 50 15 L 52 20 Z" 
+          d="M 47 20 L 50 15 L 53 20 Z" 
           fill="currentColor"
         />
         {/* Guard (tsuba) */}
         <rect 
-          x="45" 
+          x="44" 
           y="74" 
-          width="10" 
-          height="3" 
+          width="12" 
+          height="4" 
           fill="currentColor"
           rx="1"
         />
         {/* Handle (tsuka) */}
         <rect 
-          x="47" 
-          y="77" 
-          width="6" 
+          x="46" 
+          y="78" 
+          width="8" 
           height="12" 
           fill="currentColor"
           opacity="0.8"
@@ -90,8 +90,8 @@ export default function CrossedKatanasIcon({
         {/* Pommel */}
         <circle 
           cx="50" 
-          cy="90" 
-          r="2" 
+          cy="91" 
+          r="2.5" 
           fill="currentColor"
         />
       </g>
