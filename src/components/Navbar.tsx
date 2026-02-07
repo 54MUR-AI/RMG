@@ -14,7 +14,7 @@ export default function Navbar() {
               <div className="w-12 h-12 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
                 <Flame className="text-samurai-red animate-flame-flicker" size={28} />
               </div>
-              <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA GROUP</span>
+              <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA</span>
             </Link>
           </div>
 

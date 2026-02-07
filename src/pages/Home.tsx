@@ -29,7 +29,7 @@ export default function Home() {
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 neon-text tracking-tight">
-              RONIN MEDIA GROUP
+              RONIN MEDIA
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 sm:mb-6 font-bold text-white px-4">
