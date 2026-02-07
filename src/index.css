@@ -4,6 +4,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Android-specific rendering fixes */
+@supports (-webkit-appearance: none) {
+  * {
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000;
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -102,6 +111,8 @@ code {
     0 0 20px rgba(230, 57, 70, 0.42),
     0 0 30px rgba(230, 57, 70, 0.28),
     0 0 40px rgba(230, 57, 70, 0.14);
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 /* Card hover effects */

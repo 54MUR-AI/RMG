@@ -113,10 +113,14 @@ export default function FloatingEmbers() {
               width: `${ember.size}px`,
               height: `${ember.size}px`,
               opacity: ember.opacity,
-              animation: `emberFlickerChaotic ${1 + Math.random() * 2}s ease-in-out infinite, emberPulseGlow${ember.id} ${2 + Math.random()}s ease-in-out infinite`,
-              willChange: 'transform, opacity',
+              animation: window.innerWidth < 768 
+                ? `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`
+                : `emberFlickerChaotic ${1 + Math.random() * 2}s ease-in-out infinite, emberPulseGlow${ember.id} ${2 + Math.random()}s ease-in-out infinite`,
+              willChange: 'transform',
               transform: 'translate3d(0,0,0)',
               backfaceVisibility: 'hidden',
+              WebkitTransform: 'translate3d(0,0,0)',
+              WebkitBackfaceVisibility: 'hidden',
             }}
           />
         </div>
