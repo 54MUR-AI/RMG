@@ -128,8 +128,8 @@ export default function Home() {
                 </div>
                 
                 {/* Thumbnail */}
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark transition-all duration-500 ${
-                  featuredCard === 'OMNI' ? 'h-64' : 'h-32'
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                  featuredCard === 'OMNI' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/omni-thumb.svg" 
@@ -200,8 +200,8 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark transition-all duration-500 ${
-                  featuredCard === 'SCRP' ? 'h-64' : 'h-32'
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                  featuredCard === 'SCRP' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/scrp-thumb.svg" 
@@ -270,8 +270,8 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark transition-all duration-500 ${
-                  featuredCard === 'LDGR' ? 'h-64' : 'h-32'
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                  featuredCard === 'LDGR' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/ldgr-thumb.svg" 
@@ -340,8 +340,8 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark transition-all duration-500 ${
-                  featuredCard === 'WSPR' ? 'h-64' : 'h-32'
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                  featuredCard === 'WSPR' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/wspr-thumb.svg" 
@@ -410,8 +410,8 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark transition-all duration-500 ${
-                  featuredCard === 'STONKS' ? 'h-64' : 'h-32'
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                  featuredCard === 'STONKS' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/stonks-thumb.svg" 
