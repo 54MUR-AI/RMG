@@ -17,8 +17,9 @@ export default function FloatingEmbers() {
   const [embers, setEmbers] = useState<Ember[]>([])
 
   useEffect(() => {
-    // Generate random embers
-    const emberCount = 40
+    // Generate random embers - fewer on mobile for performance
+    const isMobile = window.innerWidth < 768
+    const emberCount = isMobile ? 20 : 40
     const newEmbers: Ember[] = []
     
     for (let i = 0; i < emberCount; i++) {
@@ -108,12 +109,13 @@ export default function FloatingEmbers() {
           }}
         >
           <div
-            className="rounded-full bg-samurai-red blur-[1px]"
+            className="rounded-full bg-samurai-red md:blur-[1px]"
             style={{
               width: `${ember.size}px`,
               height: `${ember.size}px`,
               opacity: ember.opacity,
               animation: `emberFlickerChaotic ${1 + Math.random() * 2}s ease-in-out infinite, emberPulseGlow${ember.id} ${2 + Math.random()}s ease-in-out infinite`,
+              willChange: 'transform, opacity',
             }}
           />
         </div>
