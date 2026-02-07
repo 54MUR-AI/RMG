@@ -10,7 +10,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
-  const [infoPopup, setInfoPopup] = useState<{ title: string; features: string[]; icon: React.ReactNode } | null>(null)
+  const [infoPopup, setInfoPopup] = useState<{ title: string; features: string[]; icon: React.ReactNode; thumbnail: string } | null>(null)
 
   return (
     <div className="min-h-screen bg-samurai-black relative">
@@ -111,6 +111,7 @@ export default function Home() {
                     onClick={() => setInfoPopup({ 
                       title: 'STONKS', 
                       icon: <TrendingUp className="text-samurai-red" size={32} />,
+                      thumbnail: '/thumbnails/stonks-thumb.svg',
                       features: [
                         'LSTM, Transformer & GNN Neural Networks',
                         'News Intelligence & Sentiment Analysis',
@@ -168,6 +169,7 @@ export default function Home() {
                     onClick={() => setInfoPopup({ 
                       title: 'SCRP', 
                       icon: <FileText className="text-samurai-red" size={32} />,
+                      thumbnail: '/thumbnails/scrp-thumb.svg',
                       features: [
                         'Multi-Source Scraping (Articles, Videos, PDFs)',
                         'AI Summarization (GPT-4, Claude, Ollama)',
@@ -225,6 +227,7 @@ export default function Home() {
                     onClick={() => setInfoPopup({ 
                       title: 'LDGR', 
                       icon: <Lock className="text-samurai-red" size={32} />,
+                      thumbnail: '/thumbnails/ldgr-thumb.svg',
                       features: [
                         'Blockchain Integration (Ethereum/Hardhat)',
                         'AES/RSA High-Level Encryption',
@@ -282,6 +285,7 @@ export default function Home() {
                     onClick={() => setInfoPopup({ 
                       title: 'WSPR', 
                       icon: <Zap className="text-samurai-red" size={32} />,
+                      thumbnail: '/thumbnails/wspr-thumb.svg',
                       features: [
                         'End-to-End AES-GCM Encryption',
                         'Real-Time Encrypted Messaging',
@@ -293,6 +297,15 @@ export default function Home() {
                   >
                     <Info className="text-samurai-red" size={20} />
                   </button>
+                </div>
+                
+                {/* Thumbnail */}
+                <div className="mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark">
+                  <img 
+                    src="/thumbnails/wspr-thumb.svg" 
+                    alt="WSPR UI Preview" 
+                    className="w-full h-32 object-cover"
+                  />
                 </div>
                 
                 <p className="text-white/80 mb-4 text-sm leading-relaxed">
@@ -330,6 +343,7 @@ export default function Home() {
                     onClick={() => setInfoPopup({ 
                       title: 'OMNI', 
                       icon: <Brain className="text-samurai-red" size={32} />,
+                      thumbnail: '/thumbnails/omni-thumb.svg',
                       features: [
                         'Multiple AI Models (Ollama, Claude, GPT, Grok)',
                         'PyQt6 Desktop Application',
@@ -343,6 +357,15 @@ export default function Home() {
                   >
                     <Info className="text-samurai-red" size={20} />
                   </button>
+                </div>
+                
+                {/* Thumbnail */}
+                <div className="mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark">
+                  <img 
+                    src="/thumbnails/omni-thumb.svg" 
+                    alt="OMNI UI Preview" 
+                    className="w-full h-32 object-cover"
+                  />
                 </div>
                 
                 <p className="text-white/80 mb-4 text-sm leading-relaxed">
