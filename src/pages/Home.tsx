@@ -139,7 +139,10 @@ export default function Home() {
                 {featuredCard === 'OMNI' && (
                   <div className="mb-4 animate-fade-in">
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      OMNI is a comprehensive AI dashboard that provides seamless multi-model interaction, advanced plugin management, and real-time performance monitoring. Built with PyQt6, it offers a powerful desktop environment for managing multiple AI models simultaneously, featuring dynamic model switching, streaming responses, and a robust plugin ecosystem.
+                      OMNI represents the pinnacle of AI model orchestration, providing a unified command center for managing and interacting with multiple large language models simultaneously. Built from the ground up with PyQt6, this sophisticated desktop application delivers enterprise-grade performance monitoring, real-time streaming responses, and seamless model switching across providers including Ollama, Anthropic Claude, OpenAI GPT-4, and xAI Grok.
+                    </p>
+                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                      The platform features an extensible plugin architecture with a built-in marketplace, allowing users to enhance functionality through community-developed extensions. Advanced capabilities include text-to-speech synthesis with multiple voice options, vector database integration for semantic search and RAG implementations, and a fully-featured code editor with syntax highlighting supporting 50+ programming languages. The system maintains conversation history with export capabilities, supports custom system prompts and temperature controls, and provides detailed token usage analytics and cost tracking across all connected models.
                     </p>
                     <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
                     <ul className="space-y-1 mb-4">
@@ -223,7 +226,10 @@ export default function Home() {
                 {featuredCard === 'SCRP' && (
                   <div className="mb-4 animate-fade-in">
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      SCRP is an AI-powered content extraction and summarization platform that transforms articles, videos, and PDFs into actionable intelligence. Leveraging advanced natural language processing with GPT-4, Claude, and Ollama, it automatically extracts key insights, generates comprehensive summaries, and processes multiple sources simultaneously.
+                      SCRP revolutionizes content intelligence by transforming disparate information sources into structured, actionable insights. This advanced platform employs cutting-edge natural language processing to extract, analyze, and synthesize content from web articles, YouTube videos, academic PDFs, and documentation with unprecedented accuracy and speed.
+                    </p>
+                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                      Powered by multiple AI backends including GPT-4, Claude 3, and local Ollama models, SCRP performs multi-layered analysis including sentiment detection, entity recognition, topic modeling, and key phrase extraction. The system supports batch processing of hundreds of sources simultaneously, automatically categorizes content by relevance and quality, generates hierarchical summaries at multiple abstraction levels, and exports results in JSON, Markdown, or structured database formats. Advanced features include automatic citation generation, cross-reference detection between sources, duplicate content identification, and customizable extraction templates for domain-specific use cases.
                     </p>
                     <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
                     <ul className="space-y-1 mb-4">
@@ -306,7 +312,10 @@ export default function Home() {
                 {featuredCard === 'LDGR' && (
                   <div className="mb-4 animate-fade-in">
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      LDGR is a blockchain-powered database management system that combines military-grade encryption with immutable data storage. Built on Ethereum with Hardhat, it provides AES-256 and RSA encryption, smart contract-based transactions, and decentralized verification.
+                      LDGR establishes a new paradigm in secure data management by fusing blockchain immutability with military-grade cryptographic protocols. Built on the Ethereum network using the Hardhat development framework, this system provides tamper-proof data storage with cryptographic verification at every layer of the stack.
+                    </p>
+                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                      The architecture implements a multi-layered security model featuring AES-256-GCM encryption for data at rest, RSA-4096 for key exchange, and ECDSA for transaction signing. Smart contracts written in Solidity manage access control through role-based permissions, enforce data retention policies, and maintain comprehensive audit trails of all operations. The system supports atomic transactions with rollback capabilities, implements Merkle tree verification for data integrity, provides automatic backup and replication across nodes, and offers both public and private blockchain deployment options. Advanced features include time-locked data release, multi-signature authorization requirements, encrypted search capabilities, and compliance-ready logging for regulatory requirements including GDPR, HIPAA, and SOC 2.
                     </p>
                     <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
                     <ul className="space-y-1 mb-4">
@@ -389,7 +398,10 @@ export default function Home() {
                 {featuredCard === 'WSPR' && (
                   <div className="mb-4 animate-fade-in">
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      WSPR is a privacy-focused encrypted communication platform featuring end-to-end encryption and perfect forward secrecy. Built with React, TypeScript, and PostgreSQL, it provides real-time secure messaging with client-side AES-GCM encryption and comprehensive two-factor authentication.
+                      WSPR delivers military-grade secure communications through a sophisticated web-based platform that prioritizes user privacy above all else. Implementing the Signal Protocol's Double Ratchet algorithm, every message benefits from perfect forward secrecy, ensuring that compromised keys cannot decrypt past communications.
+                    </p>
+                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                      Built with a modern React and TypeScript frontend paired with a hardened PostgreSQL backend, the platform performs all encryption operations client-side using AES-256-GCM with authenticated encryption. The system implements ECDH key exchange for establishing secure channels, supports ephemeral messaging with automatic deletion timers, provides verified device management with public key fingerprinting, and includes comprehensive two-factor authentication with TOTP and hardware key support. Real-time messaging operates over WebSocket connections with automatic reconnection and message queuing, while the platform maintains zero-knowledge architecture where the server never has access to plaintext content. Additional security features include screenshot detection, clipboard protection, secure file sharing with end-to-end encryption up to 100MB, and optional self-destructing messages with read receipts.
                     </p>
                     <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
                     <ul className="space-y-1 mb-4">
@@ -472,7 +484,10 @@ export default function Home() {
                 {featuredCard === 'STONKS' && (
                   <div className="mb-4 animate-fade-in">
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      STONKS is an advanced machine learning platform for financial market analysis and trading strategy development. Powered by cutting-edge neural networks including LSTM, Transformers, and Graph Neural Networks, it processes real-time market data, news sentiment, and technical indicators to generate predictive insights.
+                      STONKS represents the convergence of advanced machine learning and quantitative finance, providing institutional-grade analytical capabilities for traders at all experience levels. The platform employs a sophisticated ensemble of neural network architectures including LSTM networks for time-series prediction, Transformer models for pattern recognition, WaveNet for high-frequency analysis, and Graph Neural Networks for correlation discovery across asset classes.
+                    </p>
+                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                      The system ingests and processes real-time market data from multiple exchanges, performs sentiment analysis on financial news and social media using NLP models, calculates over 150 technical indicators, and generates probabilistic forecasts with confidence intervals. Portfolio optimization leverages modern portfolio theory combined with machine learning to balance risk-adjusted returns, while the backtesting engine supports walk-forward analysis, Monte Carlo simulation, and realistic slippage modeling. Advanced features include automated strategy generation using genetic algorithms, risk management with dynamic position sizing, real-time alert systems for market anomalies, integration with major brokerage APIs for live trading, and comprehensive performance analytics with Sharpe ratio, maximum drawdown, and alpha/beta calculations. The production infrastructure runs on Docker with Kubernetes orchestration, supports horizontal scaling, and includes comprehensive logging and monitoring.
                     </p>
                     <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
                     <ul className="space-y-1 mb-4">
