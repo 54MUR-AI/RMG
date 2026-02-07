@@ -1,5 +1,6 @@
 import { X } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { useEffect } from 'react'
 
 interface InfoPopupProps {
   title: string
@@ -10,15 +11,31 @@ interface InfoPopupProps {
 }
 
 export default function InfoPopup({ title, features, icon, thumbnail, onClose }: InfoPopupProps) {
+  useEffect(() => {
+    // Lock body scroll when popup is open
+    document.body.style.overflow = 'hidden'
+    
+    // Cleanup: restore scroll when popup closes
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [])
+
   return (
-    <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto relative">
-        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-steel-dark p-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center flex-shrink-0">
+    <div 
+      className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4 overflow-y-auto"
+      onClick={onClose}
+    >
+      <div 
+        className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl max-w-2xl w-full my-8 relative"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-steel-dark p-4 sm:p-6 flex items-center justify-between gap-3 z-10">
+          <div className="flex items-center gap-3 min-w-0">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 steel-texture rounded-2xl flex items-center justify-center flex-shrink-0">
               {icon}
             </div>
-            <h2 className="text-3xl font-black text-white">{title}</h2>
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-white truncate">{title}</h2>
           </div>
           <button
             onClick={onClose}
@@ -29,22 +46,22 @@ export default function InfoPopup({ title, features, icon, thumbnail, onClose }:
           </button>
         </div>
         
-        <div className="p-6">
+        <div className="p-4 sm:p-6 max-h-[70vh] overflow-y-auto">
           {/* Thumbnail Preview */}
           <div className="mb-6 rounded-xl overflow-hidden border-2 border-samurai-steel-dark">
             <img 
               src={thumbnail} 
               alt={`${title} UI Preview`} 
-              className="w-full h-64 object-cover"
+              className="w-full h-48 sm:h-64 object-cover"
             />
           </div>
           
-          <h3 className="text-xl font-bold text-samurai-red mb-4">Key Features</h3>
+          <h3 className="text-lg sm:text-xl font-bold text-samurai-red mb-4">Key Features</h3>
           <div className="space-y-3">
             {features.map((feature, index) => (
               <div key={index} className="flex items-start">
                 <div className="w-2 h-2 bg-samurai-red rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                <span className="text-white/80">{feature}</span>
+                <span className="text-sm sm:text-base text-white/80">{feature}</span>
               </div>
             ))}
           </div>
