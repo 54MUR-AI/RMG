@@ -27,7 +27,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center animate-slide-up">
             {/* Flame icon with animation */}
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-8 relative" style={{ zIndex: 10 }}>
               <Flame className="w-20 h-20 text-white drop-shadow-[0_0_15px_rgba(230,57,70,1)] animate-flame-pulse-big" />
             </div>
             
@@ -110,19 +110,19 @@ export default function Home() {
                 </p>
                 
                 <div className="space-y-3 mb-8">
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">LSTM, Transformer & GNN Neural Networks</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">News Intelligence & Sentiment Analysis</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Portfolio Optimization & Risk Analytics</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Production-Grade Infrastructure</span>
                   </div>
@@ -173,19 +173,19 @@ export default function Home() {
                 </p>
                 
                 <div className="space-y-3 mb-8">
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Multi-Source Scraping (Articles, Videos, PDFs)</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">AI Summarization (GPT-4, Claude, Ollama)</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Key Points Extraction & Analysis</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">High-Speed Batch Processing</span>
                   </div>
@@ -235,19 +235,19 @@ export default function Home() {
                 </p>
                 
                 <div className="space-y-3 mb-8">
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Blockchain Integration (Ethereum/Hardhat)</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">AES/RSA High-Level Encryption</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Smart Contract Data Transactions</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">User-Friendly Database Management</span>
                   </div>
@@ -293,19 +293,19 @@ export default function Home() {
                 </p>
                 
                 <div className="space-y-3 mb-8">
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">End-to-End AES-GCM Encryption</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Real-Time Encrypted Messaging</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">Two-Factor Authentication (2FA)</span>
                   </div>
-                  <div className="flex items-start">
+                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
                     <span className="text-white/70">React + TypeScript + PostgreSQL</span>
                   </div>

@@ -97,7 +97,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1, isolation: 'isolate' }}>
       {embers.map((ember) => (
         <div
           key={ember.id}
@@ -105,7 +105,6 @@ export default function FloatingEmbers() {
           style={{
             left: `${ember.left}%`,
             animation: `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`,
-            zIndex: 0,
           }}
         >
           <div
