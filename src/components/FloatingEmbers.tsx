@@ -18,7 +18,7 @@ export default function FloatingEmbers() {
 
   useEffect(() => {
     // Generate random embers
-    const emberCount = 20
+    const emberCount = 40
     const newEmbers: Ember[] = []
     
     for (let i = 0; i < emberCount; i++) {
