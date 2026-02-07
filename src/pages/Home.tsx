@@ -89,7 +89,7 @@ export default function Home() {
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'OMNI' 
-                  ? 'col-span-2 lg:col-start-2 lg:row-start-1' 
+                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
                   : featuredCard === 'SCRP'
                     ? 'lg:col-start-1 lg:row-start-1'
                   : featuredCard === 'LDGR'
@@ -178,7 +178,7 @@ export default function Home() {
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'SCRP' 
-                  ? 'col-span-2 lg:col-start-2 lg:row-start-1' 
+                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
                   : featuredCard === 'OMNI'
                     ? 'lg:col-start-1 lg:row-start-2'
                   : featuredCard === 'LDGR'
@@ -264,7 +264,7 @@ export default function Home() {
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'LDGR' 
-                  ? 'col-span-2 lg:col-start-2 lg:row-start-1' 
+                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
                   : featuredCard === 'OMNI'
                     ? 'lg:col-start-4 lg:row-start-1'
                   : featuredCard === 'SCRP'
@@ -350,7 +350,7 @@ export default function Home() {
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'WSPR' 
-                  ? 'col-span-2 lg:col-start-2 lg:row-start-1' 
+                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
                   : featuredCard === 'OMNI'
                     ? 'lg:col-start-4 lg:row-start-2'
                   : featuredCard === 'SCRP'
@@ -436,7 +436,7 @@ export default function Home() {
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'STONKS' 
-                  ? 'col-span-2 lg:col-start-2 lg:row-start-1' 
+                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
                   : featuredCard === 'OMNI'
                     ? 'lg:col-start-2 lg:row-start-3'
                   : featuredCard === 'SCRP'
