@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom'
-import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Shield, Gamepad2 } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Shield } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
 import KatanaIcon from '../components/KatanaIcon'
+import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
 import { useState } from 'react'
 
@@ -51,7 +51,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 bg-samurai-red text-white rounded-xl font-bold text-base sm:text-lg hover:bg-samurai-red-dark transition-all transform hover:scale-105 flame-glow touch-manipulation"
               >
-                <Gamepad2 className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
+                <DiscordIcon className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
                 Enter the Dojo
               </a>
             </div>
