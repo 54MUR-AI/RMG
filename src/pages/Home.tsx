@@ -10,7 +10,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
-  const [infoPopup, setInfoPopup] = useState<{ title: string; features: string[] } | null>(null)
+  const [infoPopup, setInfoPopup] = useState<{ title: string; features: string[]; icon: React.ReactNode } | null>(null)
 
   return (
     <div className="min-h-screen bg-samurai-black relative">
@@ -110,6 +110,7 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'STONKS', 
+                      icon: <TrendingUp className="text-samurai-red" size={32} />,
                       features: [
                         'LSTM, Transformer & GNN Neural Networks',
                         'News Intelligence & Sentiment Analysis',
@@ -157,6 +158,7 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'SCRP', 
+                      icon: <FileText className="text-samurai-red" size={32} />,
                       features: [
                         'Multi-Source Scraping (Articles, Videos, PDFs)',
                         'AI Summarization (GPT-4, Claude, Ollama)',
@@ -204,6 +206,7 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'LDGR', 
+                      icon: <Lock className="text-samurai-red" size={32} />,
                       features: [
                         'Blockchain Integration (Ethereum/Hardhat)',
                         'AES/RSA High-Level Encryption',
@@ -251,6 +254,7 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'WSPR', 
+                      icon: <Zap className="text-samurai-red" size={32} />,
                       features: [
                         'End-to-End AES-GCM Encryption',
                         'Real-Time Encrypted Messaging',
@@ -298,6 +302,7 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'OMNI', 
+                      icon: <Brain className="text-samurai-red" size={32} />,
                       features: [
                         'Multiple AI Models (Ollama, Claude, GPT, Grok)',
                         'PyQt6 Desktop Application',
@@ -487,6 +492,7 @@ export default function Home() {
         <InfoPopup
           title={infoPopup.title}
           features={infoPopup.features}
+          icon={infoPopup.icon}
           onClose={() => setInfoPopup(null)}
         />
       )}

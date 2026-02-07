@@ -1,20 +1,27 @@
 import { X } from 'lucide-react'
+import type { ReactNode } from 'react'
 
 interface InfoPopupProps {
   title: string
   features: string[]
+  icon: ReactNode
   onClose: () => void
 }
 
-export default function InfoPopup({ title, features, onClose }: InfoPopupProps) {
+export default function InfoPopup({ title, features, icon, onClose }: InfoPopupProps) {
   return (
     <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
       <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-y-auto relative">
         <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-steel-dark p-6 flex items-center justify-between">
-          <h2 className="text-3xl font-black text-white">{title}</h2>
+          <div className="flex items-center gap-4">
+            <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center flex-shrink-0">
+              {icon}
+            </div>
+            <h2 className="text-3xl font-black text-white">{title}</h2>
+          </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
+            className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors flex-shrink-0"
             aria-label="Close"
           >
             <X className="text-white" size={24} />
