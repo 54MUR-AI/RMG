@@ -40,7 +40,7 @@ export default function Home() {
               automation to conquer real-world challenges.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
+            <div className="flex justify-center px-4">
               <a
                 href="https://discord.gg/EHcZ5PZ877"
                 target="_blank"
@@ -49,13 +49,6 @@ export default function Home() {
               >
                 <Gamepad2 className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
                 Enter the Dojo
-              </a>
-              <a
-                href="#arsenal"
-                className="group inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 border-2 border-white text-white rounded-xl font-bold text-base sm:text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] touch-manipulation"
-              >
-                View Arsenal
-                <KatanaIcon size={24} className="ml-3 group-hover:rotate-12 transition-transform" />
               </a>
             </div>
           </div>
