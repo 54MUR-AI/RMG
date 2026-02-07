@@ -12,7 +12,7 @@ export default function Footer() {
             <p className="text-sm text-samurai-steel-light">
               &copy; {new Date().getFullYear()} <span className="font-bold text-white">RONIN MEDIA</span>
             </p>
-            <p className="text-xs text-samurai-steel">Digital Damascus for the Cyber Swordsman</p>
+            <p className="text-xs text-samurai-steel">Digital Damascus for the Cyber Samurai</p>
           </div>
 
           {/* Center: Quick Links */}
