@@ -1,0 +1,98 @@
+import { X } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
+
+interface ReadmePopupProps {
+  title: string
+  readmeUrl: string
+  onClose: () => void
+}
+
+export default function ReadmePopup({ title, readmeUrl, onClose }: ReadmePopupProps) {
+  const [isVisible, setIsVisible] = useState(false)
+  const [content, setContent] = useState<string>('')
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    // Fade in animation
+    setTimeout(() => setIsVisible(true), 100)
+    
+    // Fetch README content
+    fetch(readmeUrl)
+      .then(res => res.text())
+      .then(text => {
+        setContent(text)
+        setLoading(false)
+      })
+      .catch(() => {
+        setContent('# Error\n\nFailed to load README content.')
+        setLoading(false)
+      })
+  }, [readmeUrl])
+
+  const handleClose = () => {
+    setIsVisible(false)
+    setTimeout(onClose, 300)
+  }
+
+  return (
+    <div 
+      className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-300 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      }`}
+      style={{ backgroundColor: 'rgba(10, 10, 10, 0.9)' }}
+      onClick={handleClose}
+    >
+      <div 
+        className={`relative max-w-4xl w-full max-h-[90vh] bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl shadow-2xl shadow-samurai-red/50 transform transition-all duration-300 overflow-hidden ${
+          isVisible ? 'scale-100' : 'scale-95'
+        }`}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-red p-6 flex items-center justify-between z-10">
+          <h2 className="text-3xl font-black text-samurai-red uppercase neon-text">{title} README</h2>
+          <button
+            onClick={handleClose}
+            className="p-2 text-white hover:text-samurai-red transition-colors rounded-lg hover:bg-samurai-red/10"
+            aria-label="Close"
+          >
+            <X size={24} />
+          </button>
+        </div>
+
+        {/* Content */}
+        <div className="p-8 overflow-y-auto max-h-[calc(90vh-100px)]">
+          {loading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="w-12 h-12 border-4 border-samurai-red border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <div className="prose prose-invert prose-red max-w-none">
+              <ReactMarkdown
+                components={{
+                  h1: ({node, ...props}) => <h1 className="text-4xl font-black text-samurai-red mb-4 uppercase" {...props} />,
+                  h2: ({node, ...props}) => <h2 className="text-3xl font-bold text-white mt-8 mb-4" {...props} />,
+                  h3: ({node, ...props}) => <h3 className="text-2xl font-bold text-white mt-6 mb-3" {...props} />,
+                  p: ({node, ...props}) => <p className="text-white/80 mb-4 leading-relaxed" {...props} />,
+                  ul: ({node, ...props}) => <ul className="list-disc list-inside text-white/80 mb-4 space-y-2" {...props} />,
+                  ol: ({node, ...props}) => <ol className="list-decimal list-inside text-white/80 mb-4 space-y-2" {...props} />,
+                  li: ({node, ...props}) => <li className="text-white/80" {...props} />,
+                  code: ({node, inline, ...props}: any) => 
+                    inline ? 
+                      <code className="bg-samurai-black px-2 py-1 rounded text-samurai-red font-mono text-sm" {...props} /> :
+                      <code className="block bg-samurai-black p-4 rounded-lg text-white/90 font-mono text-sm overflow-x-auto mb-4" {...props} />,
+                  pre: ({node, ...props}) => <pre className="bg-samurai-black p-4 rounded-lg overflow-x-auto mb-4" {...props} />,
+                  a: ({node, ...props}) => <a className="text-samurai-red hover:text-samurai-red-dark underline" {...props} />,
+                  blockquote: ({node, ...props}) => <blockquote className="border-l-4 border-samurai-red pl-4 italic text-white/70 my-4" {...props} />,
+                }}
+              >
+                {content}
+              </ReactMarkdown>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}

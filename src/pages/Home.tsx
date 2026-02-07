@@ -2,8 +2,12 @@ import { Link } from 'react-router-dom'
 import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Shield, Gamepad2 } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
 import KatanaIcon from '../components/KatanaIcon'
+import ReadmePopup from '../components/ReadmePopup'
+import { useState } from 'react'
 
 export default function Home() {
+  const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
+
   return (
     <div className="min-h-screen bg-samurai-black relative">
       {/* Floating embers - spans entire page */}
@@ -124,13 +128,13 @@ export default function Home() {
                 </div>
                 
                 <div className="flex gap-4">
-                  <Link
-                    to="/stonks"
+                  <button
+                    onClick={() => setReadmePopup({ title: 'STONKS', url: 'https://raw.githubusercontent.com/54MUR-AI/stonks/main/README.md' })}
                     className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
                   >
                     <span>Details</span>
                     <ArrowRight className="ml-2 group-hover/btn:translate-x-1 transition-transform" size={20} />
-                  </Link>
+                  </button>
                   <a
                     href="https://stonks-app.onrender.com"
                     target="_blank"
@@ -187,13 +191,13 @@ export default function Home() {
                 </div>
                 
                 <div className="flex gap-4">
-                  <Link
-                    to="/scraper"
+                  <button
+                    onClick={() => setReadmePopup({ title: 'SCRPR', url: 'https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md' })}
                     className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
                   >
                     <span>Details</span>
                     <ArrowRight className="ml-2 group-hover/btn:translate-x-1 transition-transform" size={20} />
-                  </Link>
+                  </button>
                   <a
                     href="https://scraper-frontend-3hnj.onrender.com"
                     target="_blank"
@@ -468,6 +472,15 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* README Popup */}
+      {readmePopup && (
+        <ReadmePopup
+          title={readmePopup.title}
+          readmeUrl={readmePopup.url}
+          onClose={() => setReadmePopup(null)}
+        />
+      )}
     </div>
   )
 }
