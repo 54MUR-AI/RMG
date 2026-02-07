@@ -44,37 +44,45 @@ export default function FloatingEmbers() {
     styleSheet.textContent = newEmbers.map(ember => `
       @keyframes floatEmber${ember.id} {
         0% {
-          transform: translateY(0vh) translateX(0) rotate(0deg) scale(0.8);
+          transform: translateY(100vh) translateX(0) rotate(0deg) scale(0.8);
+          opacity: 0;
+        }
+        5% {
+          opacity: 1;
         }
         10% {
-          transform: translateY(-10vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.1}deg) scale(0.85);
+          transform: translateY(90vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.1}deg) scale(0.85);
         }
         20% {
-          transform: translateY(-20vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.2}deg) scale(0.9);
+          transform: translateY(80vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.2}deg) scale(0.9);
         }
         30% {
-          transform: translateY(-30vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.3}deg) scale(0.95);
+          transform: translateY(70vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.3}deg) scale(0.95);
         }
         40% {
-          transform: translateY(-40vh) translateX(${ember.horizontalMeander * 1.0}px) rotate(${ember.rotation * 0.4}deg) scale(1.0);
+          transform: translateY(60vh) translateX(${ember.horizontalMeander * 1.0}px) rotate(${ember.rotation * 0.4}deg) scale(1.0);
         }
         50% {
-          transform: translateY(-50vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.5}deg) scale(0.95);
+          transform: translateY(50vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.5}deg) scale(0.95);
         }
         60% {
-          transform: translateY(-60vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.6}deg) scale(0.9);
+          transform: translateY(40vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.6}deg) scale(0.9);
         }
         70% {
-          transform: translateY(-70vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.7}deg) scale(0.8);
+          transform: translateY(30vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.7}deg) scale(0.8);
         }
         80% {
-          transform: translateY(-80vh) translateX(${ember.horizontalMeander * -0.2}px) rotate(${ember.rotation * 0.8}deg) scale(0.7);
+          transform: translateY(20vh) translateX(${ember.horizontalMeander * -0.2}px) rotate(${ember.rotation * 0.8}deg) scale(0.7);
         }
         90% {
-          transform: translateY(-90vh) translateX(${ember.horizontalMeander * -0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.5);
+          transform: translateY(10vh) translateX(${ember.horizontalMeander * -0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.5);
+        }
+        95% {
+          opacity: 1;
         }
         100% {
-          transform: translateY(-120vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.2);
+          transform: translateY(-10vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.2);
+          opacity: 0;
         }
       }
       
