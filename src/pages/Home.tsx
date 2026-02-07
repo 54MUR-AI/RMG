@@ -1,11 +1,15 @@
 import { Link } from 'react-router-dom'
 import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Sword, Shield } from 'lucide-react'
+import FloatingEmbers from '../components/FloatingEmbers'
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-samurai-black">
       {/* Epic Hero Section with Parallax */}
       <section className="gradient-bg text-white py-32 relative overflow-hidden">
+        {/* Floating embers */}
+        <FloatingEmbers />
+        
         {/* Animated background elements */}
         <div className="absolute inset-0 pattern-bg opacity-10"></div>
         <div className="absolute top-20 left-10 w-64 h-64 bg-samurai-red rounded-full filter blur-3xl opacity-20 animate-pulse"></div>
@@ -49,7 +53,7 @@ export default function Home() {
               </a>
               <a
                 href="#arsenal"
-                className="group inline-flex items-center justify-center px-10 py-4 border-2 border-samurai-red text-samurai-red rounded-xl font-bold text-lg hover:bg-samurai-red hover:text-white transition-all transform hover:scale-105"
+                className="group inline-flex items-center justify-center px-10 py-4 border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)]"
               >
                 View Arsenal
                 <Sword className="ml-3 group-hover:rotate-12 transition-transform" size={24} />
@@ -68,6 +72,9 @@ export default function Home() {
 
       {/* Arsenal Section - Our Weapons */}
       <section id="arsenal" className="py-24 bg-samurai-black relative overflow-hidden">
+        {/* Floating embers */}
+        <FloatingEmbers />
+        
         {/* Background effects */}
         <div className="absolute inset-0 pattern-bg opacity-5"></div>
         
