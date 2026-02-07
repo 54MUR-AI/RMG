@@ -5,12 +5,12 @@ export default function StonksPage() {
   const [showPopup, setShowPopup] = useState(true)
 
   const features = [
-    'Advanced ML models: LSTM, Transformer, WaveNet, GNN',
-    'Real-time news intelligence with AI summarization',
-    'Portfolio optimization with risk parity & Black-Litterman',
-    'Automated rebalancing and trading execution',
-    'Production-ready infrastructure with Docker & Kubernetes',
-    'Real-time WebSocket streaming for market data',
+    'Advanced ML models: LSTM, Transformer, WaveNet, Graph Neural Networks',
+    'Real-time market data processing with technical indicators',
+    'Portfolio optimization with modern portfolio theory algorithms',
+    'Automated rebalancing and risk management',
+    'Production infrastructure with Docker containerization',
+    'Comprehensive testing and security scanning',
   ]
 
   return (

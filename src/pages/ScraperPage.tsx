@@ -5,12 +5,12 @@ export default function ScraperPage() {
   const [showPopup, setShowPopup] = useState(true)
 
   const features = [
-    'Scrape articles from Medium, Substack, blogs, and news sites',
-    'Extract YouTube video transcripts automatically',
-    'Parse PDF documents and research papers',
-    'AI-powered summarization with multiple providers',
-    'Support for OpenAI, Anthropic, HuggingFace, and Ollama',
-    'Beautiful web interface with real-time processing',
+    'Multi-source scraping: Articles, YouTube videos, PDFs, and web pages',
+    'AI-powered summarization with GPT-4, Claude, or HuggingFace',
+    'Automatic key points extraction from content',
+    'Batch processing for multiple URLs at once',
+    'Beautiful web interface with real-time results',
+    'Enhanced anti-bot detection bypass for major news sites',
   ]
 
   return (
