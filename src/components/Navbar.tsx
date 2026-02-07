@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Github, Flame } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
+  
+  const isActive = (path: string) => location.pathname === path
 
   return (
     <nav className="bg-samurai-black border-b-2 border-samurai-red sticky top-0 z-50 shadow-2xl">
@@ -20,17 +23,35 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-samurai-steel-light hover:text-samurai-red font-bold transition-colors relative group">
+            <Link to="/" className={`font-bold transition-all relative group ${
+              isActive('/') 
+                ? 'text-samurai-red neon-text' 
+                : 'text-samurai-steel-light hover:text-samurai-red'
+            }`}>
               Home
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-samurai-red group-hover:w-full transition-all"></span>
+              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                isActive('/') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+              }`}></span>
             </Link>
-            <Link to="/stonks" className="text-samurai-steel-light hover:text-samurai-red font-bold transition-colors relative group">
+            <Link to="/stonks" className={`font-bold transition-all relative group ${
+              isActive('/stonks') 
+                ? 'text-samurai-red neon-text' 
+                : 'text-samurai-steel-light hover:text-samurai-red'
+            }`}>
               STONKS
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-samurai-red group-hover:w-full transition-all"></span>
+              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                isActive('/stonks') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+              }`}></span>
             </Link>
-            <Link to="/scraper" className="text-samurai-steel-light hover:text-samurai-red font-bold transition-colors relative group">
+            <Link to="/scraper" className={`font-bold transition-all relative group ${
+              isActive('/scraper') 
+                ? 'text-samurai-red neon-text' 
+                : 'text-samurai-steel-light hover:text-samurai-red'
+            }`}>
               SCRAPER
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-samurai-red group-hover:w-full transition-all"></span>
+              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                isActive('/scraper') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+              }`}></span>
             </Link>
             <a 
               href="https://github.com/54MUR-AI" 
@@ -62,21 +83,33 @@ export default function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
               to="/"
-              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
+              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                isActive('/') 
+                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+              }`}
               onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/stonks"
-              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
+              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                isActive('/stonks') 
+                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+              }`}
               onClick={() => setIsOpen(false)}
             >
               STONKS
             </Link>
             <Link
               to="/scraper"
-              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
+              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                isActive('/scraper') 
+                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+              }`}
               onClick={() => setIsOpen(false)}
             >
               SCRAPER
