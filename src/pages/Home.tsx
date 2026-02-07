@@ -31,11 +31,11 @@ export default function Home() {
             
             <div className="h-1 w-32 bg-gradient-to-r from-transparent via-samurai-red to-transparent mx-auto mb-8"></div>
             
-            <p className="text-2xl md:text-3xl mb-6 font-bold text-samurai-steel-light">
+            <p className="text-2xl md:text-3xl mb-6 font-bold text-white">
               Forging AI-Powered Weapons for the Digital Age
             </p>
             
-            <p className="text-lg mb-12 max-w-3xl mx-auto text-gray-300 leading-relaxed">
+            <p className="text-lg mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed">
               Like masterless samurai, we walk our own path—crafting cutting-edge software 
               that wields the power of artificial intelligence, machine learning, and advanced 
               automation to conquer real-world challenges.
@@ -87,7 +87,7 @@ export default function Home() {
               THE ARSENAL
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-transparent via-samurai-red to-transparent mx-auto mb-6"></div>
-            <p className="text-xl text-samurai-steel-light max-w-2xl mx-auto">
+            <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Battle-tested tools forged in the fires of innovation
             </p>
           </div>
@@ -111,7 +111,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <p className="text-gray-300 mb-8 text-lg leading-relaxed">
+                <p className="text-white/90 mb-8 text-lg leading-relaxed">
                   Slice through market chaos with precision. Advanced ML platform wielding 
                   real-time analysis, predictive strategies, and news intelligence.
                 </p>
@@ -119,19 +119,19 @@ export default function Home() {
                 <div className="space-y-3 mb-8">
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">LSTM, Transformer & GNN Neural Networks</span>
+                    <span className="text-white/70">LSTM, Transformer & GNN Neural Networks</span>
                   </div>
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">News Intelligence & Sentiment Analysis</span>
+                    <span className="text-white/70">News Intelligence & Sentiment Analysis</span>
                   </div>
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">Portfolio Optimization & Risk Analytics</span>
+                    <span className="text-white/70">Portfolio Optimization & Risk Analytics</span>
                   </div>
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">Production-Grade Infrastructure</span>
+                    <span className="text-white/70">Production-Grade Infrastructure</span>
                   </div>
                 </div>
                 
@@ -174,7 +174,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <p className="text-gray-300 mb-8 text-lg leading-relaxed">
+                <p className="text-white/90 mb-8 text-lg leading-relaxed">
                   Extract knowledge from any battlefield. AI-powered scraping that conquers 
                   articles, videos, PDFs, and transforms them into actionable intelligence.
                 </p>
@@ -182,19 +182,19 @@ export default function Home() {
                 <div className="space-y-3 mb-8">
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">Multi-Source Scraping (Articles, Videos, PDFs)</span>
+                    <span className="text-white/70">Multi-Source Scraping (Articles, Videos, PDFs)</span>
                   </div>
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">AI Summarization (GPT-4, Claude, Ollama)</span>
+                    <span className="text-white/70">AI Summarization (GPT-4, Claude, Ollama)</span>
                   </div>
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">Key Points Extraction & Analysis</span>
+                    <span className="text-white/70">Key Points Extraction & Analysis</span>
                   </div>
                   <div className="flex items-start">
                     <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-gray-400">High-Speed Batch Processing</span>
+                    <span className="text-white/70">High-Speed Batch Processing</span>
                   </div>
                 </div>
                 
@@ -235,7 +235,7 @@ export default function Home() {
               THE FORGE
             </h2>
             <div className="h-1 w-24 bg-gradient-to-r from-transparent via-samurai-red to-transparent mx-auto mb-6"></div>
-            <p className="text-xl text-samurai-steel-light max-w-2xl mx-auto">
+            <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Crafted with battle-tested, production-grade technologies
             </p>
           </div>
@@ -248,7 +248,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">Backend</h3>
               </div>
-              <ul className="space-y-3 text-gray-400">
+              <ul className="space-y-3 text-white/70">
                 <li className="flex items-center">
                   <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
                   Python 3.13 & FastAPI
@@ -275,7 +275,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">Frontend</h3>
               </div>
-              <ul className="space-y-3 text-gray-400">
+              <ul className="space-y-3 text-white/70">
                 <li className="flex items-center">
                   <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
                   React & TypeScript
@@ -302,7 +302,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">AI & ML</h3>
               </div>
-              <ul className="space-y-3 text-gray-400">
+              <ul className="space-y-3 text-white/70">
                 <li className="flex items-center">
                   <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
                   OpenAI GPT-4
