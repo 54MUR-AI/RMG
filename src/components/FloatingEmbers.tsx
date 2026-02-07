@@ -49,26 +49,32 @@ export default function FloatingEmbers() {
         5% {
           opacity: 1;
         }
-        12.5% {
-          transform: translateY(-12.5vh) translateX(${ember.horizontalMeander * 0.15}px) rotate(${ember.rotation * 0.15}deg) scale(1.05);
+        10% {
+          transform: translateY(-10vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.1}deg) scale(1.05);
         }
-        25% {
-          transform: translateY(-25vh) translateX(${ember.horizontalMeander * 0.4}px) rotate(${ember.rotation * 0.3}deg) scale(1.1);
+        20% {
+          transform: translateY(-20vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.2}deg) scale(1.1);
         }
-        37.5% {
-          transform: translateY(-37.5vh) translateX(${ember.horizontalMeander * 0.7}px) rotate(${ember.rotation * 0.45}deg) scale(1.0);
+        30% {
+          transform: translateY(-30vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.3}deg) scale(1.05);
+        }
+        40% {
+          transform: translateY(-40vh) translateX(${ember.horizontalMeander * 1.0}px) rotate(${ember.rotation * 0.4}deg) scale(1.0);
         }
         50% {
-          transform: translateY(-50vh) translateX(${ember.horizontalMeander * 0.85}px) rotate(${ember.rotation * 0.6}deg) scale(0.9);
+          transform: translateY(-50vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.5}deg) scale(0.95);
         }
-        62.5% {
-          transform: translateY(-62.5vh) translateX(${ember.horizontalMeander * 0.7}px) rotate(${ember.rotation * 0.75}deg) scale(0.8);
+        60% {
+          transform: translateY(-60vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.6}deg) scale(0.9);
         }
-        75% {
-          transform: translateY(-75vh) translateX(${ember.horizontalMeander * 0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.7);
+        70% {
+          transform: translateY(-70vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.7}deg) scale(0.8);
         }
-        87.5% {
-          transform: translateY(-87.5vh) translateX(${ember.horizontalMeander * 0.15}px) rotate(${ember.rotation * 0.95}deg) scale(0.5);
+        80% {
+          transform: translateY(-80vh) translateX(${ember.horizontalMeander * -0.2}px) rotate(${ember.rotation * 0.8}deg) scale(0.7);
+        }
+        90% {
+          transform: translateY(-90vh) translateX(${ember.horizontalMeander * -0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.5);
         }
         95% {
           opacity: 0.8;
