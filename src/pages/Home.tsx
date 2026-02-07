@@ -283,7 +283,7 @@ export default function Home() {
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       WSPR
                     </h3>
-                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Whisper Secure Private Relay</p>
+                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Web-Secure P2P Relay</p>
                   </div>
                 </div>
                 
