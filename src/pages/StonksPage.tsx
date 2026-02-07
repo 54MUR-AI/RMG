@@ -19,7 +19,7 @@ export default function StonksPage() {
       {showPopup && (
         <AppInfoPopup
           title="STONKS"
-          description="Advanced Financial Machine Learning Platform with News Intelligence"
+          description="Smart Trading Options for Novices & Knowledgeable Speculators"
           features={features}
           githubUrl="https://github.com/54MUR-AI/stonks"
           onClose={() => setShowPopup(false)}

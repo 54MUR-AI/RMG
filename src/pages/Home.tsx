@@ -95,7 +95,7 @@ export default function Home() {
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       STONKS
                     </h3>
-                    <p className="text-samurai-steel text-sm font-semibold">Financial Katana</p>
+                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Smart Trading Options for Novices & Knowledgeable Speculators</p>
                   </div>
                 </div>
                 
@@ -156,14 +156,14 @@ export default function Home() {
                   </div>
                   <div>
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      WEB SCRAPER
+                      SCRPR
                     </h3>
-                    <p className="text-samurai-steel text-sm font-semibold">Intelligence Wakizashi</p>
+                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Smart Content Retrieval & Processing Relay</p>
                   </div>
                 </div>
                 
-                <p className="text-white/90 mb-8 text-lg leading-relaxed">
-                  Extract knowledge from any battlefield. AI-powered scraping that conquers 
+                <p className="text-white/70 mb-6 leading-relaxed">
+                  AI-powered content extraction and summarization-powered scraping that conquers 
                   articles, videos, PDFs, and transforms them into actionable intelligence.
                 </p>
                 
