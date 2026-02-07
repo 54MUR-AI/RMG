@@ -124,6 +124,15 @@ export default function Home() {
                   </button>
                 </div>
                 
+                {/* Thumbnail */}
+                <div className="mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark">
+                  <img 
+                    src="/thumbnails/stonks-thumb.svg" 
+                    alt="STONKS UI Preview" 
+                    className="w-full h-32 object-cover"
+                  />
+                </div>
+                
                 <p className="text-white/80 mb-4 text-sm leading-relaxed">
                   Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.
                 </p>
@@ -172,6 +181,15 @@ export default function Home() {
                   </button>
                 </div>
                 
+                {/* Thumbnail */}
+                <div className="mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark">
+                  <img 
+                    src="/thumbnails/scrp-thumb.svg" 
+                    alt="SCRP UI Preview" 
+                    className="w-full h-32 object-cover"
+                  />
+                </div>
+                
                 <p className="text-white/80 mb-4 text-sm leading-relaxed">
                   AI-powered content extraction and summarization that transforms articles, videos, and PDFs into actionable intelligence.
                 </p>
@@ -218,6 +236,15 @@ export default function Home() {
                   >
                     <Info className="text-samurai-red" size={20} />
                   </button>
+                </div>
+                
+                {/* Thumbnail */}
+                <div className="mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark">
+                  <img 
+                    src="/thumbnails/ldgr-thumb.svg" 
+                    alt="LDGR UI Preview" 
+                    className="w-full h-32 object-cover"
+                  />
                 </div>
                 
                 <p className="text-white/80 mb-4 text-sm leading-relaxed">
