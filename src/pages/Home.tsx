@@ -543,6 +543,7 @@ export default function Home() {
           title={infoPopup.title}
           features={infoPopup.features}
           icon={infoPopup.icon}
+          thumbnail={infoPopup.thumbnail}
           onClose={() => setInfoPopup(null)}
         />
       )}

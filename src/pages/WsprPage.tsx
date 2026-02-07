@@ -14,7 +14,7 @@ export default function WsprPage() {
       {showReadme && (
         <ReadmePopup
           title="WSPR"
-          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/wspr-web-new/main/README.md"
+          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/wspr-web/main/README.md"
           onClose={() => setShowReadme(false)}
         />
       )}
