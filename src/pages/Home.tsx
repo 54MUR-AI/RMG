@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
-import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Sword, Shield, MessageCircle } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Sword, Shield } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
+import DiscordIcon from '../components/DiscordIcon'
 
 export default function Home() {
   return (
@@ -49,7 +50,7 @@ export default function Home() {
                 rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 bg-samurai-red text-white rounded-xl font-bold text-base sm:text-lg hover:bg-samurai-red-dark transition-all transform hover:scale-105 flame-glow touch-manipulation"
               >
-                <MessageCircle className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
+                <DiscordIcon size={24} className="mr-3 group-hover:rotate-12 transition-transform" />
                 Enter the Dojo
               </a>
               <a
