@@ -9,7 +9,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
-  const [infoPopup, setInfoPopup] = useState<{ title: string; features: string[]; icon: React.ReactNode; thumbnail: string } | null>(null)
+  const [infoPopup, setInfoPopup] = useState<{ title: string; subtitle: string; description: string; features: string[]; icon: React.ReactNode; thumbnail: string } | null>(null)
 
   return (
     <div className="min-h-screen bg-samurai-black relative">
@@ -108,6 +108,8 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'OMNI', 
+                      subtitle: 'Optimized Multi-Model Networked Intelligence',
+                      description: 'OMNI is a comprehensive AI dashboard that provides seamless multi-model interaction, advanced plugin management, and real-time performance monitoring. Built with PyQt6, it offers a powerful desktop environment for managing multiple AI models simultaneously, featuring dynamic model switching, streaming responses, and a robust plugin ecosystem. Perfect for developers and AI enthusiasts who need a unified interface to interact with various AI providers including Ollama, Claude, GPT-4, and Grok.',
                       icon: <Brain className="text-samurai-red" size={32} />,
                       thumbnail: '/thumbnails/omni-thumb.svg',
                       features: [
@@ -168,6 +170,8 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'SCRP', 
+                      subtitle: 'Smart Content Retrieval & Processing',
+                      description: 'SCRP is an AI-powered content extraction and summarization platform that transforms articles, videos, and PDFs into actionable intelligence. Leveraging advanced natural language processing with GPT-4, Claude, and Ollama, it automatically extracts key insights, generates comprehensive summaries, and processes multiple sources simultaneously. Ideal for researchers, content creators, and professionals who need to quickly digest large volumes of information from diverse sources.',
                       icon: <FileText className="text-samurai-red" size={32} />,
                       thumbnail: '/thumbnails/scrp-thumb.svg',
                       features: [
@@ -226,6 +230,8 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'LDGR', 
+                      subtitle: 'Layered Data Gateway & Repository',
+                      description: 'LDGR is a blockchain-powered database management system that combines military-grade encryption with immutable data storage. Built on Ethereum with Hardhat development environment, it provides multi-layered security architecture featuring AES-256 and RSA encryption, smart contract-based data transactions, and decentralized verification. Perfect for applications requiring tamper-proof data integrity, audit trails, and secure multi-party data access with cryptographic guarantees.',
                       icon: <Lock className="text-samurai-red" size={32} />,
                       thumbnail: '/thumbnails/ldgr-thumb.svg',
                       features: [
@@ -284,6 +290,8 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'WSPR', 
+                      subtitle: 'Web-Secure P2P Relay',
+                      description: 'WSPR is a privacy-focused encrypted communication platform featuring end-to-end encryption and perfect forward secrecy. Built with React, TypeScript, and PostgreSQL, it provides real-time secure messaging with client-side AES-GCM encryption, ECDH key exchange, and comprehensive two-factor authentication. Messages are encrypted before leaving your device and can only be decrypted by intended recipients. Ideal for teams and individuals who prioritize privacy and security in their communications.',
                       icon: <Zap className="text-samurai-red" size={32} />,
                       thumbnail: '/thumbnails/wspr-thumb.svg',
                       features: [
@@ -342,6 +350,8 @@ export default function Home() {
                   <button
                     onClick={() => setInfoPopup({ 
                       title: 'STONKS', 
+                      subtitle: 'Smart Trading Options for Novices & Knowledgeable Speculators',
+                      description: 'STONKS is an advanced machine learning platform for financial market analysis and trading strategy development. Powered by cutting-edge neural networks including LSTM, Transformers, WaveNet, and Graph Neural Networks, it processes real-time market data, news sentiment, and technical indicators to generate predictive insights. Features automated portfolio optimization using modern portfolio theory, risk management algorithms, and production-ready Docker infrastructure. Designed for both novice traders seeking guidance and experienced speculators requiring sophisticated analytical tools.',
                       icon: <TrendingUp className="text-samurai-red" size={32} />,
                       thumbnail: '/thumbnails/stonks-thumb.svg',
                       features: [
@@ -498,6 +508,8 @@ export default function Home() {
       {infoPopup && (
         <InfoPopup
           title={infoPopup.title}
+          subtitle={infoPopup.subtitle}
+          description={infoPopup.description}
           features={infoPopup.features}
           icon={infoPopup.icon}
           thumbnail={infoPopup.thumbnail}

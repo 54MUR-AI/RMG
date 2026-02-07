@@ -4,13 +4,15 @@ import { useEffect } from 'react'
 
 interface InfoPopupProps {
   title: string
+  subtitle: string
+  description: string
   features: string[]
   icon: ReactNode
   thumbnail: string
   onClose: () => void
 }
 
-export default function InfoPopup({ title, features, icon, thumbnail, onClose }: InfoPopupProps) {
+export default function InfoPopup({ title, subtitle, description, features, icon, thumbnail, onClose }: InfoPopupProps) {
   useEffect(() => {
     // Save current scroll position
     const scrollY = window.scrollY
@@ -74,6 +76,9 @@ export default function InfoPopup({ title, features, icon, thumbnail, onClose }:
         </div>
         
         <div className="flex-1 p-4 sm:p-6 overflow-y-auto">
+          {/* Subtitle */}
+          <p className="text-sm sm:text-base text-samurai-red font-bold tracking-wider mb-4">{subtitle}</p>
+          
           {/* Thumbnail Preview */}
           <div className="mb-6 rounded-xl overflow-hidden border-2 border-samurai-steel-dark">
             <img 
@@ -82,6 +87,9 @@ export default function InfoPopup({ title, features, icon, thumbnail, onClose }:
               className="w-full h-48 sm:h-64 object-cover"
             />
           </div>
+          
+          {/* Description */}
+          <p className="text-sm sm:text-base text-white/90 mb-6 leading-relaxed">{description}</p>
           
           <h3 className="text-lg sm:text-xl font-bold text-samurai-red mb-4">Key Features</h3>
           <div className="space-y-3">
