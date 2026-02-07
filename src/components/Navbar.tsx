@@ -48,7 +48,7 @@ export default function Navbar() {
                 ? 'text-samurai-red neon-text' 
                 : 'text-samurai-steel-light hover:text-samurai-red'
             }`}>
-              SCRPR
+              SCRP
               <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
                 isActive('/scraper') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
@@ -112,7 +112,7 @@ export default function Navbar() {
               }`}
               onClick={() => setIsOpen(false)}
             >
-              SCRPR
+              SCRP
             </Link>
             <a
               href="https://github.com/54MUR-AI"

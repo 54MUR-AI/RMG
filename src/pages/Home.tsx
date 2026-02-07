@@ -160,9 +160,9 @@ export default function Home() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      SCRPR
+                      SCRP
                     </h3>
-                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Smart Content Retrieval & Processing Relay</p>
+                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Smart Content Retrieval & Processing</p>
                   </div>
                 </div>
                 
@@ -192,7 +192,7 @@ export default function Home() {
                 
                 <div className="flex gap-4">
                   <button
-                    onClick={() => setReadmePopup({ title: 'SCRPR', url: 'https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md' })}
+                    onClick={() => setReadmePopup({ title: 'SCRP', url: 'https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md' })}
                     className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
                   >
                     <span>Details</span>
