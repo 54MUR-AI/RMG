@@ -508,15 +508,13 @@ export default function Home() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="https://github.com/54MUR-AI"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/discord"
               className="group inline-flex items-center justify-center px-12 py-5 bg-white text-samurai-red rounded-xl font-black text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-2xl"
             >
-              <Github className="mr-3 group-hover:rotate-12 transition-transform" size={28} />
+              <DiscordIcon size={28} className="mr-3 group-hover:rotate-12 transition-transform text-samurai-red" />
               ENTER THE DOJO
-            </a>
+            </Link>
             <a
               href="#arsenal"
               className="group inline-flex items-center justify-center px-12 py-5 border-2 border-white text-white rounded-xl font-black text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105"

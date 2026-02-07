@@ -87,15 +87,13 @@ export default function Navbar() {
             <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
             
             {/* Discord Link */}
-            <a
-              href="https://discord.gg/your-invite-code"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/discord"
               className="group transition-all hover:scale-110"
               aria-label="Join our Discord"
             >
               <DiscordIcon size={28} className="text-samurai-steel-light group-hover:text-samurai-red transition-colors" />
-            </a>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -183,16 +181,14 @@ export default function Navbar() {
             </Link>
             
             {/* Discord Link */}
-            <a
-              href="https://discord.gg/your-invite-code"
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/discord"
               className="flex items-center justify-center px-4 py-4 rounded-lg transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white"
               onClick={() => setIsOpen(false)}
             >
               <DiscordIcon size={24} className="mr-2" />
               <span className="font-bold">DISCORD</span>
-            </a>
+            </Link>
           </div>
         </div>
       )}

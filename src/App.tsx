@@ -7,6 +7,7 @@ import ScraperPage from './pages/ScraperPage'
 import LdgrPage from './pages/LdgrPage'
 import WsprPage from './pages/WsprPage'
 import OmniPage from './pages/OmniPage'
+import DiscordPage from './pages/DiscordPage'
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/ldgr" element={<LdgrPage />} />
             <Route path="/wspr" element={<WsprPage />} />
             <Route path="/omni" element={<OmniPage />} />
+            <Route path="/discord" element={<DiscordPage />} />
           </Routes>
         </main>
         <Footer />
