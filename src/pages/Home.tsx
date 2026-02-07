@@ -106,21 +106,26 @@ export default function Home() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setInfoPopup({ 
-                      title: 'OMNI', 
-                      subtitle: 'Optimized Multi-Model Networked Intelligence',
-                      description: 'OMNI is a comprehensive AI dashboard that provides seamless multi-model interaction, advanced plugin management, and real-time performance monitoring. Built with PyQt6, it offers a powerful desktop environment for managing multiple AI models simultaneously, featuring dynamic model switching, streaming responses, and a robust plugin ecosystem. Perfect for developers and AI enthusiasts who need a unified interface to interact with various AI providers including Ollama, Claude, GPT-4, and Grok.',
-                      icon: <Brain className="text-samurai-red" size={32} />,
-                      thumbnail: '/thumbnails/omni-thumb.svg',
-                      features: [
-                        'Multiple AI Models (Ollama, Claude, GPT, Grok)',
-                        'PyQt6 Desktop Application',
-                        'Plugin System with Marketplace',
-                        'Text-to-Speech & Audio Capabilities',
-                        'Vector Database Integration',
-                        'Code Editor with Syntax Highlighting'
-                      ]
-                    })}
+                    onClick={() => {
+                      document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      setTimeout(() => {
+                        setInfoPopup({ 
+                          title: 'OMNI', 
+                          subtitle: 'Optimized Multi-Model Networked Intelligence',
+                          description: 'OMNI is a comprehensive AI dashboard that provides seamless multi-model interaction, advanced plugin management, and real-time performance monitoring. Built with PyQt6, it offers a powerful desktop environment for managing multiple AI models simultaneously, featuring dynamic model switching, streaming responses, and a robust plugin ecosystem. Perfect for developers and AI enthusiasts who need a unified interface to interact with various AI providers including Ollama, Claude, GPT-4, and Grok.',
+                          icon: <Brain className="text-samurai-red" size={32} />,
+                          thumbnail: '/thumbnails/omni-thumb.svg',
+                          features: [
+                            'Multiple AI Models (Ollama, Claude, GPT, Grok)',
+                            'PyQt6 Desktop Application',
+                            'Plugin System with Marketplace',
+                            'Text-to-Speech & Audio Capabilities',
+                            'Vector Database Integration',
+                            'Code Editor with Syntax Highlighting'
+                          ]
+                        })
+                      }, 500)
+                    }}
                     className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
                   >
                     <Info className="text-samurai-red" size={20} />
@@ -168,19 +173,24 @@ export default function Home() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setInfoPopup({ 
-                      title: 'SCRP', 
-                      subtitle: 'Smart Content Retrieval & Processing',
-                      description: 'SCRP is an AI-powered content extraction and summarization platform that transforms articles, videos, and PDFs into actionable intelligence. Leveraging advanced natural language processing with GPT-4, Claude, and Ollama, it automatically extracts key insights, generates comprehensive summaries, and processes multiple sources simultaneously. Ideal for researchers, content creators, and professionals who need to quickly digest large volumes of information from diverse sources.',
-                      icon: <FileText className="text-samurai-red" size={32} />,
-                      thumbnail: '/thumbnails/scrp-thumb.svg',
-                      features: [
-                        'Multi-Source Scraping (Articles, Videos, PDFs)',
-                        'AI Summarization (GPT-4, Claude, Ollama)',
-                        'Key Points Extraction & Analysis',
-                        'High-Speed Batch Processing'
-                      ]
-                    })}
+                    onClick={() => {
+                      document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      setTimeout(() => {
+                        setInfoPopup({ 
+                          title: 'SCRP', 
+                          subtitle: 'Smart Content Retrieval & Processing',
+                          description: 'SCRP is an AI-powered content extraction and summarization platform that transforms articles, videos, and PDFs into actionable intelligence. Leveraging advanced natural language processing with GPT-4, Claude, and Ollama, it automatically extracts key insights, generates comprehensive summaries, and processes multiple sources simultaneously. Ideal for researchers, content creators, and professionals who need to quickly digest large volumes of information from diverse sources.',
+                          icon: <FileText className="text-samurai-red" size={32} />,
+                          thumbnail: '/thumbnails/scrp-thumb.svg',
+                          features: [
+                            'Multi-Source Scraping (Articles, Videos, PDFs)',
+                            'AI Summarization (GPT-4, Claude, Ollama)',
+                            'Key Points Extraction & Analysis',
+                            'High-Speed Batch Processing'
+                          ]
+                        })
+                      }, 500)
+                    }}
                     className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
                   >
                     <Info className="text-samurai-red" size={20} />
@@ -228,19 +238,24 @@ export default function Home() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setInfoPopup({ 
-                      title: 'LDGR', 
-                      subtitle: 'Layered Data Gateway & Repository',
-                      description: 'LDGR is a blockchain-powered database management system that combines military-grade encryption with immutable data storage. Built on Ethereum with Hardhat development environment, it provides multi-layered security architecture featuring AES-256 and RSA encryption, smart contract-based data transactions, and decentralized verification. Perfect for applications requiring tamper-proof data integrity, audit trails, and secure multi-party data access with cryptographic guarantees.',
-                      icon: <Lock className="text-samurai-red" size={32} />,
-                      thumbnail: '/thumbnails/ldgr-thumb.svg',
-                      features: [
-                        'Blockchain Integration (Ethereum/Hardhat)',
-                        'AES/RSA High-Level Encryption',
-                        'Smart Contract Data Transactions',
-                        'User-Friendly Database Management'
-                      ]
-                    })}
+                    onClick={() => {
+                      document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      setTimeout(() => {
+                        setInfoPopup({ 
+                          title: 'LDGR', 
+                          subtitle: 'Layered Data Gateway & Repository',
+                          description: 'LDGR is a blockchain-powered database management system that combines military-grade encryption with immutable data storage. Built on Ethereum with Hardhat development environment, it provides multi-layered security architecture featuring AES-256 and RSA encryption, smart contract-based data transactions, and decentralized verification. Perfect for applications requiring tamper-proof data integrity, audit trails, and secure multi-party data access with cryptographic guarantees.',
+                          icon: <Lock className="text-samurai-red" size={32} />,
+                          thumbnail: '/thumbnails/ldgr-thumb.svg',
+                          features: [
+                            'Blockchain Integration (Ethereum/Hardhat)',
+                            'AES/RSA High-Level Encryption',
+                            'Smart Contract Data Transactions',
+                            'User-Friendly Database Management'
+                          ]
+                        })
+                      }, 500)
+                    }}
                     className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
                   >
                     <Info className="text-samurai-red" size={20} />
@@ -288,19 +303,24 @@ export default function Home() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setInfoPopup({ 
-                      title: 'WSPR', 
-                      subtitle: 'Web-Secure P2P Relay',
-                      description: 'WSPR is a privacy-focused encrypted communication platform featuring end-to-end encryption and perfect forward secrecy. Built with React, TypeScript, and PostgreSQL, it provides real-time secure messaging with client-side AES-GCM encryption, ECDH key exchange, and comprehensive two-factor authentication. Messages are encrypted before leaving your device and can only be decrypted by intended recipients. Ideal for teams and individuals who prioritize privacy and security in their communications.',
-                      icon: <Zap className="text-samurai-red" size={32} />,
-                      thumbnail: '/thumbnails/wspr-thumb.svg',
-                      features: [
-                        'End-to-End AES-GCM Encryption',
-                        'Real-Time Encrypted Messaging',
-                        'Two-Factor Authentication (2FA)',
-                        'React + TypeScript + PostgreSQL'
-                      ]
-                    })}
+                    onClick={() => {
+                      document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      setTimeout(() => {
+                        setInfoPopup({ 
+                          title: 'WSPR', 
+                          subtitle: 'Web-Secure P2P Relay',
+                          description: 'WSPR is a privacy-focused encrypted communication platform featuring end-to-end encryption and perfect forward secrecy. Built with React, TypeScript, and PostgreSQL, it provides real-time secure messaging with client-side AES-GCM encryption, ECDH key exchange, and comprehensive two-factor authentication. Messages are encrypted before leaving your device and can only be decrypted by intended recipients. Ideal for teams and individuals who prioritize privacy and security in their communications.',
+                          icon: <Zap className="text-samurai-red" size={32} />,
+                          thumbnail: '/thumbnails/wspr-thumb.svg',
+                          features: [
+                            'End-to-End AES-GCM Encryption',
+                            'Real-Time Encrypted Messaging',
+                            'Two-Factor Authentication (2FA)',
+                            'React + TypeScript + PostgreSQL'
+                          ]
+                        })
+                      }, 500)
+                    }}
                     className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
                   >
                     <Info className="text-samurai-red" size={20} />
@@ -348,19 +368,24 @@ export default function Home() {
                     </div>
                   </div>
                   <button
-                    onClick={() => setInfoPopup({ 
-                      title: 'STONKS', 
-                      subtitle: 'Smart Trading Options for Novices & Knowledgeable Speculators',
-                      description: 'STONKS is an advanced machine learning platform for financial market analysis and trading strategy development. Powered by cutting-edge neural networks including LSTM, Transformers, WaveNet, and Graph Neural Networks, it processes real-time market data, news sentiment, and technical indicators to generate predictive insights. Features automated portfolio optimization using modern portfolio theory, risk management algorithms, and production-ready Docker infrastructure. Designed for both novice traders seeking guidance and experienced speculators requiring sophisticated analytical tools.',
-                      icon: <TrendingUp className="text-samurai-red" size={32} />,
-                      thumbnail: '/thumbnails/stonks-thumb.svg',
-                      features: [
-                        'LSTM, Transformer & GNN Neural Networks',
-                        'News Intelligence & Sentiment Analysis',
-                        'Portfolio Optimization & Risk Analytics',
-                        'Production-Grade Infrastructure'
-                      ]
-                    })}
+                    onClick={() => {
+                      document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      setTimeout(() => {
+                        setInfoPopup({ 
+                          title: 'STONKS', 
+                          subtitle: 'Smart Trading Options for Novices & Knowledgeable Speculators',
+                          description: 'STONKS is an advanced machine learning platform for financial market analysis and trading strategy development. Powered by cutting-edge neural networks including LSTM, Transformers, WaveNet, and Graph Neural Networks, it processes real-time market data, news sentiment, and technical indicators to generate predictive insights. Features automated portfolio optimization using modern portfolio theory, risk management algorithms, and production-ready Docker infrastructure. Designed for both novice traders seeking guidance and experienced speculators requiring sophisticated analytical tools.',
+                          icon: <TrendingUp className="text-samurai-red" size={32} />,
+                          thumbnail: '/thumbnails/stonks-thumb.svg',
+                          features: [
+                            'LSTM, Transformer & GNN Neural Networks',
+                            'News Intelligence & Sentiment Analysis',
+                            'Portfolio Optimization & Risk Analytics',
+                            'Production-Grade Infrastructure'
+                          ]
+                        })
+                      }, 500)
+                    }}
                     className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
                   >
                     <Info className="text-samurai-red" size={20} />
