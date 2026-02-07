@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-samurai-black relative">
       {/* Floating embers - spans entire page */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
         <FloatingEmbers />
       </div>
       
