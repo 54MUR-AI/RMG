@@ -90,15 +90,9 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'OMNI' 
                   ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard === 'SCRP'
+                  : featuredCard
                     ? 'lg:col-start-1 lg:row-start-1'
-                  : featuredCard === 'LDGR'
-                    ? 'lg:col-start-1 lg:row-start-1'
-                  : featuredCard === 'WSPR'
-                    ? 'lg:col-start-1 lg:row-start-1'
-                  : featuredCard === 'STONKS'
-                    ? 'lg:col-start-1 lg:row-start-1'
-                  : ''
+                    : ''
               }`}
               onClick={() => {
                 if (featuredCard === 'OMNI') {
