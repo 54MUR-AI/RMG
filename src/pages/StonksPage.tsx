@@ -16,10 +16,18 @@ export default function StonksPage() {
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <a
-              href="https://github.com/54MUR-AI/stonks"
+              href="https://stonks-app.onrender.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition"
+            >
+              Launch App
+            </a>
+            <a
+              href="https://github.com/54MUR-AI/stonks"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 border-2 border-purple-600 text-purple-600 rounded-lg font-semibold hover:bg-purple-50 transition"
             >
               <Github className="mr-2" size={20} />
               View on GitHub
@@ -77,7 +85,7 @@ export default function StonksPage() {
           </div>
         </div>
 
-        <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8">
+        <div className="bg-gradient-to-br from-purple-50 to-blue-50 rounded-2xl p-8 mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Key Features</h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div>
@@ -92,6 +100,21 @@ export default function StonksPage() {
               <h4 className="font-semibold text-gray-900 mb-2">Automated Trading</h4>
               <p className="text-gray-600">Risk-aware order management and execution engine</p>
             </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-2xl p-8 shadow-lg">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Live Application</h2>
+          <p className="text-gray-600 mb-6">
+            Interact with the STONKS platform directly below. Note: First load may take ~30 seconds as the free tier spins up.
+          </p>
+          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+            <iframe
+              src="https://stonks-app.onrender.com"
+              className="absolute top-0 left-0 w-full h-full border-2 border-gray-200 rounded-lg"
+              title="STONKS Application"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
           </div>
         </div>
       </div>

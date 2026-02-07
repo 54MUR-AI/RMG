@@ -16,10 +16,18 @@ export default function ScraperPage() {
           </p>
           <div className="mt-8 flex justify-center gap-4">
             <a
-              href="https://github.com/54MUR-AI/scraper"
+              href="https://scraper-app.onrender.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center px-6 py-3 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
+            >
+              Launch App
+            </a>
+            <a
+              href="https://github.com/54MUR-AI/scraper"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center px-6 py-3 border-2 border-green-600 text-green-600 rounded-lg font-semibold hover:bg-green-50 transition"
             >
               <Github className="mr-2" size={20} />
               View on GitHub
@@ -82,7 +90,7 @@ export default function ScraperPage() {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl p-8 shadow-md">
+        <div className="bg-white rounded-xl p-8 shadow-md mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-6">Usage Example</h2>
           <div className="bg-gray-900 rounded-lg p-6 overflow-x-auto">
             <pre className="text-green-400 text-sm">
@@ -95,6 +103,21 @@ python main.py batch urls.txt -o output/
 # Scrape without summarization
 python main.py scrape "https://example.com" --no-summary`}
             </pre>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl p-8 shadow-lg">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4">Live Application</h2>
+          <p className="text-gray-600 mb-6">
+            Try the Scraper web interface directly below. Note: First load may take ~30 seconds as the free tier spins up.
+          </p>
+          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+            <iframe
+              src="https://scraper-app.onrender.com"
+              className="absolute top-0 left-0 w-full h-full border-2 border-gray-200 rounded-lg"
+              title="Scraper Application"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
           </div>
         </div>
       </div>

@@ -81,13 +81,23 @@ export default function Home() {
                   <span>Production-Grade Infrastructure</span>
                 </div>
               </div>
-              <Link
-                to="/stonks"
-                className="inline-flex items-center text-purple-600 font-semibold hover:text-purple-700 transition"
-              >
-                Learn More
-                <ArrowRight className="ml-2" size={20} />
-              </Link>
+              <div className="flex gap-4">
+                <Link
+                  to="/stonks"
+                  className="inline-flex items-center text-purple-600 font-semibold hover:text-purple-700 transition"
+                >
+                  Learn More
+                  <ArrowRight className="ml-2" size={20} />
+                </Link>
+                <a
+                  href="https://stonks-app.onrender.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition"
+                >
+                  Launch App
+                </a>
+              </div>
             </div>
 
             {/* Scraper Card */}
@@ -120,13 +130,23 @@ export default function Home() {
                   <span>Batch Processing</span>
                 </div>
               </div>
-              <Link
-                to="/scraper"
-                className="inline-flex items-center text-green-600 font-semibold hover:text-green-700 transition"
-              >
-                Learn More
-                <ArrowRight className="ml-2" size={20} />
-              </Link>
+              <div className="flex gap-4">
+                <Link
+                  to="/scraper"
+                  className="inline-flex items-center text-green-600 font-semibold hover:text-green-700 transition"
+                >
+                  Learn More
+                  <ArrowRight className="ml-2" size={20} />
+                </Link>
+                <a
+                  href="https://scraper-app.onrender.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-lg font-semibold hover:bg-green-700 transition"
+                >
+                  Launch App
+                </a>
+              </div>
             </div>
           </div>
         </div>
