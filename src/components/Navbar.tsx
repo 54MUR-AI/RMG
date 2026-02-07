@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Flame } from 'lucide-react'
 import { useState } from 'react'
+import KatanaUnderline from './KatanaUnderline'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -15,7 +16,10 @@ export default function Navbar() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3 group">
               <Flame className="text-white group-hover:text-samurai-red transition-colors animate-flame-flicker" size={38} />
-              <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA</span>
+              <div className="flex flex-col">
+                <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA</span>
+                <KatanaUnderline width={160} className="text-samurai-red opacity-70 group-hover:opacity-100 transition-opacity mt-1" />
+              </div>
             </Link>
           </div>
 
