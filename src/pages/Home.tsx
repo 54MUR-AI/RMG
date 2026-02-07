@@ -16,7 +16,7 @@ export default function Home() {
             {/* Flame icon with animation */}
             <div className="flex justify-center mb-8">
               <div className="relative">
-                <Flame className="w-20 h-20 text-samurai-red animate-flame-flicker" />
+                <Flame className="w-20 h-20 text-white drop-shadow-[0_0_15px_rgba(230,57,70,1)] animate-flame-flicker" />
                 <div className="absolute inset-0 flame-glow"></div>
               </div>
             </div>
@@ -200,7 +200,7 @@ export default function Home() {
                     <ArrowRight className="ml-2 group-hover/btn:translate-x-1 transition-transform" size={20} />
                   </Link>
                   <a
-                    href="https://scraper-app-w6xu.onrender.com/docs"
+                    href="https://scraper-frontend.onrender.com"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-red text-white rounded-xl font-bold hover:bg-samurai-red-dark transition-all flame-glow"
