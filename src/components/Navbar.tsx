@@ -32,14 +32,14 @@ export default function Navbar() {
                 isActive('/') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
-            <Link to="/stonks" className={`font-bold transition-all relative group ${
-              isActive('/stonks') 
+            <Link to="/omni" className={`font-bold transition-all relative group ${
+              isActive('/omni') 
                 ? 'text-samurai-red neon-text' 
                 : 'text-samurai-steel-light hover:text-samurai-red'
             }`}>
-              STONKS
+              OMNI
               <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/stonks') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                isActive('/omni') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
             <Link to="/scraper" className={`font-bold transition-all relative group ${
@@ -72,14 +72,14 @@ export default function Navbar() {
                 isActive('/wspr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
-            <Link to="/omni" className={`font-bold transition-all relative group ${
-              isActive('/omni') 
+            <Link to="/stonks" className={`font-bold transition-all relative group ${
+              isActive('/stonks') 
                 ? 'text-samurai-red neon-text' 
                 : 'text-samurai-steel-light hover:text-samurai-red'
             }`}>
-              OMNI
+              STONKS
               <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/omni') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                isActive('/stonks') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
             
@@ -125,15 +125,15 @@ export default function Navbar() {
               FORGE
             </Link>
             <Link
-              to="/stonks"
+              to="/omni"
               className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/stonks') 
+                isActive('/omni') 
                   ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                   : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
               }`}
               onClick={() => setIsOpen(false)}
             >
-              STONKS
+              OMNI
             </Link>
             <Link
               to="/scraper"
@@ -169,15 +169,15 @@ export default function Navbar() {
               WSPR
             </Link>
             <Link
-              to="/omni"
+              to="/stonks"
               className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/omni') 
+                isActive('/stonks') 
                   ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                   : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
               }`}
               onClick={() => setIsOpen(false)}
             >
-              OMNI
+              STONKS
             </Link>
             
             {/* Discord Link */}

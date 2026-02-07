@@ -17,7 +17,7 @@ export default function Footer() {
 
           {/* Center: Quick Links */}
           <div className="flex items-center gap-4 text-sm">
-            <Link to="/stonks" className="text-samurai-steel-light hover:text-samurai-red transition-colors font-semibold">STONKS</Link>
+            <Link to="/omni" className="text-samurai-steel-light hover:text-samurai-red transition-colors font-semibold">OMNI</Link>
             <span className="text-samurai-steel-dark">•</span>
             <Link to="/scraper" className="text-samurai-steel-light hover:text-samurai-red transition-colors font-semibold">SCRP</Link>
             <span className="text-samurai-steel-dark">•</span>
@@ -25,7 +25,7 @@ export default function Footer() {
             <span className="text-samurai-steel-dark">•</span>
             <Link to="/wspr" className="text-samurai-steel-light hover:text-samurai-red transition-colors font-semibold">WSPR</Link>
             <span className="text-samurai-steel-dark">•</span>
-            <Link to="/omni" className="text-samurai-steel-light hover:text-samurai-red transition-colors font-semibold">OMNI</Link>
+            <Link to="/stonks" className="text-samurai-steel-light hover:text-samurai-red transition-colors font-semibold">STONKS</Link>
           </div>
 
           {/* Right: Social Links */}

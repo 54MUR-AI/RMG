@@ -88,34 +88,35 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {/* STONKS Card - Katana */}
+            {/* OMNI Card */}
             <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden">
-              {/* Glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                      <TrendingUp className="text-white group-hover:text-samurai-red transition-colors" size={24} />
+                      <Brain className="text-white group-hover:text-samurai-red transition-colors" size={24} />
                     </div>
                     <div>
                       <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
-                        STONKS
+                        OMNI
                       </h3>
-                      <p className="text-xs text-samurai-red font-bold tracking-wider">Smart Trading Options <span className="lowercase">for</span> Novices & Knowledgeable Speculators</p>
+                      <p className="text-xs text-samurai-red font-bold tracking-wider">Optimized Multi-Model Networked Intelligence</p>
                     </div>
                   </div>
                   <button
                     onClick={() => setInfoPopup({ 
-                      title: 'STONKS', 
-                      icon: <TrendingUp className="text-samurai-red" size={32} />,
-                      thumbnail: '/thumbnails/stonks-thumb.svg',
+                      title: 'OMNI', 
+                      icon: <Brain className="text-samurai-red" size={32} />,
+                      thumbnail: '/thumbnails/omni-thumb.svg',
                       features: [
-                        'LSTM, Transformer & GNN Neural Networks',
-                        'News Intelligence & Sentiment Analysis',
-                        'Portfolio Optimization & Risk Analytics',
-                        'Production-Grade Infrastructure'
+                        'Multiple AI Models (Ollama, Claude, GPT, Grok)',
+                        'PyQt6 Desktop Application',
+                        'Plugin System with Marketplace',
+                        'Text-to-Speech & Audio Capabilities',
+                        'Vector Database Integration',
+                        'Code Editor with Syntax Highlighting'
                       ]
                     })}
                     className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
@@ -127,18 +128,18 @@ export default function Home() {
                 {/* Thumbnail */}
                 <div className="mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark">
                   <img 
-                    src="/thumbnails/stonks-thumb.svg" 
-                    alt="STONKS UI Preview" 
+                    src="/thumbnails/omni-thumb.svg" 
+                    alt="OMNI UI Preview" 
                     className="w-full h-32 object-cover"
                   />
                 </div>
                 
                 <p className="text-white/80 mb-4 text-sm leading-relaxed">
-                  Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.
+                  Comprehensive AI dashboard providing multi-model interaction, plugin management, and performance monitoring.
                 </p>
                 
                 <Link
-                  to="/stonks"
+                  to="/omni"
                   className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
                 >
                   <Zap className="mr-2" size={18} />
@@ -321,7 +322,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* OMNI Card */}
+            {/* STONKS Card */}
             <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -329,27 +330,25 @@ export default function Home() {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                      <Brain className="text-white group-hover:text-samurai-red transition-colors" size={24} />
+                      <TrendingUp className="text-white group-hover:text-samurai-red transition-colors" size={24} />
                     </div>
                     <div>
                       <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
-                        OMNI
+                        STONKS
                       </h3>
-                      <p className="text-xs text-samurai-red font-bold tracking-wider">Optimized Multi-Model Networked Intelligence</p>
+                      <p className="text-xs text-samurai-red font-bold tracking-wider">Smart Trading Options <span className="lowercase">for</span> Novices & Knowledgeable Speculators</p>
                     </div>
                   </div>
                   <button
                     onClick={() => setInfoPopup({ 
-                      title: 'OMNI', 
-                      icon: <Brain className="text-samurai-red" size={32} />,
-                      thumbnail: '/thumbnails/omni-thumb.svg',
+                      title: 'STONKS', 
+                      icon: <TrendingUp className="text-samurai-red" size={32} />,
+                      thumbnail: '/thumbnails/stonks-thumb.svg',
                       features: [
-                        'Multiple AI Models (Ollama, Claude, GPT, Grok)',
-                        'PyQt6 Desktop Application',
-                        'Plugin System with Marketplace',
-                        'Text-to-Speech & Audio Capabilities',
-                        'Vector Database Integration',
-                        'Code Editor with Syntax Highlighting'
+                        'LSTM, Transformer & GNN Neural Networks',
+                        'News Intelligence & Sentiment Analysis',
+                        'Portfolio Optimization & Risk Analytics',
+                        'Production-Grade Infrastructure'
                       ]
                     })}
                     className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
@@ -361,18 +360,18 @@ export default function Home() {
                 {/* Thumbnail */}
                 <div className="mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark">
                   <img 
-                    src="/thumbnails/omni-thumb.svg" 
-                    alt="OMNI UI Preview" 
+                    src="/thumbnails/stonks-thumb.svg" 
+                    alt="STONKS UI Preview" 
                     className="w-full h-32 object-cover"
                   />
                 </div>
                 
                 <p className="text-white/80 mb-4 text-sm leading-relaxed">
-                  Comprehensive AI dashboard providing multi-model interaction, plugin management, and performance monitoring.
+                  Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.
                 </p>
                 
                 <Link
-                  to="/omni"
+                  to="/stonks"
                   className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
                 >
                   <Zap className="mr-2" size={18} />
