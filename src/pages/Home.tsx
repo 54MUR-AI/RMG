@@ -80,7 +80,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
             {/* STONKS Card - Katana */}
             <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-8 border-2 border-samurai-steel-dark relative overflow-hidden">
               {/* Glow effect on hover */}
@@ -203,6 +203,122 @@ export default function Home() {
                     <Zap className="mr-2" size={20} />
                     Launch
                   </a>
+                </div>
+              </div>
+            </div>
+
+            {/* LDGR Card */}
+            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-8 border-2 border-samurai-steel-dark relative overflow-hidden">
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
+                    <Shield className="text-samurai-red" size={32} />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
+                      LDGR
+                    </h3>
+                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Ledger Database Gateway & Repository</p>
+                  </div>
+                </div>
+                
+                <p className="text-white/70 mb-6 leading-relaxed">
+                  Blockchain-powered database management with military-grade encryption and immutable data storage.
+                </p>
+                
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">Blockchain Integration (Ethereum/Hardhat)</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">AES/RSA High-Level Encryption</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">Smart Contract Data Transactions</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">User-Friendly Database Management</span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <a
+                    href="https://github.com/54MUR-AI/ldgr"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
+                  >
+                    <Github className="mr-2" size={20} />
+                    <span>View Source</span>
+                  </a>
+                  <div className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-grey-dark text-white/50 rounded-xl font-bold cursor-not-allowed">
+                    <span>In Development</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* WSPR Card */}
+            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-8 border-2 border-samurai-steel-dark relative overflow-hidden">
+              {/* Glow effect on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center mb-6">
+                  <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
+                    <Zap className="text-samurai-red" size={32} />
+                  </div>
+                  <div>
+                    <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
+                      WSPR
+                    </h3>
+                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Whisper Secure Private Relay</p>
+                  </div>
+                </div>
+                
+                <p className="text-white/70 mb-6 leading-relaxed">
+                  Privacy-focused encrypted communication platform with end-to-end encryption and perfect forward secrecy.
+                </p>
+                
+                <div className="space-y-3 mb-8">
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">End-to-End AES-GCM Encryption</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">Real-Time Encrypted Messaging</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">Two-Factor Authentication (2FA)</span>
+                  </div>
+                  <div className="flex items-start">
+                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
+                    <span className="text-white/70">React + TypeScript + PostgreSQL</span>
+                  </div>
+                </div>
+                
+                <div className="flex gap-4">
+                  <a
+                    href="https://github.com/54MUR-AI/wspr-web-new"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
+                  >
+                    <Github className="mr-2" size={20} />
+                    <span>View Source</span>
+                  </a>
+                  <div className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-grey-dark text-white/50 rounded-xl font-bold cursor-not-allowed">
+                    <span>In Development</span>
+                  </div>
                 </div>
               </div>
             </div>
