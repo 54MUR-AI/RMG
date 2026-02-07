@@ -189,6 +189,18 @@ code {
   }
 }
 
+/* Big flame pulsating animation */
+@keyframes flame-pulse-big {
+  0%, 100% {
+    transform: scale(1);
+    filter: brightness(1) drop-shadow(0 0 15px rgba(230, 57, 70, 1));
+  }
+  50% {
+    transform: scale(1.4);
+    filter: brightness(1.3) drop-shadow(0 0 30px rgba(230, 57, 70, 1));
+  }
+}
+
 /* Chaotic ember flicker with random intensity */
 @keyframes emberFlickerChaotic {
   0%, 100% {
@@ -223,4 +235,8 @@ code {
 
 .animate-ember-flicker {
   animation: ember-flicker 2s ease-in-out infinite;
+}
+
+.animate-flame-pulse-big {
+  animation: flame-pulse-big 2s ease-in-out infinite;
 }

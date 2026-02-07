@@ -23,10 +23,7 @@ export default function Home() {
           <div className="text-center animate-slide-up">
             {/* Flame icon with animation */}
             <div className="flex justify-center mb-8">
-              <div className="relative">
-                <Flame className="w-20 h-20 text-white drop-shadow-[0_0_15px_rgba(230,57,70,1)] animate-flame-flicker" />
-                <div className="absolute inset-0 flame-glow"></div>
-              </div>
+              <Flame className="w-20 h-20 text-white drop-shadow-[0_0_15px_rgba(230,57,70,1)] animate-flame-pulse-big" />
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 neon-text tracking-tight">
