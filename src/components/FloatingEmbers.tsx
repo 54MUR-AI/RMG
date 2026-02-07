@@ -44,10 +44,6 @@ export default function FloatingEmbers() {
       @keyframes floatEmber${ember.id} {
         0% {
           transform: translateY(0) translateX(0) rotate(0deg) scale(1);
-          opacity: 0;
-        }
-        5% {
-          opacity: 1;
         }
         10% {
           transform: translateY(-10vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.1}deg) scale(1.05);
@@ -76,12 +72,8 @@ export default function FloatingEmbers() {
         90% {
           transform: translateY(-90vh) translateX(${ember.horizontalMeander * -0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.5);
         }
-        95% {
-          opacity: 0.8;
-        }
         100% {
           transform: translateY(-100vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.3);
-          opacity: 0;
         }
       }
       
