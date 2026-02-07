@@ -10,6 +10,17 @@ export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
   const [featuredCard, setFeaturedCard] = useState<string | null>('OMNI')
 
+  // Helper to get CSS Grid order based on which card is featured
+  // Target layout: [CARD][FEATURED 2-col][CARD] on row 1, [CARD][CARD][CARD] on row 2
+  const getCardOrder = (cardName: string) => {
+    if (!featuredCard) return 0 // Natural order when nothing featured
+    if (cardName === featuredCard) return 2 // Featured card in position 2 (center)
+    
+    // Other cards: OMNI=1, SCRP=3, LDGR=4, WSPR=5, STONKS=6
+    const baseOrder = { OMNI: 1, SCRP: 3, LDGR: 4, WSPR: 5, STONKS: 6 }
+    return baseOrder[cardName as keyof typeof baseOrder] || 0
+  }
+
   return (
     <div className="min-h-screen bg-samurai-black relative">
       {/* Floating embers - fixed to viewport */}
@@ -88,12 +99,9 @@ export default function Home() {
             {/* OMNI Card */}
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'OMNI' 
-                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard
-                    ? 'lg:col-start-1 lg:row-start-1'
-                    : ''
+                featuredCard === 'OMNI' ? 'col-span-2 lg:col-span-2' : ''
               }`}
+              style={{ order: getCardOrder('OMNI') }}
               onClick={() => {
                 if (featuredCard === 'OMNI') {
                   setFeaturedCard(null)
@@ -171,18 +179,9 @@ export default function Home() {
             {/* SCRP Card */}
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'SCRP' 
-                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard
-                    ? featuredCard === 'OMNI'
-                      ? 'lg:col-start-1 lg:row-start-2'
-                      : featuredCard === 'LDGR'
-                        ? 'lg:col-start-1 lg:row-start-1'
-                        : featuredCard === 'WSPR'
-                          ? 'lg:col-start-1 lg:row-start-2'
-                          : 'lg:col-start-1 lg:row-start-2'
-                    : ''
+                featuredCard === 'SCRP' ? 'col-span-2 lg:col-span-2' : ''
               }`}
+              style={{ order: getCardOrder('SCRP') }}
               onClick={() => {
                 if (featuredCard === 'SCRP') {
                   setFeaturedCard(null)
@@ -257,12 +256,9 @@ export default function Home() {
             {/* LDGR Card */}
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'LDGR' 
-                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard
-                    ? 'lg:col-start-4 lg:row-start-1'
-                    : ''
+                featuredCard === 'LDGR' ? 'col-span-2 lg:col-span-2' : ''
               }`}
+              style={{ order: getCardOrder('LDGR') }}
               onClick={() => {
                 if (featuredCard === 'LDGR') {
                   setFeaturedCard(null)
@@ -337,12 +333,9 @@ export default function Home() {
             {/* WSPR Card */}
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'WSPR' 
-                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard
-                    ? 'lg:col-start-4 lg:row-start-2'
-                    : ''
+                featuredCard === 'WSPR' ? 'col-span-2 lg:col-span-2' : ''
               }`}
+              style={{ order: getCardOrder('WSPR') }}
               onClick={() => {
                 if (featuredCard === 'WSPR') {
                   setFeaturedCard(null)
@@ -417,12 +410,9 @@ export default function Home() {
             {/* STONKS Card */}
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'STONKS' 
-                  ? 'col-span-2 lg:col-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard
-                    ? 'lg:col-start-2 lg:row-start-3'
-                    : ''
+                featuredCard === 'STONKS' ? 'col-span-2 lg:col-span-2' : ''
               }`}
+              style={{ order: getCardOrder('STONKS') }}
               onClick={() => {
                 if (featuredCard === 'STONKS') {
                   setFeaturedCard(null)
