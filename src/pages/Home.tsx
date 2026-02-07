@@ -11,14 +11,20 @@ export default function Home() {
   const [featuredCard, setFeaturedCard] = useState<string | null>('OMNI')
 
   // Helper to get CSS Grid order based on which card is featured
-  // Target layout: [CARD][FEATURED 2-col][CARD] on row 1, [CARD][CARD][CARD] on row 2
+  // Target layout: Col1[Card1, Card5], Col2[FEATURED (tall)], Col3[Card3, Card6]
   const getCardOrder = (cardName: string) => {
     if (!featuredCard) return 0 // Natural order when nothing featured
-    if (cardName === featuredCard) return 2 // Featured card in position 2 (center)
+    if (cardName === featuredCard) return 3 // Featured card in position 3 (center column)
     
-    // Other cards: OMNI=1, SCRP=3, LDGR=4, WSPR=5, STONKS=6
-    const baseOrder = { OMNI: 1, SCRP: 3, LDGR: 4, WSPR: 5, STONKS: 6 }
-    return baseOrder[cardName as keyof typeof baseOrder] || 0
+    // Cards arranged: 1,2 (left col), 3 (featured center), 4,5 (right col)
+    // When OMNI featured: SCRP=1, LDGR=2, OMNI=3, WSPR=4, STONKS=5
+    const allCards = ['OMNI', 'SCRP', 'LDGR', 'WSPR', 'STONKS']
+    const otherCards = allCards.filter(c => c !== featuredCard)
+    const orderMap: Record<string, number> = {}
+    otherCards.forEach((card, idx) => {
+      orderMap[card] = idx < 2 ? idx + 1 : idx + 2 // 1,2 then skip 3 (featured), then 4,5
+    })
+    return orderMap[cardName] || 0
   }
 
   return (
@@ -95,11 +101,11 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 gap-6 mb-12 lg:auto-rows-fr">
             {/* OMNI Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'OMNI' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+                featuredCard === 'OMNI' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2 lg:w-[200%]' : ''
               }`}
               style={{ order: getCardOrder('OMNI') }}
               onClick={() => {
@@ -178,8 +184,8 @@ export default function Home() {
 
             {/* SCRP Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'SCRP' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+                featuredCard === 'SCRP' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2 lg:w-[200%]' : ''
               }`}
               style={{ order: getCardOrder('SCRP') }}
               onClick={() => {
@@ -255,8 +261,8 @@ export default function Home() {
 
             {/* LDGR Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'LDGR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+                featuredCard === 'LDGR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2 lg:w-[200%]' : ''
               }`}
               style={{ order: getCardOrder('LDGR') }}
               onClick={() => {
@@ -332,8 +338,8 @@ export default function Home() {
 
             {/* WSPR Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'WSPR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+                featuredCard === 'WSPR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2 lg:w-[200%]' : ''
               }`}
               style={{ order: getCardOrder('WSPR') }}
               onClick={() => {
@@ -409,8 +415,8 @@ export default function Home() {
 
             {/* STONKS Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
-                featuredCard === 'STONKS' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+                featuredCard === 'STONKS' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2 lg:w-[200%]' : ''
               }`}
               style={{ order: getCardOrder('STONKS') }}
               onClick={() => {
