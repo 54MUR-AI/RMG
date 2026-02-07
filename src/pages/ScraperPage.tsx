@@ -2,7 +2,7 @@ import { Github, FileText, Video, FileType, Sparkles } from 'lucide-react'
 
 export default function ScraperPage() {
   return (
-    <div className="min-h-screen bg-samurai-black py-12">
+    <div className="min-h-screen bg-samurai-black py-8 sm:py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <div className="flex justify-center mb-4">
@@ -10,16 +10,16 @@ export default function ScraperPage() {
               <FileText className="text-white" size={40} />
             </div>
           </div>
-          <h1 className="text-6xl font-black text-samurai-red mb-4 uppercase neon-text tracking-wider">Web Scraper & Summarizer</h1>
-          <p className="text-xl text-white/90 max-w-3xl mx-auto font-semibold">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-samurai-red mb-4 uppercase neon-text tracking-wider">Web Scraper & Summarizer</h1>
+          <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-3xl mx-auto font-semibold px-4">
             Beautiful web interface for scraping and summarizing any web content with AI
           </p>
-          <div className="mt-8 flex justify-center gap-4">
+          <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4">
             <a
               href="https://scraper-frontend.onrender.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-samurai-red to-samurai-red-dark text-white rounded-xl font-bold hover:from-samurai-red-dark hover:to-samurai-red-darker transition shadow-lg shadow-samurai-red/30 hover:shadow-xl hover:shadow-samurai-red/50"
+              className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-samurai-red to-samurai-red-dark text-white rounded-xl font-bold hover:from-samurai-red-dark hover:to-samurai-red-darker transition shadow-lg shadow-samurai-red/30 hover:shadow-xl hover:shadow-samurai-red/50 touch-manipulation"
             >
               Launch Web App
             </a>
@@ -27,7 +27,7 @@ export default function ScraperPage() {
               href="https://github.com/54MUR-AI/scraper"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition"
+              className="inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition touch-manipulation"
             >
               <Github className="mr-2" size={20} />
               View on GitHub
@@ -122,7 +122,7 @@ python main.py batch urls.txt`}
           <p className="text-white/80 mb-6">
             Try the Scraper web interface directly below. Enter any URL to scrape and get an AI-powered summary. Note: First load may take ~30 seconds as the free tier spins up.
           </p>
-          <div className="relative w-full" style={{ paddingBottom: '75%' }}>
+          <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
             <iframe
               src="https://scraper-frontend.onrender.com"
               className="absolute top-0 left-0 w-full h-full border-2 border-samurai-red/50 rounded-lg"

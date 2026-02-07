@@ -14,7 +14,7 @@ export default function Navbar() {
               <div className="w-12 h-12 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
                 <Flame className="text-samurai-red animate-flame-flicker" size={28} />
               </div>
-              <span className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA GROUP</span>
+              <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA GROUP</span>
             </Link>
           </div>
 
@@ -47,7 +47,8 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-samurai-steel-light hover:text-samurai-red transition-colors"
+              className="text-samurai-steel-light hover:text-samurai-red transition-colors p-2 touch-manipulation"
+              aria-label="Toggle menu"
             >
               {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
@@ -61,21 +62,21 @@ export default function Navbar() {
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
               to="/"
-              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
+              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
               onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/stonks"
-              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
+              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
               onClick={() => setIsOpen(false)}
             >
               STONKS
             </Link>
             <Link
               to="/scraper"
-              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
+              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
               onClick={() => setIsOpen(false)}
             >
               SCRAPER
@@ -84,7 +85,7 @@ export default function Navbar() {
               href="https://github.com/54MUR-AI"
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
+              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
             >
               GITHUB
             </a>

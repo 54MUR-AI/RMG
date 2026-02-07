@@ -11,7 +11,7 @@ export default function Home() {
       </div>
       
       {/* Epic Hero Section with Parallax */}
-      <section className="gradient-bg text-white py-32 relative overflow-hidden">
+      <section className="gradient-bg text-white py-16 sm:py-24 md:py-32 relative overflow-hidden">
         
         {/* Animated background elements */}
         <div className="absolute inset-0 pattern-bg opacity-10"></div>
@@ -28,33 +28,33 @@ export default function Home() {
               </div>
             </div>
             
-            <h1 className="text-7xl md:text-8xl font-black mb-8 neon-text tracking-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 neon-text tracking-tight">
               RONIN MEDIA GROUP
             </h1>
             
-            <p className="text-2xl md:text-3xl mb-6 font-bold text-white">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 sm:mb-6 font-bold text-white px-4">
               Forging AI-Powered Weapons for the Digital Age
             </p>
             
-            <p className="text-lg mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed">
+            <p className="text-base sm:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed px-4">
               Like masterless samurai, we walk our own path—crafting cutting-edge software 
               that wields the power of artificial intelligence, machine learning, and advanced 
               automation to conquer real-world challenges.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center px-4">
               <a
                 href="https://discord.gg/EHcZ5PZ877"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center px-10 py-4 bg-samurai-red text-white rounded-xl font-bold text-lg hover:bg-samurai-red-dark transition-all transform hover:scale-105 flame-glow"
+                className="group inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 bg-samurai-red text-white rounded-xl font-bold text-base sm:text-lg hover:bg-samurai-red-dark transition-all transform hover:scale-105 flame-glow touch-manipulation"
               >
                 <MessageCircle className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
                 Enter the Dojo
               </a>
               <a
                 href="#arsenal"
-                className="group inline-flex items-center justify-center px-10 py-4 border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)]"
+                className="group inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 border-2 border-white text-white rounded-xl font-bold text-base sm:text-lg hover:bg-white hover:text-samurai-red transition-all transform hover:scale-105 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] touch-manipulation"
               >
                 View Arsenal
                 <Sword className="ml-3 group-hover:rotate-12 transition-transform" size={24} />
@@ -73,9 +73,6 @@ export default function Home() {
 
       {/* Arsenal Section - Our Weapons */}
       <section id="arsenal" className="py-24 bg-samurai-black relative overflow-hidden">
-        {/* Floating embers */}
-        <FloatingEmbers />
-        
         {/* Background effects */}
         <div className="absolute inset-0 pattern-bg opacity-5"></div>
         
@@ -84,10 +81,10 @@ export default function Home() {
             <div className="inline-block mb-4">
               <Sword className="w-12 h-12 text-samurai-red mx-auto animate-flame-flicker" />
             </div>
-            <h2 className="text-5xl md:text-6xl font-black text-white mb-6 neon-text">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 neon-text">
               THE ARSENAL
             </h2>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto px-4">
               Battle-tested tools forged in the fires of innovation
             </p>
           </div>
