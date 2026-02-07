@@ -4,11 +4,14 @@ import FloatingEmbers from '../components/FloatingEmbers'
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-samurai-black">
+    <div className="min-h-screen bg-samurai-black relative">
+      {/* Floating embers - spans entire page */}
+      <div className="fixed inset-0 pointer-events-none z-0">
+        <FloatingEmbers />
+      </div>
+      
       {/* Epic Hero Section with Parallax */}
       <section className="gradient-bg text-white py-32 relative overflow-hidden">
-        {/* Floating embers */}
-        <FloatingEmbers />
         
         {/* Animated background elements */}
         <div className="absolute inset-0 pattern-bg opacity-10"></div>
