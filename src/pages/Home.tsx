@@ -104,7 +104,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <p className="text-white/90 mb-8 text-lg leading-relaxed">
+                <p className="text-white/90 mb-8 text-base leading-relaxed">
                   Slice through market chaos with precision. Advanced ML platform wielding 
                   real-time analysis, predictive strategies, and news intelligence.
                 </p>
@@ -167,7 +167,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <p className="text-white/70 mb-6 leading-relaxed">
+                <p className="text-white/90 mb-8 text-base leading-relaxed">
                   AI-powered content extraction and summarization-powered scraping that conquers 
                   articles, videos, PDFs, and transforms them into actionable intelligence.
                 </p>
@@ -230,7 +230,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <p className="text-white/70 mb-6 leading-relaxed">
+                <p className="text-white/90 mb-8 text-base leading-relaxed">
                   Blockchain-powered database management with military-grade encryption and immutable data storage.
                 </p>
                 
@@ -288,7 +288,7 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <p className="text-white/70 mb-6 leading-relaxed">
+                <p className="text-white/90 mb-8 text-base leading-relaxed">
                   Privacy-focused encrypted communication platform with end-to-end encryption and perfect forward secrecy.
                 </p>
                 
