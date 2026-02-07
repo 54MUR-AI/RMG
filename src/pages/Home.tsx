@@ -8,7 +8,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
-  const [featuredCard, setFeaturedCard] = useState<string | null>(null)
+  const [featuredCard, setFeaturedCard] = useState<string | null>('OMNI')
 
   return (
     <div className="min-h-screen bg-samurai-black relative">
@@ -90,9 +90,15 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'OMNI' 
                   ? 'md:col-span-2 lg:col-span-2 md:row-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard 
-                    ? 'lg:col-start-1 lg:row-start-1' 
-                    : ''
+                  : featuredCard === 'SCRP'
+                    ? 'lg:col-start-1 lg:row-start-1'
+                  : featuredCard === 'LDGR'
+                    ? 'lg:col-start-1 lg:row-start-1'
+                  : featuredCard === 'WSPR'
+                    ? 'lg:col-start-1 lg:row-start-1'
+                  : featuredCard === 'STONKS'
+                    ? 'lg:col-start-1 lg:row-start-1'
+                  : ''
               }`}
               onClick={() => {
                 if (featuredCard === 'OMNI') {
@@ -170,9 +176,15 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'SCRP' 
                   ? 'md:col-span-2 lg:col-span-2 md:row-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard 
-                    ? 'lg:col-start-1 lg:row-start-2' 
-                    : ''
+                  : featuredCard === 'OMNI'
+                    ? 'lg:col-start-1 lg:row-start-2'
+                  : featuredCard === 'LDGR'
+                    ? 'lg:col-start-1 lg:row-start-1'
+                  : featuredCard === 'WSPR'
+                    ? 'lg:col-start-1 lg:row-start-2'
+                  : featuredCard === 'STONKS'
+                    ? 'lg:col-start-1 lg:row-start-2'
+                  : ''
               }`}
               onClick={() => {
                 if (featuredCard === 'SCRP') {
@@ -247,9 +259,15 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'LDGR' 
                   ? 'md:col-span-2 lg:col-span-2 md:row-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard 
-                    ? 'lg:col-start-4 lg:row-start-1' 
-                    : ''
+                  : featuredCard === 'OMNI'
+                    ? 'lg:col-start-4 lg:row-start-1'
+                  : featuredCard === 'SCRP'
+                    ? 'lg:col-start-4 lg:row-start-1'
+                  : featuredCard === 'WSPR'
+                    ? 'lg:col-start-4 lg:row-start-1'
+                  : featuredCard === 'STONKS'
+                    ? 'lg:col-start-4 lg:row-start-1'
+                  : ''
               }`}
               onClick={() => {
                 if (featuredCard === 'LDGR') {
@@ -324,9 +342,15 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'WSPR' 
                   ? 'md:col-span-2 lg:col-span-2 md:row-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard 
-                    ? 'lg:col-start-4 lg:row-start-2' 
-                    : ''
+                  : featuredCard === 'OMNI'
+                    ? 'lg:col-start-4 lg:row-start-2'
+                  : featuredCard === 'SCRP'
+                    ? 'lg:col-start-4 lg:row-start-2'
+                  : featuredCard === 'LDGR'
+                    ? 'lg:col-start-4 lg:row-start-2'
+                  : featuredCard === 'STONKS'
+                    ? 'lg:col-start-4 lg:row-start-2'
+                  : ''
               }`}
               onClick={() => {
                 if (featuredCard === 'WSPR') {
@@ -401,9 +425,15 @@ export default function Home() {
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ${
                 featuredCard === 'STONKS' 
                   ? 'md:col-span-2 lg:col-span-2 md:row-span-2 lg:col-start-2 lg:row-start-1' 
-                  : featuredCard && featuredCard !== 'STONKS'
-                    ? 'hidden lg:block lg:col-start-2 lg:row-start-3' 
-                    : ''
+                  : featuredCard === 'OMNI'
+                    ? 'lg:col-start-2 lg:row-start-3'
+                  : featuredCard === 'SCRP'
+                    ? 'lg:col-start-2 lg:row-start-3'
+                  : featuredCard === 'LDGR'
+                    ? 'lg:col-start-2 lg:row-start-3'
+                  : featuredCard === 'WSPR'
+                    ? 'lg:col-start-2 lg:row-start-3'
+                  : ''
               }`}
               onClick={() => {
                 if (featuredCard === 'STONKS') {
