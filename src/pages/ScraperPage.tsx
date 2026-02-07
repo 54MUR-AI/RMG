@@ -16,7 +16,7 @@ export default function ScraperPage() {
           </p>
           <div className="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4">
             <a
-              href="https://scraper-frontend.onrender.com"
+              href="https://scraper-frontend-3hnj.onrender.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-samurai-red to-samurai-red-dark text-white rounded-xl font-bold hover:from-samurai-red-dark hover:to-samurai-red-darker transition shadow-lg shadow-samurai-red/30 hover:shadow-xl hover:shadow-samurai-red/50 touch-manipulation"
@@ -124,7 +124,7 @@ python main.py batch urls.txt`}
           </p>
           <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
             <iframe
-              src="https://scraper-frontend.onrender.com"
+              src="https://scraper-frontend-3hnj.onrender.com"
               className="absolute top-0 left-0 w-full h-full border-2 border-samurai-red/50 rounded-lg"
               title="Scraper Web Application"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
