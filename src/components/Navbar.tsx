@@ -51,6 +51,36 @@ export default function Navbar() {
                 isActive('/scraper') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
+            <Link to="/ldgr" className={`font-bold transition-all relative group ${
+              isActive('/ldgr') 
+                ? 'text-samurai-red neon-text' 
+                : 'text-samurai-steel-light hover:text-samurai-red'
+            }`}>
+              LDGR
+              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                isActive('/ldgr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+              }`}></span>
+            </Link>
+            <Link to="/wspr" className={`font-bold transition-all relative group ${
+              isActive('/wspr') 
+                ? 'text-samurai-red neon-text' 
+                : 'text-samurai-steel-light hover:text-samurai-red'
+            }`}>
+              WSPR
+              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                isActive('/wspr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+              }`}></span>
+            </Link>
+            <Link to="/omni" className={`font-bold transition-all relative group ${
+              isActive('/omni') 
+                ? 'text-samurai-red neon-text' 
+                : 'text-samurai-steel-light hover:text-samurai-red'
+            }`}>
+              OMNI
+              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                isActive('/omni') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+              }`}></span>
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -102,6 +132,39 @@ export default function Navbar() {
               onClick={() => setIsOpen(false)}
             >
               SCRP
+            </Link>
+            <Link
+              to="/ldgr"
+              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                isActive('/ldgr') 
+                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              LDGR
+            </Link>
+            <Link
+              to="/wspr"
+              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                isActive('/wspr') 
+                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              WSPR
+            </Link>
+            <Link
+              to="/omni"
+              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                isActive('/omni') 
+                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+              }`}
+              onClick={() => setIsOpen(false)}
+            >
+              OMNI
             </Link>
           </div>
         </div>
