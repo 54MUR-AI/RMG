@@ -97,7 +97,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1, isolation: 'isolate' }}>
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ zIndex: -1, isolation: 'isolate', transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}>
       {embers.map((ember) => (
         <div
           key={ember.id}
@@ -115,6 +115,8 @@ export default function FloatingEmbers() {
               opacity: ember.opacity,
               animation: `emberFlickerChaotic ${1 + Math.random() * 2}s ease-in-out infinite, emberPulseGlow${ember.id} ${2 + Math.random()}s ease-in-out infinite`,
               willChange: 'transform, opacity',
+              transform: 'translate3d(0,0,0)',
+              backfaceVisibility: 'hidden',
             }}
           />
         </div>

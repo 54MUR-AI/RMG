@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-samurai-black relative">
       {/* Floating embers - spans entire page */}
-      <div className="fixed inset-0 pointer-events-none z-50">
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
         <FloatingEmbers />
       </div>
       
@@ -74,7 +74,7 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <div className="mb-6">
+            <div className="mb-6 relative" style={{ zIndex: 10, transform: 'translate3d(0,0,0)' }}>
               <CrossedKatanasIcon size={80} className="text-samurai-red mx-auto animate-flame-flicker" />
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 neon-text">
