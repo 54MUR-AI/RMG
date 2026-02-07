@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AppInfoPopup from '../components/AppInfoPopup'
 
 export default function StonksPage() {
   const [showPopup, setShowPopup] = useState(true)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const features = [
     'Advanced ML models: LSTM, Transformer, WaveNet, Graph Neural Networks',

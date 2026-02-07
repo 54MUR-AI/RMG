@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import AppInfoPopup from '../components/AppInfoPopup'
 
 export default function ScraperPage() {
   const [showPopup, setShowPopup] = useState(true)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   const features = [
     'Multi-source scraping: Articles, YouTube videos, PDFs, and web pages',

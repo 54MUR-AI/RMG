@@ -74,7 +74,7 @@ export default function FloatingEmbers() {
           transform: translateY(-90vh) translateX(${ember.horizontalMeander * -0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.5);
         }
         100% {
-          transform: translateY(-100vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.3);
+          transform: translateY(-120vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.2);
         }
       }
       

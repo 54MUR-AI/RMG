@@ -5,7 +5,7 @@ export default function LdgrPage() {
   const [showReadme, setShowReadme] = useState(true)
 
   useEffect(() => {
-    // Show popup when page loads
+    window.scrollTo(0, 0)
     setShowReadme(true)
   }, [])
 
