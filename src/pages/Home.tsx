@@ -110,13 +110,7 @@ export default function Home() {
                 featuredCard === 'OMNI' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
               style={{ order: getCardOrder('OMNI'), transition: 'order 0s' }}
-              onClick={() => {
-                if (featuredCard === 'OMNI') {
-                  setFeaturedCard(null)
-                } else {
-                  setFeaturedCard('OMNI')
-                }
-              }}
+              onClick={() => setFeaturedCard('OMNI')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -189,13 +183,7 @@ export default function Home() {
                 featuredCard === 'SCRP' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
               style={{ order: getCardOrder('SCRP'), transition: 'order 0s' }}
-              onClick={() => {
-                if (featuredCard === 'SCRP') {
-                  setFeaturedCard(null)
-                } else {
-                  setFeaturedCard('SCRP')
-                }
-              }}
+              onClick={() => setFeaturedCard('SCRP')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -265,13 +253,7 @@ export default function Home() {
                 featuredCard === 'LDGR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
               style={{ order: getCardOrder('LDGR'), transition: 'order 0s' }}
-              onClick={() => {
-                if (featuredCard === 'LDGR') {
-                  setFeaturedCard(null)
-                } else {
-                  setFeaturedCard('LDGR')
-                }
-              }}
+              onClick={() => setFeaturedCard('LDGR')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -341,13 +323,7 @@ export default function Home() {
                 featuredCard === 'WSPR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
               style={{ order: getCardOrder('WSPR'), transition: 'order 0s' }}
-              onClick={() => {
-                if (featuredCard === 'WSPR') {
-                  setFeaturedCard(null)
-                } else {
-                  setFeaturedCard('WSPR')
-                }
-              }}
+              onClick={() => setFeaturedCard('WSPR')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
@@ -417,13 +393,7 @@ export default function Home() {
                 featuredCard === 'STONKS' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
               style={{ order: getCardOrder('STONKS'), transition: 'order 0s' }}
-              onClick={() => {
-                if (featuredCard === 'STONKS') {
-                  setFeaturedCard(null)
-                } else {
-                  setFeaturedCard('STONKS')
-                }
-              }}
+              onClick={() => setFeaturedCard('STONKS')}
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
