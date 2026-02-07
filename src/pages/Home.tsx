@@ -94,7 +94,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
                   <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <TrendingUp className="text-samurai-red" size={32} />
+                    <TrendingUp className="text-white group-hover:text-samurai-red transition-colors" size={32} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
@@ -157,7 +157,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
                   <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <FileText className="text-samurai-red" size={32} />
+                    <FileText className="text-white group-hover:text-samurai-red transition-colors" size={32} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
@@ -220,7 +220,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
                   <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <Lock className="text-samurai-red" size={32} />
+                    <Lock className="text-white group-hover:text-samurai-red transition-colors" size={32} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
@@ -278,7 +278,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
                   <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <Zap className="text-samurai-red" size={32} />
+                    <Zap className="text-white group-hover:text-samurai-red transition-colors" size={32} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
