@@ -1,6 +1,7 @@
 import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Shield } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
 import KatanaIcon from '../components/KatanaIcon'
+import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
 import { useState } from 'react'
