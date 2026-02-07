@@ -103,7 +103,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_1.5fr_1fr] lg:grid-rows-2 gap-6 mb-12 lg:auto-rows-fr">
+          <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-2 gap-6 mb-12 lg:auto-rows-fr">
             {/* OMNI Card */}
             <div 
               className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
