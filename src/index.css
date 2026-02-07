@@ -98,10 +98,10 @@ code {
 /* Neon text effect */
 .neon-text {
   text-shadow: 
-    0 0 10px rgba(230, 57, 70, 0.8),
-    0 0 20px rgba(230, 57, 70, 0.6),
-    0 0 30px rgba(230, 57, 70, 0.4),
-    0 0 40px rgba(230, 57, 70, 0.2);
+    0 0 10px rgba(230, 57, 70, 0.56),
+    0 0 20px rgba(230, 57, 70, 0.42),
+    0 0 30px rgba(230, 57, 70, 0.28),
+    0 0 40px rgba(230, 57, 70, 0.14);
 }
 
 /* Card hover effects */
@@ -193,11 +193,11 @@ code {
 @keyframes flame-pulse-big {
   0%, 100% {
     transform: scale(1);
-    filter: brightness(1) drop-shadow(0 0 15px rgba(230, 57, 70, 1));
+    filter: brightness(1) drop-shadow(0 0 15px rgba(230, 57, 70, 0.7));
   }
   50% {
     transform: scale(1.4);
-    filter: brightness(1.3) drop-shadow(0 0 30px rgba(230, 57, 70, 1));
+    filter: brightness(1.3) drop-shadow(0 0 30px rgba(230, 57, 70, 0.7));
   }
 }
 
