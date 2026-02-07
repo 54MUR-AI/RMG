@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import ReadmePopup from '../components/ReadmePopup'
+import FloatingEmbers from '../components/FloatingEmbers'
 
 export default function LdgrPage() {
   const [showReadme, setShowReadme] = useState(true)
@@ -11,6 +12,9 @@ export default function LdgrPage() {
 
   return (
     <div className="min-h-screen bg-samurai-black">
+      {/* Floating embers - fixed to viewport */}
+      <FloatingEmbers />
+
       {showReadme && (
         <ReadmePopup
           title="LDGR"
