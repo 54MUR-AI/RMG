@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Github, Flame } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Navbar() {
@@ -13,10 +13,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-3 group">
-              <div className="w-12 h-12 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                <Flame className="text-samurai-red animate-flame-flicker" size={28} />
-              </div>
+            <Link to="/" className="group">
               <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA</span>
             </Link>
           </div>
@@ -53,15 +50,6 @@ export default function Navbar() {
                 isActive('/scraper') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
-            <a 
-              href="https://github.com/54MUR-AI" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-samurai-red text-white px-5 py-2.5 rounded-lg hover:bg-samurai-red-dark transition-all flame-glow font-bold"
-            >
-              <Github size={20} />
-              <span>GITHUB</span>
-            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -114,14 +102,6 @@ export default function Navbar() {
             >
               SCRP
             </Link>
-            <a
-              href="https://github.com/54MUR-AI"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block px-4 py-4 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all touch-manipulation text-lg"
-            >
-              GITHUB
-            </a>
           </div>
         </div>
       )}
