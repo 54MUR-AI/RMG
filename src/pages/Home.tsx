@@ -1,13 +1,15 @@
-import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Hammer, Lock } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Hammer, Lock, Info, Brain } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
 import KatanaIcon from '../components/KatanaIcon'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
+import InfoPopup from '../components/InfoPopup'
 import { useState } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
+  const [infoPopup, setInfoPopup] = useState<{ title: string; features: string[] } | null>(null)
 
   return (
     <div className="min-h-screen bg-samurai-black relative">
@@ -85,127 +87,116 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {/* STONKS Card - Katana */}
-            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-8 border-2 border-samurai-steel-dark relative overflow-hidden">
+            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden">
               {/* Glow effect on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <TrendingUp className="text-white group-hover:text-samurai-red transition-colors" size={32} />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
+                      <TrendingUp className="text-white group-hover:text-samurai-red transition-colors" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
+                        STONKS
+                      </h3>
+                      <p className="text-xs text-samurai-red font-bold tracking-wider">Smart Trading Options <span className="lowercase">for</span> Novices & Knowledgeable Speculators</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      STONKS
-                    </h3>
-                    <p className="text-sm text-samurai-red font-bold tracking-wider">Smart Trading Options <span className="lowercase">for</span> Novices & Knowledgeable Speculators</p>
-                  </div>
+                  <button
+                    onClick={() => setInfoPopup({ 
+                      title: 'STONKS', 
+                      features: [
+                        'LSTM, Transformer & GNN Neural Networks',
+                        'News Intelligence & Sentiment Analysis',
+                        'Portfolio Optimization & Risk Analytics',
+                        'Production-Grade Infrastructure'
+                      ]
+                    })}
+                    className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
+                  >
+                    <Info className="text-samurai-red" size={20} />
+                  </button>
                 </div>
                 
-                <p className="text-white/90 mb-8 text-base leading-relaxed">
-                  Slice through market chaos with precision. Advanced ML platform wielding 
-                  real-time analysis, predictive strategies, and news intelligence.
+                <p className="text-white/80 mb-4 text-sm leading-relaxed">
+                  Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.
                 </p>
                 
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">LSTM, Transformer & GNN Neural Networks</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">News Intelligence & Sentiment Analysis</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Portfolio Optimization & Risk Analytics</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Production-Grade Infrastructure</span>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   <button
                     onClick={() => setReadmePopup({ title: 'STONKS', url: 'https://raw.githubusercontent.com/54MUR-AI/stonks/main/README.md' })}
-                    className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
                   >
                     <span>Details</span>
-                    <ArrowRight className="ml-2 group-hover/btn:translate-x-1 transition-transform" size={20} />
                   </button>
                   <a
                     href="https://stonks-app.onrender.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-red text-white rounded-xl font-bold hover:bg-samurai-red-dark transition-all flame-glow"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
                   >
-                    <Zap className="mr-2" size={20} />
+                    <Zap className="mr-1" size={16} />
                     Launch
                   </a>
                 </div>
               </div>
             </div>
 
-            {/* Scraper Card - Wakizashi */}
-            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-8 border-2 border-samurai-steel-dark relative overflow-hidden">
-              {/* Glow effect on hover */}
+            {/* SCRP Card */}
+            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <FileText className="text-white group-hover:text-samurai-red transition-colors" size={32} />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
+                      <FileText className="text-white group-hover:text-samurai-red transition-colors" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
+                        SCRP
+                      </h3>
+                      <p className="text-xs text-samurai-red font-bold tracking-wider">Smart Content Retrieval & Processing</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      SCRP
-                    </h3>
-                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Smart Content Retrieval & Processing</p>
-                  </div>
+                  <button
+                    onClick={() => setInfoPopup({ 
+                      title: 'SCRP', 
+                      features: [
+                        'Multi-Source Scraping (Articles, Videos, PDFs)',
+                        'AI Summarization (GPT-4, Claude, Ollama)',
+                        'Key Points Extraction & Analysis',
+                        'High-Speed Batch Processing'
+                      ]
+                    })}
+                    className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
+                  >
+                    <Info className="text-samurai-red" size={20} />
+                  </button>
                 </div>
                 
-                <p className="text-white/90 mb-8 text-base leading-relaxed">
-                  AI-powered content extraction and summarization-powered scraping that conquers 
-                  articles, videos, PDFs, and transforms them into actionable intelligence.
+                <p className="text-white/80 mb-4 text-sm leading-relaxed">
+                  AI-powered content extraction and summarization that transforms articles, videos, and PDFs into actionable intelligence.
                 </p>
                 
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Multi-Source Scraping (Articles, Videos, PDFs)</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">AI Summarization (GPT-4, Claude, Ollama)</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Key Points Extraction & Analysis</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">High-Speed Batch Processing</span>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   <button
                     onClick={() => setReadmePopup({ title: 'SCRP', url: 'https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md' })}
-                    className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
                   >
                     <span>Details</span>
-                    <ArrowRight className="ml-2 group-hover/btn:translate-x-1 transition-transform" size={20} />
                   </button>
                   <a
                     href="https://scraper-frontend-3hnj.onrender.com"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-red text-white rounded-xl font-bold hover:bg-samurai-red-dark transition-all flame-glow"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
                   >
-                    <Zap className="mr-2" size={20} />
+                    <Zap className="mr-1" size={16} />
                     Launch
                   </a>
                 </div>
@@ -213,116 +204,164 @@ export default function Home() {
             </div>
 
             {/* LDGR Card */}
-            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-8 border-2 border-samurai-steel-dark relative overflow-hidden">
-              {/* Glow effect on hover */}
+            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <Lock className="text-white group-hover:text-samurai-red transition-colors" size={32} />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
+                      <Lock className="text-white group-hover:text-samurai-red transition-colors" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
+                        LDGR
+                      </h3>
+                      <p className="text-xs text-samurai-red font-bold tracking-wider">Layered Data Gateway & Repository</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      LDGR
-                    </h3>
-                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Layered Data Gateway & Repository</p>
-                  </div>
+                  <button
+                    onClick={() => setInfoPopup({ 
+                      title: 'LDGR', 
+                      features: [
+                        'Blockchain Integration (Ethereum/Hardhat)',
+                        'AES/RSA High-Level Encryption',
+                        'Smart Contract Data Transactions',
+                        'User-Friendly Database Management'
+                      ]
+                    })}
+                    className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
+                  >
+                    <Info className="text-samurai-red" size={20} />
+                  </button>
                 </div>
                 
-                <p className="text-white/90 mb-8 text-base leading-relaxed">
+                <p className="text-white/80 mb-4 text-sm leading-relaxed">
                   Blockchain-powered database management with military-grade encryption and immutable data storage.
                 </p>
                 
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Blockchain Integration (Ethereum/Hardhat)</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">AES/RSA High-Level Encryption</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Smart Contract Data Transactions</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">User-Friendly Database Management</span>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   <a
                     href="https://github.com/54MUR-AI/ldgr"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
                   >
-                    <Github className="mr-2" size={20} />
-                    <span>View Source</span>
+                    <Github className="mr-1" size={16} />
+                    <span>Source</span>
                   </a>
-                  <div className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-grey-dark text-white/50 rounded-xl font-bold cursor-not-allowed">
-                    <span>In Development</span>
+                  <div className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-grey-dark text-white/50 rounded-lg font-bold cursor-not-allowed text-sm">
+                    <span>In Dev</span>
                   </div>
                 </div>
               </div>
             </div>
 
             {/* WSPR Card */}
-            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-8 border-2 border-samurai-steel-dark relative overflow-hidden">
-              {/* Glow effect on hover */}
+            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden">
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
               <div className="relative z-10">
-                <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <Zap className="text-white group-hover:text-samurai-red transition-colors" size={32} />
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
+                      <Zap className="text-white group-hover:text-samurai-red transition-colors" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
+                        WSPR
+                      </h3>
+                      <p className="text-xs text-samurai-red font-bold tracking-wider">Web-Secure P2P Relay</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      WSPR
-                    </h3>
-                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Web-Secure P2P Relay</p>
-                  </div>
+                  <button
+                    onClick={() => setInfoPopup({ 
+                      title: 'WSPR', 
+                      features: [
+                        'End-to-End AES-GCM Encryption',
+                        'Real-Time Encrypted Messaging',
+                        'Two-Factor Authentication (2FA)',
+                        'React + TypeScript + PostgreSQL'
+                      ]
+                    })}
+                    className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
+                  >
+                    <Info className="text-samurai-red" size={20} />
+                  </button>
                 </div>
                 
-                <p className="text-white/90 mb-8 text-base leading-relaxed">
+                <p className="text-white/80 mb-4 text-sm leading-relaxed">
                   Privacy-focused encrypted communication platform with end-to-end encryption and perfect forward secrecy.
                 </p>
                 
-                <div className="space-y-3 mb-8">
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">End-to-End AES-GCM Encryption</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Real-Time Encrypted Messaging</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">Two-Factor Authentication (2FA)</span>
-                  </div>
-                  <div className="flex items-start relative" style={{ zIndex: 1 }}>
-                    <Flame size={18} className="mr-3 text-samurai-red flex-shrink-0 mt-1 animate-flame-flicker" />
-                    <span className="text-white/70">React + TypeScript + PostgreSQL</span>
-                  </div>
-                </div>
-                
-                <div className="flex gap-4">
+                <div className="flex gap-3">
                   <a
                     href="https://github.com/54MUR-AI/wspr-web-new"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all group/btn"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
                   >
-                    <Github className="mr-2" size={20} />
-                    <span>View Source</span>
+                    <Github className="mr-1" size={16} />
+                    <span>Source</span>
                   </a>
-                  <div className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-samurai-grey-dark text-white/50 rounded-xl font-bold cursor-not-allowed">
-                    <span>In Development</span>
+                  <div className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-grey-dark text-white/50 rounded-lg font-bold cursor-not-allowed text-sm">
+                    <span>In Dev</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* OMNI Card */}
+            <div className="group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              <div className="relative z-10">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
+                      <Brain className="text-white group-hover:text-samurai-red transition-colors" size={24} />
+                    </div>
+                    <div>
+                      <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
+                        OMNI
+                      </h3>
+                      <p className="text-xs text-samurai-red font-bold tracking-wider">Optimized Multi-Model Networked Intelligence</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setInfoPopup({ 
+                      title: 'OMNI', 
+                      features: [
+                        'Multiple AI Models (Ollama, Claude, GPT, Grok)',
+                        'PyQt6 Desktop Application',
+                        'Plugin System with Marketplace',
+                        'Text-to-Speech & Audio Capabilities',
+                        'Vector Database Integration',
+                        'Code Editor with Syntax Highlighting'
+                      ]
+                    })}
+                    className="p-2 hover:bg-samurai-red/20 rounded-lg transition-colors"
+                  >
+                    <Info className="text-samurai-red" size={20} />
+                  </button>
+                </div>
+                
+                <p className="text-white/80 mb-4 text-sm leading-relaxed">
+                  Comprehensive AI dashboard providing multi-model interaction, plugin management, and performance monitoring.
+                </p>
+                
+                <div className="flex gap-3">
+                  <a
+                    href="https://github.com/54MUR-AI/omni"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
+                  >
+                    <Github className="mr-1" size={16} />
+                    <span>Source</span>
+                  </a>
+                  <div className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-grey-dark text-white/50 rounded-lg font-bold cursor-not-allowed text-sm">
+                    <span>In Dev</span>
                   </div>
                 </div>
               </div>
@@ -480,6 +519,15 @@ export default function Home() {
           title={readmePopup.title}
           readmeUrl={readmePopup.url}
           onClose={() => setReadmePopup(null)}
+        />
+      )}
+
+      {/* Info Popup */}
+      {infoPopup && (
+        <InfoPopup
+          title={infoPopup.title}
+          features={infoPopup.features}
+          onClose={() => setInfoPopup(null)}
         />
       )}
     </div>
