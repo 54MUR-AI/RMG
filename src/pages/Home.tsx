@@ -99,7 +99,7 @@ export default function Home() {
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       STONKS
                     </h3>
-                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Smart Trading Options for Novices & Knowledgeable Speculators</p>
+                    <p className="text-sm text-samurai-red font-bold tracking-wider">Smart Trading Options <span className="lowercase">for</span> Novices & Knowledgeable Speculators</p>
                   </div>
                 </div>
                 
