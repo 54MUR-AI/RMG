@@ -1,42 +1,45 @@
 import { Link } from 'react-router-dom'
-import { Menu, X, Github } from 'lucide-react'
+import { Menu, X, Github, Flame } from 'lucide-react'
 import { useState } from 'react'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <nav className="bg-white shadow-lg sticky top-0 z-50">
+    <nav className="bg-samurai-black border-b-2 border-samurai-red sticky top-0 z-50 shadow-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-10 h-10 gradient-bg rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-xl">R</span>
+            <Link to="/" className="flex items-center space-x-3 group">
+              <div className="w-12 h-12 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
+                <Flame className="text-samurai-red animate-flame-flicker" size={28} />
               </div>
-              <span className="text-2xl font-bold gradient-text">Ronin Media Group</span>
+              <span className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA GROUP</span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-purple-600 font-medium transition">
+            <Link to="/" className="text-samurai-steel-light hover:text-samurai-red font-bold transition-colors relative group">
               Home
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-samurai-red group-hover:w-full transition-all"></span>
             </Link>
-            <Link to="/stonks" className="text-gray-700 hover:text-purple-600 font-medium transition">
+            <Link to="/stonks" className="text-samurai-steel-light hover:text-samurai-red font-bold transition-colors relative group">
               STONKS
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-samurai-red group-hover:w-full transition-all"></span>
             </Link>
-            <Link to="/scraper" className="text-gray-700 hover:text-purple-600 font-medium transition">
-              Scraper
+            <Link to="/scraper" className="text-samurai-steel-light hover:text-samurai-red font-bold transition-colors relative group">
+              SCRAPER
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-samurai-red group-hover:w-full transition-all"></span>
             </Link>
             <a 
               href="https://github.com/54MUR-AI" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 bg-gray-900 text-white px-4 py-2 rounded-lg hover:bg-gray-800 transition"
+              className="flex items-center space-x-2 bg-samurai-red text-white px-5 py-2.5 rounded-lg hover:bg-samurai-red-dark transition-all flame-glow font-bold"
             >
               <Github size={20} />
-              <span>GitHub</span>
+              <span>GITHUB</span>
             </a>
           </div>
 
@@ -44,9 +47,9 @@ export default function Navbar() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-700 hover:text-purple-600"
+              className="text-samurai-steel-light hover:text-samurai-red transition-colors"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
@@ -54,36 +57,36 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-white border-t">
+        <div className="md:hidden bg-samurai-grey-darker border-t-2 border-samurai-red">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
               to="/"
-              className="block px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-md"
+              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
               onClick={() => setIsOpen(false)}
             >
               Home
             </Link>
             <Link
               to="/stonks"
-              className="block px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-md"
+              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
               onClick={() => setIsOpen(false)}
             >
               STONKS
             </Link>
             <Link
               to="/scraper"
-              className="block px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-md"
+              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
               onClick={() => setIsOpen(false)}
             >
-              Scraper
+              SCRAPER
             </Link>
             <a
               href="https://github.com/54MUR-AI"
               target="_blank"
               rel="noopener noreferrer"
-              className="block px-3 py-2 text-gray-700 hover:bg-purple-50 hover:text-purple-600 rounded-md"
+              className="block px-4 py-3 text-samurai-steel-light hover:bg-samurai-red hover:text-white rounded-lg font-bold transition-all"
             >
-              GitHub
+              GITHUB
             </a>
           </div>
         </div>

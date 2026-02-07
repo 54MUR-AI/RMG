@@ -8,7 +8,7 @@ import ScraperPage from './pages/ScraperPage'
 function App() {
   return (
     <Router>
-      <div className="min-h-screen flex flex-col bg-gray-50">
+      <div className="min-h-screen flex flex-col bg-samurai-black">
         <Navbar />
         <main className="flex-grow">
           <Routes>

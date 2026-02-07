@@ -11,6 +11,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #0A0A0A;
 }
 
 code {
@@ -18,13 +19,114 @@ code {
     monospace;
 }
 
+/* Samurai-inspired gradients */
 .gradient-bg {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #C1121F 0%, #E63946 50%, #8B0000 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(230, 57, 70, 0.3) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #E63946 0%, #C1121F 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Flame effect */
+.flame-glow {
+  box-shadow: 
+    0 0 20px rgba(230, 57, 70, 0.5),
+    0 0 40px rgba(230, 57, 70, 0.3),
+    0 0 60px rgba(230, 57, 70, 0.1);
+}
+
+/* Steel texture */
+.steel-texture {
+  background: linear-gradient(145deg, #4B5563, #6B7280);
+  box-shadow: 
+    inset 0 2px 4px rgba(0,0,0,0.3),
+    inset 0 -2px 4px rgba(255,255,255,0.1);
+}
+
+/* Glowing border effect */
+.glow-border {
+  position: relative;
+  border: 2px solid transparent;
+  background: linear-gradient(#0A0A0A, #0A0A0A) padding-box,
+              linear-gradient(135deg, #E63946, #C1121F) border-box;
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(135deg, #E63946, #C1121F);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0.5;
+  filter: blur(4px);
+}
+
+/* Parallax effect */
+.parallax-layer {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* Neon text effect */
+.neon-text {
+  text-shadow: 
+    0 0 10px rgba(230, 57, 70, 0.8),
+    0 0 20px rgba(230, 57, 70, 0.6),
+    0 0 30px rgba(230, 57, 70, 0.4),
+    0 0 40px rgba(230, 57, 70, 0.2);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 
+    0 20px 40px rgba(230, 57, 70, 0.3),
+    0 0 60px rgba(230, 57, 70, 0.2);
+}
+
+/* Animated background pattern */
+.pattern-bg {
+  background-image: 
+    linear-gradient(45deg, rgba(230, 57, 70, 0.05) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(230, 57, 70, 0.05) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(230, 57, 70, 0.05) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(230, 57, 70, 0.05) 75%);
+  background-size: 40px 40px;
+  background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+  animation: patternMove 20s linear infinite;
+}
+
+@keyframes patternMove {
+  0% { background-position: 0 0, 0 20px, 20px -20px, -20px 0px; }
+  100% { background-position: 40px 40px, 40px 60px, 60px 20px, 20px 40px; }
 }
