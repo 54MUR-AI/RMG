@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3 group">
-              <Flame className="text-white group-hover:text-samurai-red transition-colors animate-flame-flicker" size={56} />
+              <Flame className="text-white group-hover:text-samurai-red transition-colors animate-flame-flicker" size={48} />
               <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA</span>
             </Link>
           </div>
