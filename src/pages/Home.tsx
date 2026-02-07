@@ -1,7 +1,6 @@
-import { TrendingUp, FileText, Sparkles, Github, Zap, Flame, Hammer, Lock, Info, Brain } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Lock, Info, Brain } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import FloatingEmbers from '../components/FloatingEmbers'
-import KatanaIcon from '../components/KatanaIcon'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
