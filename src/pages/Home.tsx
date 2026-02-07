@@ -1,4 +1,5 @@
 import { TrendingUp, FileText, Sparkles, Github, Zap, Flame, Hammer, Lock, Info, Brain } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import FloatingEmbers from '../components/FloatingEmbers'
 import KatanaIcon from '../components/KatanaIcon'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
@@ -126,23 +127,13 @@ export default function Home() {
                   Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.
                 </p>
                 
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setReadmePopup({ title: 'STONKS', url: 'https://raw.githubusercontent.com/54MUR-AI/stonks/main/README.md' })}
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
-                  >
-                    <span>Details</span>
-                  </button>
-                  <a
-                    href="https://stonks-app.onrender.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
-                  >
-                    <Zap className="mr-1" size={16} />
-                    Launch
-                  </a>
-                </div>
+                <Link
+                  to="/stonks"
+                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
+                >
+                  <Zap className="mr-2" size={18} />
+                  Launch
+                </Link>
               </div>
             </div>
 
@@ -183,23 +174,13 @@ export default function Home() {
                   AI-powered content extraction and summarization that transforms articles, videos, and PDFs into actionable intelligence.
                 </p>
                 
-                <div className="flex gap-3">
-                  <button
-                    onClick={() => setReadmePopup({ title: 'SCRP', url: 'https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md' })}
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
-                  >
-                    <span>Details</span>
-                  </button>
-                  <a
-                    href="https://scraper-frontend-3hnj.onrender.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
-                  >
-                    <Zap className="mr-1" size={16} />
-                    Launch
-                  </a>
-                </div>
+                <Link
+                  to="/scraper"
+                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
+                >
+                  <Zap className="mr-2" size={18} />
+                  Launch
+                </Link>
               </div>
             </div>
 
@@ -240,20 +221,13 @@ export default function Home() {
                   Blockchain-powered database management with military-grade encryption and immutable data storage.
                 </p>
                 
-                <div className="flex gap-3">
-                  <a
-                    href="https://github.com/54MUR-AI/ldgr"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
-                  >
-                    <Github className="mr-1" size={16} />
-                    <span>Source</span>
-                  </a>
-                  <div className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-grey-dark text-white/50 rounded-lg font-bold cursor-not-allowed text-sm">
-                    <span>In Dev</span>
-                  </div>
-                </div>
+                <Link
+                  to="/ldgr"
+                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
+                >
+                  <Zap className="mr-2" size={18} />
+                  Launch
+                </Link>
               </div>
             </div>
 
@@ -294,20 +268,13 @@ export default function Home() {
                   Privacy-focused encrypted communication platform with end-to-end encryption and perfect forward secrecy.
                 </p>
                 
-                <div className="flex gap-3">
-                  <a
-                    href="https://github.com/54MUR-AI/wspr-web-new"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
-                  >
-                    <Github className="mr-1" size={16} />
-                    <span>Source</span>
-                  </a>
-                  <div className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-grey-dark text-white/50 rounded-lg font-bold cursor-not-allowed text-sm">
-                    <span>In Dev</span>
-                  </div>
-                </div>
+                <Link
+                  to="/wspr"
+                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
+                >
+                  <Zap className="mr-2" size={18} />
+                  Launch
+                </Link>
               </div>
             </div>
 
@@ -350,20 +317,13 @@ export default function Home() {
                   Comprehensive AI dashboard providing multi-model interaction, plugin management, and performance monitoring.
                 </p>
                 
-                <div className="flex gap-3">
-                  <a
-                    href="https://github.com/54MUR-AI/omni"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center px-4 py-2 border-2 border-samurai-red text-samurai-red rounded-lg font-bold hover:bg-samurai-red hover:text-white transition-all text-sm"
-                  >
-                    <Github className="mr-1" size={16} />
-                    <span>Source</span>
-                  </a>
-                  <div className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-samurai-grey-dark text-white/50 rounded-lg font-bold cursor-not-allowed text-sm">
-                    <span>In Dev</span>
-                  </div>
-                </div>
+                <Link
+                  to="/omni"
+                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm"
+                >
+                  <Zap className="mr-2" size={18} />
+                  Launch
+                </Link>
               </div>
             </div>
           </div>
