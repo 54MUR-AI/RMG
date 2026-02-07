@@ -32,6 +32,10 @@ export default function Navbar() {
                 isActive('/') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
+            
+            {/* Separator */}
+            <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
+            
             <Link to="/omni" className={`font-bold transition-all relative group ${
               isActive('/omni') 
                 ? 'text-samurai-red neon-text' 
