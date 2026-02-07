@@ -46,7 +46,7 @@ export default function AppInfoPopup({ title, description, features, githubUrl, 
         {/* Content */}
         <div className="text-center mb-6">
           <h2 className="text-4xl font-black text-samurai-red mb-3 uppercase neon-text">{title}</h2>
-          <p className="text-lg text-white/90">{description}</p>
+          <p className="text-base text-white/90 whitespace-nowrap overflow-hidden text-ellipsis">{description}</p>
         </div>
 
         {/* Features */}
@@ -63,18 +63,12 @@ export default function AppInfoPopup({ title, description, features, githubUrl, 
         </div>
 
         {/* Actions */}
-        <div className="flex gap-4">
-          <button
-            onClick={handleClose}
-            className="flex-1 px-6 py-3 bg-samurai-red text-white rounded-xl font-bold hover:bg-samurai-red-dark transition-all flame-glow"
-          >
-            Launch App
-          </button>
+        <div className="flex justify-center">
           <a
             href={githubUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 px-6 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all text-center"
+            className="px-8 py-3 border-2 border-samurai-red text-samurai-red rounded-xl font-bold hover:bg-samurai-red hover:text-white transition-all"
           >
             View Source
           </a>
