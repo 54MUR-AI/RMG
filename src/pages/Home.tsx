@@ -225,7 +225,7 @@ export default function Home() {
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       LDGR
                     </h3>
-                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Ledger Database Gateway & Repository</p>
+                    <p className="text-sm text-samurai-red font-bold uppercase tracking-wider">Layered Data Gateway & Repository</p>
                   </div>
                 </div>
                 
