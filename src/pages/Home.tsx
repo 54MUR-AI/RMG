@@ -50,9 +50,9 @@ export default function Home() {
                 href="https://discord.gg/EHcZ5PZ877"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 bg-samurai-red text-white rounded-xl font-bold text-base sm:text-lg hover:bg-samurai-red-dark transition-all transform hover:scale-105 flame-glow touch-manipulation"
+                className="group inline-flex items-center justify-center px-10 sm:px-14 py-4 sm:py-5 bg-samurai-red text-white rounded-2xl font-black text-lg sm:text-xl hover:bg-white hover:text-samurai-red transition-all duration-300 transform hover:scale-110 shadow-2xl shadow-samurai-red/50 hover:shadow-white/50 border-2 border-white/20 hover:border-samurai-red touch-manipulation uppercase tracking-wider"
               >
-                <DiscordIcon className="mr-3 group-hover:rotate-12 transition-transform" size={24} />
+                <DiscordIcon className="mr-3 group-hover:rotate-12 transition-transform duration-300" size={28} />
                 Enter the Dojo
               </a>
             </div>
@@ -74,8 +74,8 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
-            <div className="inline-block p-4 bg-samurai-red/10 rounded-full mb-6">
-              <CrossedKatanasIcon size={48} className="text-samurai-red mx-auto animate-flame-flicker" />
+            <div className="mb-6">
+              <CrossedKatanasIcon size={80} className="text-samurai-red mx-auto animate-flame-flicker" />
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 neon-text">
               THE ARSENAL
