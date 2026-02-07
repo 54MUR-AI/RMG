@@ -28,6 +28,7 @@ export default {
         'flame-flicker': 'flameFlicker 2s ease-in-out infinite',
         'slide-up': 'slideUp 0.5s ease-out',
         'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'fade-in': 'fadeIn 0.4s ease-out',
       },
       keyframes: {
         flameFlicker: {
@@ -41,6 +42,10 @@ export default {
         glowPulse: {
           '0%, 100%': { boxShadow: '0 0 20px rgba(230, 57, 70, 0.5)' },
           '50%': { boxShadow: '0 0 40px rgba(230, 57, 70, 0.8)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
       },
     },

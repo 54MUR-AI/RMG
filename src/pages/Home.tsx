@@ -106,16 +106,15 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-2 gap-6 mb-12 lg:auto-rows-fr">
             {/* OMNI Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'OMNI' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('OMNI') }}
+              style={{ order: getCardOrder('OMNI'), transition: 'order 0s' }}
               onClick={() => {
                 if (featuredCard === 'OMNI') {
                   setFeaturedCard(null)
                 } else {
-                  document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  setTimeout(() => setFeaturedCard('OMNI'), 300)
+                  setFeaturedCard('OMNI')
                 }
               }}
             >
@@ -186,16 +185,15 @@ export default function Home() {
 
             {/* SCRP Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'SCRP' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('SCRP') }}
+              style={{ order: getCardOrder('SCRP'), transition: 'order 0s' }}
               onClick={() => {
                 if (featuredCard === 'SCRP') {
                   setFeaturedCard(null)
                 } else {
-                  document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  setTimeout(() => setFeaturedCard('SCRP'), 300)
+                  setFeaturedCard('SCRP')
                 }
               }}
             >
@@ -263,16 +261,15 @@ export default function Home() {
 
             {/* LDGR Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'LDGR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('LDGR') }}
+              style={{ order: getCardOrder('LDGR'), transition: 'order 0s' }}
               onClick={() => {
                 if (featuredCard === 'LDGR') {
                   setFeaturedCard(null)
                 } else {
-                  document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  setTimeout(() => setFeaturedCard('LDGR'), 300)
+                  setFeaturedCard('LDGR')
                 }
               }}
             >
@@ -340,16 +337,15 @@ export default function Home() {
 
             {/* WSPR Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'WSPR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('WSPR') }}
+              style={{ order: getCardOrder('WSPR'), transition: 'order 0s' }}
               onClick={() => {
                 if (featuredCard === 'WSPR') {
                   setFeaturedCard(null)
                 } else {
-                  document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  setTimeout(() => setFeaturedCard('WSPR'), 300)
+                  setFeaturedCard('WSPR')
                 }
               }}
             >
@@ -417,16 +413,15 @@ export default function Home() {
 
             {/* STONKS Card */}
             <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer ${
+              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
                 featuredCard === 'STONKS' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
               }`}
-              style={{ order: getCardOrder('STONKS') }}
+              style={{ order: getCardOrder('STONKS'), transition: 'order 0s' }}
               onClick={() => {
                 if (featuredCard === 'STONKS') {
                   setFeaturedCard(null)
                 } else {
-                  document.getElementById('arsenal')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                  setTimeout(() => setFeaturedCard('STONKS'), 300)
+                  setFeaturedCard('STONKS')
                 }
               }}
             >
