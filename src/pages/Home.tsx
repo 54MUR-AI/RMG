@@ -73,9 +73,9 @@ export default function Home() {
         <div className="absolute inset-0 pattern-bg opacity-5"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-20">
-            <div className="inline-block mb-4">
-              <KatanaIcon size={48} className="text-samurai-red mx-auto animate-flame-flicker" />
+          <div className="text-center mb-16">
+            <div className="inline-block p-4 bg-samurai-red/10 rounded-full mb-6">
+              <CrossedKatanasIcon size={48} className="text-samurai-red mx-auto animate-flame-flicker" />
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 neon-text">
               THE ARSENAL
