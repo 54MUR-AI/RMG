@@ -11,18 +11,20 @@ export default function Home() {
   const [featuredCard, setFeaturedCard] = useState<string | null>('OMNI')
 
   // Helper to get CSS Grid order based on which card is featured
-  // Target layout: Col1[Card1, Card5], Col2[FEATURED (tall)], Col3[Card3, Card6]
+  // Target layout: Col1[Card1, Card3], Col2[FEATURED (tall)], Col3[Card2, Card4]
+  // Grid positions: 1=left-top, 2=center-top, 3=right-top, 4=left-bottom, 5=center-bottom, 6=right-bottom
   const getCardOrder = (cardName: string) => {
     if (!featuredCard) return 0 // Natural order when nothing featured
-    if (cardName === featuredCard) return 3 // Featured card in position 3 (center column)
+    if (cardName === featuredCard) return 2 // Featured card in position 2 (center column, spans 2 rows)
     
-    // Cards arranged: 1,2 (left col), 3 (featured center), 4,5 (right col)
-    // When OMNI featured: SCRP=1, LDGR=2, OMNI=3, WSPR=4, STONKS=5
+    // Other 4 cards arranged around featured: positions 1, 3, 4, 6 (skipping 2 and 5 for featured)
+    // When OMNI featured: SCRP=1, LDGR=3, WSPR=4, STONKS=6
     const allCards = ['OMNI', 'SCRP', 'LDGR', 'WSPR', 'STONKS']
     const otherCards = allCards.filter(c => c !== featuredCard)
+    const positions = [1, 3, 4, 6] // Left-top, right-top, left-bottom, right-bottom
     const orderMap: Record<string, number> = {}
     otherCards.forEach((card, idx) => {
-      orderMap[card] = idx < 2 ? idx + 1 : idx + 2 // 1,2 then skip 3 (featured), then 4,5
+      orderMap[card] = positions[idx]
     })
     return orderMap[cardName] || 0
   }
