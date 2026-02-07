@@ -1,24 +1,23 @@
 import { useEffect } from 'react'
+import DiscordIcon from '../components/DiscordIcon'
 
 export default function DiscordPage() {
   useEffect(() => {
     window.scrollTo(0, 0)
+    // Redirect to Discord invite after a brief moment
+    const timer = setTimeout(() => {
+      window.location.href = 'https://discord.gg/EHcZ5PZ877'
+    }, 1500)
+    
+    return () => clearTimeout(timer)
   }, [])
 
   return (
-    <div className="min-h-screen bg-samurai-black">
-      {/* Discord Widget Embed */}
-      <div className="w-full h-[calc(100vh-64px)]">
-        <iframe
-          src="https://discord.com/widget?id=YOUR_SERVER_ID&theme=dark"
-          width="100%"
-          height="100%"
-          allowTransparency={true}
-          frameBorder="0"
-          sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
-          title="Discord Server Widget"
-          className="border-none"
-        />
+    <div className="min-h-screen bg-samurai-black flex items-center justify-center">
+      <div className="text-center">
+        <DiscordIcon size={80} className="text-samurai-red mx-auto mb-6 animate-pulse" />
+        <h1 className="text-4xl font-black text-white mb-4">Entering the Dojo...</h1>
+        <p className="text-xl text-samurai-steel-light">Redirecting to Discord</p>
       </div>
     </div>
   )
