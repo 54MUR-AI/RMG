@@ -1,4 +1,4 @@
-import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Hammer } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, ArrowRight, Github, Zap, Flame, Hammer, Lock } from 'lucide-react'
 import FloatingEmbers from '../components/FloatingEmbers'
 import KatanaIcon from '../components/KatanaIcon'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
@@ -220,7 +220,7 @@ export default function Home() {
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
                   <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
-                    <Shield className="text-samurai-red" size={32} />
+                    <Lock className="text-samurai-red" size={32} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
