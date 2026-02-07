@@ -92,10 +92,10 @@ export default function Home() {
               
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
+                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
                     <TrendingUp className="text-samurai-red" size={32} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       STONKS
                     </h3>
@@ -155,10 +155,10 @@ export default function Home() {
               
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
+                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
                     <FileText className="text-samurai-red" size={32} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       SCRPR
                     </h3>
@@ -218,10 +218,10 @@ export default function Home() {
               
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
+                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
                     <Shield className="text-samurai-red" size={32} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       LDGR
                     </h3>
@@ -276,10 +276,10 @@ export default function Home() {
               
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
+                  <div className="w-16 h-16 flex-shrink-0 steel-texture rounded-2xl flex items-center justify-center mr-4 group-hover:animate-glow-pulse">
                     <Zap className="text-samurai-red" size={32} />
                   </div>
-                  <div>
+                  <div className="flex-1 min-w-0">
                     <h3 className="text-3xl font-black text-white group-hover:text-samurai-red transition-colors">
                       WSPR
                     </h3>
