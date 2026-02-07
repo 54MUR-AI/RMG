@@ -38,7 +38,7 @@ export default function Home() {
             </h1>
             
             <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 sm:mb-6 font-bold text-white px-4">
-              Forging Digital Damascus for the Cyber Swordsman
+              Digital Damascus for the Cyber Swordsman
             </p>
             
             <p className="text-base sm:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed px-4">
