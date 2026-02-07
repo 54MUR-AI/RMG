@@ -84,7 +84,7 @@ export default function Home() {
               THE ARSENAL
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto px-4">
-              Battle-tested tools forged in the fires of innovation
+              Forging Digital Damascus for the Cyber Swordsman
             </p>
           </div>
 
