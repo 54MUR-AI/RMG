@@ -46,7 +46,28 @@ npm run preview
 
 The site runs on `http://localhost:5173` by default.
 
-## 📁 Project Structure
+## � GitHub Pages Deployment
+
+This site is configured for automatic deployment to GitHub Pages.
+
+### Setup (One-time):
+1. Go to your repository settings
+2. Navigate to **Pages** section
+3. Under **Build and deployment**:
+   - Source: **GitHub Actions**
+4. Push to `main` branch to trigger automatic deployment
+
+### Live Site:
+Once deployed, your site will be available at:
+`https://54mur-ai.github.io/RMG/`
+
+### Manual Deployment:
+```bash
+npm run build
+# The dist/ folder contains the production build
+```
+
+## �📁 Project Structure
 
 ```
 RMG/
