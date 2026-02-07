@@ -30,7 +30,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none z-50">
+    <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
       {embers.map((ember) => (
         <div
           key={ember.id}
@@ -39,7 +39,7 @@ export default function FloatingEmbers() {
             left: `${ember.left}%`,
             animationDelay: `${ember.delay}s`,
             animationDuration: `${ember.duration}s`,
-            zIndex: 50,
+            zIndex: 0,
           }}
         >
           <div

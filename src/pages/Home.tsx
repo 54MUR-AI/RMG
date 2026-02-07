@@ -25,11 +25,9 @@ export default function Home() {
               </div>
             </div>
             
-            <h1 className="text-7xl md:text-8xl font-black mb-6 neon-text tracking-tight">
+            <h1 className="text-7xl md:text-8xl font-black mb-8 neon-text tracking-tight">
               RONIN MEDIA GROUP
             </h1>
-            
-            <div className="h-1 w-32 bg-gradient-to-r from-transparent via-samurai-red to-transparent mx-auto mb-8"></div>
             
             <p className="text-2xl md:text-3xl mb-6 font-bold text-white">
               Forging AI-Powered Weapons for the Digital Age
@@ -86,7 +84,6 @@ export default function Home() {
             <h2 className="text-5xl md:text-6xl font-black text-white mb-6 neon-text">
               THE ARSENAL
             </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-transparent via-samurai-red to-transparent mx-auto mb-6"></div>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Battle-tested tools forged in the fires of innovation
             </p>
@@ -234,7 +231,6 @@ export default function Home() {
             <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
               THE FORGE
             </h2>
-            <div className="h-1 w-24 bg-gradient-to-r from-transparent via-samurai-red to-transparent mx-auto mb-6"></div>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Crafted with battle-tested, production-grade technologies
             </p>
