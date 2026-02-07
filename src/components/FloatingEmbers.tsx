@@ -33,6 +33,41 @@ export default function FloatingEmbers() {
     }
     
     setEmbers(newEmbers)
+    
+    // Inject keyframes for each ember
+    const styleSheet = document.createElement('style')
+    styleSheet.textContent = newEmbers.map(ember => `
+      @keyframes floatEmber${ember.id} {
+        0% {
+          transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+          opacity: 0;
+        }
+        5% {
+          opacity: 1;
+        }
+        25% {
+          transform: translateY(-25vh) translateX(${ember.drift * 0.3}px) rotate(${ember.rotation * 0.3}deg) scale(1.1);
+        }
+        50% {
+          transform: translateY(-50vh) translateX(${ember.drift * 0.7}px) rotate(${ember.rotation * 0.6}deg) scale(0.9);
+        }
+        75% {
+          transform: translateY(-75vh) translateX(${ember.drift}px) rotate(${ember.rotation * 0.9}deg) scale(0.7);
+        }
+        95% {
+          opacity: 0.8;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(${ember.drift * 1.2}px) rotate(${ember.rotation}deg) scale(0.3);
+          opacity: 0;
+        }
+      }
+    `).join('\n')
+    document.head.appendChild(styleSheet)
+    
+    return () => {
+      document.head.removeChild(styleSheet)
+    }
   }, [])
 
   return (
@@ -43,11 +78,9 @@ export default function FloatingEmbers() {
           className="absolute bottom-0"
           style={{
             left: `${ember.left}%`,
-            animation: `floatChaotic ${ember.duration}s ease-in-out ${ember.delay}s infinite`,
-            '--drift': `${ember.drift}px`,
-            '--rotation': `${ember.rotation}deg`,
+            animation: `floatEmber${ember.id} ${ember.duration}s ease-in-out ${ember.delay}s infinite`,
             zIndex: 0,
-          } as React.CSSProperties}
+          }}
         >
           <div
             className="rounded-full bg-samurai-red blur-[1px]"
