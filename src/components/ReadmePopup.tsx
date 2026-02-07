@@ -44,25 +44,25 @@ export default function ReadmePopup({ title, readmeUrl, onClose }: ReadmePopupPr
       onClick={handleClose}
     >
       <div 
-        className={`relative max-w-4xl w-full max-h-[90vh] bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl shadow-2xl shadow-samurai-red/50 transform transition-all duration-300 overflow-hidden ${
+        className={`relative max-w-4xl w-full max-h-[90vh] sm:max-h-[85vh] bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl shadow-2xl shadow-samurai-red/50 transform transition-all duration-300 overflow-hidden flex flex-col ${
           isVisible ? 'scale-100' : 'scale-95'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-red p-6 flex items-center justify-between z-10">
-          <h2 className="text-3xl font-black text-samurai-red uppercase neon-text">{title} README</h2>
+        <div className="flex-shrink-0 bg-samurai-grey-darker border-b-2 border-samurai-red p-4 sm:p-6 flex items-center justify-between gap-3">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-samurai-red uppercase neon-text truncate">{title} README</h2>
           <button
             onClick={handleClose}
-            className="p-2 text-white hover:text-samurai-red transition-colors rounded-lg hover:bg-samurai-red/10"
+            className="flex-shrink-0 p-2 text-white hover:text-samurai-red transition-colors rounded-lg hover:bg-samurai-red/10"
             aria-label="Close"
           >
-            <X size={24} />
+            <X size={24} className="sm:w-6 sm:h-6" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-8 overflow-y-auto max-h-[calc(90vh-100px)]">
+        <div className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
           {loading ? (
             <div className="flex items-center justify-center py-12">
               <div className="w-12 h-12 border-4 border-samurai-red border-t-transparent rounded-full animate-spin"></div>
