@@ -125,12 +125,14 @@ code {
 }
 
 .card-hover:hover {
-  transform: translateY(-8px) scale(1.02) translateZ(0);
+  transform: translateY(-8px) translateZ(0);
   box-shadow: 
     0 20px 40px rgba(230, 57, 70, 0.3),
     0 0 60px rgba(230, 57, 70, 0.2);
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -moz-osx-font-smoothing: auto;
 }
 
 /* Animated background pattern */
