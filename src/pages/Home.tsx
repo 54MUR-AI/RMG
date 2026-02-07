@@ -105,7 +105,7 @@ export default function Home() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="relative z-10 h-full flex flex-col">
+              <div className="relative z-20 h-full flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
                     <Brain className="text-white group-hover:text-samurai-red transition-colors" size={24} />
@@ -185,7 +185,7 @@ export default function Home() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="relative z-10 h-full flex flex-col">
+              <div className="relative z-20 h-full flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
                     <FileText className="text-white group-hover:text-samurai-red transition-colors" size={24} />
@@ -262,7 +262,7 @@ export default function Home() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="relative z-10 h-full flex flex-col">
+              <div className="relative z-20 h-full flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
                     <Lock className="text-white group-hover:text-samurai-red transition-colors" size={24} />
@@ -339,7 +339,7 @@ export default function Home() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="relative z-10 h-full flex flex-col">
+              <div className="relative z-20 h-full flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
                     <Zap className="text-white group-hover:text-samurai-red transition-colors" size={24} />
@@ -416,7 +416,7 @@ export default function Home() {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               
-              <div className="relative z-10 h-full flex flex-col">
+              <div className="relative z-20 h-full flex flex-col">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
                     <TrendingUp className="text-white group-hover:text-samurai-red transition-colors" size={24} />
