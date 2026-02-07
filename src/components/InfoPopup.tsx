@@ -23,13 +23,21 @@ export default function InfoPopup({ title, features, icon, thumbnail, onClose }:
 
   return (
     <div 
-      className="fixed inset-0 bg-black/90 backdrop-blur-sm z-[9999] flex items-center justify-center p-4"
+      className="fixed top-0 left-0 right-0 bottom-0 bg-black/90 backdrop-blur-sm z-[9999] p-4"
       onClick={onClose}
-      style={{ alignItems: 'center', justifyContent: 'center' }}
+      style={{ 
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'fixed'
+      }}
     >
       <div 
         className="bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl max-w-2xl w-full max-h-[90vh] flex flex-col relative overflow-hidden"
         onClick={(e) => e.stopPropagation()}
+        style={{
+          margin: 'auto'
+        }}
       >
         <div className="flex-shrink-0 bg-samurai-grey-darker border-b-2 border-samurai-steel-dark p-4 sm:p-6 flex items-center justify-between gap-3 rounded-t-2xl">
           <div className="flex items-center gap-3 min-w-0">
