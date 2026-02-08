@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Flame, Key, User } from 'lucide-react'
+import { Menu, X, Flame, Key } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import DiscordIcon from './DiscordIcon'
 import AuthPopup from './AuthPopup'
@@ -131,15 +131,21 @@ export default function Navbar() {
             
             {/* Auth Icon */}
             {user ? (
-              <button
-                onClick={() => setShowAuthPopup(true)}
-                className="group transition-all hover:scale-110"
-                aria-label="User profile"
-              >
-                <div className="w-8 h-8 rounded-full bg-samurai-red flex items-center justify-center border-2 border-samurai-red group-hover:border-white transition-colors">
-                  <User size={20} className="text-white" />
-                </div>
-              </button>
+              <div className="relative" ref={profileRef}>
+                <button
+                  onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                  className="flex items-center justify-center w-8 h-8 rounded-full text-white font-bold cursor-pointer transition-all hover:scale-110"
+                  style={{ backgroundColor: user.user_metadata?.avatar_color || '#E63946' }}
+                >
+                  {user.user_metadata?.display_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase() || 'U'}
+                </button>
+                {showProfileDropdown && (
+                  <ProfileDropdown
+                    onViewProfile={() => setShowProfilePopup(true)}
+                    onClose={() => setShowProfileDropdown(false)}
+                  />
+                )}
+              </div>
             ) : (
               <button
                 onClick={() => setShowAuthPopup(true)}
