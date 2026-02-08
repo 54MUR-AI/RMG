@@ -25,7 +25,7 @@ export default function FloatingEmbers() {
     for (let i = 0; i < emberCount; i++) {
       newEmbers.push({
         id: i,
-        left: Math.random() * 100,
+        left: 5 + Math.random() * 90, // Keep embers between 5-95% to prevent edge overflow
         delay: Math.random() * 5,
         duration: 12 + Math.random() * 20, // Doubled duration for longer lifespan
         size: 3 + Math.random() * 7,
@@ -106,7 +106,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999, isolation: 'isolate', backfaceVisibility: 'hidden' }}>
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 9999 }}>
       {embers.map((ember) => (
         <div
           key={ember.id}
