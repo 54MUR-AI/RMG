@@ -3,7 +3,7 @@ import { useAuth } from '../contexts/AuthContext'
 import FileUpload from '../components/ldgr/FileUpload'
 import FileList from '../components/ldgr/FileList'
 import FolderView from '../components/ldgr/FolderView'
-import { Lock, Shield, Zap } from 'lucide-react'
+import { Lock, Shield, Zap, BookOpen } from 'lucide-react'
 import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
 import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder } from '../lib/ldgr/folders'
@@ -235,6 +235,15 @@ export default function LdgrPage() {
           </div>
         )}
       </main>
+
+      {/* README Button */}
+      <button
+        onClick={() => window.open('https://github.com/54MUR-AI/ldgr#readme', '_blank')}
+        className="fixed bottom-6 right-6 p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110 z-40"
+        aria-label="README"
+      >
+        <BookOpen className="w-6 h-6" />
+      </button>
     </div>
   )
 }
