@@ -1,5 +1,6 @@
-import { X } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { X, ExternalLink } from 'lucide-react'
+import ModalPortal from './ModalPortal'
 
 interface AppInfoPopupProps {
   title: string
@@ -23,8 +24,9 @@ export default function AppInfoPopup({ title, description, features, githubUrl, 
   }
 
   return (
-    <div 
-      className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-opacity duration-300 ${
+    <ModalPortal>
+      <div 
+        className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-opacity duration-300 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{ backgroundColor: 'rgba(10, 10, 10, 0.85)' }}
@@ -79,5 +81,6 @@ export default function AppInfoPopup({ title, description, features, githubUrl, 
         </p>
       </div>
     </div>
+    </ModalPortal>
   )
 }

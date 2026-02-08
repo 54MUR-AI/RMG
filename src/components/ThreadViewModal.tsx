@@ -4,6 +4,7 @@ import { useAdmin } from '../contexts/AdminContext'
 import { X, Send, ArrowUp, ArrowDown, MessageSquare, Eye, Trash2, Pin, Lock } from 'lucide-react'
 import { getThreadPosts, createPost, voteThread, votePost, deletePost, type ForumThread, type ForumPost } from '../lib/forum'
 import { toggleThreadPin, toggleThreadLock, deleteThread, deletePost as adminDeletePost } from '../lib/admin'
+import ModalPortal from './ModalPortal'
 
 interface ThreadViewModalProps {
   thread: ForumThread
@@ -168,7 +169,8 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
   }
 
   return (
-    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999] p-4">
+    <ModalPortal>
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999] p-4">
       <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-grey p-6 z-10">
@@ -415,5 +417,6 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
         )}
       </div>
     </div>
+    </ModalPortal>
   )
 }

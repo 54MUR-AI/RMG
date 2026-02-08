@@ -1,6 +1,7 @@
 import { X } from 'lucide-react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
+import ModalPortal from './ModalPortal'
 
 interface ReadmePopupProps {
   readmeUrl: string
@@ -35,8 +36,9 @@ export default function ReadmePopup({ readmeUrl, onClose }: ReadmePopupProps) {
   }
 
   return (
-    <div 
-      className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-opacity duration-300 ${
+    <ModalPortal>
+      <div 
+        className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-opacity duration-300 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
       style={{ backgroundColor: 'rgba(10, 10, 10, 0.9)' }}
@@ -102,5 +104,6 @@ export default function ReadmePopup({ readmeUrl, onClose }: ReadmePopupProps) {
         </div>
       </div>
     </div>
+    </ModalPortal>
   )
 }

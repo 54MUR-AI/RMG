@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { X, Lock, Mail, Github } from 'lucide-react'
-import { supabase } from '../lib/supabase'
+import { X, Mail, Lock, Github } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+import DiscordIcon from './DiscordIcon'
+import ModalPortal from './ModalPortal'
 
 interface AuthPopupProps {
   onClose: () => void
@@ -73,7 +75,8 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
   }
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <ModalPortal>
+      <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
       <div className="relative w-full max-w-md bg-samurai-grey-darker border-2 border-samurai-red rounded-xl shadow-2xl shadow-samurai-red/20">
         <button
           onClick={onClose}
@@ -241,5 +244,6 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
         </div>
       </div>
     </div>
+    </ModalPortal>
   )
 }
