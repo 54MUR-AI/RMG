@@ -285,7 +285,7 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
                 onChange={(e) => setReplyContent(e.target.value)}
                 placeholder="Write your reply..."
                 rows={4}
-                className="w-full px-4 py-3 bg-samurai-grey border-2 border-samurai-grey-dark rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors resize-none"
+                className="w-full px-4 py-3 bg-samurai-grey-darker border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors resize-none"
                 maxLength={2000}
               />
               

@@ -81,7 +81,7 @@ export default function CreateThreadModal({ categories, onClose, onSuccess }: Cr
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="What's on your mind?"
-              className="w-full px-4 py-3 bg-samurai-grey border-2 border-samurai-grey-dark rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors"
+              className="w-full px-4 py-3 bg-samurai-grey-darker border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors"
               maxLength={200}
             />
           </div>
@@ -94,7 +94,7 @@ export default function CreateThreadModal({ categories, onClose, onSuccess }: Cr
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full px-4 py-3 bg-samurai-grey border-2 border-samurai-grey-dark rounded-lg text-white focus:border-samurai-red focus:outline-none transition-colors"
+              className="w-full px-4 py-3 bg-samurai-grey-darker border-2 border-samurai-grey rounded-lg text-white focus:border-samurai-red focus:outline-none transition-colors"
             >
               <option value="">General</option>
               {categories.map((category) => (
@@ -115,7 +115,7 @@ export default function CreateThreadModal({ categories, onClose, onSuccess }: Cr
               onChange={(e) => setContent(e.target.value)}
               placeholder="Share your thoughts..."
               rows={8}
-              className="w-full px-4 py-3 bg-samurai-grey border-2 border-samurai-grey-dark rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors resize-none"
+              className="w-full px-4 py-3 bg-samurai-grey-darker border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors resize-none"
               maxLength={5000}
             />
             <div className="text-right text-sm text-white/50 mt-1">
