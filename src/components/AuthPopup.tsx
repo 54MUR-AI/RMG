@@ -11,6 +11,7 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
   const [isForgotPassword, setIsForgotPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [rememberMe, setRememberMe] = useState(true)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [message, setMessage] = useState<string | null>(null)
@@ -36,6 +37,8 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
         if (error) throw error
         setMessage('Check your email for the confirmation link!')
       } else {
+        // Supabase automatically persists sessions in localStorage by default
+        // The rememberMe option is more about UX - we keep it for user preference indication
         const { error } = await supabase.auth.signInWithPassword({
           email,
           password,
@@ -91,23 +94,40 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
             </div>
 
             {!isForgotPassword && (
-              <div>
-                <label className="block text-sm font-medium text-white/80 mb-2">
-                  Password
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={20} />
-                  <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full pl-10 pr-4 py-3 bg-samurai-black border-2 border-samurai-steel-dark focus:border-samurai-red rounded-lg text-white placeholder-white/50 outline-none transition-colors"
-                    placeholder="••••••••"
-                    required
-                    minLength={6}
-                  />
+              <>
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={20} />
+                    <input
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full pl-10 pr-4 py-3 bg-samurai-black border-2 border-samurai-steel-dark focus:border-samurai-red rounded-lg text-white placeholder-white/50 outline-none transition-colors"
+                      placeholder="••••••••"
+                      required
+                      minLength={6}
+                    />
+                  </div>
                 </div>
-              </div>
+                
+                {!isSignUp && (
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      id="rememberMe"
+                      checked={rememberMe}
+                      onChange={(e) => setRememberMe(e.target.checked)}
+                      className="w-4 h-4 bg-samurai-black border-2 border-samurai-steel-dark rounded focus:ring-2 focus:ring-samurai-red accent-samurai-red cursor-pointer"
+                    />
+                    <label htmlFor="rememberMe" className="ml-2 text-sm text-white/80 cursor-pointer">
+                      Remember me
+                    </label>
+                  </div>
+                )}
+              </>
             )}
 
             {error && (
