@@ -1,6 +1,8 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
+import type { ReactNode } from 'react'
 import { useAuth } from './AuthContext'
-import { getUserRole, UserRole } from '../lib/admin'
+import { getUserRole } from '../lib/admin'
+import type { UserRole } from '../lib/admin'
 
 interface AdminContextType {
   isAdmin: boolean

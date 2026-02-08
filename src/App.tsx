@@ -11,11 +11,13 @@ import OmniPage from './pages/OmniPage'
 import DiscordPage from './pages/DiscordPage'
 import ResetPassword from './pages/ResetPassword'
 import { AuthProvider } from './contexts/AuthContext'
+import { AdminProvider } from './contexts/AdminContext'
 
 function App() {
   return (
     <AuthProvider>
-      <Router>
+      <AdminProvider>
+        <Router>
         <div className="fixed inset-0 flex flex-col bg-samurai-black">
           {/* Floating embers - persists across all pages */}
           <FloatingEmbers />
@@ -45,6 +47,7 @@ function App() {
           </div>
         </div>
       </Router>
+      </AdminProvider>
     </AuthProvider>
   )
 }
