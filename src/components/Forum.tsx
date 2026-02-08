@@ -114,28 +114,28 @@ export default function Forum() {
   return (
     <div className="w-full max-w-7xl mx-auto mb-12">
       {/* Forum Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8">
         <div className="flex items-center gap-3">
           <MessageSquare className="w-8 h-8 text-samurai-red" />
           <h2 className="text-3xl font-black text-white">FORUM</h2>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
-          className="flex items-center justify-center gap-2 px-6 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all shadow-lg hover:shadow-samurai-red/50 w-full sm:w-auto min-h-[48px] touch-manipulation"
+          className="flex items-center gap-2 px-4 py-2 text-white/70 hover:text-samurai-red transition-colors font-semibold border border-white/20 hover:border-samurai-red rounded touch-manipulation"
         >
-          <Plus className="w-5 h-5" />
+          <Plus className="w-4 h-4" />
           <span>New Thread</span>
         </button>
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-6 mb-6 pb-4 border-b border-white/10">
         <button
           onClick={() => setSelectedCategory(undefined)}
-          className={`px-4 py-2.5 rounded-lg font-semibold transition-all min-h-[44px] touch-manipulation ${
+          className={`font-semibold transition-all touch-manipulation relative ${
             !selectedCategory
-              ? 'bg-samurai-red text-white'
-              : 'bg-samurai-grey-dark text-white/70 hover:bg-samurai-grey'
+              ? 'text-samurai-red after:absolute after:bottom-[-17px] after:left-0 after:right-0 after:h-0.5 after:bg-samurai-red'
+              : 'text-white/70 hover:text-white'
           }`}
         >
           All
@@ -144,10 +144,10 @@ export default function Forum() {
           <button
             key={category.id}
             onClick={() => setSelectedCategory(category.id)}
-            className={`px-4 py-2.5 rounded-lg font-semibold transition-all min-h-[44px] touch-manipulation ${
+            className={`font-semibold transition-all touch-manipulation relative ${
               selectedCategory === category.id
-                ? 'bg-samurai-red text-white'
-                : 'bg-samurai-grey-dark text-white/70 hover:bg-samurai-grey'
+                ? 'text-samurai-red after:absolute after:bottom-[-17px] after:left-0 after:right-0 after:h-0.5 after:bg-samurai-red'
+                : 'text-white/70 hover:text-white'
             }`}
           >
             {category.icon} {category.name}
@@ -156,28 +156,28 @@ export default function Forum() {
       </div>
 
       {/* Sort Options */}
-      <div className="flex gap-2 mb-6">
+      <div className="flex gap-6 mb-6">
         <button
           onClick={() => setSortBy('recent')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold transition-all min-h-[44px] touch-manipulation ${
+          className={`flex items-center gap-2 font-semibold transition-all touch-manipulation relative ${
             sortBy === 'recent'
-              ? 'bg-samurai-red text-white'
-              : 'bg-samurai-grey-dark text-white/70 hover:bg-samurai-grey'
+              ? 'text-samurai-red'
+              : 'text-white/70 hover:text-white'
           }`}
         >
           <Clock className="w-4 h-4" />
-          <span>Recent</span>
+          <span className={sortBy === 'recent' ? 'underline decoration-2 underline-offset-4' : ''}>Recent</span>
         </button>
         <button
           onClick={() => setSortBy('popular')}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-lg font-semibold transition-all min-h-[44px] touch-manipulation ${
+          className={`flex items-center gap-2 font-semibold transition-all touch-manipulation relative ${
             sortBy === 'popular'
-              ? 'bg-samurai-red text-white'
-              : 'bg-samurai-grey-dark text-white/70 hover:bg-samurai-grey'
+              ? 'text-samurai-red'
+              : 'text-white/70 hover:text-white'
           }`}
         >
           <TrendingUp className="w-4 h-4" />
-          <span>Popular</span>
+          <span className={sortBy === 'popular' ? 'underline decoration-2 underline-offset-4' : ''}>Popular</span>
         </button>
       </div>
 
