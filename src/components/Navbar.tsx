@@ -288,7 +288,7 @@ export default function Navbar() {
                       setIsOpen(false)
                       setShowProfilePopup(true)
                     }}
-                    className="w-full flex items-center px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white"
+                    className="w-full flex items-center px-4 py-3 rounded-lg font-bold transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white"
                   >
                     <User size={24} className="mr-3" />
                     <span>VIEW PROFILE</span>
@@ -298,7 +298,7 @@ export default function Navbar() {
                       setIsOpen(false)
                       await signOut()
                     }}
-                    className="w-full flex items-center px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white"
+                    className="w-full flex items-center px-4 py-3 rounded-lg font-bold transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white"
                   >
                     <LogOut size={24} className="mr-3" />
                     <span>LOG OUT</span>
