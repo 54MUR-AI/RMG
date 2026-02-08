@@ -119,7 +119,7 @@ export async function getFolderPath(folderId: string | null): Promise<Folder[]> 
   let currentId: string | null = folderId
   
   while (currentId) {
-    const { data, error } = await supabase
+    const { data, error }: { data: Folder | null; error: any } = await supabase
       .from('folders')
       .select('*')
       .eq('id', currentId)
@@ -127,7 +127,7 @@ export async function getFolderPath(folderId: string | null): Promise<Folder[]> 
     
     if (error || !data) break
     
-    path.unshift(data as Folder)
+    path.unshift(data)
     currentId = data.parent_id
   }
   
