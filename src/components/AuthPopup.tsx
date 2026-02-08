@@ -25,7 +25,7 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
     try {
       if (isForgotPassword) {
         const { error } = await supabase.auth.resetPasswordForEmail(email, {
-          redirectTo: `${window.location.origin}/reset-password`,
+          redirectTo: 'https://54mur-ai.github.io/RMG/#/reset-password',
         })
         if (error) throw error
         setMessage('Password reset link sent! Check your email.')

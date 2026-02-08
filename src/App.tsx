@@ -9,6 +9,7 @@ import LdgrPage from './pages/LdgrPage'
 import WsprPage from './pages/WsprPage'
 import OmniPage from './pages/OmniPage'
 import DiscordPage from './pages/DiscordPage'
+import ResetPassword from './pages/ResetPassword'
 import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/stonks" element={<StonksPage />} />
               <Route path="/scraper" element={<ScraperPage />} />
               <Route path="/ldgr" element={<LdgrPage />} />
