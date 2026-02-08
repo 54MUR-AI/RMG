@@ -492,7 +492,7 @@ export default function Home() {
           </div>
 
           {/* Forge Forum */}
-          <div className="mb-16">
+          <div className="mb-16 max-h-[600px] overflow-y-auto">
             <Forum />
           </div>
 
