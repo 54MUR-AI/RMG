@@ -54,14 +54,13 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
             <a 
-              href="#forge" 
+              href="/#forge" 
               onClick={(e) => {
                 e.preventDefault()
                 const forgeSection = document.getElementById('forge')
                 if (forgeSection) {
                   forgeSection.scrollIntoView({ behavior: 'smooth' })
                 } else {
-                  window.location.hash = ''
                   window.location.href = '/#forge'
                 }
               }}
@@ -191,7 +190,7 @@ export default function Navbar() {
         <div className="md:hidden bg-samurai-grey-darker border-t-2 border-samurai-red max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <a
-              href="#forge"
+              href="/#forge"
               onClick={(e) => {
                 e.preventDefault()
                 setIsOpen(false)
@@ -199,7 +198,6 @@ export default function Navbar() {
                 if (forgeSection) {
                   forgeSection.scrollIntoView({ behavior: 'smooth' })
                 } else {
-                  window.location.hash = ''
                   window.location.href = '/#forge'
                 }
               }}
