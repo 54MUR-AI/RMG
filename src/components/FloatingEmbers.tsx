@@ -24,11 +24,12 @@ export default function FloatingEmbers() {
     const newEmbers: Ember[] = []
     
     for (let i = 0; i < emberCount; i++) {
+      const duration = 12 + Math.random() * 20 // Doubled duration for longer lifespan
       newEmbers.push({
         id: i,
         left: 5 + Math.random() * 90, // Keep embers between 5-95% to prevent edge overflow
-        delay: Math.random() * 5,
-        duration: 12 + Math.random() * 20, // Doubled duration for longer lifespan
+        delay: Math.random() * duration, // Spread delays across full duration for steady flow
+        duration: duration,
         size: 3 + Math.random() * 7,
         drift: -30 + Math.random() * 60, // Random horizontal drift -30 to +30
         rotation: Math.random() * 360, // Random rotation
