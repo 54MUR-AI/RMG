@@ -175,33 +175,15 @@ export default function LdgrPage() {
 
   return (
     <div className="relative bg-samurai-black text-white min-h-screen">
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-6 pb-24">
-        <div className="text-center mb-8 animate-slide-up">
-          <div className="flex items-center justify-center gap-4 mb-4">
-            <Lock className="w-12 h-12 text-samurai-red" />
-            <h1 className="text-5xl font-black neon-text">LDGR</h1>
+      <main className="relative z-10 max-w-7xl mx-auto px-6 py-4 pb-24">
+        <div className="text-center mb-6 animate-slide-up">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <Lock className="w-8 h-8 text-samurai-red" />
+            <h1 className="text-3xl font-black neon-text">LDGR</h1>
           </div>
-          <h2 className="text-3xl font-black mb-4 text-white">
-            Military-Grade File Security
-          </h2>
-          <p className="text-xl text-white/70 mb-8 max-w-2xl mx-auto">
-            Store and share files with AES-256 encryption, blockchain verification, and P2P transfer
+          <p className="text-sm text-white/60 mb-4">
+            Secure file storage with AES-256 encryption and API key management
           </p>
-          
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            <div className="flex items-center gap-2 px-6 py-3 bg-samurai-grey-darker border-2 border-samurai-red/30 rounded-full">
-              <Lock className="w-5 h-5 text-samurai-red" />
-              <span className="font-semibold">End-to-End Encrypted</span>
-            </div>
-            <div className="flex items-center gap-2 px-6 py-3 bg-samurai-grey-darker border-2 border-samurai-red/30 rounded-full">
-              <Shield className="w-5 h-5 text-samurai-red" />
-              <span className="font-semibold">Blockchain Verified</span>
-            </div>
-            <div className="flex items-center gap-2 px-6 py-3 bg-samurai-grey-darker border-2 border-samurai-red/30 rounded-full">
-              <Zap className="w-5 h-5 text-samurai-red" />
-              <span className="font-semibold">P2P Transfer</span>
-            </div>
-          </div>
         </div>
 
         {/* Tab Navigation */}
