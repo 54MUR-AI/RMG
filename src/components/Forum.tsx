@@ -75,7 +75,7 @@ export default function Forum() {
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <MessageSquare className="w-8 h-8 text-samurai-red" />
-          <h2 className="text-3xl font-black text-white">FORGE FORUM</h2>
+          <h2 className="text-3xl font-black text-white">FORUM</h2>
         </div>
         <button
           onClick={() => setShowCreateModal(true)}
@@ -154,7 +154,7 @@ export default function Forum() {
           {sortedThreads.map((thread) => (
             <div
               key={thread.id}
-              className="bg-samurai-grey-darker border-2 border-samurai-grey hover:border-samurai-red/50 rounded-lg p-4 transition-all cursor-pointer group"
+              className="bg-samurai-grey-darker border-2 border-samurai-steel-dark hover:border-samurai-red rounded-lg p-4 transition-all cursor-pointer group"
               onClick={() => setSelectedThread(thread)}
             >
               <div className="flex gap-4">
