@@ -3,8 +3,9 @@ import { useAuth } from '../contexts/AuthContext'
 import FileUpload from '../components/ldgr/FileUpload'
 import FileList from '../components/ldgr/FileList'
 import FolderView from '../components/ldgr/FolderView'
+import ApiKeyManager from '../components/ldgr/ApiKeyManager'
 import ReadmePopup from '../components/ReadmePopup'
-import { Lock, Shield, Zap, BookOpen } from 'lucide-react'
+import { Lock, Shield, Zap, BookOpen, Key, FolderOpen } from 'lucide-react'
 import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
 import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder } from '../lib/ldgr/folders'
@@ -19,6 +20,7 @@ export default function LdgrPage() {
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [showReadme, setShowReadme] = useState(false)
+  const [activeTab, setActiveTab] = useState<'files' | 'api-keys'>('files')
   const { user } = useAuth()
 
   useEffect(() => {
@@ -202,39 +204,79 @@ export default function LdgrPage() {
           </div>
         </div>
 
-        <FileUpload onFileUpload={handleFileUpload} uploading={uploading} />
-
-        <div className="mt-8">
-          <FolderView
-            folders={folders}
-            currentPath={currentPath}
-            onFolderClick={handleFolderClick}
-            onCreateFolder={handleCreateFolder}
-            onRenameFolder={handleRenameFolder}
-            onDeleteFolder={handleDeleteFolder}
-            fileCount={folderFileCounts}
-            onMoveFile={handleMoveFile}
-          />
+        {/* Tab Navigation */}
+        <div className="flex gap-4 mb-8 border-b border-white/10 pb-4">
+          <button
+            onClick={() => setActiveTab('files')}
+            className={`flex items-center gap-2 px-4 py-2 font-semibold transition-all relative ${
+              activeTab === 'files'
+                ? 'text-samurai-red'
+                : 'text-white/70 hover:text-white'
+            }`}
+          >
+            <FolderOpen className="w-5 h-5" />
+            <span className={activeTab === 'files' ? 'underline decoration-2 underline-offset-4' : ''}>
+              Files
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab('api-keys')}
+            className={`flex items-center gap-2 px-4 py-2 font-semibold transition-all relative ${
+              activeTab === 'api-keys'
+                ? 'text-samurai-red'
+                : 'text-white/70 hover:text-white'
+            }`}
+          >
+            <Key className="w-5 h-5" />
+            <span className={activeTab === 'api-keys' ? 'underline decoration-2 underline-offset-4' : ''}>
+              API Keys
+            </span>
+          </button>
         </div>
 
-        {loading ? (
-          <div className="mt-12 text-center">
-            <div className="inline-block w-8 h-8 border-4 border-samurai-red/30 border-t-samurai-red rounded-full animate-spin" />
-            <p className="mt-4 text-white/70">Loading your files...</p>
-          </div>
-        ) : files.length > 0 ? (
-          <div className="mt-12">
-            <FileList 
-              files={files} 
-              onDownload={handleFileDownload}
-              onDelete={handleFileDelete}
-              onMoveFile={handleMoveFile}
-            />
-          </div>
-        ) : (
-          <div className="mt-12 text-center text-white/50">
-            <p>No files yet. Upload your first file above!</p>
-          </div>
+        {/* Files Tab */}
+        {activeTab === 'files' && (
+          <>
+            <FileUpload onFileUpload={handleFileUpload} uploading={uploading} />
+
+            <div className="mt-8">
+              <FolderView
+                folders={folders}
+                currentPath={currentPath}
+                onFolderClick={handleFolderClick}
+                onCreateFolder={handleCreateFolder}
+                onRenameFolder={handleRenameFolder}
+                onDeleteFolder={handleDeleteFolder}
+                fileCount={folderFileCounts}
+                onMoveFile={handleMoveFile}
+              />
+            </div>
+
+            {loading ? (
+              <div className="mt-12 text-center">
+                <div className="inline-block w-8 h-8 border-4 border-samurai-red/30 border-t-samurai-red rounded-full animate-spin" />
+                <p className="mt-4 text-white/70">Loading your files...</p>
+              </div>
+            ) : files.length > 0 ? (
+              <div className="mt-12">
+                <FileList 
+                  files={files} 
+                  onDownload={handleFileDownload}
+                  onDelete={handleFileDelete}
+                  onMoveFile={handleMoveFile}
+                />
+              </div>
+            ) : (
+              <div className="mt-12 text-center text-white/50">
+                <p>No files yet. Upload your first file above!</p>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* API Keys Tab */}
+        {activeTab === 'api-keys' && (
+          <ApiKeyManager />
         )}
       </main>
 
