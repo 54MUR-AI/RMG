@@ -110,7 +110,7 @@ export default function Home() {
               ARSENAL
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto px-4">
-              Battle-tested tools forged in the fires of innovation
+              Powerful tools for the independent developer
             </p>
           </div>
 
@@ -489,7 +489,7 @@ export default function Home() {
               FORGE
             </h2>
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
-              Crafted with battle-tested, production-grade technologies
+              Where the community meets the code
             </p>
           </div>
 
