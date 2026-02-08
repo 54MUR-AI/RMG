@@ -9,28 +9,31 @@ import LdgrPage from './pages/LdgrPage'
 import WsprPage from './pages/WsprPage'
 import OmniPage from './pages/OmniPage'
 import DiscordPage from './pages/DiscordPage'
+import { AuthProvider } from './contexts/AuthContext'
 
 function App() {
   return (
-    <Router>
-      <div className="min-h-screen flex flex-col bg-samurai-black">
-        {/* Floating embers - persists across all pages */}
-        <FloatingEmbers />
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/stonks" element={<StonksPage />} />
-            <Route path="/scraper" element={<ScraperPage />} />
-            <Route path="/ldgr" element={<LdgrPage />} />
-            <Route path="/wspr" element={<WsprPage />} />
-            <Route path="/omni" element={<OmniPage />} />
-            <Route path="/discord" element={<DiscordPage />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen flex flex-col bg-samurai-black">
+          {/* Floating embers - persists across all pages */}
+          <FloatingEmbers />
+          <Navbar />
+          <main className="flex-grow">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/stonks" element={<StonksPage />} />
+              <Route path="/scraper" element={<ScraperPage />} />
+              <Route path="/ldgr" element={<LdgrPage />} />
+              <Route path="/wspr" element={<WsprPage />} />
+              <Route path="/omni" element={<OmniPage />} />
+              <Route path="/discord" element={<DiscordPage />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </AuthProvider>
   )
 }
 

@@ -1,11 +1,15 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Flame } from 'lucide-react'
+import { Menu, X, Flame, Key, User } from 'lucide-react'
 import { useState } from 'react'
 import DiscordIcon from './DiscordIcon'
+import AuthPopup from './AuthPopup'
+import { useAuth } from '../contexts/AuthContext'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [showAuthPopup, setShowAuthPopup] = useState(false)
   const location = useLocation()
+  const { user } = useAuth()
   
   const isActive = (path: string) => location.pathname === path
 
@@ -98,6 +102,27 @@ export default function Navbar() {
             >
               <DiscordIcon size={28} className="text-samurai-steel-light group-hover:text-samurai-red transition-colors" />
             </Link>
+            
+            {/* Auth Icon */}
+            {user ? (
+              <button
+                onClick={() => setShowAuthPopup(true)}
+                className="group transition-all hover:scale-110"
+                aria-label="User profile"
+              >
+                <div className="w-8 h-8 rounded-full bg-samurai-red flex items-center justify-center border-2 border-samurai-red group-hover:border-white transition-colors">
+                  <User size={20} className="text-white" />
+                </div>
+              </button>
+            ) : (
+              <button
+                onClick={() => setShowAuthPopup(true)}
+                className="group transition-all hover:scale-110"
+                aria-label="Sign in"
+              >
+                <Key size={28} className="text-samurai-steel-light group-hover:text-samurai-red transition-colors" />
+              </button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -196,6 +221,9 @@ export default function Navbar() {
           </div>
         </div>
       )}
+      
+      {/* Auth Popup */}
+      {showAuthPopup && <AuthPopup onClose={() => setShowAuthPopup(false)} />}
     </nav>
   )
 }
