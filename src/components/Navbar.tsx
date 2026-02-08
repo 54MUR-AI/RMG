@@ -16,7 +16,7 @@ export default function Navbar() {
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
   const profileRef = useRef<HTMLDivElement>(null)
-  const profileButtonRef = useRef<HTMLButtonButton>(null)
+  const profileButtonRef = useRef<HTMLButtonElement>(null)
   const profileDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
