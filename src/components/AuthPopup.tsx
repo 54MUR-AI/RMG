@@ -8,6 +8,7 @@ interface AuthPopupProps {
 
 export default function AuthPopup({ onClose }: AuthPopupProps) {
   const [isSignUp, setIsSignUp] = useState(false)
+  const [isForgotPassword, setIsForgotPassword] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -21,7 +22,13 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
     setMessage(null)
 
     try {
-      if (isSignUp) {
+      if (isForgotPassword) {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/reset-password`,
+        })
+        if (error) throw error
+        setMessage('Password reset link sent! Check your email.')
+      } else if (isSignUp) {
         const { error } = await supabase.auth.signUp({
           email,
           password,
@@ -59,10 +66,10 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
           </div>
           
           <h2 className="text-3xl font-black text-center text-white mb-2 neon-text">
-            {isSignUp ? 'Join RMG' : 'Welcome Back'}
+            {isForgotPassword ? 'Reset Password' : isSignUp ? 'Join RMG' : 'Welcome Back'}
           </h2>
           <p className="text-center text-white/70 mb-6">
-            {isSignUp ? 'Create your account' : 'Sign in to continue'}
+            {isForgotPassword ? 'Enter your email to receive a reset link' : isSignUp ? 'Create your account' : 'Sign in to continue'}
           </p>
 
           <form onSubmit={handleAuth} className="space-y-4">
@@ -83,23 +90,25 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
               </div>
             </div>
 
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={20} />
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 bg-samurai-black border-2 border-samurai-steel-dark focus:border-samurai-red rounded-lg text-white placeholder-white/50 outline-none transition-colors"
-                  placeholder="••••••••"
-                  required
-                  minLength={6}
-                />
+            {!isForgotPassword && (
+              <div>
+                <label className="block text-sm font-medium text-white/80 mb-2">
+                  Password
+                </label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50" size={20} />
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full pl-10 pr-4 py-3 bg-samurai-black border-2 border-samurai-steel-dark focus:border-samurai-red rounded-lg text-white placeholder-white/50 outline-none transition-colors"
+                    placeholder="••••••••"
+                    required
+                    minLength={6}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {error && (
               <div className="p-3 bg-red-500/10 border border-red-500/50 rounded-lg text-red-400 text-sm">
@@ -118,20 +127,36 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
               disabled={loading}
               className="w-full py-3 bg-samurai-red hover:bg-samurai-red-dark text-white font-bold rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-lg hover:shadow-samurai-red/50"
             >
-              {loading ? 'Loading...' : isSignUp ? 'Sign Up' : 'Sign In'}
+              {loading ? 'Loading...' : isForgotPassword ? 'Send Reset Link' : isSignUp ? 'Sign Up' : 'Sign In'}
             </button>
           </form>
 
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center space-y-2">
+            {!isForgotPassword && (
+              <button
+                onClick={() => {
+                  setIsForgotPassword(true)
+                  setError(null)
+                  setMessage(null)
+                }}
+                className="block w-full text-sm text-white/70 hover:text-samurai-red transition-colors"
+              >
+                Forgot password?
+              </button>
+            )}
             <button
               onClick={() => {
-                setIsSignUp(!isSignUp)
+                if (isForgotPassword) {
+                  setIsForgotPassword(false)
+                } else {
+                  setIsSignUp(!isSignUp)
+                }
                 setError(null)
                 setMessage(null)
               }}
-              className="text-sm text-white/70 hover:text-samurai-red transition-colors"
+              className="block w-full text-sm text-white/70 hover:text-samurai-red transition-colors"
             >
-              {isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+              {isForgotPassword ? 'Back to sign in' : isSignUp ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
             </button>
           </div>
         </div>
