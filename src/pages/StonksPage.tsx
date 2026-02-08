@@ -13,7 +13,6 @@ export default function StonksPage() {
       {/* README Popup */}
       {showPopup && (
         <ReadmePopup
-          title="STONKS"
           readmeUrl="https://raw.githubusercontent.com/54MUR-AI/stonks/main/README.md"
           onClose={() => setShowPopup(false)}
         />

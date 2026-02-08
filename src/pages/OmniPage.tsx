@@ -13,7 +13,6 @@ export default function OmniPage() {
       {/* README Popup */}
       {showPopup && (
         <ReadmePopup
-          title="OMNI"
           readmeUrl="https://raw.githubusercontent.com/54MUR-AI/omni/main/README.md"
           onClose={() => setShowPopup(false)}
         />

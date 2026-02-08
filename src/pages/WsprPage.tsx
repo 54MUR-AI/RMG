@@ -13,7 +13,6 @@ export default function WsprPage() {
     <div className="bg-samurai-black">
       {showReadme && (
         <ReadmePopup
-          title="WSPR"
           readmeUrl="https://raw.githubusercontent.com/54MUR-AI/wspr-web/main/README.md"
           onClose={() => setShowReadme(false)}
         />

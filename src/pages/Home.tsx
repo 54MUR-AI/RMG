@@ -610,7 +610,6 @@ export default function Home() {
       {/* README Popup */}
       {readmePopup && (
         <ReadmePopup
-          title={readmePopup.title}
           readmeUrl={readmePopup.url}
           onClose={() => setReadmePopup(null)}
         />

@@ -3,12 +3,11 @@ import { useState, useEffect } from 'react'
 import ReactMarkdown from 'react-markdown'
 
 interface ReadmePopupProps {
-  title: string
   readmeUrl: string
   onClose: () => void
 }
 
-export default function ReadmePopup({ title, readmeUrl, onClose }: ReadmePopupProps) {
+export default function ReadmePopup({ readmeUrl, onClose }: ReadmePopupProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [content, setContent] = useState<string>('')
   const [loading, setLoading] = useState(true)

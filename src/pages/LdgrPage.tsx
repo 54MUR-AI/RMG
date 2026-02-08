@@ -241,7 +241,6 @@ export default function LdgrPage() {
       {/* README Popup */}
       {showReadme && (
         <ReadmePopup
-          title="LDGR"
           readmeUrl="https://raw.githubusercontent.com/54MUR-AI/ldgr/main/README.md"
           onClose={() => setShowReadme(false)}
         />
