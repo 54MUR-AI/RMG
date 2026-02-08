@@ -29,6 +29,11 @@ export default function OmniPage() {
         className="w-full h-screen border-none"
         title="OMNI - Optimized Multi-Model Networked Intelligence"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        style={{
+          colorScheme: 'light only',
+          filter: 'none',
+          WebkitFilter: 'none'
+        }}
       />
     </div>
   )
