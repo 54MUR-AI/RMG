@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { X, Mail, Lock, Github } from 'lucide-react'
 import ModalPortal from './ModalPortal'
 import { supabase } from '../lib/supabase'
-import DiscordIcon from './DiscordIcon'
 
 interface AuthPopupProps {
   onClose: () => void
