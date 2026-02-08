@@ -96,13 +96,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Forge Section - Community Forum */}
-      <section id="forge" className="py-16 bg-samurai-black relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <Forum />
-        </div>
-      </section>
-
       {/* Arsenal Section - Our Weapons */}
       <section id="arsenal" className="py-24 bg-samurai-black relative">
         {/* Background effects */}
@@ -119,6 +112,11 @@ export default function Home() {
             <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto px-4">
               Battle-tested tools forged in the fires of innovation
             </p>
+          </div>
+
+          {/* Forge Forum */}
+          <div id="forge" className="mb-16">
+            <Forum />
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-2 gap-6 mb-12 lg:auto-rows-fr">
