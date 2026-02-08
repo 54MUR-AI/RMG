@@ -1,5 +1,5 @@
 import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Lock, Brain, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'

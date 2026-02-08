@@ -88,9 +88,6 @@ export default function FloatingEmbers() {
       // Turbulence offset based on phase (creates wave-like wind gusts)
       const turbulenceOffset = ember.turbulencePhase * 25
       
-      // Depth-based speed multiplier (closer = faster parallax)
-      const depthSpeed = ember.depthLayer === 2 ? 1.15 : ember.depthLayer === 1 ? 1.0 : 0.85
-      
       // Calculate color transitions: white-hot → orange → red → dark ash
       const startColor = ember.color // Initial color based on change rate
       const midColor = `rgb(230, ${Math.floor(57 + ember.changeRate * 80)}, 70)` // Orange phase
