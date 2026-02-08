@@ -11,6 +11,8 @@ interface Ember {
   opacity: number
   horizontalMeander: number
   meanderSpeed: number
+  color: string
+  changeRate: number
 }
 
 export default function FloatingEmbers() {
@@ -24,18 +26,40 @@ export default function FloatingEmbers() {
     const newEmbers: Ember[] = []
     
     for (let i = 0; i < emberCount; i++) {
-      const duration = 12 + Math.random() * 20 // Doubled duration for longer lifespan
+      // Size determines speed - bigger embers are slower (more mass)
+      const size = 3 + Math.random() * 7
+      const baseDuration = 12
+      const maxDuration = 32
+      // Map size (3-10) to duration: small=fast(12-20s), large=slow(20-32s)
+      const sizeInfluence = (size - 3) / 7 // 0 to 1
+      const duration = baseDuration + (sizeInfluence * (maxDuration - baseDuration)) + Math.random() * 8
+      
+      // Calculate rate of change (how much the ember changes per second)
+      // Faster embers with more movement = higher change rate
+      const horizontalMeander = -80 + Math.random() * 160
+      const changeRate = (Math.abs(horizontalMeander) / 80) * (baseDuration / duration)
+      
+      // Map change rate to color: high rate = white-hot, low rate = deep red
+      // changeRate ranges roughly 0-1.5
+      const colorIntensity = Math.min(changeRate / 1.5, 1)
+      const red = 230
+      const green = Math.floor(57 + (colorIntensity * 198)) // 57 to 255
+      const blue = Math.floor(70 + (colorIntensity * 185))  // 70 to 255
+      const color = `rgb(${red}, ${green}, ${blue})`
+      
       newEmbers.push({
         id: i,
-        left: 5 + Math.random() * 90, // Keep embers between 5-95% to prevent edge overflow
-        delay: Math.random() * duration, // Spread delays across full duration for steady flow
+        left: 5 + Math.random() * 90,
+        delay: Math.random() * duration,
         duration: duration,
-        size: 3 + Math.random() * 7,
-        drift: -30 + Math.random() * 60, // Random horizontal drift -30 to +30
-        rotation: Math.random() * 360, // Random rotation
-        opacity: 0.6 + Math.random() * 0.3, // Varying opacity
-        horizontalMeander: -80 + Math.random() * 160, // Random horizontal meandering -80 to +80
-        meanderSpeed: 2 + Math.random() * 3 // Random meander speed
+        size: size,
+        drift: -30 + Math.random() * 60,
+        rotation: Math.random() * 360,
+        opacity: 0.6 + Math.random() * 0.3,
+        horizontalMeander: horizontalMeander,
+        meanderSpeed: 2 + Math.random() * 3,
+        color: color,
+        changeRate: changeRate
       })
     }
     
@@ -118,10 +142,11 @@ export default function FloatingEmbers() {
           }}
         >
           <div
-            className="rounded-full bg-samurai-red"
+            className="rounded-full"
             style={{
               width: `${ember.size}px`,
               height: `${ember.size}px`,
+              backgroundColor: ember.color,
               opacity: ember.opacity,
               animation: window.innerWidth < 1024
                 ? `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`
