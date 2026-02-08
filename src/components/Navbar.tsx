@@ -16,10 +16,15 @@ export default function Navbar() {
   const { user, signOut } = useAuth()
   const profileRef = useRef<HTMLDivElement>(null)
   const profileButtonRef = useRef<HTMLButtonElement>(null)
+  const profileDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+      const target = event.target as Node
+      const isOutsideButton = profileRef.current && !profileRef.current.contains(target)
+      const isOutsideDropdown = profileDropdownRef.current && !profileDropdownRef.current.contains(target)
+      
+      if (isOutsideButton && isOutsideDropdown) {
         setShowProfileDropdown(false)
       }
     }

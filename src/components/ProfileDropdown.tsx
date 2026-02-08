@@ -6,9 +6,10 @@ interface ProfileDropdownProps {
   onViewProfile: () => void
   onClose: () => void
   buttonRef: React.RefObject<HTMLButtonElement>
+  dropdownRef: React.RefObject<HTMLDivElement>
 }
 
-export default function ProfileDropdown({ onViewProfile, onClose, buttonRef }: ProfileDropdownProps) {
+export default function ProfileDropdown({ onViewProfile, onClose, buttonRef, dropdownRef }: ProfileDropdownProps) {
   const { user, signOut } = useAuth()
 
   const handleLogout = async () => {
@@ -29,6 +30,7 @@ export default function ProfileDropdown({ onViewProfile, onClose, buttonRef }: P
   return (
     <ModalPortal>
       <div 
+        ref={dropdownRef}
         className="fixed w-64 bg-samurai-grey-darker border-2 border-samurai-red rounded-lg shadow-2xl shadow-samurai-red/20 overflow-hidden z-[9999]"
         style={{ top: `${top}px`, right: `${right}px` }}
       >
