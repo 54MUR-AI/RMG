@@ -291,7 +291,7 @@ export default function LdgrPage() {
       {/* README Button */}
       <button
         onClick={() => setShowReadme(true)}
-        className="fixed bottom-6 right-6 p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110 z-50"
+        className="fixed bottom-6 right-6 p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110 z-50"
         aria-label="README"
       >
         <BookOpen className="w-6 h-6" />
