@@ -47,14 +47,14 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/" className={`font-bold transition-all relative group ${
-              isActive('/') 
+            <Link to="/forge" className={`font-bold transition-all relative group ${
+              isActive('/forge') 
                 ? 'text-samurai-red neon-text' 
                 : 'text-samurai-steel-light hover:text-samurai-red'
             }`}>
               FORGE
               <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                isActive('/forge') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
               }`}></span>
             </Link>
             
@@ -175,9 +175,9 @@ export default function Navbar() {
         <div className="md:hidden bg-samurai-grey-darker border-t-2 border-samurai-red">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <Link
-              to="/"
+              to="/forge"
               className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/') 
+                isActive('/forge') 
                   ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                   : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
               }`}

@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import FloatingEmbers from './components/FloatingEmbers'
 import Home from './pages/Home'
+import ForgePage from './pages/ForgePage'
 import StonksPage from './pages/StonksPage'
 import ScraperPage from './pages/ScraperPage'
 import LdgrPage from './pages/LdgrPage'
@@ -23,6 +24,7 @@ function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/forge" element={<ForgePage />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/stonks" element={<StonksPage />} />
               <Route path="/scraper" element={<ScraperPage />} />
