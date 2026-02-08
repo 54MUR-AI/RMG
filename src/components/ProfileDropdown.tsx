@@ -20,7 +20,7 @@ export default function ProfileDropdown({ onViewProfile, onClose }: ProfileDropd
   }
 
   return (
-    <div className="absolute right-0 top-12 w-64 bg-samurai-grey-darker border-2 border-samurai-red rounded-lg shadow-2xl shadow-samurai-red/20 overflow-hidden z-[100]">
+    <div className="absolute right-0 top-12 w-64 bg-samurai-grey-darker border-2 border-samurai-red rounded-lg shadow-2xl shadow-samurai-red/20 overflow-hidden z-50">
       {/* User Info */}
       <div className="p-4 border-b border-samurai-steel-dark">
         <div className="flex items-center gap-3">
