@@ -5,7 +5,6 @@ import ReadmePopup from '../components/ReadmePopup'
 export default function ScraperPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [showReadme, setShowReadme] = useState(false)
-  const [showSettings, setShowSettings] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -55,18 +54,6 @@ export default function ScraperPage() {
       iframe.addEventListener('load', sendAuthToken)
       return () => iframe.removeEventListener('load', sendAuthToken)
     }
-  }, [])
-
-  // Listen for settings toggle from iframe
-  useEffect(() => {
-    const handleMessage = (event: MessageEvent) => {
-      if (event.data?.type === 'SCRP_TOGGLE_SETTINGS') {
-        setShowSettings(prev => !prev)
-      }
-    }
-
-    window.addEventListener('message', handleMessage)
-    return () => window.removeEventListener('message', handleMessage)
   }, [])
 
   // Send settings toggle to iframe

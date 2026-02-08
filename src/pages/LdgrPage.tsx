@@ -174,8 +174,8 @@ export default function LdgrPage() {
   }
 
   return (
-    <div className="relative bg-samurai-black text-white min-h-screen">
-      <main className="relative z-10 max-w-7xl mx-auto px-6 py-6">
+    <div className="relative bg-samurai-black text-white min-h-screen overflow-hidden">
+      <main className="relative z-10 max-w-7xl mx-auto px-6 py-6 pb-24">
         <div className="text-center mb-8 animate-slide-up">
           <div className="flex items-center justify-center gap-4 mb-4">
             <Lock className="w-12 h-12 text-samurai-red" />
