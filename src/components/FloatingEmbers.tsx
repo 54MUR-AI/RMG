@@ -13,6 +13,9 @@ interface Ember {
   meanderSpeed: number
   color: string
   changeRate: number
+  depthLayer: number // 0=back, 1=mid, 2=front for parallax
+  turbulencePhase: number // For wind gust synchronization
+  burstGroup: number // For clustering effects
 }
 
 export default function FloatingEmbers() {
@@ -47,6 +50,17 @@ export default function FloatingEmbers() {
       const blue = Math.floor(70 + (colorIntensity * 185))  // 70 to 255
       const color = `rgb(${red}, ${green}, ${blue})`
       
+      // Depth layering: distribute embers across 3 layers for parallax
+      // Back layer (0): 30%, Mid layer (1): 50%, Front layer (2): 20%
+      const depthRoll = Math.random()
+      const depthLayer = depthRoll < 0.3 ? 0 : depthRoll < 0.8 ? 1 : 2
+      
+      // Turbulence phase: group embers into wind gust waves (0-3)
+      const turbulencePhase = Math.floor(Math.random() * 4)
+      
+      // Burst grouping: occasional clusters (10% chance of being in a burst)
+      const burstGroup = Math.random() < 0.1 ? Math.floor(Math.random() * 3) : -1
+      
       newEmbers.push({
         id: i,
         left: 5 + Math.random() * 90,
@@ -59,69 +73,114 @@ export default function FloatingEmbers() {
         horizontalMeander: horizontalMeander,
         meanderSpeed: 2 + Math.random() * 3,
         color: color,
-        changeRate: changeRate
+        changeRate: changeRate,
+        depthLayer: depthLayer,
+        turbulencePhase: turbulencePhase,
+        burstGroup: burstGroup
       })
     }
     
     setEmbers(newEmbers)
     
-    // Inject keyframes for each ember
+    // Inject keyframes for each ember with enhanced realism
     const styleSheet = document.createElement('style')
-    styleSheet.textContent = newEmbers.map(ember => `
+    styleSheet.textContent = newEmbers.map(ember => {
+      // Turbulence offset based on phase (creates wave-like wind gusts)
+      const turbulenceOffset = ember.turbulencePhase * 25
+      
+      // Depth-based speed multiplier (closer = faster parallax)
+      const depthSpeed = ember.depthLayer === 2 ? 1.15 : ember.depthLayer === 1 ? 1.0 : 0.85
+      
+      // Calculate color transitions: white-hot → orange → red → dark ash
+      const startColor = ember.color // Initial color based on change rate
+      const midColor = `rgb(230, ${Math.floor(57 + ember.changeRate * 80)}, 70)` // Orange phase
+      const endColor = `rgb(180, 40, 50)` // Dark red/ash
+      const ashColor = `rgb(60, 30, 30)` // Nearly black ash
+      
+      // Gravity effect: slight downward drift before updraft takes over
+      const gravityDip = ember.size * 2 // Bigger embers dip more
+      
+      return `
       @keyframes floatEmber${ember.id} {
         0% {
-          transform: translateY(0) translateX(0) rotate(0deg) scale(0.8);
+          transform: translateY(0) translateX(0) rotate(0deg) scale(0.6);
           opacity: 0;
+          filter: brightness(1.5);
         }
-        5% {
+        3% {
+          transform: translateY(${gravityDip}px) translateX(${turbulenceOffset * 0.1}px) rotate(${ember.rotation * 0.05}deg) scale(0.7);
+          opacity: 0.8;
+          filter: brightness(1.8);
+        }
+        8% {
+          transform: translateY(-8vh) translateX(${ember.horizontalMeander * 0.15 + turbulenceOffset * 0.2}px) rotate(${ember.rotation * 0.1}deg) scale(0.85);
           opacity: 1;
+          filter: brightness(1.5);
         }
-        10% {
-          transform: translateY(-10vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.1}deg) scale(0.85);
+        15% {
+          transform: translateY(-15vh) translateX(${ember.horizontalMeander * 0.3 + turbulenceOffset * 0.4}px) rotate(${ember.rotation * 0.15}deg) scale(0.95);
+          filter: brightness(1.3);
         }
-        20% {
-          transform: translateY(-20vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.2}deg) scale(0.9);
+        25% {
+          transform: translateY(-25vh) translateX(${ember.horizontalMeander * 0.6 + turbulenceOffset * 0.6}px) rotate(${ember.rotation * 0.25}deg) scale(1.05);
+          filter: brightness(1.1);
         }
-        30% {
-          transform: translateY(-30vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.3}deg) scale(0.95);
-        }
-        40% {
-          transform: translateY(-40vh) translateX(${ember.horizontalMeander * 1.0}px) rotate(${ember.rotation * 0.4}deg) scale(1.0);
+        35% {
+          transform: translateY(-35vh) translateX(${ember.horizontalMeander * 0.9 + turbulenceOffset * 0.7}px) rotate(${ember.rotation * 0.35}deg) scale(1.1);
+          filter: brightness(1.0);
         }
         50% {
-          transform: translateY(-50vh) translateX(${ember.horizontalMeander * 0.8}px) rotate(${ember.rotation * 0.5}deg) scale(0.95);
+          transform: translateY(-50vh) translateX(${ember.horizontalMeander * 1.0 + turbulenceOffset}px) rotate(${ember.rotation * 0.5}deg) scale(1.0);
+          filter: brightness(0.9);
         }
-        60% {
-          transform: translateY(-60vh) translateX(${ember.horizontalMeander * 0.5}px) rotate(${ember.rotation * 0.6}deg) scale(0.9);
+        65% {
+          transform: translateY(-65vh) translateX(${ember.horizontalMeander * 0.7 + turbulenceOffset * 0.8}px) rotate(${ember.rotation * 0.65}deg) scale(0.85);
+          filter: brightness(0.8);
         }
-        70% {
-          transform: translateY(-70vh) translateX(${ember.horizontalMeander * 0.2}px) rotate(${ember.rotation * 0.7}deg) scale(0.8);
+        75% {
+          transform: translateY(-75vh) translateX(${ember.horizontalMeander * 0.4 + turbulenceOffset * 0.5}px) rotate(${ember.rotation * 0.75}deg) scale(0.7);
+          filter: brightness(0.7);
         }
-        80% {
-          transform: translateY(-80vh) translateX(${ember.horizontalMeander * -0.2}px) rotate(${ember.rotation * 0.8}deg) scale(0.7);
+        85% {
+          transform: translateY(-85vh) translateX(${ember.horizontalMeander * 0.1 + turbulenceOffset * 0.3}px) rotate(${ember.rotation * 0.85}deg) scale(0.5);
+          opacity: 0.9;
+          filter: brightness(0.6);
         }
-        90% {
-          transform: translateY(-90vh) translateX(${ember.horizontalMeander * -0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.5);
+        92% {
+          transform: translateY(-92vh) translateX(${turbulenceOffset * 0.1}px) rotate(${ember.rotation * 0.92}deg) scale(0.35);
+          opacity: 0.7;
+          filter: brightness(0.4);
         }
-        98% {
-          opacity: 1;
-          transform: translateY(-105vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.3);
+        97% {
+          transform: translateY(-100vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.2);
+          opacity: 0.3;
+          filter: brightness(0.2);
         }
         100% {
-          transform: translateY(-110vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.2);
+          transform: translateY(-110vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.1);
           opacity: 0;
+          filter: brightness(0);
         }
       }
       
-      @keyframes emberPulseGlow${ember.id} {
-        0%, 100% {
-          opacity: ${ember.opacity};
-        }
-        50% {
-          opacity: ${ember.opacity * 1.3};
-        }
+      @keyframes emberColorShift${ember.id} {
+        0% { background-color: ${startColor}; }
+        30% { background-color: ${startColor}; }
+        60% { background-color: ${midColor}; }
+        85% { background-color: ${endColor}; }
+        100% { background-color: ${ashColor}; }
       }
-    `).join('\n')
+      
+      @keyframes emberFlicker${ember.id} {
+        0%, 100% { opacity: ${ember.opacity}; }
+        15% { opacity: ${ember.opacity * 1.4}; }
+        30% { opacity: ${ember.opacity * 0.8}; }
+        45% { opacity: ${ember.opacity * 1.2}; }
+        60% { opacity: ${ember.opacity * 0.9}; }
+        75% { opacity: ${ember.opacity * 1.3}; }
+        90% { opacity: ${ember.opacity * 0.7}; }
+      }
+    `}).join('\n')
     document.head.appendChild(styleSheet)
     
     return () => {
@@ -131,31 +190,46 @@ export default function FloatingEmbers() {
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 9999 }}>
-      {embers.map((ember) => (
-        <div
-          key={ember.id}
-          className="absolute"
-          style={{
-            left: `${ember.left}%`,
-            bottom: '0px',
-            animation: `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`,
-          }}
-        >
+      {embers.map((ember) => {
+        // Depth-based styling for parallax effect
+        const depthOpacity = ember.depthLayer === 2 ? 1.0 : ember.depthLayer === 1 ? 0.85 : 0.7
+        const depthBlur = ember.depthLayer === 0 ? 'blur(0.5px)' : 'none'
+        const depthScale = ember.depthLayer === 2 ? 1.0 : ember.depthLayer === 1 ? 0.9 : 0.8
+        
+        // Performance optimization: simpler animations on mobile
+        const isMobile = window.innerWidth < 1024
+        const animations = isMobile
+          ? `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`
+          : `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite, 
+             emberColorShift${ember.id} ${ember.duration}s linear ${ember.delay}s infinite,
+             emberFlicker${ember.id} ${1.5 + Math.random()}s ease-in-out infinite`
+        
+        return (
           <div
-            className="rounded-full"
+            key={ember.id}
+            className="absolute"
             style={{
-              width: `${ember.size}px`,
-              height: `${ember.size}px`,
-              backgroundColor: ember.color,
-              opacity: ember.opacity,
-              animation: window.innerWidth < 1024
-                ? `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`
-                : `emberFlickerChaotic ${1 + Math.random() * 2}s ease-in-out infinite, emberPulseGlow${ember.id} ${2 + Math.random()}s ease-in-out infinite`,
-              willChange: 'transform',
+              left: `${ember.left}%`,
+              bottom: '0px',
+              zIndex: ember.depthLayer, // Layer ordering
+              animation: `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`,
             }}
-          />
-        </div>
-      ))}
+          >
+            <div
+              className="rounded-full"
+              style={{
+                width: `${ember.size * depthScale}px`,
+                height: `${ember.size * depthScale}px`,
+                backgroundColor: ember.color,
+                opacity: ember.opacity * depthOpacity,
+                animation: animations,
+                filter: depthBlur,
+                willChange: 'transform, opacity',
+              }}
+            />
+          </div>
+        )
+      })}
     </div>
   )
 }
