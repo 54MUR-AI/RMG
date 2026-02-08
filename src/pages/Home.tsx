@@ -35,7 +35,7 @@ export default function Home() {
       <FloatingEmbers />
       
       {/* Epic Hero Section with Parallax */}
-      <section className="gradient-bg text-white py-16 sm:py-24 md:py-32 relative overflow-hidden">
+      <section className="gradient-bg text-white py-16 sm:py-24 md:py-32 relative">
         
         {/* Animated background elements */}
         <div className="absolute inset-0 pattern-bg opacity-10"></div>
@@ -86,7 +86,7 @@ export default function Home() {
       </section>
 
       {/* Arsenal Section - Our Weapons */}
-      <section id="arsenal" className="py-24 bg-samurai-black relative overflow-hidden">
+      <section id="arsenal" className="py-24 bg-samurai-black relative">
         {/* Background effects */}
         <div className="absolute inset-0 pattern-bg opacity-5"></div>
         
