@@ -113,16 +113,6 @@ export default function ApiKeyManager() {
     }
   }
 
-  const getDecryptedKeyDisplay = async (key: ApiKey): Promise<string> => {
-    if (!user?.email) return '••••••••••••••••'
-    try {
-      const decrypted = await decryptApiKey(key.encrypted_key, user.email)
-      return decrypted
-    } catch {
-      return '••••••••••••••••'
-    }
-  }
-
   const categories = ['all', ...new Set(Object.values(API_SERVICES).map(s => s.category))]
   
   const filteredKeys = filterCategory === 'all' 
