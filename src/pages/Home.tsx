@@ -64,12 +64,12 @@ export default function Home() {
               RONIN MEDIA
             </h1>
             
-            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 sm:mb-6 font-bold text-white px-4">
+            <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-4 sm:mb-6 font-bold text-white px-4 uppercase tracking-wide">
               Digital Damascus for the Cyber Samurai
             </p>
             
             <p className="text-base sm:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed px-4 uppercase font-bold tracking-wide">
-              No masters, no compromises, just powerful tools.
+              No masters, no compromises, just powerful tools
             </p>
             
             <div className="flex justify-center px-4">
