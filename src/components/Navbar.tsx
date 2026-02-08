@@ -188,7 +188,7 @@ export default function Navbar() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden bg-samurai-grey-darker border-t-2 border-samurai-red">
+        <div className="md:hidden bg-samurai-grey-darker border-t-2 border-samurai-red max-h-[calc(100vh-4rem)] overflow-y-auto">
           <div className="px-2 pt-2 pb-3 space-y-1">
             <a
               href="#forge"
@@ -203,7 +203,7 @@ export default function Navbar() {
                   window.location.href = '/#forge'
                 }
               }}
-              className="block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white cursor-pointer"
+              className="block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white cursor-pointer"
             >
               FORGE
             </a>
@@ -213,7 +213,7 @@ export default function Navbar() {
               <>
                 <Link
                   to="/omni"
-                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/omni') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
@@ -224,7 +224,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/scraper"
-                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/scraper') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
@@ -235,7 +235,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/ldgr"
-                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/ldgr') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
@@ -246,7 +246,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/wspr"
-                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/wspr') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
@@ -257,7 +257,7 @@ export default function Navbar() {
                 </Link>
                 <Link
                   to="/stonks"
-                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/stonks') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
@@ -272,10 +272,10 @@ export default function Navbar() {
             {/* Discord Link */}
             <Link
               to="/discord"
-              className="flex items-center justify-center px-4 py-4 rounded-lg transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white"
+              className="flex items-center px-4 py-3 rounded-lg transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white"
               onClick={() => setIsOpen(false)}
             >
-              <DiscordIcon size={24} className="mr-2" />
+              <DiscordIcon size={24} className="mr-3" />
               <span className="font-bold">DISCORD</span>
             </Link>
 
@@ -310,7 +310,7 @@ export default function Navbar() {
                     setIsOpen(false)
                     setShowAuthPopup(true)
                   }}
-                  className="w-full flex items-center justify-center px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg bg-samurai-red text-white hover:bg-samurai-red-dark"
+                  className="w-full flex items-center justify-center px-4 py-3 rounded-lg font-bold transition-all touch-manipulation bg-samurai-red text-white hover:bg-samurai-red-dark"
                 >
                   <Key size={24} className="mr-3" />
                   <span>SIGN IN</span>
