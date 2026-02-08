@@ -128,13 +128,15 @@ export default function Home() {
                 </div>
                 
                 {/* Thumbnail */}
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
                   featuredCard === 'OMNI' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/omni-thumb.svg" 
                     alt="OMNI UI Preview" 
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
                 
@@ -200,13 +202,15 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
                   featuredCard === 'SCRP' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/scrp-thumb.svg" 
                     alt="SCRP UI Preview" 
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
                 
@@ -270,13 +274,15 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
                   featuredCard === 'LDGR' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/ldgr-thumb.svg" 
                     alt="LDGR UI Preview" 
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
                 
@@ -340,13 +346,15 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
                   featuredCard === 'WSPR' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/wspr-thumb.svg" 
                     alt="WSPR UI Preview" 
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
                 
@@ -410,13 +418,15 @@ export default function Home() {
                   </div>
                 </div>
                 
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark ${
+                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
                   featuredCard === 'STONKS' ? 'h-48' : 'h-32'
                 }`}>
                   <img 
                     src="/thumbnails/stonks-thumb.svg" 
                     alt="STONKS UI Preview" 
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
                 
