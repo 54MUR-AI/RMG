@@ -50,9 +50,12 @@ export async function getUserRole(userId?: string): Promise<UserRole | null> {
     .from('user_roles')
     .select('*')
     .eq('user_id', targetUserId)
-    .single()
+    .maybeSingle()
 
-  if (error) return null
+  if (error) {
+    console.error('Error fetching user role:', error)
+    return null
+  }
   return data
 }
 
