@@ -21,6 +21,9 @@ export default function Forum() {
 
   useEffect(() => {
     loadCategories()
+  }, [])
+
+  useEffect(() => {
     loadThreads()
   }, [selectedCategory, user])
 
@@ -28,6 +31,13 @@ export default function Forum() {
     try {
       const data = await getCategories()
       setCategories(data)
+      // Set Announcements (first category after reordering) as default
+      if (data.length > 0 && selectedCategory === undefined) {
+        const announcementsCategory = data.find(cat => cat.name === 'Announcements')
+        if (announcementsCategory) {
+          setSelectedCategory(announcementsCategory.id)
+        }
+      }
     } catch (error) {
       console.error('Error loading categories:', error)
     }
