@@ -186,7 +186,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 9999 }}>
+    <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 1 }}>
       {embers.map((ember) => {
         // Depth-based styling for parallax effect
         const depthOpacity = ember.depthLayer === 2 ? 1.0 : ember.depthLayer === 1 ? 0.85 : 0.7
