@@ -81,19 +81,12 @@ export default function FileUpload({ onFileUpload, uploading = false }: FileUplo
             </div>
           </div>
 
-          <button 
-            className="px-8 py-3 bg-samurai-red hover:bg-samurai-red-dark text-white font-bold rounded-lg transition-all duration-300 shadow-lg hover:shadow-samurai-red/50 transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-            disabled={uploading}
-          >
-            {uploading ? (
-              <span className="flex items-center gap-2">
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                Encrypting & Uploading...
-              </span>
-            ) : (
-              'Select Files'
-            )}
-          </button>
+          {uploading && (
+            <div className="flex items-center gap-2 text-samurai-red font-bold">
+              <div className="w-5 h-5 border-2 border-samurai-red/30 border-t-samurai-red rounded-full animate-spin" />
+              Encrypting & Uploading...
+            </div>
+          )}
         </div>
       </label>
     </div>
