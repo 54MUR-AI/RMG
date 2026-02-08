@@ -27,7 +27,7 @@ export default function FloatingEmbers() {
         id: i,
         left: Math.random() * 100,
         delay: Math.random() * 5,
-        duration: 6 + Math.random() * 10, // More variation in speed
+        duration: 12 + Math.random() * 20, // Doubled duration for longer lifespan
         size: 3 + Math.random() * 7,
         drift: -30 + Math.random() * 60, // Random horizontal drift -30 to +30
         rotation: Math.random() * 360, // Random rotation
