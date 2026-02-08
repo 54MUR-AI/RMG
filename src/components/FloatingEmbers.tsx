@@ -110,9 +110,10 @@ export default function FloatingEmbers() {
       {embers.map((ember) => (
         <div
           key={ember.id}
-          className="absolute bottom-0"
+          className="absolute"
           style={{
             left: `${ember.left}%`,
+            bottom: '0px',
             animation: `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`,
           }}
         >
