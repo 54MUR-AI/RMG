@@ -106,7 +106,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999, isolation: 'isolate', transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}>
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999, isolation: 'isolate', backfaceVisibility: 'hidden' }}>
       {embers.map((ember) => (
         <div
           key={ember.id}
