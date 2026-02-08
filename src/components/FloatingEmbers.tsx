@@ -126,9 +126,7 @@ export default function FloatingEmbers() {
                 ? `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`
                 : `emberFlickerChaotic ${1 + Math.random() * 2}s ease-in-out infinite, emberPulseGlow${ember.id} ${2 + Math.random()}s ease-in-out infinite`,
               willChange: 'transform',
-              transform: 'translate3d(0,0,0)',
               backfaceVisibility: 'hidden',
-              WebkitTransform: 'translate3d(0,0,0)',
               WebkitBackfaceVisibility: 'hidden',
             }}
           />
