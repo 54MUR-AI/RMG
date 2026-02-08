@@ -9,7 +9,7 @@ export default function OmniPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-samurai-black">
+    <div className="bg-samurai-black">
       {/* README Popup */}
       {showPopup && (
         <ReadmePopup

@@ -56,7 +56,7 @@ export default function ResetPassword() {
   }
 
   return (
-    <div className="min-h-screen bg-samurai-black flex items-center justify-center p-4">
+    <div className="bg-samurai-black flex items-center justify-center p-4 py-32">
       <div className="w-full max-w-md bg-samurai-grey-darker border-2 border-samurai-red rounded-xl shadow-2xl shadow-samurai-red/20 p-8">
         <div className="flex items-center justify-center mb-6">
           <Lock className="w-12 h-12 text-samurai-red" />

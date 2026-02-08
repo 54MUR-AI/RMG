@@ -44,7 +44,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-samurai-black">
+    <div className="bg-samurai-black">
       {/* Epic Hero Section with Parallax */}
       <section className="gradient-bg text-white py-16 sm:py-24 md:py-32 relative">
         

@@ -161,7 +161,7 @@ export default function LdgrPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-samurai-black flex items-center justify-center p-4">
+      <div className="bg-samurai-black flex items-center justify-center p-4 py-32">
         <div className="text-center">
           <Lock className="w-16 h-16 text-samurai-red mx-auto mb-4" />
           <h2 className="text-3xl font-black text-white mb-2 neon-text">LDGR</h2>
@@ -172,7 +172,7 @@ export default function LdgrPage() {
   }
 
   return (
-    <div className="min-h-screen bg-samurai-black text-white">
+    <div className="bg-samurai-black text-white">
       <main className="relative z-10 max-w-7xl mx-auto px-6 py-6">
         <div className="text-center mb-8 animate-slide-up">
           <div className="flex items-center justify-center gap-4 mb-4">

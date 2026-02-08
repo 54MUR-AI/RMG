@@ -10,7 +10,7 @@ export default function WsprPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-samurai-black">
+    <div className="bg-samurai-black">
       {showReadme && (
         <ReadmePopup
           title="WSPR"

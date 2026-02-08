@@ -13,7 +13,7 @@ export default function DiscordPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-samurai-black flex items-center justify-center">
+    <div className="bg-samurai-black flex items-center justify-center py-32">
       <div className="text-center">
         <DiscordIcon size={80} className="text-samurai-red mx-auto mb-6 animate-pulse" />
         <h1 className="text-4xl font-black text-white mb-4">Entering the Dojo...</h1>

@@ -6,7 +6,7 @@ export default function ScraperPage() {
   }, [])
 
   return (
-    <div className="min-h-screen bg-samurai-black">
+    <div className="bg-samurai-black">
       {/* Fullscreen iframe */}
       <iframe
         src="https://scraper-frontend-3hnj.onrender.com"
