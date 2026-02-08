@@ -495,22 +495,30 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">Backend</h3>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Code2 className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">Python 3.13 & FastAPI</span>
+              <div className="grid grid-cols-4 gap-4">
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Code2 className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Python 3.13 & FastAPI
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Cpu className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">TensorFlow & PyTorch</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Cpu className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    TensorFlow & PyTorch
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Database className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">SQLAlchemy & Redis</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Database className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    SQLAlchemy & Redis
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Container className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">Docker & Kubernetes</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Container className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Docker & Kubernetes
+                  </div>
                 </div>
               </div>
             </div>
@@ -522,22 +530,30 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">Frontend</h3>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Layout className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">React & TypeScript</span>
+              <div className="grid grid-cols-4 gap-4">
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Layout className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    React & TypeScript
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Server className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">Redux Toolkit</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Server className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Redux Toolkit
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Palette className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">TailwindCSS</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Palette className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    TailwindCSS
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Zap className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">Vite Build Tool</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Zap className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Vite Build Tool
+                  </div>
                 </div>
               </div>
             </div>
@@ -549,22 +565,30 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">AI & ML</h3>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <MessageSquare className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">OpenAI GPT-4</span>
+              <div className="grid grid-cols-4 gap-4">
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <MessageSquare className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    OpenAI GPT-4
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Bot className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">Anthropic Claude</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Bot className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Anthropic Claude
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Network className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">HuggingFace Models</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Network className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    HuggingFace Models
+                  </div>
                 </div>
-                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
-                  <Wrench className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
-                  <span className="text-xs text-white/70 text-center font-semibold">Custom ML Pipelines</span>
+                <div className="relative flex items-center justify-center p-6 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-all group">
+                  <Wrench className="text-samurai-red group-hover:scale-110 transition-transform" size={40} />
+                  <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-1 bg-samurai-black border border-samurai-red rounded-lg text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    Custom ML Pipelines
+                  </div>
                 </div>
               </div>
             </div>
