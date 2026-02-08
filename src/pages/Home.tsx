@@ -481,7 +481,7 @@ export default function Home() {
         <div className="absolute inset-0 pattern-bg opacity-5"></div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-16">
+          <div id="forge" className="text-center mb-16">
             <div className="inline-block mb-4">
               <Hammer className="w-12 h-12 text-samurai-red mx-auto" />
             </div>
@@ -494,7 +494,7 @@ export default function Home() {
           </div>
 
           {/* Forge Forum */}
-          <div id="forge" className="mb-16">
+          <div className="mb-16">
             <Forum />
           </div>
 
