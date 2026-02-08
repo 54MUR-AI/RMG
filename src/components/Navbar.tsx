@@ -47,16 +47,23 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <Link to="/forge" className={`font-bold transition-all relative group ${
-              isActive('/forge') 
-                ? 'text-samurai-red neon-text' 
-                : 'text-samurai-steel-light hover:text-samurai-red'
-            }`}>
+            <a 
+              href="#forge" 
+              onClick={(e) => {
+                e.preventDefault()
+                const forgeSection = document.getElementById('forge')
+                if (forgeSection) {
+                  forgeSection.scrollIntoView({ behavior: 'smooth' })
+                } else {
+                  window.location.hash = ''
+                  window.location.href = '/#forge'
+                }
+              }}
+              className="font-bold transition-all relative group text-samurai-steel-light hover:text-samurai-red cursor-pointer"
+            >
               FORGE
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/forge') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </Link>
+              <span className="absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all w-0 group-hover:w-full"></span>
+            </a>
             
             {/* Project Links - Only show when logged in */}
             {user && (
@@ -174,17 +181,23 @@ export default function Navbar() {
       {isOpen && (
         <div className="md:hidden bg-samurai-grey-darker border-t-2 border-samurai-red">
           <div className="px-2 pt-2 pb-3 space-y-1">
-            <Link
-              to="/forge"
-              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/forge') 
-                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-              }`}
-              onClick={() => setIsOpen(false)}
+            <a
+              href="#forge"
+              onClick={(e) => {
+                e.preventDefault()
+                setIsOpen(false)
+                const forgeSection = document.getElementById('forge')
+                if (forgeSection) {
+                  forgeSection.scrollIntoView({ behavior: 'smooth' })
+                } else {
+                  window.location.hash = ''
+                  window.location.href = '/#forge'
+                }
+              }}
+              className="block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white cursor-pointer"
             >
               FORGE
-            </Link>
+            </a>
             
             {/* Only show project links when logged in */}
             {user && (

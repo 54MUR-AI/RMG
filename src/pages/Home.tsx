@@ -4,6 +4,7 @@ import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
 import AuthPopup from '../components/AuthPopup'
+import Forum from '../components/Forum'
 import { useAuth } from '../contexts/AuthContext'
 import { useState } from 'react'
 
@@ -92,6 +93,13 @@ export default function Home() {
           <svg className="block w-full" viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
             <path d="M0 0L60 10C120 20 240 40 360 46.7C480 53 600 47 720 43.3C840 40 960 40 1080 46.7C1200 53 1320 67 1380 73.3L1440 80V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0V0Z" fill="#0A0A0A"/>
           </svg>
+        </div>
+      </section>
+
+      {/* Forge Section - Community Forum */}
+      <section id="forge" className="py-16 bg-samurai-black relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <Forum />
         </div>
       </section>
 
