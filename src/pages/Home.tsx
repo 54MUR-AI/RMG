@@ -1,4 +1,4 @@
-import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Lock, Brain } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Lock, Brain, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import FloatingEmbers from '../components/FloatingEmbers'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
@@ -495,24 +495,24 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">Backend</h3>
               </div>
-              <ul className="space-y-3 text-white/70">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  Python 3.13 & FastAPI
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  TensorFlow & PyTorch
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  SQLAlchemy & Redis
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  Docker & Kubernetes
-                </li>
-              </ul>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Code2 className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">Python 3.13 & FastAPI</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Cpu className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">TensorFlow & PyTorch</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Database className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">SQLAlchemy & Redis</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Container className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">Docker & Kubernetes</span>
+                </div>
+              </div>
             </div>
 
             <div className="group bg-samurai-black rounded-2xl p-8 border-2 border-samurai-steel-dark hover:border-samurai-red transition-all duration-300 card-hover">
@@ -522,24 +522,24 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">Frontend</h3>
               </div>
-              <ul className="space-y-3 text-white/70">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  React & TypeScript
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  Redux Toolkit
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  TailwindCSS
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  Vite Build Tool
-                </li>
-              </ul>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Layout className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">React & TypeScript</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Server className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">Redux Toolkit</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Palette className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">TailwindCSS</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Zap className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">Vite Build Tool</span>
+                </div>
+              </div>
             </div>
 
             <div className="group bg-samurai-black rounded-2xl p-8 border-2 border-samurai-steel-dark hover:border-samurai-red transition-all duration-300 card-hover">
@@ -549,24 +549,24 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-black text-white">AI & ML</h3>
               </div>
-              <ul className="space-y-3 text-white/70">
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  OpenAI GPT-4
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  Anthropic Claude
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  HuggingFace Models
-                </li>
-                <li className="flex items-center">
-                  <span className="w-2 h-2 bg-samurai-red rounded-full mr-3"></span>
-                  Custom ML Pipelines
-                </li>
-              </ul>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <MessageSquare className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">OpenAI GPT-4</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Bot className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">Anthropic Claude</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Network className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">HuggingFace Models</span>
+                </div>
+                <div className="flex flex-col items-center p-4 bg-samurai-grey-darker rounded-xl border border-samurai-steel-dark hover:border-samurai-red transition-colors group">
+                  <Wrench className="text-samurai-red mb-2 group-hover:scale-110 transition-transform" size={32} />
+                  <span className="text-xs text-white/70 text-center font-semibold">Custom ML Pipelines</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
