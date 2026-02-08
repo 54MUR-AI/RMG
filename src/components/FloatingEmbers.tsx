@@ -77,8 +77,9 @@ export default function FloatingEmbers() {
         90% {
           transform: translateY(-90vh) translateX(${ember.horizontalMeander * -0.4}px) rotate(${ember.rotation * 0.9}deg) scale(0.5);
         }
-        95% {
+        98% {
           opacity: 1;
+          transform: translateY(-105vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.3);
         }
         100% {
           transform: translateY(-110vh) translateX(0px) rotate(${ember.rotation}deg) scale(0.2);
@@ -105,7 +106,7 @@ export default function FloatingEmbers() {
   }, [])
 
   return (
-    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 1, isolation: 'isolate', transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}>
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 9999, isolation: 'isolate', transform: 'translate3d(0,0,0)', backfaceVisibility: 'hidden' }}>
       {embers.map((ember) => (
         <div
           key={ember.id}
