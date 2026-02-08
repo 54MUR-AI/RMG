@@ -158,6 +158,7 @@ export default function Navbar() {
                     onViewProfile={() => setShowProfilePopup(true)}
                     onClose={() => setShowProfileDropdown(false)}
                     buttonRef={profileButtonRef}
+                    dropdownRef={profileDropdownRef}
                   />
                 )}
               </div>
