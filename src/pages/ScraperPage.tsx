@@ -1,7 +1,11 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { BookOpen, Settings } from 'lucide-react'
+import ReadmePopup from '../components/ReadmePopup'
 
 export default function ScraperPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null)
+  const [showReadme, setShowReadme] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -53,16 +57,67 @@ export default function ScraperPage() {
     }
   }, [])
 
+  // Listen for settings toggle from iframe
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'SCRP_TOGGLE_SETTINGS') {
+        setShowSettings(prev => !prev)
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
+
+  // Send settings toggle to iframe
+  const handleSettingsClick = () => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        { type: 'RMG_TOGGLE_SETTINGS' },
+        'https://scraper-frontend-3hnj.onrender.com'
+      )
+    }
+  }
+
   return (
-    <div className="bg-samurai-black">
+    <div className="relative bg-samurai-black h-screen">
       {/* Fullscreen iframe */}
       <iframe
         ref={iframeRef}
         src="https://scraper-frontend-3hnj.onrender.com"
-        className="w-full h-screen border-none"
+        className="w-full h-full border-none"
         title="SCRP - Smart Content Retrieval & Processing"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       />
+
+      {/* Floating Buttons */}
+      <div className="fixed bottom-6 right-6 flex flex-col gap-3 z-50">
+        {/* README Button */}
+        <button
+          onClick={() => setShowReadme(true)}
+          className="p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
+          aria-label="README"
+        >
+          <BookOpen className="w-6 h-6" />
+        </button>
+        
+        {/* Settings Button */}
+        <button
+          onClick={handleSettingsClick}
+          className="p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
+          aria-label="Settings"
+        >
+          <Settings className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* README Popup */}
+      {showReadme && (
+        <ReadmePopup
+          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md"
+          onClose={() => setShowReadme(false)}
+        />
+      )}
     </div>
   )
 }
