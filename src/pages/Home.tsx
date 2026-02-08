@@ -114,11 +114,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Forge Forum */}
-          <div id="forge" className="mb-16">
-            <Forum />
-          </div>
-
           <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-2 gap-6 mb-12 lg:auto-rows-fr">
             {/* OMNI Card */}
             <div 
@@ -496,6 +491,11 @@ export default function Home() {
             <p className="text-xl text-white/80 max-w-2xl mx-auto">
               Crafted with battle-tested, production-grade technologies
             </p>
+          </div>
+
+          {/* Forge Forum */}
+          <div id="forge" className="mb-16">
+            <Forum />
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
