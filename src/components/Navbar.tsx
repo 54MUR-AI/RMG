@@ -250,6 +250,9 @@ export default function Navbar() {
       
       {/* Auth Popup */}
       {showAuthPopup && <AuthPopup onClose={() => setShowAuthPopup(false)} />}
+      
+      {/* Profile Popup */}
+      {showProfilePopup && <ProfilePopup onClose={() => setShowProfilePopup(false)} />}
     </nav>
   )
 }
