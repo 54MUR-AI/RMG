@@ -16,17 +16,17 @@ function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="h-screen flex flex-col bg-samurai-black overflow-hidden">
+        <div className="fixed inset-0 flex flex-col bg-samurai-black">
           {/* Floating embers - persists across all pages */}
           <FloatingEmbers />
           
           {/* Fixed Header */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 z-10">
             <Navbar />
           </div>
           
           {/* Scrollable Content */}
-          <main className="flex-1 overflow-y-auto">
+          <main className="flex-1 overflow-y-auto overflow-x-hidden">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/reset-password" element={<ResetPassword />} />
@@ -40,7 +40,7 @@ function App() {
           </main>
           
           {/* Fixed Footer */}
-          <div className="flex-shrink-0">
+          <div className="flex-shrink-0 z-10">
             <Footer />
           </div>
         </div>
