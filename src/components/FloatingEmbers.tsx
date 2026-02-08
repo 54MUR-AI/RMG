@@ -19,7 +19,8 @@ export default function FloatingEmbers() {
   useEffect(() => {
     // Generate random embers - fewer on mobile for performance
     const isMobile = window.innerWidth < 768
-    const emberCount = isMobile ? 20 : 40
+    const isTablet = window.innerWidth >= 768 && window.innerWidth < 1024
+    const emberCount = isMobile ? 12 : isTablet ? 25 : 40
     const newEmbers: Ember[] = []
     
     for (let i = 0; i < emberCount; i++) {
@@ -89,12 +90,10 @@ export default function FloatingEmbers() {
       
       @keyframes emberPulseGlow${ember.id} {
         0%, 100% {
-          filter: brightness(1) saturate(1);
-          box-shadow: 0 0 ${ember.size * 3}px rgba(230, 57, 70, 1), 0 0 ${ember.size * 6}px rgba(230, 57, 70, 0.6);
+          opacity: ${ember.opacity};
         }
         50% {
-          filter: brightness(1.8) saturate(0.5);
-          box-shadow: 0 0 ${ember.size * 6}px rgba(255, 200, 200, 1), 0 0 ${ember.size * 12}px rgba(255, 150, 150, 0.8), 0 0 ${ember.size * 18}px rgba(230, 57, 70, 0.4);
+          opacity: ${ember.opacity * 1.3};
         }
       }
     `).join('\n')
@@ -118,17 +117,15 @@ export default function FloatingEmbers() {
           }}
         >
           <div
-            className="rounded-full bg-samurai-red md:blur-[1px]"
+            className="rounded-full bg-samurai-red"
             style={{
               width: `${ember.size}px`,
               height: `${ember.size}px`,
               opacity: ember.opacity,
-              animation: window.innerWidth < 768 
+              animation: window.innerWidth < 1024
                 ? `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`
                 : `emberFlickerChaotic ${1 + Math.random() * 2}s ease-in-out infinite, emberPulseGlow${ember.id} ${2 + Math.random()}s ease-in-out infinite`,
               willChange: 'transform',
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden',
             }}
           />
         </div>
