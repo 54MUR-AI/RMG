@@ -37,12 +37,15 @@ export default function ProfileDropdown({ onViewProfile, onClose, buttonRef, dro
       {/* User Info */}
       <div className="p-4 border-b border-samurai-steel-dark">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-samurai-red flex items-center justify-center text-white font-bold">
-            {user?.email?.charAt(0).toUpperCase() || 'U'}
+          <div 
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"
+            style={{ backgroundColor: user?.user_metadata?.avatar_color || '#E63946' }}
+          >
+            {(user?.user_metadata?.display_name?.charAt(0) || user?.email?.charAt(0) || 'U').toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-white font-bold truncate">
-              {user?.user_metadata?.preferred_username || user?.user_metadata?.name || 'User'}
+              {user?.user_metadata?.display_name || user?.user_metadata?.preferred_username || user?.user_metadata?.name || 'User'}
             </p>
             <p className="text-white/60 text-sm truncate">{user?.email}</p>
           </div>
