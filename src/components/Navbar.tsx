@@ -185,61 +185,67 @@ export default function Navbar() {
             >
               FORGE
             </Link>
-            <Link
-              to="/omni"
-              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/omni') 
-                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              OMNI
-            </Link>
-            <Link
-              to="/scraper"
-              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/scraper') 
-                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              SCRP
-            </Link>
-            <Link
-              to="/ldgr"
-              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/ldgr') 
-                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              LDGR
-            </Link>
-            <Link
-              to="/wspr"
-              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/wspr') 
-                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              WSPR
-            </Link>
-            <Link
-              to="/stonks"
-              className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
-                isActive('/stonks') 
-                  ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                  : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-              }`}
-              onClick={() => setIsOpen(false)}
-            >
-              STONKS
-            </Link>
+            
+            {/* Only show project links when logged in */}
+            {user && (
+              <>
+                <Link
+                  to="/omni"
+                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                    isActive('/omni') 
+                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  OMNI
+                </Link>
+                <Link
+                  to="/scraper"
+                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                    isActive('/scraper') 
+                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  SCRP
+                </Link>
+                <Link
+                  to="/ldgr"
+                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                    isActive('/ldgr') 
+                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  LDGR
+                </Link>
+                <Link
+                  to="/wspr"
+                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                    isActive('/wspr') 
+                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  WSPR
+                </Link>
+                <Link
+                  to="/stonks"
+                  className={`block px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg ${
+                    isActive('/stonks') 
+                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  STONKS
+                </Link>
+              </>
+            )}
             
             {/* Discord Link */}
             <Link
