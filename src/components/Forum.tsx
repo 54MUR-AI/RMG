@@ -191,18 +191,19 @@ export default function Forum() {
         </button>
       </div>
 
-      {/* Thread List */}
-      {loading ? (
-        <div className="text-center py-12">
-          <div className="inline-block w-8 h-8 border-4 border-samurai-red/30 border-t-samurai-red rounded-full animate-spin" />
-        </div>
-      ) : sortedThreads.length === 0 ? (
-        <div className="text-center py-12 bg-samurai-grey-darker rounded-lg border-2 border-samurai-grey">
-          <MessageSquare className="w-16 h-16 text-white/30 mx-auto mb-4" />
-          <p className="text-white/70 text-lg">No threads yet. Be the first to start a discussion!</p>
-        </div>
-      ) : (
-        <div className="space-y-4">
+      {/* Thread List - Scrollable */}
+      <div className="max-h-[600px] overflow-y-auto">
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="inline-block w-8 h-8 border-4 border-samurai-red/30 border-t-samurai-red rounded-full animate-spin" />
+          </div>
+        ) : sortedThreads.length === 0 ? (
+          <div className="text-center py-12 bg-samurai-grey-darker rounded-lg border-2 border-samurai-grey">
+            <MessageSquare className="w-16 h-16 text-white/30 mx-auto mb-4" />
+            <p className="text-white/70 text-lg">No threads yet. Be the first to start a discussion!</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
           {sortedThreads.map((thread) => (
             <div
               key={thread.id}
@@ -334,7 +335,8 @@ export default function Forum() {
             </div>
           ))}
         </div>
-      )}
+        )}
+      </div>
 
       {/* Modals */}
       {showCreateModal && (
