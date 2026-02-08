@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { supabase } from '../supabase'
 import { encryptFile, decryptFile, generateEncryptionKey } from './encryption'
 
 export type FileMetadata = {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Folder as FolderIcon, FolderPlus, Edit2, Trash2, ChevronRight, Home } from 'lucide-react'
-import type { Folder } from '../lib/folders'
+import type { Folder } from '../../lib/ldgr/folders'
 
 interface FolderViewProps {
   folders: Folder[]

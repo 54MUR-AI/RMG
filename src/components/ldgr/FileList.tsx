@@ -1,5 +1,5 @@
 import { FileText, Lock, Download, Share2, Trash2, Image as ImageIcon, FileVideo, FileAudio, File } from 'lucide-react'
-import type { FileMetadata } from '../lib/storage'
+import type { FileMetadata } from '../../lib/ldgr/storage'
 
 interface FileListProps {
   files: FileMetadata[]
