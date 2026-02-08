@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Flame, Key } from 'lucide-react'
+import { Menu, X, Flame, Key, User, LogOut } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import DiscordIcon from './DiscordIcon'
 import AuthPopup from './AuthPopup'
@@ -13,7 +13,7 @@ export default function Navbar() {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false)
   const [showProfilePopup, setShowProfilePopup] = useState(false)
   const location = useLocation()
-  const { user } = useAuth()
+  const { user, signOut } = useAuth()
   const profileRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -269,6 +269,45 @@ export default function Navbar() {
               <DiscordIcon size={24} className="mr-2" />
               <span className="font-bold">DISCORD</span>
             </Link>
+
+            {/* Auth Section */}
+            <div className="border-t-2 border-samurai-steel-dark mt-2 pt-2">
+              {user ? (
+                <>
+                  <button
+                    onClick={() => {
+                      setIsOpen(false)
+                      setShowProfilePopup(true)
+                    }}
+                    className="w-full flex items-center px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white"
+                  >
+                    <User size={24} className="mr-3" />
+                    <span>VIEW PROFILE</span>
+                  </button>
+                  <button
+                    onClick={async () => {
+                      setIsOpen(false)
+                      await signOut()
+                    }}
+                    className="w-full flex items-center px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg text-samurai-steel-light hover:bg-samurai-red hover:text-white"
+                  >
+                    <LogOut size={24} className="mr-3" />
+                    <span>LOG OUT</span>
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    setIsOpen(false)
+                    setShowAuthPopup(true)
+                  }}
+                  className="w-full flex items-center justify-center px-4 py-4 rounded-lg font-bold transition-all touch-manipulation text-lg bg-samurai-red text-white hover:bg-samurai-red-dark"
+                >
+                  <Key size={24} className="mr-3" />
+                  <span>SIGN IN</span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
