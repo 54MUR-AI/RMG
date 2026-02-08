@@ -15,6 +15,7 @@ export default function Navbar() {
   const location = useLocation()
   const { user, signOut } = useAuth()
   const profileRef = useRef<HTMLDivElement>(null)
+  const profileButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
