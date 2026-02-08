@@ -174,7 +174,7 @@ export default function LdgrPage() {
   }
 
   return (
-    <div className="relative bg-samurai-black text-white min-h-screen overflow-hidden">
+    <div className="relative bg-samurai-black text-white min-h-screen">
       <main className="relative z-10 max-w-7xl mx-auto px-6 py-6 pb-24">
         <div className="text-center mb-8 animate-slide-up">
           <div className="flex items-center justify-center gap-4 mb-4">
@@ -291,7 +291,7 @@ export default function LdgrPage() {
       {/* README Button */}
       <button
         onClick={() => setShowReadme(true)}
-        className="fixed bottom-6 right-6 p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110 z-50"
+        className="fixed bottom-20 right-6 p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110 z-50"
         aria-label="README"
       >
         <BookOpen className="w-6 h-6" />
