@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { X, Send, ArrowUp, ArrowDown, MessageSquare, Eye, Trash2 } from 'lucide-react'
+import { useAdmin } from '../contexts/AdminContext'
+import { X, Send, ArrowUp, ArrowDown, MessageSquare, Eye, Trash2, Pin, Lock } from 'lucide-react'
 import { getThreadPosts, createPost, voteThread, votePost, deletePost, type ForumThread, type ForumPost } from '../lib/forum'
+import { toggleThreadPin, toggleThreadLock, deleteThread, deletePost as adminDeletePost } from '../lib/admin'
 
 interface ThreadViewModalProps {
   thread: ForumThread
@@ -11,6 +13,7 @@ interface ThreadViewModalProps {
 
 export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadViewModalProps) {
   const { user } = useAuth()
+  const { isAdmin } = useAdmin()
   const [posts, setPosts] = useState<ForumPost[]>([])
   const [replyContent, setReplyContent] = useState('')
   const [isAnonymous, setIsAnonymous] = useState(false)
@@ -105,6 +108,55 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
     }
   }
 
+  const handleAdminDeletePost = async (postId: string) => {
+    if (!isAdmin || !confirm('Delete this reply? (Admin action)')) return
+
+    try {
+      await adminDeletePost(postId)
+      await loadPosts()
+      onUpdate()
+    } catch (error) {
+      console.error('Error deleting post:', error)
+      alert('Failed to delete post.')
+    }
+  }
+
+  const handlePinThread = async () => {
+    if (!isAdmin) return
+
+    try {
+      await toggleThreadPin(thread.id, !thread.is_pinned)
+      onUpdate()
+      onClose()
+    } catch (error) {
+      console.error('Error pinning thread:', error)
+    }
+  }
+
+  const handleLockThread = async () => {
+    if (!isAdmin) return
+
+    try {
+      await toggleThreadLock(thread.id, !thread.is_locked)
+      onUpdate()
+      onClose()
+    } catch (error) {
+      console.error('Error locking thread:', error)
+    }
+  }
+
+  const handleDeleteThread = async () => {
+    if (!isAdmin || !confirm('Delete this entire thread? This cannot be undone.')) return
+
+    try {
+      await deleteThread(thread.id)
+      onUpdate()
+      onClose()
+    } catch (error) {
+      console.error('Error deleting thread:', error)
+    }
+  }
+
   const formatTimeAgo = (date: string) => {
     const seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000)
     
@@ -119,41 +171,77 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
       <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-grey p-6 flex items-start justify-between z-10">
-          <div className="flex-1">
-            <h2 className="text-2xl font-black text-white mb-2">{thread.title}</h2>
-            <div className="flex items-center gap-4 text-sm text-white/50">
-              <div className="flex items-center gap-2">
-                <div
-                  className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
-                  style={{ backgroundColor: thread.author_avatar_color }}
-                >
-                  {thread.author_name.charAt(0).toUpperCase()}
-                </div>
-                <span>{thread.author_name}</span>
-              </div>
-              {thread.category && (
-                <span className="px-2 py-1 bg-samurai-grey rounded text-xs">
-                  {thread.category.icon} {thread.category.name}
-                </span>
+        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-grey p-6 z-10">
+          <div className="flex items-start justify-between mb-2">
+            <h2 className="text-2xl font-black text-white flex-1">{thread.title}</h2>
+            <div className="flex items-center gap-2">
+              {/* Admin Controls */}
+              {isAdmin && (
+                <>
+                  <button
+                    onClick={handlePinThread}
+                    className={`p-2 rounded transition-colors ${
+                      thread.is_pinned 
+                        ? 'bg-samurai-red text-white hover:bg-samurai-red-dark' 
+                        : 'bg-samurai-grey hover:bg-samurai-grey-dark text-white/70'
+                    }`}
+                    title={thread.is_pinned ? 'Unpin thread' : 'Pin thread'}
+                  >
+                    <Pin className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={handleLockThread}
+                    className={`p-2 rounded transition-colors ${
+                      thread.is_locked 
+                        ? 'bg-yellow-600 text-white hover:bg-yellow-700' 
+                        : 'bg-samurai-grey hover:bg-samurai-grey-dark text-white/70'
+                    }`}
+                    title={thread.is_locked ? 'Unlock thread' : 'Lock thread'}
+                  >
+                    <Lock className="w-5 h-5" />
+                  </button>
+                  <button
+                    onClick={handleDeleteThread}
+                    className="p-2 rounded bg-samurai-grey hover:bg-red-600 text-white/70 hover:text-white transition-colors"
+                    title="Delete thread"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </>
               )}
-              <div className="flex items-center gap-1">
-                <MessageSquare className="w-4 h-4" />
-                <span>{thread.reply_count}</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <Eye className="w-4 h-4" />
-                <span>{thread.view_count}</span>
-              </div>
-              <span>{formatTimeAgo(thread.created_at)}</span>
+              <button
+                onClick={onClose}
+                className="text-white/70 hover:text-samurai-red transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
             </div>
           </div>
-          <button
-            onClick={onClose}
-            className="text-white/70 hover:text-samurai-red transition-colors ml-4"
-          >
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-4 text-sm text-white/50">
+            <div className="flex items-center gap-2">
+              <div
+                className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                style={{ backgroundColor: thread.author_avatar_color }}
+              >
+                {thread.author_name.charAt(0).toUpperCase()}
+              </div>
+              <span>{thread.author_name}</span>
+            </div>
+            {thread.category && (
+              <span className="px-2 py-1 bg-samurai-grey rounded text-xs">
+                {thread.category.icon} {thread.category.name}
+              </span>
+            )}
+            <div className="flex items-center gap-1">
+              <MessageSquare className="w-4 h-4" />
+              <span>{thread.reply_count}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Eye className="w-4 h-4" />
+              <span>{thread.view_count}</span>
+            </div>
+            <span>{formatTimeAgo(thread.created_at)}</span>
+          </div>
         </div>
 
         {/* Thread Content */}
@@ -260,14 +348,15 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
                       <span className="text-white font-semibold">{post.author_name}</span>
                       <span className="text-white/50 text-sm">{formatTimeAgo(post.created_at)}</span>
                     </div>
-                    {user && post.author_id === user.id && (
+                    {(user && post.author_id === user.id) || isAdmin ? (
                       <button
-                        onClick={() => handleDeletePost(post.id)}
+                        onClick={() => isAdmin && post.author_id !== user?.id ? handleAdminDeletePost(post.id) : handleDeletePost(post.id)}
                         className="text-white/50 hover:text-samurai-red transition-colors"
+                        title={isAdmin && post.author_id !== user?.id ? 'Delete (Admin)' : 'Delete'}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
-                    )}
+                    ) : null}
                   </div>
                   <p className="text-white/90 whitespace-pre-wrap">{post.content}</p>
                 </div>

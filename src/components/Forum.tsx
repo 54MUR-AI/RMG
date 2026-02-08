@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '../contexts/AuthContext'
-import { MessageSquare, Plus, TrendingUp, Clock, Pin, Lock, ArrowUp, ArrowDown, Eye } from 'lucide-react'
+import { useAdmin } from '../contexts/AdminContext'
+import { MessageSquare, Plus, TrendingUp, Clock, Pin, Lock, ArrowUp, ArrowDown, Eye, Trash2 } from 'lucide-react'
 import { getCategories, getThreads, voteThread, type ForumThread, type ForumCategory } from '../lib/forum'
+import { toggleThreadPin, toggleThreadLock, deleteThread } from '../lib/admin'
 import CreateThreadModal from './CreateThreadModal'
 import ThreadViewModal from './ThreadViewModal'
 
 export default function Forum() {
   const { user } = useAuth()
+  const { isAdmin } = useAdmin()
   const [threads, setThreads] = useState<ForumThread[]>([])
   const [categories, setCategories] = useState<ForumCategory[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>()
@@ -49,6 +52,44 @@ export default function Forum() {
       await loadThreads()
     } catch (error) {
       console.error('Error voting:', error)
+    }
+  }
+
+  const handlePinThread = async (e: React.MouseEvent, threadId: string, isPinned: boolean) => {
+    e.stopPropagation()
+    if (!isAdmin) return
+    
+    try {
+      await toggleThreadPin(threadId, !isPinned)
+      await loadThreads()
+    } catch (error) {
+      console.error('Error pinning thread:', error)
+    }
+  }
+
+  const handleLockThread = async (e: React.MouseEvent, threadId: string, isLocked: boolean) => {
+    e.stopPropagation()
+    if (!isAdmin) return
+    
+    try {
+      await toggleThreadLock(threadId, !isLocked)
+      await loadThreads()
+    } catch (error) {
+      console.error('Error locking thread:', error)
+    }
+  }
+
+  const handleDeleteThread = async (e: React.MouseEvent, threadId: string) => {
+    e.stopPropagation()
+    if (!isAdmin) return
+    
+    if (!confirm('Are you sure you want to delete this thread? This cannot be undone.')) return
+    
+    try {
+      await deleteThread(threadId)
+      await loadThreads()
+    } catch (error) {
+      console.error('Error deleting thread:', error)
     }
   }
 
@@ -210,30 +251,67 @@ export default function Forum() {
                     {thread.content}
                   </p>
 
-                  <div className="flex items-center gap-4 text-sm text-white/50">
-                    <div className="flex items-center gap-2">
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
-                        style={{ backgroundColor: thread.author_avatar_color }}
-                      >
-                        {thread.author_name.charAt(0).toUpperCase()}
+                  <div className="flex items-center justify-between gap-4 text-sm text-white/50">
+                    <div className="flex items-center gap-4">
+                      <div className="flex items-center gap-2">
+                        <div
+                          className="w-6 h-6 rounded-full flex items-center justify-center text-white text-xs font-bold"
+                          style={{ backgroundColor: thread.author_avatar_color }}
+                        >
+                          {thread.author_name.charAt(0).toUpperCase()}
+                        </div>
+                        <span>{thread.author_name}</span>
                       </div>
-                      <span>{thread.author_name}</span>
+                      {thread.category && (
+                        <span className="px-2 py-1 bg-samurai-grey rounded text-xs">
+                          {thread.category.icon} {thread.category.name}
+                        </span>
+                      )}
+                      <div className="flex items-center gap-1">
+                        <MessageSquare className="w-4 h-4" />
+                        <span>{thread.reply_count}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <Eye className="w-4 h-4" />
+                        <span>{thread.view_count}</span>
+                      </div>
+                      <span>{formatTimeAgo(thread.updated_at)}</span>
                     </div>
-                    {thread.category && (
-                      <span className="px-2 py-1 bg-samurai-grey rounded text-xs">
-                        {thread.category.icon} {thread.category.name}
-                      </span>
+
+                    {/* Admin Controls */}
+                    {isAdmin && (
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={(e) => handlePinThread(e, thread.id, thread.is_pinned)}
+                          className={`p-1.5 rounded transition-colors ${
+                            thread.is_pinned 
+                              ? 'bg-samurai-red text-white hover:bg-samurai-red-dark' 
+                              : 'bg-samurai-grey hover:bg-samurai-grey-dark text-white/70'
+                          }`}
+                          title={thread.is_pinned ? 'Unpin thread' : 'Pin thread'}
+                        >
+                          <Pin className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={(e) => handleLockThread(e, thread.id, thread.is_locked)}
+                          className={`p-1.5 rounded transition-colors ${
+                            thread.is_locked 
+                              ? 'bg-yellow-600 text-white hover:bg-yellow-700' 
+                              : 'bg-samurai-grey hover:bg-samurai-grey-dark text-white/70'
+                          }`}
+                          title={thread.is_locked ? 'Unlock thread' : 'Lock thread'}
+                        >
+                          <Lock className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={(e) => handleDeleteThread(e, thread.id)}
+                          className="p-1.5 rounded bg-samurai-grey hover:bg-red-600 text-white/70 hover:text-white transition-colors"
+                          title="Delete thread"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     )}
-                    <div className="flex items-center gap-1">
-                      <MessageSquare className="w-4 h-4" />
-                      <span>{thread.reply_count}</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Eye className="w-4 h-4" />
-                      <span>{thread.view_count}</span>
-                    </div>
-                    <span>{formatTimeAgo(thread.updated_at)}</span>
                   </div>
                 </div>
               </div>
