@@ -141,6 +141,7 @@ export default function Navbar() {
             {user ? (
               <div className="relative" ref={profileRef}>
                 <button
+                  ref={profileButtonRef}
                   onClick={() => setShowProfileDropdown(!showProfileDropdown)}
                   className="flex items-center justify-center w-8 h-8 rounded-full text-white font-bold cursor-pointer transition-all hover:scale-110"
                   style={{ backgroundColor: user.user_metadata?.avatar_color || '#E63946' }}
@@ -151,6 +152,7 @@ export default function Navbar() {
                   <ProfileDropdown
                     onViewProfile={() => setShowProfilePopup(true)}
                     onClose={() => setShowProfileDropdown(false)}
+                    buttonRef={profileButtonRef}
                   />
                 )}
               </div>
