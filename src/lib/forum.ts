@@ -66,7 +66,7 @@ export async function getCategories(): Promise<ForumCategory[]> {
   const { data, error } = await supabase
     .from('forum_categories')
     .select('*')
-    .order('name')
+    .order('created_at')
 
   if (error) throw error
   return data || []
