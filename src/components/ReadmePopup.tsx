@@ -49,17 +49,14 @@ export default function ReadmePopup({ title, readmeUrl, onClose }: ReadmePopupPr
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="flex-shrink-0 bg-samurai-grey-darker border-b-2 border-samurai-red p-4 sm:p-6 flex items-center justify-between gap-3">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-black text-samurai-red uppercase neon-text truncate">{title} README</h2>
-          <button
-            onClick={handleClose}
-            className="flex-shrink-0 p-2 text-white hover:text-samurai-red transition-colors rounded-lg hover:bg-samurai-red/10"
-            aria-label="Close"
-          >
-            <X size={24} className="sm:w-6 sm:h-6" />
-          </button>
-        </div>
+        {/* Close Button */}
+        <button
+          onClick={handleClose}
+          className="absolute top-4 right-4 z-10 p-2 text-white hover:text-samurai-red transition-colors rounded-lg hover:bg-samurai-red/10 bg-samurai-grey-darker/80 backdrop-blur-sm"
+          aria-label="Close"
+        >
+          <X size={24} />
+        </button>
 
         {/* Content */}
         <div className="flex-1 p-4 sm:p-6 md:p-8 overflow-y-auto">
