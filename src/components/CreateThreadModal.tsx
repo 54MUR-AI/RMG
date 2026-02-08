@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { X, Send } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import { createThread, getCategories, type ForumCategory } from '../lib/forum'
+import { createThread, type ForumCategory } from '../lib/forum'
 import ModalPortal from './ModalPortal'
 
 interface CreateThreadModalProps {

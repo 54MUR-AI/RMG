@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { X, ExternalLink } from 'lucide-react'
+import { X } from 'lucide-react'
 import ModalPortal from './ModalPortal'
 
 interface AppInfoPopupProps {
