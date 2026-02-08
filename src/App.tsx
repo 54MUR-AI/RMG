@@ -1,7 +1,6 @@
 import { HashRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import AnimatedTitle from './components/AnimatedTitle'
 import Home from './pages/Home'
 import StonksPage from './pages/StonksPage'
 import ScraperPage from './pages/ScraperPage'
@@ -13,7 +12,6 @@ import DiscordPage from './pages/DiscordPage'
 function App() {
   return (
     <Router>
-      <AnimatedTitle />
       <div className="min-h-screen flex flex-col bg-samurai-black">
         <Navbar />
         <main className="flex-grow">
