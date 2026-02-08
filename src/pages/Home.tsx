@@ -1,6 +1,5 @@
 import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Lock, Brain, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import FloatingEmbers from '../components/FloatingEmbers'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
@@ -31,9 +30,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-samurai-black">
-      {/* Floating embers - fixed to viewport */}
-      <FloatingEmbers />
-      
       {/* Epic Hero Section with Parallax */}
       <section className="gradient-bg text-white py-16 sm:py-24 md:py-32 relative">
         
