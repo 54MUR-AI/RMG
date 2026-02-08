@@ -63,10 +63,10 @@ export default function FileUpload({ onFileUpload, uploading = false }: FileUplo
       <label htmlFor="file-upload" className="cursor-pointer">
         <div className="flex flex-col items-center gap-6">
           <div className="relative">
-            <Upload className="w-16 h-16 text-samurai-red animate-glow-pulse" />
-            <div className="absolute -bottom-2 -right-2 bg-samurai-black rounded-full p-1">
-              <Lock className="w-6 h-6 text-white" />
+            <div className="bg-samurai-black rounded-2xl p-2">
+              <Upload className="w-16 h-16 text-samurai-red animate-glow-pulse" />
             </div>
+            <Lock className="w-8 h-8 text-white absolute -bottom-2 -right-2" />
           </div>
           
           <div>
