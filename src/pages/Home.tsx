@@ -69,9 +69,7 @@ export default function Home() {
             </p>
             
             <p className="text-base sm:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed px-4">
-              Like masterless samurai, we walk our own path—crafting cutting-edge software 
-              that wields the power of artificial intelligence, machine learning, and advanced 
-              automation to conquer real-world challenges.
+              No masters, no compromises, just powerful tools.
             </p>
             
             <div className="flex justify-center px-4">
