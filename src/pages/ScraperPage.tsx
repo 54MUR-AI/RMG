@@ -1,24 +1,12 @@
-import { useState, useEffect } from 'react'
-import ReadmePopup from '../components/ReadmePopup'
+import { useEffect } from 'react'
 
 export default function ScraperPage() {
-  const [showPopup, setShowPopup] = useState(true)
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
   return (
     <div className="min-h-screen bg-samurai-black">
-      {/* README Popup */}
-      {showPopup && (
-        <ReadmePopup
-          title="SCRP"
-          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/scraper/main/README.md"
-          onClose={() => setShowPopup(false)}
-        />
-      )}
-
       {/* Fullscreen iframe */}
       <iframe
         src="https://scraper-frontend-3hnj.onrender.com"
