@@ -24,6 +24,36 @@ body {
   color-scheme: light only;
 }
 
+/* Custom Scrollbar Styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #E63946 #1A1A1A;
+}
+
+*::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #1A1A1A;
+  border-radius: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #E63946;
+  border-radius: 10px;
+  border: 2px solid #1A1A1A;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #FF4757;
+}
+
+*::-webkit-scrollbar-corner {
+  background: #1A1A1A;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
