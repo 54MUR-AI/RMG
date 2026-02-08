@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X, Flame, Key, User, LogOut } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import DiscordIcon from './DiscordIcon'
@@ -13,9 +13,10 @@ export default function Navbar() {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false)
   const [showProfilePopup, setShowProfilePopup] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
   const { user, signOut } = useAuth()
   const profileRef = useRef<HTMLDivElement>(null)
-  const profileButtonRef = useRef<HTMLButtonElement>(null)
+  const profileButtonRef = useRef<HTMLButtonButton>(null)
   const profileDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -57,11 +58,19 @@ export default function Navbar() {
               href="/#forge" 
               onClick={(e) => {
                 e.preventDefault()
-                const forgeSection = document.getElementById('forge')
-                if (forgeSection) {
-                  forgeSection.scrollIntoView({ behavior: 'smooth' })
+                if (location.pathname !== '/') {
+                  navigate('/')
+                  setTimeout(() => {
+                    const forgeSection = document.getElementById('forge')
+                    if (forgeSection) {
+                      forgeSection.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }, 100)
                 } else {
-                  window.location.href = '/#forge'
+                  const forgeSection = document.getElementById('forge')
+                  if (forgeSection) {
+                    forgeSection.scrollIntoView({ behavior: 'smooth' })
+                  }
                 }
               }}
               className="font-bold transition-all relative group text-samurai-steel-light hover:text-samurai-red cursor-pointer"
@@ -194,11 +203,19 @@ export default function Navbar() {
               onClick={(e) => {
                 e.preventDefault()
                 setIsOpen(false)
-                const forgeSection = document.getElementById('forge')
-                if (forgeSection) {
-                  forgeSection.scrollIntoView({ behavior: 'smooth' })
+                if (location.pathname !== '/') {
+                  navigate('/')
+                  setTimeout(() => {
+                    const forgeSection = document.getElementById('forge')
+                    if (forgeSection) {
+                      forgeSection.scrollIntoView({ behavior: 'smooth' })
+                    }
+                  }, 100)
                 } else {
-                  window.location.href = '/#forge'
+                  const forgeSection = document.getElementById('forge')
+                  if (forgeSection) {
+                    forgeSection.scrollIntoView({ behavior: 'smooth' })
+                  }
                 }
               }}
               className="block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white cursor-pointer"
