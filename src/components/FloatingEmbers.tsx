@@ -114,7 +114,7 @@ export default function FloatingEmbers() {
           style={{
             left: `${ember.left}%`,
             bottom: '0px',
-            animation: `emberFloat ${ember.duration}s linear ${ember.delay}s infinite`,
+            animation: `floatEmber${ember.id} ${ember.duration}s linear ${ember.delay}s infinite`,
           }}
         >
           <div
