@@ -176,7 +176,7 @@ export default function LdgrPage() {
   return (
     <div className="relative bg-samurai-black text-white min-h-screen">
       <main className="relative z-10 max-w-7xl mx-auto px-6 py-4 pb-24">
-        <div className="text-center mb-6 animate-slide-up">
+        <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-3 mb-2">
             <Lock className="w-8 h-8 text-samurai-red" />
             <h1 className="text-3xl font-black neon-text">LDGR</h1>
