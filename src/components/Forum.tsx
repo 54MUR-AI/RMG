@@ -206,7 +206,7 @@ export default function Forum() {
           {sortedThreads.map((thread) => (
             <div
               key={thread.id}
-              className="bg-samurai-grey-darker border border-samurai-steel-dark/50 hover:border-samurai-red rounded-lg p-5 md:p-6 transition-all cursor-pointer group shadow-sm hover:shadow-md"
+              className="bg-samurai-black border border-samurai-steel-dark/50 hover:border-samurai-red rounded-lg p-5 md:p-6 transition-all cursor-pointer group shadow-sm hover:shadow-md"
               onClick={() => setSelectedThread(thread)}
             >
               <div className="flex flex-col md:flex-row gap-4">

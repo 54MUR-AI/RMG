@@ -172,9 +172,9 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
   return (
     <ModalPortal>
       <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[9999] p-4">
-      <div className="bg-samurai-black border-2 border-samurai-red rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-samurai-black border-b-2 border-samurai-grey p-6 z-10">
+        <div className="sticky top-0 bg-samurai-grey-darker border-b-2 border-samurai-grey p-6 z-10">
           <div className="flex items-start justify-between mb-2">
             <h2 className="text-2xl font-black text-white flex-1">{thread.title}</h2>
             <div className="flex items-center gap-2">
@@ -305,7 +305,7 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
             </div>
           ) : (
             posts.map((post) => (
-              <div key={post.id} className="flex gap-4 p-4 bg-samurai-black border border-samurai-grey/30 rounded-lg">
+              <div key={post.id} className="flex gap-4 p-4 bg-samurai-grey rounded-lg">
                 {/* Vote Section */}
                 <div className="flex flex-col items-center gap-1 min-w-[50px]">
                   <button
@@ -373,14 +373,14 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
 
         {/* Reply Form */}
         {!thread.is_locked && (
-          <div className="sticky bottom-0 bg-samurai-black border-t-2 border-samurai-grey p-6">
+          <div className="sticky bottom-0 bg-samurai-grey-darker border-t-2 border-samurai-grey p-6">
             <form onSubmit={handleReply} className="space-y-4">
               <textarea
                 value={replyContent}
                 onChange={(e) => setReplyContent(e.target.value)}
                 placeholder="Write your reply..."
                 rows={4}
-                className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors resize-none"
+                className="w-full px-4 py-3 bg-samurai-grey-darker border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none transition-colors resize-none"
                 maxLength={2000}
               />
               
