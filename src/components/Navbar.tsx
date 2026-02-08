@@ -37,59 +37,64 @@ export default function Navbar() {
               }`}></span>
             </Link>
             
-            {/* Separator */}
-            <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
-            
-            <Link to="/omni" className={`font-bold transition-all relative group ${
-              isActive('/omni') 
-                ? 'text-samurai-red neon-text' 
-                : 'text-samurai-steel-light hover:text-samurai-red'
-            }`}>
-              OMNI
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/omni') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </Link>
-            <Link to="/scraper" className={`font-bold transition-all relative group ${
-              isActive('/scraper') 
-                ? 'text-samurai-red neon-text' 
-                : 'text-samurai-steel-light hover:text-samurai-red'
-            }`}>
-              SCRP
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/scraper') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </Link>
-            <Link to="/ldgr" className={`font-bold transition-all relative group ${
-              isActive('/ldgr') 
-                ? 'text-samurai-red neon-text' 
-                : 'text-samurai-steel-light hover:text-samurai-red'
-            }`}>
-              LDGR
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/ldgr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </Link>
-            <Link to="/wspr" className={`font-bold transition-all relative group ${
-              isActive('/wspr') 
-                ? 'text-samurai-red neon-text' 
-                : 'text-samurai-steel-light hover:text-samurai-red'
-            }`}>
-              WSPR
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/wspr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </Link>
-            <Link to="/stonks" className={`font-bold transition-all relative group ${
-              isActive('/stonks') 
-                ? 'text-samurai-red neon-text' 
-                : 'text-samurai-steel-light hover:text-samurai-red'
-            }`}>
-              STONKS
-              <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                isActive('/stonks') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-              }`}></span>
-            </Link>
+            {/* Project Links - Only show when logged in */}
+            {user && (
+              <>
+                {/* Separator */}
+                <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
+                
+                <Link to="/omni" className={`font-bold transition-all relative group ${
+                  isActive('/omni') 
+                    ? 'text-samurai-red neon-text' 
+                    : 'text-samurai-steel-light hover:text-samurai-red'
+                }`}>
+                  OMNI
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                    isActive('/omni') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                </Link>
+                <Link to="/scraper" className={`font-bold transition-all relative group ${
+                  isActive('/scraper') 
+                    ? 'text-samurai-red neon-text' 
+                    : 'text-samurai-steel-light hover:text-samurai-red'
+                }`}>
+                  SCRP
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                    isActive('/scraper') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                </Link>
+                <Link to="/ldgr" className={`font-bold transition-all relative group ${
+                  isActive('/ldgr') 
+                    ? 'text-samurai-red neon-text' 
+                    : 'text-samurai-steel-light hover:text-samurai-red'
+                }`}>
+                  LDGR
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                    isActive('/ldgr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                </Link>
+                <Link to="/wspr" className={`font-bold transition-all relative group ${
+                  isActive('/wspr') 
+                    ? 'text-samurai-red neon-text' 
+                    : 'text-samurai-steel-light hover:text-samurai-red'
+                }`}>
+                  WSPR
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                    isActive('/wspr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                </Link>
+                <Link to="/stonks" className={`font-bold transition-all relative group ${
+                  isActive('/stonks') 
+                    ? 'text-samurai-red neon-text' 
+                    : 'text-samurai-steel-light hover:text-samurai-red'
+                }`}>
+                  STONKS
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
+                    isActive('/stonks') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                  }`}></span>
+                </Link>
+              </>
+            )}
             
             {/* Separator */}
             <span className="text-samurai-steel-dark text-2xl font-thin">|</span>

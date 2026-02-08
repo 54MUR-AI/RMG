@@ -1,13 +1,27 @@
 import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Lock, Brain, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
+import AuthPopup from '../components/AuthPopup'
+import { useAuth } from '../contexts/AuthContext'
 import { useState } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
   const [featuredCard, setFeaturedCard] = useState<string | null>('OMNI')
+  const [showAuthPopup, setShowAuthPopup] = useState(false)
+  const { user } = useAuth()
+  const navigate = useNavigate()
+  
+  const handleLaunchClick = (e: React.MouseEvent, path: string) => {
+    e.stopPropagation()
+    if (!user) {
+      setShowAuthPopup(true)
+    } else {
+      navigate(path)
+    }
+  }
 
   // Helper to get CSS Grid order based on which card is featured
   // Target layout: Col1[Card1, Card3], Col2[FEATURED (tall)], Col3[Card2, Card4]
@@ -164,14 +178,13 @@ export default function Home() {
                   </p>
                 )}
                 
-                <Link
-                  to="/omni"
+                <button
+                  onClick={(e) => handleLaunchClick(e, '/omni')}
                   className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <Zap className="mr-2" size={18} />
                   Launch
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -236,14 +249,13 @@ export default function Home() {
                   </p>
                 )}
                 
-                <Link
-                  to="/scraper"
+                <button
+                  onClick={(e) => handleLaunchClick(e, '/scraper')}
                   className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <Zap className="mr-2" size={18} />
                   Launch
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -308,14 +320,13 @@ export default function Home() {
                   </p>
                 )}
                 
-                <Link
-                  to="/ldgr"
+                <button
+                  onClick={(e) => handleLaunchClick(e, '/ldgr')}
                   className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <Zap className="mr-2" size={18} />
                   Launch
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -380,14 +391,13 @@ export default function Home() {
                   </p>
                 )}
                 
-                <Link
-                  to="/wspr"
+                <button
+                  onClick={(e) => handleLaunchClick(e, '/wspr')}
                   className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <Zap className="mr-2" size={18} />
                   Launch
-                </Link>
+                </button>
               </div>
             </div>
 
@@ -452,14 +462,13 @@ export default function Home() {
                   </p>
                 )}
                 
-                <Link
-                  to="/stonks"
+                <button
+                  onClick={(e) => handleLaunchClick(e, '/stonks')}
                   className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                  onClick={(e) => e.stopPropagation()}
                 >
                   <Zap className="mr-2" size={18} />
                   Launch
-                </Link>
+                </button>
               </div>
             </div>
           </div>
@@ -600,6 +609,9 @@ export default function Home() {
           onClose={() => setReadmePopup(null)}
         />
       )}
+      
+      {/* Auth Popup */}
+      {showAuthPopup && <AuthPopup onClose={() => setShowAuthPopup(false)} />}
     </div>
   )
 }
