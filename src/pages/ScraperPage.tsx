@@ -58,11 +58,16 @@ export default function ScraperPage() {
 
   // Send settings toggle to iframe
   const handleSettingsClick = () => {
+    console.log('Settings button clicked in RMG')
     if (iframeRef.current?.contentWindow) {
+      console.log('Sending RMG_TOGGLE_SETTINGS to SCRP iframe')
       iframeRef.current.contentWindow.postMessage(
         { type: 'RMG_TOGGLE_SETTINGS' },
         'https://scraper-frontend-3hnj.onrender.com'
       )
+      console.log('Message sent')
+    } else {
+      console.error('Iframe contentWindow not available')
     }
   }
 
