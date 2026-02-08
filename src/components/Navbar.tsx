@@ -1,16 +1,37 @@
 import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Flame, Key, User } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import DiscordIcon from './DiscordIcon'
 import AuthPopup from './AuthPopup'
+import ProfileDropdown from './ProfileDropdown'
+import ProfilePopup from './ProfilePopup'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
   const [showAuthPopup, setShowAuthPopup] = useState(false)
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false)
+  const [showProfilePopup, setShowProfilePopup] = useState(false)
   const location = useLocation()
   const { user } = useAuth()
-  
+  const profileRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setShowProfileDropdown(false)
+      }
+    }
+
+    if (showProfileDropdown) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showProfileDropdown])
+
   const isActive = (path: string) => location.pathname === path
 
   return (
