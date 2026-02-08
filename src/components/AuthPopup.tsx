@@ -25,7 +25,7 @@ export default function AuthPopup({ onClose }: AuthPopupProps) {
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
         options: {
-          redirectTo: 'https://54mur-ai.github.io/RMG/#/',
+          redirectTo: window.location.origin + window.location.pathname,
         },
       })
       if (error) throw error
