@@ -5,6 +5,7 @@ import { X, Send, ArrowUp, ArrowDown, MessageSquare, Eye, Trash2, Pin, Lock } fr
 import { getThreadPosts, createPost, voteThread, votePost, deletePost, type ForumThread, type ForumPost } from '../lib/forum'
 import { toggleThreadPin, toggleThreadLock, deleteThread, deletePost as adminDeletePost } from '../lib/admin'
 import ModalPortal from './ModalPortal'
+import UserIdBadge from './UserIdBadge'
 
 interface ThreadViewModalProps {
   thread: ForumThread
@@ -348,6 +349,9 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
                         {post.author_name.charAt(0).toUpperCase()}
                       </div>
                       <span className="text-white font-semibold">{post.author_name}</span>
+                      {isAdmin && post.author_id && (
+                        <UserIdBadge userId={post.author_id} />
+                      )}
                       <span className="text-white/50 text-sm">{formatTimeAgo(post.created_at)}</span>
                     </div>
                     {(user && post.author_id === user.id) || isAdmin ? (

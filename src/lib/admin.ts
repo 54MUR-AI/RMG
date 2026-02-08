@@ -6,6 +6,7 @@ export interface UserRole {
   email: string
   is_admin: boolean
   is_moderator: boolean
+  user_id_number: number | null
   created_at: string
   updated_at: string
 }

@@ -6,6 +6,7 @@ import { getCategories, getThreads, voteThread, type ForumThread, type ForumCate
 import { toggleThreadPin, toggleThreadLock, deleteThread } from '../lib/admin'
 import CreateThreadModal from './CreateThreadModal'
 import ThreadViewModal from './ThreadViewModal'
+import UserIdBadge from './UserIdBadge'
 
 export default function Forum() {
   const { user } = useAuth()
@@ -261,6 +262,9 @@ export default function Forum() {
                           {thread.author_name.charAt(0).toUpperCase()}
                         </div>
                         <span>{thread.author_name}</span>
+                        {isAdmin && thread.author_id && (
+                          <UserIdBadge userId={thread.author_id} />
+                        )}
                       </div>
                       {thread.category && (
                         <span className="px-2 py-1 bg-samurai-grey rounded text-xs">
