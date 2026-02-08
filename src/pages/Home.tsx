@@ -30,7 +30,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-samurai-black relative">
+    <div className="min-h-screen bg-samurai-black">
       {/* Floating embers - fixed to viewport */}
       <FloatingEmbers />
       
