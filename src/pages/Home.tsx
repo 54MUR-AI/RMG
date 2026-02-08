@@ -68,7 +68,7 @@ export default function Home() {
               Digital Damascus for the Cyber Samurai
             </p>
             
-            <p className="text-base sm:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed px-4">
+            <p className="text-base sm:text-lg mb-8 sm:mb-12 max-w-3xl mx-auto text-white/90 leading-relaxed px-4 uppercase font-bold tracking-wide">
               No masters, no compromises, just powerful tools.
             </p>
             
@@ -107,8 +107,8 @@ export default function Home() {
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 neon-text">
               ARSENAL
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto px-4">
-              Powerful tools for the independent developer
+            <p className="text-base sm:text-lg md:text-xl text-white/80 max-w-2xl mx-auto px-4 uppercase font-bold tracking-wide">
+              AI-driven automation for the independent developer
             </p>
           </div>
 
@@ -486,7 +486,7 @@ export default function Home() {
             <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
               FORGE
             </h2>
-            <p className="text-xl text-white/80 max-w-2xl mx-auto">
+            <p className="text-xl text-white/80 max-w-2xl mx-auto uppercase font-bold tracking-wide">
               Where the community meets the code
             </p>
           </div>
