@@ -47,7 +47,7 @@ export async function decryptFile(
         const encryptedData = e.target?.result as string
         const decrypted = CryptoJS.AES.decrypt(encryptedData, password)
         const typedArray = convertWordArrayToUint8Array(decrypted)
-        const blob = new Blob([typedArray], { type: originalType })
+        const blob = new Blob([typedArray as BlobPart], { type: originalType })
         resolve(blob)
       } catch (error) {
         reject(error)
