@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { BookOpen, Settings } from 'lucide-react'
+import { BookOpen, Settings, Lock } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 import ReadmePopup from '../components/ReadmePopup'
 
 export default function OmniPage() {
+  const { user } = useAuth()
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [showReadme, setShowReadme] = useState(false)
 
@@ -64,6 +66,18 @@ export default function OmniPage() {
         'https://omni-lite-web.onrender.com'
       )
     }
+  }
+
+  if (!user) {
+    return (
+      <div className="bg-samurai-black flex items-center justify-center p-4 py-32">
+        <div className="text-center">
+          <Lock className="w-16 h-16 text-samurai-red mx-auto mb-4" />
+          <h2 className="text-3xl font-black text-white mb-2 neon-text">OMNI</h2>
+          <p className="text-white/70 mb-6">Please sign in to access OMNI-Lite</p>
+        </div>
+      </div>
+    )
   }
 
   return (
