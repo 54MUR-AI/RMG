@@ -13,16 +13,16 @@ export default function OmniPage() {
       {/* README Popup */}
       {showPopup && (
         <ReadmePopup
-          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/omni/main/README.md"
+          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/omni_lite/main/README.md"
           onClose={() => setShowPopup(false)}
         />
       )}
 
       {/* Fullscreen iframe */}
       <iframe
-        src="https://profound-gumption-6dd81c.netlify.app"
+        src="https://omni-lite-web.onrender.com"
         className="w-full h-screen border-none"
-        title="OMNI - Optimized Multi-Model Networked Intelligence"
+        title="OMNI-Lite - Optimized Multi-Model Networked Intelligence"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         style={{
           colorScheme: 'light only',
