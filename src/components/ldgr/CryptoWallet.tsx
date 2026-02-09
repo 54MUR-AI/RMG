@@ -38,9 +38,8 @@ export default function CryptoWallet() {
   const [loading, setLoading] = useState(true)
   const [loadingBalances, setLoadingBalances] = useState(false)
   const [showAddModal, setShowAddModal] = useState(false)
-  const [editingWallet, setEditingWallet] = useState<CryptoWallet | null>(null)
-  const [revealedSeeds, setRevealedSeeds] = useState<Set<string>>(new Set())
-  const [copiedItem, setCopiedItem] = useState<string | null>(null)
+  const [revealedSeeds] = useState<Set<string>>(new Set())
+  const [copiedItem] = useState<string | null>(null)
   const [filterBlockchain, setFilterBlockchain] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
 
@@ -57,7 +56,7 @@ export default function CryptoWallet() {
     setWallets([])
   }
 
-  const loadWalletBalance = async (address: string, blockchain: string) => {
+  const loadWalletBalance = async (address: string, _blockchain: string) => {
     // TODO: Implement blockchain API integration
     // Use services like Etherscan, Blockchain.com, etc.
     setLoadingBalances(true)
@@ -124,12 +123,16 @@ export default function CryptoWallet() {
             <span className="hidden sm:inline">Refresh</span>
           </button>
           <button
-            onClick={() => setShowAddModal(true)}
+            onClick={() => {
+              setShowAddModal(true)
+              alert('Crypto wallet management coming soon!')
+            }}
             className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flex-1 sm:flex-none"
           >
             <Plus className="w-4 h-4" />
             Add Wallet
           </button>
+          {showAddModal && null}
         </div>
       </div>
 

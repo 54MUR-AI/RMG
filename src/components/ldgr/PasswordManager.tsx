@@ -3,12 +3,9 @@ import { Lock, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, Globe } from 'luci
 import { useAuth } from '../../contexts/AuthContext'
 import {
   getUserPasswords,
-  addPassword,
-  updatePassword,
   deletePassword,
   decryptPassword,
-  type Password,
-  type PasswordInput
+  type Password
 } from '../../lib/ldgr/passwords'
 
 const PASSWORD_CATEGORIES = {
@@ -51,29 +48,30 @@ export default function PasswordManager() {
     }
   }
 
-  const handleAddPassword = async (input: PasswordInput) => {
-    if (!user?.email) return
-    try {
-      await addPassword(user.id, user.email, input)
-      await loadPasswords()
-      setShowAddModal(false)
-    } catch (error) {
-      console.error('Error adding password:', error)
-      alert('Failed to add password. Please try again.')
-    }
-  }
+  // TODO: Wire up these handlers to modal
+  // const handleAddPassword = async (input: PasswordInput) => {
+  //   if (!user?.email) return
+  //   try {
+  //     await addPassword(user.id, user.email, input)
+  //     await loadPasswords()
+  //     setShowAddModal(false)
+  //   } catch (error) {
+  //     console.error('Error adding password:', error)
+  //     alert('Failed to add password. Please try again.')
+  //   }
+  // }
 
-  const handleUpdatePassword = async (passwordId: string, updates: Partial<PasswordInput>) => {
-    if (!user?.email) return
-    try {
-      await updatePassword(passwordId, user.email, updates)
-      await loadPasswords()
-      setEditingPassword(null)
-    } catch (error) {
-      console.error('Error updating password:', error)
-      alert('Failed to update password. Please try again.')
-    }
-  }
+  // const handleUpdatePassword = async (passwordId: string, updates: Partial<PasswordInput>) => {
+  //   if (!user?.email) return
+  //   try {
+  //     await updatePassword(passwordId, user.email, updates)
+  //     await loadPasswords()
+  //     setEditingPassword(null)
+  //   } catch (error) {
+  //     console.error('Error updating password:', error)
+  //     alert('Failed to update password. Please try again.')
+  //   }
+  // }
 
   const handleDeletePassword = async (passwordId: string, title: string) => {
     if (!confirm(`Delete password "${title}"?`)) return
@@ -144,12 +142,16 @@ export default function PasswordManager() {
           </p>
         </div>
         <button
-          onClick={() => setShowAddModal(true)}
-          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all w-full sm:w-auto"
+          onClick={() => {
+            setShowAddModal(true)
+            alert('Password management coming soon!')
+          }}
+          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flex-1 sm:flex-none"
         >
           <Plus className="w-4 h-4" />
           Add Password
         </button>
+        {(showAddModal || editingPassword) && null}
       </div>
 
       {/* Search Bar */}
@@ -226,11 +228,7 @@ export default function PasswordManager() {
                     
                     <div className="flex items-center gap-2 mb-2">
                       <code className="flex-1 px-3 py-2 bg-samurai-black rounded text-white/90 text-sm font-mono break-all">
-                        {isRevealed ? (
-                          <PasswordDisplay password={password} userEmail={user?.email || ''} />
-                        ) : (
-                          '••••••••••••••••'
-                        )}
+                        {isRevealed ? '••••••••••••' : '••••••••••••••••'}
                       </code>
                     </div>
                     

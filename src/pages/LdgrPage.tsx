@@ -301,6 +301,16 @@ export default function LdgrPage() {
           </>
         )}
 
+        {/* Passwords Tab */}
+        {activeTab === 'passwords' && (
+          <PasswordManager />
+        )}
+
+        {/* Crypto Tab */}
+        {activeTab === 'crypto' && (
+          <CryptoWallet />
+        )}
+
         {/* API Keys Tab */}
         {activeTab === 'api-keys' && (
           <ApiKeyManager />
