@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, TrendingUp, RefreshCw } from 'lucide-react'
+import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, TrendingUp, RefreshCw, Scan } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import MultiChainWalletImport from './MultiChainWalletImport'
 import {
   getUserWallets,
   addWallet,
@@ -32,6 +33,7 @@ export default function CryptoWallet() {
   const [loading, setLoading] = useState(true)
   const [loadingBalances, setLoadingBalances] = useState(false)
   const [showAddModal, setShowAddModal] = useState(false)
+  const [showMultiChainImport, setShowMultiChainImport] = useState(false)
   const [editingWallet, setEditingWallet] = useState<CryptoWallet | null>(null)
   const [revealedSeeds, setRevealedSeeds] = useState<Set<string>>(new Set())
   const [copiedItem, setCopiedItem] = useState<string | null>(null)
@@ -185,14 +187,20 @@ export default function CryptoWallet() {
             onClick={refreshAllBalances}
             disabled={loadingBalances || wallets.length === 0}
             className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-grey-dark text-white rounded-lg font-bold hover:bg-samurai-grey transition-all disabled:opacity-50"
-            title="Refresh all balances"
           >
             <RefreshCw className={`w-4 h-4 ${loadingBalances ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">Refresh</span>
           </button>
           <button
+            onClick={() => setShowMultiChainImport(true)}
+            className="flex items-center gap-2 px-4 py-2 bg-samurai-grey-dark text-white rounded-lg hover:bg-samurai-grey transition-colors"
+          >
+            <Scan className="w-4 h-4" />
+            Import from Seed
+          </button>
+          <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flex-1 sm:flex-none"
+            className="flex items-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all"
           >
             <Plus className="w-4 h-4" />
             Add Wallet
@@ -386,6 +394,17 @@ export default function CryptoWallet() {
             setShowAddModal(false)
             setEditingWallet(null)
           }}
+        />
+      )}
+
+      {/* Multi-Chain Import Modal */}
+      {showMultiChainImport && (
+        <MultiChainWalletImport
+          onComplete={() => {
+            setShowMultiChainImport(false)
+            loadWallets()
+          }}
+          onCancel={() => setShowMultiChainImport(false)}
         />
       )}
     </div>
