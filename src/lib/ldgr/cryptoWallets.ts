@@ -393,25 +393,18 @@ async function fetchCardanoBalance(_address: string): Promise<string> {
   }
 }
 
-// Ripple (XRP) balance via public XRP Ledger API
+// Ripple (XRP) balance via XRPScan API (CORS-friendly)
 async function fetchRippleBalance(address: string): Promise<string> {
   try {
-    const response = await fetch('https://s1.ripple.com:51234/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        method: 'account_info',
-        params: [{
-          account: address,
-          ledger_index: 'validated'
-        }]
-      })
-    })
+    // Using XRPScan public API which supports CORS
+    const response = await fetch(
+      `https://api.xrpscan.com/api/v1/account/${address}`
+    )
     const data = await response.json()
     
-    if (data.result && data.result.account_data && data.result.account_data.Balance) {
-      // Convert from drops to XRP
-      const balanceInXrp = (parseInt(data.result.account_data.Balance) / 1e6).toFixed(4)
+    if (data && data.xrpBalance !== undefined) {
+      // Balance is already in XRP format
+      const balanceInXrp = parseFloat(data.xrpBalance).toFixed(4)
       return balanceInXrp
     }
     return '0.00'
