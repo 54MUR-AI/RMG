@@ -131,7 +131,7 @@ export default function ApiKeyManager() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h2 className="text-2xl font-black text-white flex items-center gap-2">
             <Key className="w-6 h-6 text-samurai-red" />
@@ -143,7 +143,7 @@ export default function ApiKeyManager() {
         </div>
         <button
           onClick={() => setShowAddModal(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" />
           Add Key
@@ -151,12 +151,12 @@ export default function ApiKeyManager() {
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2 sm:gap-3">
         {categories.map(category => (
           <button
             key={category}
             onClick={() => setFilterCategory(category)}
-            className={`px-3 py-1.5 rounded-lg font-semibold text-sm transition-all ${
+            className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex-shrink-0 ${
               filterCategory === category
                 ? 'bg-samurai-red text-white'
                 : 'bg-samurai-grey-dark text-white/70 hover:bg-samurai-grey'
