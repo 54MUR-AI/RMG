@@ -198,29 +198,15 @@ export async function reorderFolders(folders: Folder[]): Promise<void> {
 }
 
 /**
- * Ensure default folders exist for user (Scrapes, Documents, Images)
- * Creates them if they don't exist
+ * Ensure default folders exist for user
+ * NOTE: Folders are now created automatically by database trigger (handle_new_user)
+ * This function is kept for backwards compatibility but does nothing
+ * @deprecated Folders are created by database trigger
  */
 export async function ensureDefaultFolders(userId: string): Promise<void> {
-  const defaultFolders = ['Scrapes', 'Documents', 'Images']
-  
-  for (const folderName of defaultFolders) {
-    // Check if folder already exists
-    const { data: existing, error: fetchError } = await supabase
-      .from('folders')
-      .select('*')
-      .eq('user_id', userId)
-      .eq('name', folderName)
-      .is('parent_id', null)
-      .maybeSingle()
-    
-    if (fetchError) throw fetchError
-    
-    // If it doesn't exist, create it
-    if (!existing) {
-      await createFolder(userId, folderName, null)
-    }
-  }
+  // Folders are now created by database trigger on user signup
+  // No action needed here
+  return Promise.resolve()
 }
 
 /**
