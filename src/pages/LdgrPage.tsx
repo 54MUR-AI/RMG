@@ -203,7 +203,7 @@ export default function LdgrPage() {
         </div>
 
         {/* Tab Navigation */}
-        <div className="flex gap-4 mb-8 border-b border-white/10 pb-4">
+        <div className="flex flex-wrap gap-2 sm:gap-4 mb-8 border-b border-white/10 pb-4">
           <button
             onClick={() => setActiveTab('files')}
             className={`flex items-center gap-2 px-4 py-2 font-semibold transition-all relative ${
@@ -215,6 +215,32 @@ export default function LdgrPage() {
             <FolderOpen className="w-5 h-5" />
             <span className={activeTab === 'files' ? 'underline decoration-2 underline-offset-4' : ''}>
               Files
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab('passwords')}
+            className={`flex items-center gap-2 px-4 py-2 font-semibold transition-all relative ${
+              activeTab === 'passwords'
+                ? 'text-samurai-red'
+                : 'text-white/70 hover:text-white'
+            }`}
+          >
+            <Lock className="w-5 h-5" />
+            <span className={activeTab === 'passwords' ? 'underline decoration-2 underline-offset-4' : ''}>
+              Passwords
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab('crypto')}
+            className={`flex items-center gap-2 px-4 py-2 font-semibold transition-all relative ${
+              activeTab === 'crypto'
+                ? 'text-samurai-red'
+                : 'text-white/70 hover:text-white'
+            }`}
+          >
+            <Wallet className="w-5 h-5" />
+            <span className={activeTab === 'crypto' ? 'underline decoration-2 underline-offset-4' : ''}>
+              Crypto
             </span>
           </button>
           <button
