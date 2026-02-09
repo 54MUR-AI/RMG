@@ -162,7 +162,7 @@ export default function LdgrPage() {
     }
   }
 
-  const handleReorderFolders = async (reorderedFolders: Folder[]) => {
+  const handleReorderFolders = async (reorderedFolders: Folder[]): Promise<void> => {
     try {
       // Optimistically update UI
       setFolders(reorderedFolders)
@@ -245,6 +245,7 @@ export default function LdgrPage() {
                 onCreateFolder={handleCreateFolder}
                 onRenameFolder={handleRenameFolder}
                 onDeleteFolder={handleDeleteFolder}
+                onReorderFolders={handleReorderFolders}
                 fileCount={folderFileCounts}
                 onMoveFile={handleMoveFile}
               />

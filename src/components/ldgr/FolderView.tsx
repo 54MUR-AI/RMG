@@ -9,7 +9,7 @@ interface FolderViewProps {
   onCreateFolder: (name: string, parentId: string | null) => void
   onRenameFolder: (folderId: string, newName: string) => void
   onDeleteFolder: (folderId: string) => void
-  onReorderFolders: (folders: Folder[]) => void
+  onReorderFolders: (folders: Folder[]) => void | Promise<void>
   fileCount: Record<string, number>
   onMoveFile?: (fileId: string, folderId: string | null) => void
 }
