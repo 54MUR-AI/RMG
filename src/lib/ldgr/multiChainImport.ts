@@ -1,4 +1,5 @@
 import type { CryptoWalletInput } from './cryptoWallets'
+import { fetchWalletBalance } from './cryptoWallets'
 
 export interface BlockchainDetectionResult {
   blockchain: string
@@ -113,24 +114,24 @@ async function checkBlockchainBalance(
   address: string
 ): Promise<{ balance: string; usd_value: string; hasActivity: boolean }> {
   try {
-    // Reuse existing balance checking logic
-    const response = await fetch(`/api/crypto-balance?blockchain=${blockchain}&address=${address}`)
+    // Use existing fetchWalletBalance function
+    const balanceData = await fetchWalletBalance(address, blockchain.toLowerCase())
     
-    if (!response.ok) {
-      return { balance: '0', usd_value: '0', hasActivity: false }
+    if (!balanceData) {
+      return { balance: '0', usd_value: '$0.00', hasActivity: false }
     }
     
-    const data = await response.json()
-    const hasActivity = parseFloat(data.balance) > 0 || data.txCount > 0
+    const balanceNum = parseFloat(balanceData.balance)
+    const hasActivity = balanceNum > 0
     
     return {
-      balance: data.balance || '0',
-      usd_value: data.usd_value || '0',
+      balance: balanceData.balance,
+      usd_value: balanceData.usd_value,
       hasActivity
     }
   } catch (error) {
     console.error(`Error checking balance for ${blockchain}:`, error)
-    return { balance: '0', usd_value: '0', hasActivity: false }
+    return { balance: '0', usd_value: '$0.00', hasActivity: false }
   }
 }
 

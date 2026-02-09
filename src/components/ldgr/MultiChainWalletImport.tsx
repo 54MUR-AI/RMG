@@ -104,12 +104,12 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
   }
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-      <div className="bg-gray-900 rounded-lg border border-gray-800 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b border-gray-800">
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+      <div className="bg-samurai-grey-darker rounded-lg border-2 border-samurai-red max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+        <div className="p-6 border-b border-samurai-red/30">
           <div className="flex items-center gap-3">
-            <Wallet className="w-6 h-6 text-purple-400" />
-            <h2 className="text-xl font-semibold text-white">Import Multi-Chain Wallet</h2>
+            <Wallet className="w-6 h-6 text-samurai-red" />
+            <h2 className="text-xl font-bold text-white">Import Multi-Chain Wallet</h2>
           </div>
           <p className="text-sm text-gray-400 mt-2">
             Enter your seed phrase once and we'll detect all blockchains with activity
@@ -128,7 +128,7 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
                   value={walletName}
                   onChange={(e) => setWalletName(e.target.value)}
                   placeholder="My Crypto Wallet"
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                  className="w-full px-4 py-2 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-samurai-red"
                 />
               </div>
 
@@ -141,7 +141,7 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
                   onChange={(e) => setSeedPhrase(e.target.value)}
                   placeholder="word1 word2 word3 ..."
                   rows={4}
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 font-mono text-sm"
+                  className="w-full px-4 py-2 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-samurai-red font-mono text-sm"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   Your seed phrase is encrypted and never leaves your device
@@ -157,7 +157,7 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Hardware wallet, Exchange, etc."
-                  className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
+                  className="w-full px-4 py-2 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:outline-none focus:border-samurai-red"
                 />
               </div>
 
@@ -172,7 +172,7 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
 
           {step === 'detecting' && (
             <div className="flex flex-col items-center justify-center py-12">
-              <Loader2 className="w-12 h-12 text-purple-400 animate-spin mb-4" />
+              <Loader2 className="w-12 h-12 text-samurai-red animate-spin mb-4" />
               <p className="text-white font-medium">Detecting blockchains...</p>
               <p className="text-sm text-gray-400 mt-2">Checking balances across multiple chains</p>
             </div>
@@ -180,13 +180,13 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
 
           {step === 'review' && (
             <div className="space-y-4">
-              <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
+              <div className="bg-samurai-red/10 border border-samurai-red/30 rounded-lg p-4">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm text-gray-400">Total Portfolio Value</p>
                     <p className="text-2xl font-bold text-white">${totalValue}</p>
                   </div>
-                  <Wallet className="w-8 h-8 text-purple-400" />
+                  <Wallet className="w-8 h-8 text-samurai-red" />
                 </div>
               </div>
 
@@ -199,10 +199,10 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
                     <div
                       key={result.blockchain}
                       onClick={() => toggleChain(result.blockchain)}
-                      className={`p-4 rounded-lg border cursor-pointer transition-all ${
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
                         selectedChains.has(result.blockchain)
-                          ? 'bg-purple-500/10 border-purple-500/50'
-                          : 'bg-gray-800 border-gray-700 hover:border-gray-600'
+                          ? 'bg-samurai-red/10 border-samurai-red'
+                          : 'bg-samurai-grey-darker border-samurai-grey hover:border-samurai-red/50'
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -233,7 +233,7 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
                           type="checkbox"
                           checked={selectedChains.has(result.blockchain)}
                           onChange={() => toggleChain(result.blockchain)}
-                          className="w-5 h-5 rounded border-gray-600 text-purple-500 focus:ring-purple-500"
+                          className="w-5 h-5 rounded border-samurai-grey text-samurai-red focus:ring-samurai-red"
                         />
                       </div>
                     </div>
@@ -252,7 +252,7 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
 
           {step === 'importing' && (
             <div className="flex flex-col items-center justify-center py-12">
-              <Loader2 className="w-12 h-12 text-purple-400 animate-spin mb-4" />
+              <Loader2 className="w-12 h-12 text-samurai-red animate-spin mb-4" />
               <p className="text-white font-medium">Importing wallets...</p>
               <p className="text-sm text-gray-400 mt-2">Creating {selectedChains.size} wallet entries</p>
             </div>
@@ -274,13 +274,13 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
             <>
               <button
                 onClick={onCancel}
-                className="flex-1 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="flex-1 px-4 py-2 bg-samurai-grey-dark text-white rounded-lg font-bold hover:bg-samurai-grey transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleDetect}
-                className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                className="flex-1 px-4 py-2 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-colors"
               >
                 Detect Blockchains
               </button>
@@ -291,14 +291,14 @@ export default function MultiChainWalletImport({ onComplete, onCancel }: MultiCh
             <>
               <button
                 onClick={() => setStep('input')}
-                className="flex-1 px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors"
+                className="flex-1 px-4 py-2 bg-samurai-grey-dark text-white rounded-lg font-bold hover:bg-samurai-grey transition-colors"
               >
                 Back
               </button>
               <button
                 onClick={handleImport}
                 disabled={selectedChains.size === 0}
-                className="flex-1 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="flex-1 px-4 py-2 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Import {selectedChains.size} Wallet{selectedChains.size !== 1 ? 's' : ''}
               </button>
