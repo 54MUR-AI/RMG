@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react'
-import { Lock, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, Globe, Mail, CreditCard, Shield } from 'lucide-react'
+import { Lock, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, Globe } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
-
-interface Password {
-  id: string
-  user_id: string
-  title: string
-  username: string
-  encrypted_password: string
-  url?: string
-  category: string
-  notes?: string
-  created_at: string
-  updated_at: string
-}
+import {
+  getUserPasswords,
+  addPassword,
+  updatePassword,
+  deletePassword,
+  decryptPassword,
+  type Password,
+  type PasswordInput
+} from '../../lib/ldgr/passwords'
 
 const PASSWORD_CATEGORIES = {
   social: { name: 'Social', icon: '👥', color: 'blue' },
@@ -43,10 +39,76 @@ export default function PasswordManager() {
   }, [user])
 
   const loadPasswords = async () => {
-    // TODO: Implement actual API call
-    setLoading(false)
-    // Placeholder data
-    setPasswords([])
+    if (!user) return
+    try {
+      setLoading(true)
+      const data = await getUserPasswords(user.id)
+      setPasswords(data)
+    } catch (error) {
+      console.error('Error loading passwords:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleAddPassword = async (input: PasswordInput) => {
+    if (!user?.email) return
+    try {
+      await addPassword(user.id, user.email, input)
+      await loadPasswords()
+      setShowAddModal(false)
+    } catch (error) {
+      console.error('Error adding password:', error)
+      alert('Failed to add password. Please try again.')
+    }
+  }
+
+  const handleUpdatePassword = async (passwordId: string, updates: Partial<PasswordInput>) => {
+    if (!user?.email) return
+    try {
+      await updatePassword(passwordId, user.email, updates)
+      await loadPasswords()
+      setEditingPassword(null)
+    } catch (error) {
+      console.error('Error updating password:', error)
+      alert('Failed to update password. Please try again.')
+    }
+  }
+
+  const handleDeletePassword = async (passwordId: string, title: string) => {
+    if (!confirm(`Delete password "${title}"?`)) return
+    try {
+      await deletePassword(passwordId)
+      await loadPasswords()
+    } catch (error) {
+      console.error('Error deleting password:', error)
+      alert('Failed to delete password. Please try again.')
+    }
+  }
+
+  const handleRevealPassword = (passwordId: string) => {
+    if (revealedPasswords.has(passwordId)) {
+      setRevealedPasswords(prev => {
+        const next = new Set(prev)
+        next.delete(passwordId)
+        return next
+      })
+    } else {
+      setRevealedPasswords(prev => new Set(prev).add(passwordId))
+    }
+  }
+
+  const handleCopyPassword = async (password: Password) => {
+    if (!user?.email) return
+    try {
+      const decrypted = await decryptPassword(password.encrypted_password, user.email)
+      await navigator.clipboard.writeText(decrypted)
+      setCopiedPassword(password.id)
+      setTimeout(() => setCopiedPassword(null), 2000)
+    } catch (error) {
+      console.error('Error copying password:', error)
+      alert('Failed to copy password. Please try again.')
+    }
   }
 
   const categories = ['all', ...Object.keys(PASSWORD_CATEGORIES)]
@@ -164,7 +226,11 @@ export default function PasswordManager() {
                     
                     <div className="flex items-center gap-2 mb-2">
                       <code className="flex-1 px-3 py-2 bg-samurai-black rounded text-white/90 text-sm font-mono break-all">
-                        {isRevealed ? '••••••••••••' : '••••••••••••••••'}
+                        {isRevealed ? (
+                          <PasswordDisplay password={password} userEmail={user?.email || ''} />
+                        ) : (
+                          '••••••••••••••••'
+                        )}
                       </code>
                     </div>
                     
@@ -175,6 +241,7 @@ export default function PasswordManager() {
                   
                   <div className="flex flex-col sm:flex-row items-center gap-2">
                     <button
+                      onClick={() => handleRevealPassword(password.id)}
                       className="p-2 rounded hover:bg-samurai-grey transition-colors"
                       title="Reveal password"
                     >
@@ -186,6 +253,7 @@ export default function PasswordManager() {
                     </button>
                     
                     <button
+                      onClick={() => handleCopyPassword(password)}
                       className="p-2 rounded hover:bg-samurai-grey transition-colors"
                       title="Copy password"
                     >
@@ -197,6 +265,7 @@ export default function PasswordManager() {
                     </button>
                     
                     <button
+                      onClick={() => setEditingPassword(password)}
                       className="p-2 rounded hover:bg-samurai-grey transition-colors"
                       title="Edit password"
                     >
@@ -204,6 +273,7 @@ export default function PasswordManager() {
                     </button>
                     
                     <button
+                      onClick={() => handleDeletePassword(password.id, password.title)}
                       className="p-2 rounded hover:bg-red-600 transition-colors"
                       title="Delete password"
                     >
