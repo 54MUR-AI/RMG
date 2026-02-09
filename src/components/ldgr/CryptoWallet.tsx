@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, TrendingUp, RefreshCw, Scan } from 'lucide-react'
+import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, TrendingUp, RefreshCw } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import MultiChainWalletImport from './MultiChainWalletImport'
 import {
@@ -191,6 +191,7 @@ export default function CryptoWallet() {
             <RefreshCw className={`w-4 h-4 ${loadingBalances ? 'animate-spin' : ''}`} />
             <span className="hidden sm:inline">Refresh</span>
           </button>
+          {/* TODO: Re-enable when proper crypto libraries are integrated for address derivation
           <button
             onClick={() => setShowMultiChainImport(true)}
             className="flex items-center gap-2 px-4 py-2 bg-samurai-grey-dark text-white rounded-lg hover:bg-samurai-grey transition-colors"
@@ -198,6 +199,7 @@ export default function CryptoWallet() {
             <Scan className="w-4 h-4" />
             Import from Seed
           </button>
+          */}
           <button
             onClick={() => setShowAddModal(true)}
             className="flex items-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all"
