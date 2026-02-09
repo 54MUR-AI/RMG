@@ -26,6 +26,7 @@ export const API_SERVICES = {
   'openai': { name: 'OpenAI', category: 'AI/LLM', icon: '🤖' },
   'anthropic': { name: 'Anthropic (Claude)', category: 'AI/LLM', icon: '🧠' },
   'google-ai': { name: 'Google AI (Gemini)', category: 'AI/LLM', icon: '🔮' },
+  'xai': { name: 'xAI (Grok)', category: 'AI/LLM', icon: '⚡' },
   'cohere': { name: 'Cohere', category: 'AI/LLM', icon: '💬' },
   'huggingface': { name: 'Hugging Face', category: 'AI/LLM', icon: '🤗' },
   'replicate': { name: 'Replicate', category: 'AI/LLM', icon: '🔄' },
