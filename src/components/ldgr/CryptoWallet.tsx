@@ -250,7 +250,7 @@ export default function CryptoWallet() {
       ) : (
         <div className="grid gap-4">
           {filteredWallets.map(wallet => {
-            const chain = BLOCKCHAINS[wallet.blockchain as keyof typeof BLOCKCHAINS]
+            const chain = BLOCKCHAINS[wallet.blockchain as keyof typeof BLOCKCHAINS] || BLOCKCHAINS.other
             const isRevealed = revealedSeeds.has(wallet.id)
             const balance = balances[wallet.address]
             
@@ -267,7 +267,7 @@ export default function CryptoWallet() {
                         <span className="text-2xl">{chain.icon}</span>
                         <div className="flex-1 min-w-0">
                           <h3 className="text-lg font-bold text-white truncate">{wallet.wallet_name}</h3>
-                          <p className="text-sm text-white/60">{chain.name}</p>
+                          <p className="text-sm text-white/60">{chain.name === 'Other' ? wallet.blockchain : chain.name}</p>
                         </div>
                       </div>
                     </div>
@@ -305,7 +305,7 @@ export default function CryptoWallet() {
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-white/60 text-xs mb-1">Balance</p>
-                          <p className="text-2xl font-bold text-white">{balance.balance} {chain.symbol}</p>
+                          <p className="text-2xl font-bold text-white">{balance.balance} {chain.symbol || wallet.blockchain}</p>
                           <p className="text-white/60 text-sm mt-1">{balance.usd_value}</p>
                         </div>
                         <TrendingUp className="w-8 h-8 text-green-500" />
