@@ -5,6 +5,7 @@ export interface Folder {
   user_id: string
   name: string
   parent_id: string | null
+  display_order: number
   created_at: string
   updated_at: string
 }
@@ -31,7 +32,7 @@ export async function getFoldersByParent(userId: string, parentId: string | null
     .from('folders')
     .select('*')
     .eq('user_id', userId)
-    .order('name', { ascending: true })
+    .order('display_order', { ascending: true })
   
   if (parentId === null) {
     query.is('parent_id', null)
@@ -53,12 +54,24 @@ export async function createFolder(
   name: string,
   parentId: string | null = null
 ): Promise<Folder> {
+  // Get max display_order for folders in same parent
+  const { data: siblings } = await supabase
+    .from('folders')
+    .select('display_order')
+    .eq('user_id', userId)
+    .is('parent_id', parentId)
+    .order('display_order', { ascending: false })
+    .limit(1)
+  
+  const maxOrder = siblings && siblings.length > 0 ? siblings[0].display_order : -1
+  
   const { data, error } = await supabase
     .from('folders')
     .insert({
       user_id: userId,
       name,
-      parent_id: parentId
+      parent_id: parentId,
+      display_order: maxOrder + 1
     })
     .select()
     .single()
@@ -152,6 +165,36 @@ export async function countFilesInFolder(folderId: string | null): Promise<numbe
   
   if (error) throw error
   return count || 0
+}
+
+/**
+ * Update folder display order
+ */
+export async function updateFolderOrder(folderId: string, newOrder: number): Promise<Folder> {
+  const { data, error } = await supabase
+    .from('folders')
+    .update({ display_order: newOrder })
+    .eq('id', folderId)
+    .select()
+    .single()
+  
+  if (error) throw error
+  return data as Folder
+}
+
+/**
+ * Reorder folders after drag and drop
+ */
+export async function reorderFolders(folders: Folder[]): Promise<void> {
+  // Update all folders with their new order
+  const updates = folders.map((folder, index) => 
+    supabase
+      .from('folders')
+      .update({ display_order: index })
+      .eq('id', folder.id)
+  )
+  
+  await Promise.all(updates)
 }
 
 /**

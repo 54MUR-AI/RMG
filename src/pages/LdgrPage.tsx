@@ -8,7 +8,7 @@ import ReadmePopup from '../components/ReadmePopup'
 import { Lock, BookOpen, FolderOpen, Key } from 'lucide-react'
 import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
-import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, ensureScrapesFolder } from '../lib/ldgr/folders'
+import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, ensureDefaultFolders } from '../lib/ldgr/folders'
 import type { Folder } from '../lib/ldgr/folders'
 
 export default function LdgrPage() {
@@ -29,7 +29,7 @@ export default function LdgrPage() {
 
   useEffect(() => {
     if (user) {
-      ensureScrapesFolder(user.id).catch(console.error)
+      ensureDefaultFolders(user.id).catch(console.error)
       loadFiles()
       loadFolders()
       loadFolderPath()
@@ -159,6 +159,21 @@ export default function LdgrPage() {
     } catch (error) {
       console.error('Move file failed:', error)
       alert('Failed to move file. Please try again.')
+    }
+  }
+
+  const handleReorderFolders = async (reorderedFolders: Folder[]) => {
+    try {
+      // Optimistically update UI
+      setFolders(reorderedFolders)
+      // Persist to database
+      const { reorderFolders } = await import('../lib/ldgr/folders')
+      await reorderFolders(reorderedFolders)
+    } catch (error) {
+      console.error('Reorder folders failed:', error)
+      alert('Failed to reorder folders. Please try again.')
+      // Reload folders on error
+      await loadFolders()
     }
   }
 

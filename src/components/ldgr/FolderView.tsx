@@ -9,6 +9,7 @@ interface FolderViewProps {
   onCreateFolder: (name: string, parentId: string | null) => void
   onRenameFolder: (folderId: string, newName: string) => void
   onDeleteFolder: (folderId: string) => void
+  onReorderFolders: (folders: Folder[]) => void
   fileCount: Record<string, number>
   onMoveFile?: (fileId: string, folderId: string | null) => void
 }
@@ -20,6 +21,7 @@ export default function FolderView({
   onCreateFolder,
   onRenameFolder,
   onDeleteFolder,
+  onReorderFolders,
   fileCount,
   onMoveFile
 }: FolderViewProps) {
@@ -28,20 +30,44 @@ export default function FolderView({
   const [editingId, setEditingId] = useState<string | null>(null)
   const [editName, setEditName] = useState('')
   const [dragOverId, setDragOverId] = useState<string | null>(null)
+  const [draggedFolderId, setDraggedFolderId] = useState<string | null>(null)
+  const [dragOverFolderId, setDragOverFolderId] = useState<string | null>(null)
 
   const currentFolderId = currentPath.length > 0 ? currentPath[currentPath.length - 1].id : null
 
   const handleCreate = () => {
-    if (newFolderName.trim()) {
-      onCreateFolder(newFolderName.trim(), currentFolderId)
+    const trimmedName = newFolderName.trim()
+    if (trimmedName) {
+      // Check for duplicate folder names in current directory
+      const isDuplicate = folders.some(
+        folder => folder.name.toLowerCase() === trimmedName.toLowerCase()
+      )
+      
+      if (isDuplicate) {
+        alert(`A folder named "${trimmedName}" already exists in this location.`)
+        return
+      }
+      
+      onCreateFolder(trimmedName, currentFolderId)
       setNewFolderName('')
       setIsCreating(false)
     }
   }
 
   const handleRename = (folderId: string) => {
-    if (editName.trim()) {
-      onRenameFolder(folderId, editName.trim())
+    const trimmedName = editName.trim()
+    if (trimmedName) {
+      // Check for duplicate folder names in current directory (excluding current folder)
+      const isDuplicate = folders.some(
+        folder => folder.id !== folderId && folder.name.toLowerCase() === trimmedName.toLowerCase()
+      )
+      
+      if (isDuplicate) {
+        alert(`A folder named "${trimmedName}" already exists in this location.`)
+        return
+      }
+      
+      onRenameFolder(folderId, trimmedName)
       setEditingId(null)
       setEditName('')
     }
@@ -69,6 +95,58 @@ export default function FolderView({
       onMoveFile(fileId, folderId)
     }
     setDragOverId(null)
+  }
+
+  const handleFolderDragStart = (e: React.DragEvent, folderId: string) => {
+    setDraggedFolderId(folderId)
+    e.dataTransfer.effectAllowed = 'move'
+    e.dataTransfer.setData('folderId', folderId)
+  }
+
+  const handleFolderDragOver = (e: React.DragEvent, folderId: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+    const draggedId = e.dataTransfer.types.includes('folderId')
+    if (draggedId && draggedFolderId !== folderId) {
+      setDragOverFolderId(folderId)
+    }
+  }
+
+  const handleFolderDragLeave = () => {
+    setDragOverFolderId(null)
+  }
+
+  const handleFolderDrop = (e: React.DragEvent, targetFolderId: string) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
+    const draggedId = draggedFolderId
+    if (!draggedId || draggedId === targetFolderId) {
+      setDraggedFolderId(null)
+      setDragOverFolderId(null)
+      return
+    }
+
+    // Reorder folders
+    const draggedIndex = folders.findIndex(f => f.id === draggedId)
+    const targetIndex = folders.findIndex(f => f.id === targetFolderId)
+    
+    if (draggedIndex !== -1 && targetIndex !== -1) {
+      const reordered = [...folders]
+      const [removed] = reordered.splice(draggedIndex, 1)
+      reordered.splice(targetIndex, 0, removed)
+      
+      // Update display_order for all affected folders
+      reordered.forEach((folder, index) => {
+        folder.display_order = index
+      })
+      
+      // Call parent to persist the changes
+      onReorderFolders(reordered)
+    }
+
+    setDraggedFolderId(null)
+    setDragOverFolderId(null)
   }
 
   return (
@@ -155,12 +233,27 @@ export default function FolderView({
           {folders.map((folder) => (
             <div
               key={folder.id}
-              onDragOver={(e) => onMoveFile && handleDragOver(e, folder.id)}
-              onDragLeave={handleDragLeave}
-              onDrop={(e) => onMoveFile && handleDrop(e, folder.id)}
-              className={`group relative bg-samurai-grey-darker border-2 rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:shadow-samurai-red/20 ${
+              draggable={!editingId}
+              onDragStart={(e) => handleFolderDragStart(e, folder.id)}
+              onDragOver={(e) => {
+                if (onMoveFile) handleDragOver(e, folder.id)
+                handleFolderDragOver(e, folder.id)
+              }}
+              onDragLeave={() => {
+                handleDragLeave()
+                handleFolderDragLeave()
+              }}
+              onDrop={(e) => {
+                if (onMoveFile) handleDrop(e, folder.id)
+                handleFolderDrop(e, folder.id)
+              }}
+              className={`group relative bg-samurai-grey-darker border-2 rounded-xl p-4 transition-all duration-300 hover:shadow-lg hover:shadow-samurai-red/20 cursor-move ${
                 dragOverId === folder.id
                   ? 'border-samurai-red bg-samurai-red/10 scale-105'
+                  : dragOverFolderId === folder.id
+                  ? 'border-blue-500 bg-blue-500/10 scale-105'
+                  : draggedFolderId === folder.id
+                  ? 'opacity-50'
                   : 'border-samurai-red/30 hover:border-samurai-red'
               }`}
             >
