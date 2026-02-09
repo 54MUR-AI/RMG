@@ -208,24 +208,215 @@ export async function fetchWalletBalance(
   blockchain: string
 ): Promise<WalletBalance | null> {
   try {
-    // TODO: Implement actual blockchain API calls
-    // Examples:
-    // - Ethereum: Etherscan API, Alchemy, Infura
-    // - Bitcoin: Blockchain.com API, Blockchair
-    // - Solana: Solana RPC, Helius
-    // - Polygon: PolygonScan API
+    let balance = '0.00'
+    let usdValue = '$0.00'
     
-    // Placeholder implementation
-    console.log(`Fetching balance for ${blockchain} address: ${address}`)
+    switch (blockchain) {
+      case 'ethereum':
+        balance = await fetchEthereumBalance(address)
+        break
+      case 'bitcoin':
+        balance = await fetchBitcoinBalance(address)
+        break
+      case 'solana':
+        balance = await fetchSolanaBalance(address)
+        break
+      case 'polygon':
+        balance = await fetchPolygonBalance(address)
+        break
+      case 'binance':
+        balance = await fetchBinanceBalance(address)
+        break
+      case 'avalanche':
+        balance = await fetchAvalancheBalance(address)
+        break
+      case 'cardano':
+        balance = await fetchCardanoBalance(address)
+        break
+      case 'ripple':
+        balance = await fetchRippleBalance(address)
+        break
+      default:
+        console.warn(`Blockchain ${blockchain} not supported for balance fetching`)
+        return null
+    }
     
-    // Return mock data for now
+    // Get USD value (optional - would need price API)
+    // For now, just return the balance without USD conversion
+    
     return {
-      balance: '0.00',
-      usd_value: '$0.00',
+      balance,
+      usd_value: usdValue,
       last_updated: new Date().toISOString()
     }
   } catch (error) {
-    console.error('Error fetching wallet balance:', error)
+    console.error(`Error fetching ${blockchain} balance:`, error)
     return null
+  }
+}
+
+// Ethereum balance via Etherscan API (free tier)
+async function fetchEthereumBalance(address: string): Promise<string> {
+  try {
+    // Using Etherscan free API (no key needed for basic queries)
+    const response = await fetch(
+      `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest`
+    )
+    const data = await response.json()
+    
+    if (data.status === '1' && data.result) {
+      // Convert from Wei to ETH
+      const balanceInEth = (parseInt(data.result) / 1e18).toFixed(4)
+      return balanceInEth
+    }
+    return '0.00'
+  } catch (error) {
+    console.error('Ethereum balance fetch error:', error)
+    return '0.00'
+  }
+}
+
+// Bitcoin balance via Blockchain.com API (free)
+async function fetchBitcoinBalance(address: string): Promise<string> {
+  try {
+    const response = await fetch(
+      `https://blockchain.info/q/addressbalance/${address}`
+    )
+    const satoshis = await response.text()
+    
+    // Convert from Satoshis to BTC
+    const balanceInBtc = (parseInt(satoshis) / 1e8).toFixed(8)
+    return balanceInBtc
+  } catch (error) {
+    console.error('Bitcoin balance fetch error:', error)
+    return '0.00'
+  }
+}
+
+// Solana balance via public RPC
+async function fetchSolanaBalance(address: string): Promise<string> {
+  try {
+    const response = await fetch('https://api.mainnet-beta.solana.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'getBalance',
+        params: [address]
+      })
+    })
+    const data = await response.json()
+    
+    if (data.result && data.result.value !== undefined) {
+      // Convert from lamports to SOL
+      const balanceInSol = (data.result.value / 1e9).toFixed(4)
+      return balanceInSol
+    }
+    return '0.00'
+  } catch (error) {
+    console.error('Solana balance fetch error:', error)
+    return '0.00'
+  }
+}
+
+// Polygon balance via PolygonScan API (free tier)
+async function fetchPolygonBalance(address: string): Promise<string> {
+  try {
+    const response = await fetch(
+      `https://api.polygonscan.com/api?module=account&action=balance&address=${address}&tag=latest`
+    )
+    const data = await response.json()
+    
+    if (data.status === '1' && data.result) {
+      // Convert from Wei to MATIC
+      const balanceInMatic = (parseInt(data.result) / 1e18).toFixed(4)
+      return balanceInMatic
+    }
+    return '0.00'
+  } catch (error) {
+    console.error('Polygon balance fetch error:', error)
+    return '0.00'
+  }
+}
+
+// Binance Smart Chain balance via BscScan API (free tier)
+async function fetchBinanceBalance(address: string): Promise<string> {
+  try {
+    const response = await fetch(
+      `https://api.bscscan.com/api?module=account&action=balance&address=${address}&tag=latest`
+    )
+    const data = await response.json()
+    
+    if (data.status === '1' && data.result) {
+      // Convert from Wei to BNB
+      const balanceInBnb = (parseInt(data.result) / 1e18).toFixed(4)
+      return balanceInBnb
+    }
+    return '0.00'
+  } catch (error) {
+    console.error('Binance balance fetch error:', error)
+    return '0.00'
+  }
+}
+
+// Avalanche balance via SnowTrace API (free tier)
+async function fetchAvalancheBalance(address: string): Promise<string> {
+  try {
+    const response = await fetch(
+      `https://api.snowtrace.io/api?module=account&action=balance&address=${address}&tag=latest`
+    )
+    const data = await response.json()
+    
+    if (data.status === '1' && data.result) {
+      // Convert from Wei to AVAX
+      const balanceInAvax = (parseInt(data.result) / 1e18).toFixed(4)
+      return balanceInAvax
+    }
+    return '0.00'
+  } catch (error) {
+    console.error('Avalanche balance fetch error:', error)
+    return '0.00'
+  }
+}
+
+// Cardano balance via Blockfrost API (requires free API key)
+async function fetchCardanoBalance(_address: string): Promise<string> {
+  try {
+    // Note: Blockfrost requires API key - users would need to add this to their API Keys section
+    // For now, return placeholder
+    console.warn('Cardano balance requires Blockfrost API key - add to API Keys section')
+    return '0.00'
+  } catch (error) {
+    console.error('Cardano balance fetch error:', error)
+    return '0.00'
+  }
+}
+
+// Ripple (XRP) balance via public XRP Ledger API
+async function fetchRippleBalance(address: string): Promise<string> {
+  try {
+    const response = await fetch('https://s1.ripple.com:51234/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        method: 'account_info',
+        params: [{
+          account: address,
+          ledger_index: 'validated'
+        }]
+      })
+    })
+    const data = await response.json()
+    
+    if (data.result && data.result.account_data && data.result.account_data.Balance) {
+      // Convert from drops to XRP
+      const balanceInXrp = (parseInt(data.result.account_data.Balance) / 1e6).toFixed(4)
+      return balanceInXrp
+    }
+    return '0.00'
+  } catch (error) {
+    console.error('Ripple balance fetch error:', error)
+    return '0.00'
   }
 }
