@@ -203,9 +203,9 @@ export async function reorderFolders(folders: Folder[]): Promise<void> {
  * This function is kept for backwards compatibility but does nothing
  * @deprecated Folders are created by database trigger
  */
-export async function ensureDefaultFolders(userId: string): Promise<void> {
+export async function ensureDefaultFolders(_userId: string): Promise<void> {
   // Folders are now created by database trigger on user signup
-  // No action needed here
+  // No action needed here - userId parameter kept for backwards compatibility
   return Promise.resolve()
 }
 
