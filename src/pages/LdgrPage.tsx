@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
+import { FolderOpen, Key, Lock, Wallet, BookOpen } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import FileUpload from '../components/ldgr/FileUpload'
 import FileList from '../components/ldgr/FileList'
 import FolderView from '../components/ldgr/FolderView'
 import ApiKeyManager from '../components/ldgr/ApiKeyManager'
+import PasswordManager from '../components/ldgr/PasswordManager'
+import CryptoWallet from '../components/ldgr/CryptoWallet'
 import ReadmePopup from '../components/ReadmePopup'
-import { Lock, BookOpen, FolderOpen, Key } from 'lucide-react'
 import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
 import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, ensureDefaultFolders } from '../lib/ldgr/folders'
@@ -20,7 +22,7 @@ export default function LdgrPage() {
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [showReadme, setShowReadme] = useState(false)
-  const [activeTab, setActiveTab] = useState<'files' | 'api-keys'>('files')
+  const [activeTab, setActiveTab] = useState<'files' | 'passwords' | 'crypto' | 'api-keys'>('files')
   const { user } = useAuth()
 
   useEffect(() => {
