@@ -3,9 +3,12 @@ import { Lock, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, Globe } from 'luci
 import { useAuth } from '../../contexts/AuthContext'
 import {
   getUserPasswords,
+  addPassword,
+  updatePassword,
   deletePassword,
   decryptPassword,
-  type Password
+  type Password,
+  type PasswordInput
 } from '../../lib/ldgr/passwords'
 
 const PASSWORD_CATEGORIES = {
@@ -48,30 +51,29 @@ export default function PasswordManager() {
     }
   }
 
-  // TODO: Wire up these handlers to modal
-  // const handleAddPassword = async (input: PasswordInput) => {
-  //   if (!user?.email) return
-  //   try {
-  //     await addPassword(user.id, user.email, input)
-  //     await loadPasswords()
-  //     setShowAddModal(false)
-  //   } catch (error) {
-  //     console.error('Error adding password:', error)
-  //     alert('Failed to add password. Please try again.')
-  //   }
-  // }
+  const handleAddPassword = async (input: PasswordInput) => {
+    if (!user?.email) return
+    try {
+      await addPassword(user.id, user.email, input)
+      await loadPasswords()
+      setShowAddModal(false)
+    } catch (error) {
+      console.error('Error adding password:', error)
+      alert('Failed to add password. Please try again.')
+    }
+  }
 
-  // const handleUpdatePassword = async (passwordId: string, updates: Partial<PasswordInput>) => {
-  //   if (!user?.email) return
-  //   try {
-  //     await updatePassword(passwordId, user.email, updates)
-  //     await loadPasswords()
-  //     setEditingPassword(null)
-  //   } catch (error) {
-  //     console.error('Error updating password:', error)
-  //     alert('Failed to update password. Please try again.')
-  //   }
-  // }
+  const handleUpdatePassword = async (passwordId: string, updates: Partial<PasswordInput>) => {
+    if (!user?.email) return
+    try {
+      await updatePassword(passwordId, user.email, updates)
+      await loadPasswords()
+      setEditingPassword(null)
+    } catch (error) {
+      console.error('Error updating password:', error)
+      alert('Failed to update password. Please try again.')
+    }
+  }
 
   const handleDeletePassword = async (passwordId: string, title: string) => {
     if (!confirm(`Delete password "${title}"?`)) return
@@ -142,16 +144,12 @@ export default function PasswordManager() {
           </p>
         </div>
         <button
-          onClick={() => {
-            setShowAddModal(true)
-            alert('Password management coming soon!')
-          }}
+          onClick={() => setShowAddModal(true)}
           className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flex-1 sm:flex-none"
         >
           <Plus className="w-4 h-4" />
           Add Password
         </button>
-        {(showAddModal || editingPassword) && null}
       </div>
 
       {/* Search Bar */}
@@ -228,7 +226,11 @@ export default function PasswordManager() {
                     
                     <div className="flex items-center gap-2 mb-2">
                       <code className="flex-1 px-3 py-2 bg-samurai-black rounded text-white/90 text-sm font-mono break-all">
-                        {isRevealed ? '••••••••••••' : '••••••••••••••••'}
+                        {isRevealed ? (
+                          <PasswordDisplay password={password} userEmail={user?.email || ''} />
+                        ) : (
+                          '••••••••••••••••'
+                        )}
                       </code>
                     </div>
                     
@@ -284,6 +286,179 @@ export default function PasswordManager() {
           })}
         </div>
       )}
+
+      {/* Add/Edit Modal */}
+      {(showAddModal || editingPassword) && (
+        <PasswordModal
+          existingPassword={editingPassword}
+          onSave={editingPassword ? 
+            (input) => handleUpdatePassword(editingPassword.id, input) : 
+            handleAddPassword
+          }
+          onClose={() => {
+            setShowAddModal(false)
+            setEditingPassword(null)
+          }}
+        />
+      )}
+    </div>
+  )
+}
+
+// Component to display decrypted password
+function PasswordDisplay({ password, userEmail }: { password: Password; userEmail: string }) {
+  const [decrypted, setDecrypted] = useState<string>('Loading...')
+  
+  useEffect(() => {
+    decryptPassword(password.encrypted_password, userEmail)
+      .then(setDecrypted)
+      .catch(() => setDecrypted('Error decrypting'))
+  }, [password.encrypted_password, userEmail])
+  
+  return <>{decrypted}</>
+}
+
+// Modal for adding/editing passwords
+function PasswordModal({
+  existingPassword,
+  onSave,
+  onClose
+}: {
+  existingPassword: Password | null
+  onSave: (input: PasswordInput) => Promise<void>
+  onClose: () => void
+}) {
+  const [title, setTitle] = useState(existingPassword?.title || '')
+  const [username, setUsername] = useState(existingPassword?.username || '')
+  const [password, setPassword] = useState('')
+  const [url, setUrl] = useState(existingPassword?.url || '')
+  const [category, setCategory] = useState(existingPassword?.category || 'other')
+  const [notes, setNotes] = useState(existingPassword?.notes || '')
+  const [saving, setSaving] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!title || !username || (!password && !existingPassword)) return
+    
+    try {
+      setSaving(true)
+      await onSave({
+        title,
+        username,
+        password,
+        url,
+        category,
+        notes
+      })
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+      <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
+        <h2 className="text-2xl font-black text-white mb-6">
+          {existingPassword ? 'Edit Password' : 'Add Password'}
+        </h2>
+        
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-white font-semibold mb-2">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g., Gmail, Facebook, Bank Account"
+              className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none"
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-white font-semibold mb-2">Username/Email</label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="username or email@example.com"
+              className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none"
+              required
+            />
+          </div>
+          
+          <div>
+            <label className="block text-white font-semibold mb-2">
+              Password {existingPassword && '(leave blank to keep current)'}
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none font-mono"
+              required={!existingPassword}
+            />
+          </div>
+          
+          <div>
+            <label className="block text-white font-semibold mb-2">URL (optional)</label>
+            <input
+              type="url"
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://example.com"
+              className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-white font-semibold mb-2">Category</label>
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white focus:border-samurai-red focus:outline-none"
+              required
+            >
+              <option value="social">👥 Social</option>
+              <option value="email">📧 Email</option>
+              <option value="banking">🏦 Banking</option>
+              <option value="shopping">🛒 Shopping</option>
+              <option value="work">💼 Work</option>
+              <option value="entertainment">🎮 Entertainment</option>
+              <option value="other">🔧 Other</option>
+            </select>
+          </div>
+          
+          <div>
+            <label className="block text-white font-semibold mb-2">Notes (optional)</label>
+            <textarea
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="Additional notes..."
+              rows={3}
+              className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none resize-none"
+            />
+          </div>
+          
+          <div className="flex gap-3 pt-4">
+            <button
+              type="submit"
+              disabled={saving}
+              className="flex-1 px-6 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all disabled:opacity-50"
+            >
+              {saving ? 'Saving...' : existingPassword ? 'Update Password' : 'Add Password'}
+            </button>
+            <button
+              type="button"
+              onClick={onClose}
+              className="px-6 py-3 bg-samurai-grey text-white rounded-lg font-bold hover:bg-samurai-grey-dark transition-all"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
