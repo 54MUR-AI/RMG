@@ -202,6 +202,39 @@ export async function deleteWallet(walletId: string): Promise<void> {
   if (error) throw error
 }
 
+// Mapping of blockchain to CoinGecko coin ID
+const COINGECKO_IDS: Record<string, string> = {
+  ethereum: 'ethereum',
+  bitcoin: 'bitcoin',
+  solana: 'solana',
+  polygon: 'matic-network',
+  binance: 'binancecoin',
+  avalanche: 'avalanche-2',
+  cardano: 'cardano',
+  ripple: 'ripple'
+}
+
+// Fetch crypto price in USD from CoinGecko (free, no API key needed)
+async function fetchCryptoPrice(blockchain: string): Promise<number> {
+  try {
+    const coinId = COINGECKO_IDS[blockchain]
+    if (!coinId) return 0
+    
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
+    )
+    const data = await response.json()
+    
+    if (data[coinId] && data[coinId].usd) {
+      return data[coinId].usd
+    }
+    return 0
+  } catch (error) {
+    console.error(`Error fetching ${blockchain} price:`, error)
+    return 0
+  }
+}
+
 // Fetch wallet balance from blockchain API
 export async function fetchWalletBalance(
   address: string,
@@ -209,7 +242,6 @@ export async function fetchWalletBalance(
 ): Promise<WalletBalance | null> {
   try {
     let balance = '0.00'
-    let usdValue = '$0.00'
     
     switch (blockchain) {
       case 'ethereum':
@@ -241,8 +273,11 @@ export async function fetchWalletBalance(
         return null
     }
     
-    // Get USD value (optional - would need price API)
-    // For now, just return the balance without USD conversion
+    // Get USD value
+    const price = await fetchCryptoPrice(blockchain)
+    const balanceNum = parseFloat(balance)
+    const usdAmount = balanceNum * price
+    const usdValue = usdAmount > 0 ? `$${usdAmount.toFixed(2)}` : '$0.00'
     
     return {
       balance,
