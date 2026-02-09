@@ -153,3 +153,28 @@ export async function countFilesInFolder(folderId: string | null): Promise<numbe
   if (error) throw error
   return count || 0
 }
+
+/**
+ * Ensure default "Scrapes" folder exists for user
+ * Creates it if it doesn't exist, returns the folder either way
+ */
+export async function ensureScrapesFolder(userId: string): Promise<Folder> {
+  // Check if Scrapes folder already exists
+  const { data: existing, error: fetchError } = await supabase
+    .from('folders')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('name', 'Scrapes')
+    .is('parent_id', null)
+    .maybeSingle()
+  
+  if (fetchError) throw fetchError
+  
+  // If it exists, return it
+  if (existing) {
+    return existing as Folder
+  }
+  
+  // Otherwise, create it
+  return await createFolder(userId, 'Scrapes', null)
+}

@@ -8,7 +8,7 @@ import ReadmePopup from '../components/ReadmePopup'
 import { Lock, BookOpen, FolderOpen, Key } from 'lucide-react'
 import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
-import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder } from '../lib/ldgr/folders'
+import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, ensureScrapesFolder } from '../lib/ldgr/folders'
 import type { Folder } from '../lib/ldgr/folders'
 
 export default function LdgrPage() {
@@ -29,6 +29,7 @@ export default function LdgrPage() {
 
   useEffect(() => {
     if (user) {
+      ensureScrapesFolder(user.id).catch(console.error)
       loadFiles()
       loadFolders()
       loadFolderPath()
