@@ -198,7 +198,7 @@ export default function LdgrPage() {
             <h1 className="text-3xl font-black neon-text">LDGR</h1>
           </div>
           <p className="text-sm text-white/60 mb-4">
-            Secure file storage with AES-256 encryption and API key management
+            Layered Decentralized Global Registry
           </p>
         </div>
 
