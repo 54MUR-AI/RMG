@@ -463,7 +463,7 @@ function WalletModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!walletName || !blockchain || !address || (!seedPhrase && !existingWallet)) return
+    if (!walletName || !blockchain || !address) return
     
     try {
       setSaving(true)
@@ -529,7 +529,7 @@ function WalletModal({
           
           <div>
             <label className="block text-white font-semibold mb-2">
-              Seed Phrase {existingWallet && '(leave blank to keep current)'}
+              Seed Phrase (optional) {existingWallet && '- leave blank to keep current'}
             </label>
             <textarea
               value={seedPhrase}
@@ -537,7 +537,6 @@ function WalletModal({
               placeholder="word1 word2 word3 ..."
               rows={3}
               className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none resize-none font-mono text-sm"
-              required={!existingWallet}
             />
             <p className="text-xs text-white/50 mt-1">⚠️ Never share your seed phrase with anyone!</p>
           </div>
