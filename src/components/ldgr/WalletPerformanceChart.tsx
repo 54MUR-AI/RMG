@@ -62,7 +62,8 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
           return {
             wallet_name: wallet.wallet_name,
             blockchain: wallet.blockchain,
-            balance: tokenAmount
+            balance: tokenAmount,
+            address: wallet.address
           }
         })
         .filter((w): w is NonNullable<typeof w> => w !== null)

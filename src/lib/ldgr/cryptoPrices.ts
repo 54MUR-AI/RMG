@@ -1,8 +1,10 @@
 // CoinGecko API integration for fetching historical cryptocurrency prices
+import { getWalletHistoricalData } from './blockchainHistory'
 
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3'
 const USE_CORS_PROXY = false // CORS proxy blocked, using fallback data
 const CORS_PROXY = 'https://corsproxy.io/?' // Public CORS proxy
+const USE_REAL_BLOCKCHAIN_DATA = true // Use real blockchain transaction history
 
 // Cache for API responses to avoid rate limiting
 const priceCache = new Map<string, { data: HistoricalPrice[], timestamp: number }>()
@@ -214,26 +216,46 @@ export function mergeWalletDataIntoChartPoints(
  * Fetch and process historical data for multiple wallets
  */
 export async function fetchWalletPortfolioHistory(
-  wallets: Array<{ wallet_name: string; blockchain: string; balance: number }>,
+  wallets: Array<{ wallet_name: string; blockchain: string; balance: number; address?: string }>,
   timeRange: string
 ): Promise<PriceDataPoint[]> {
   const days = getCoingeckoDaysParam(timeRange)
   const walletHistoricalData = new Map<string, Map<number, number>>()
   
-  // Fetch price data for each unique blockchain
-  const blockchainPrices = new Map<string, HistoricalPrice[]>()
-  
   for (const wallet of wallets) {
+    // Try to use real blockchain data first
+    if (USE_REAL_BLOCKCHAIN_DATA && wallet.address) {
+      const coinId = BLOCKCHAIN_TO_COINGECKO_ID[wallet.blockchain]
+      const currentPrice = getCurrentPrice(wallet.blockchain)
+      
+      try {
+        const realData = await getWalletHistoricalData(
+          wallet.address,
+          wallet.blockchain,
+          wallet.balance,
+          currentPrice,
+          typeof days === 'number' ? days : 365
+        )
+        
+        if (realData.length > 0) {
+          console.log(`📊 Using real blockchain data for ${wallet.wallet_name}`)
+          const valueMap = new Map<number, number>()
+          realData.forEach(point => {
+            valueMap.set(point.timestamp, point.value)
+          })
+          walletHistoricalData.set(wallet.wallet_name, valueMap)
+          continue
+        }
+      } catch (error) {
+        console.warn(`Failed to get real data for ${wallet.wallet_name}, using fallback`)
+      }
+    }
+    
+    // Fallback to simulated data
     const coinId = BLOCKCHAIN_TO_COINGECKO_ID[wallet.blockchain]
     if (!coinId) continue
     
-    // Only fetch once per blockchain
-    if (!blockchainPrices.has(wallet.blockchain)) {
-      const prices = await fetchHistoricalPrices(coinId, days)
-      blockchainPrices.set(wallet.blockchain, prices)
-    }
-    
-    const prices = blockchainPrices.get(wallet.blockchain)!
+    const prices = await fetchHistoricalPrices(coinId, days)
     const walletValues = calculateHistoricalWalletValues(
       wallet.balance,
       prices
@@ -243,4 +265,18 @@ export async function fetchWalletPortfolioHistory(
   }
   
   return mergeWalletDataIntoChartPoints(walletHistoricalData)
+}
+
+function getCurrentPrice(blockchain: string): number {
+  const currentPrices: Record<string, number> = {
+    bitcoin: 95000,
+    ethereum: 3500,
+    ripple: 1.40,
+    solana: 150,
+    polygon: 0.90,
+    binance: 600,
+    avalanche: 40,
+    cardano: 0.60
+  }
+  return currentPrices[blockchain] || 1.0
 }
