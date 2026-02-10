@@ -119,6 +119,7 @@ export default function WsprPage() {
       {!isLoading && !error && user && (
         <div className="h-[calc(100vh-200px)]">
           <iframe
+            key={Date.now()}
             ref={iframeRef}
             src={`https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}&v=${Date.now()}`}
             className="w-full h-full border-0"
