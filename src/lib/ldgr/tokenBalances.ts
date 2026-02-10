@@ -41,6 +41,12 @@ export async function fetchERC20Tokens(
     )
     const data = await response.json()
 
+    // Check for API errors
+    if (data.message && data.message.includes('not supported')) {
+      console.warn(`Transaction history not supported for ${blockchain}, skipping token fetch`)
+      return []
+    }
+
     if (data.status !== '1' || !data.result || data.result.length === 0) {
       console.log(`No tokens found for ${address} on ${blockchain}`)
       return []
