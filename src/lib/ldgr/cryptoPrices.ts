@@ -2,7 +2,7 @@
 import { getWalletHistoricalData } from './blockchainHistory'
 
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3'
-const USE_CORS_PROXY = true // Try CORS proxy for real price data
+const USE_CORS_PROXY = false // Try direct API call first
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=' // Alternative CORS proxy
 const USE_REAL_BLOCKCHAIN_DATA = true // Use real blockchain transaction history
 
@@ -72,11 +72,23 @@ export async function fetchHistoricalPrices(
     
     const response = await fetch(url)
     if (!response.ok) {
-      console.error(`CoinGecko API error: ${response.status}`)
+      console.error(`CoinGecko API error: ${response.status} ${response.statusText}`)
       return []
     }
     
     const data = await response.json()
+    console.log(`📊 CoinGecko API response structure:`, {
+      hasPrices: !!data.prices,
+      pricesType: typeof data.prices,
+      pricesLength: data.prices?.length,
+      sampleData: data.prices?.[0]
+    })
+    
+    // Validate response structure
+    if (!data.prices || !Array.isArray(data.prices)) {
+      console.error(`Invalid CoinGecko response format:`, data)
+      return []
+    }
     
     // CoinGecko returns prices as [[timestamp, price], ...]
     const prices = data.prices.map(([timestamp, price]: [number, number]) => ({
