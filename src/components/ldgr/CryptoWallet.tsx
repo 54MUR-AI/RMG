@@ -237,6 +237,13 @@ export default function CryptoWallet() {
         ]}
       />
 
+      {/* Performance Chart */}
+      <WalletPerformanceChart 
+        wallets={wallets}
+        balances={balances}
+        filterBlockchain={filterBlockchain}
+      />
+
       {/* Wallets List */}
       {filteredWallets.length === 0 ? (
         <div className="text-center py-12 bg-samurai-grey-darker rounded-lg border-2 border-samurai-grey">

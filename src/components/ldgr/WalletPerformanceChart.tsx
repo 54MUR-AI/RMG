@@ -123,18 +123,18 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
         {/* Time Range Selector */}
         <div className="flex items-center gap-2">
           <Calendar className="w-4 h-4 text-samurai-steel hidden sm:block" />
-          <div className="flex gap-1 bg-samurai-black-lighter rounded-lg p-1">
-            {(['7d', '30d', '90d', '1y'] as TimeRange[]).map((range) => (
+          <div className="flex flex-wrap gap-1 bg-samurai-black-lighter rounded-lg p-1">
+            {(['1d', '3d', '1w', '1m', '3m', '6m', '1y', '5y', '10y', 'all'] as TimeRange[]).map((range) => (
               <button
                 key={range}
                 onClick={() => setTimeRange(range)}
-                className={`px-3 py-1.5 rounded-md text-sm font-semibold transition-all ${
+                className={`px-2 sm:px-3 py-1.5 rounded-md text-xs sm:text-sm font-semibold transition-all ${
                   timeRange === range
                     ? 'bg-samurai-red text-white'
                     : 'text-samurai-steel hover:text-white hover:bg-samurai-grey-dark'
                 }`}
               >
-                {range}
+                {range.toUpperCase()}
               </button>
             ))}
           </div>
