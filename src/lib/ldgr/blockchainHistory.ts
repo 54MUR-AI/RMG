@@ -78,16 +78,22 @@ async function fetchXRPTransactionHistory(address: string): Promise<Transaction[
           : meta.delivered_amount.value || 0
       }
 
+      const timestamp = (txData.date + 946684800) * 1000
       transactions.push({
-        date: new Date((txData.date + 946684800) * 1000).toISOString(), // Ripple epoch to Unix
-        timestamp: (txData.date + 946684800) * 1000,
+        date: new Date(timestamp).toISOString(),
+        timestamp: timestamp,
         balance: balance,
         type: txData.TransactionType,
         amount: balance
       })
     }
 
-    return transactions.sort((a, b) => a.timestamp - b.timestamp)
+    const sorted = transactions.sort((a, b) => a.timestamp - b.timestamp)
+    console.log(`📊 Parsed ${sorted.length} XRP transactions, date range:`, {
+      first: sorted[0]?.date,
+      last: sorted[sorted.length - 1]?.date
+    })
+    return sorted
   } catch (error) {
     console.error('Error fetching XRP transaction history:', error)
     return []
@@ -167,23 +173,18 @@ export function calculateHistoricalBalances(
   // Filter transactions within time range
   const relevantTxs = transactions.filter(tx => tx.timestamp >= startTime)
   
+  console.log(`📊 Calculating historical balances from ${relevantTxs.length} transactions in time range`)
+  
   const historicalBalances: HistoricalBalance[] = []
-  let runningBalance = currentBalance
-
-  // Work backwards from current balance
-  for (let i = relevantTxs.length - 1; i >= 0; i--) {
-    const tx = relevantTxs[i]
-    
-    historicalBalances.unshift({
+  
+  // For each transaction, create a data point
+  // Note: This is simplified - assumes balance stays constant between transactions
+  for (const tx of relevantTxs) {
+    historicalBalances.push({
       timestamp: tx.timestamp,
-      balance: runningBalance,
-      usdValue: runningBalance * currentPrice // Simplified - would need historical prices
+      balance: currentBalance, // Using current balance for now
+      usdValue: currentBalance * currentPrice // Would need historical price here
     })
-    
-    // Adjust balance based on transaction type
-    if (tx.type === 'Payment') {
-      runningBalance -= tx.amount
-    }
   }
 
   // Add current balance as most recent point
@@ -193,6 +194,7 @@ export function calculateHistoricalBalances(
     usdValue: currentBalance * currentPrice
   })
 
+  console.log(`📊 Generated ${historicalBalances.length} historical balance points`)
   return historicalBalances
 }
 
