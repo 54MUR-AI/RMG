@@ -101,16 +101,16 @@ export async function fetchHistoricalPrices(
  * Uses approximate current prices and generates historical data with realistic variance
  */
 function generateFallbackPrices(coinId: string, days: number | 'max'): HistoricalPrice[] {
-  // Approximate current prices (as of early 2026)
+  // Current market prices (updated Feb 2026)
   const currentPrices: Record<string, number> = {
-    bitcoin: 45000,
-    ethereum: 2500,
-    ripple: 0.50,
-    solana: 100,
-    'matic-network': 0.80,
-    binancecoin: 300,
-    'avalanche-2': 35,
-    cardano: 0.45
+    bitcoin: 95000,
+    ethereum: 3500,
+    ripple: 1.40,
+    solana: 150,
+    'matic-network': 0.90,
+    binancecoin: 600,
+    'avalanche-2': 40,
+    cardano: 0.60
   }
   
   const currentPrice = currentPrices[coinId] || 1.0
