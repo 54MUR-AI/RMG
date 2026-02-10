@@ -49,16 +49,15 @@ interface PriceDataPoint {
 /**
  * Fetch historical price data from CoinGecko
  * @param coinId - CoinGecko coin ID (e.g., 'bitcoin', 'ethereum')
- * @param days - Number of days of historical data (1, 7, 30, 90, 180, 365, max)
+ * @param days - Number of days of historical data (1, 7, 30, 90, 180, 365)
  * @returns Array of [timestamp, price] pairs
  */
 export async function fetchHistoricalPrices(
   coinId: string,
-  days: number | 'max'
+  days: number
 ): Promise<HistoricalPrice[]> {
   try {
-    const daysParam = days === 'max' ? 'max' : days.toString()
-    const cacheKey = `${coinId}-${daysParam}`
+    const cacheKey = `${coinId}-${days}`
     
     // Check cache first
     const cached = priceCache.get(cacheKey)
