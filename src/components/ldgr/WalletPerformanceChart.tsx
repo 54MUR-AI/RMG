@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { TrendingUp, Calendar } from 'lucide-react'
 import type { CryptoWallet, WalletBalance } from '../../lib/ldgr/cryptoWallets'
+import { fetchWalletPortfolioHistory, BLOCKCHAIN_NATIVE_TOKENS } from '../../lib/ldgr/cryptoPrices'
 
 interface WalletPerformanceChartProps {
   wallets: CryptoWallet[]
@@ -36,61 +37,57 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     [wallets, filterBlockchain]
   )
 
-  const generateChartData = useCallback(() => {
+  const generateChartData = useCallback(async () => {
     setLoading(true)
     
-    // Generate mock historical data based on current balances
-    // In production, this would fetch real historical price data from an API
-    const daysMap: Record<TimeRange, number> = {
-      '1d': 1,
-      '3d': 3,
-      '1w': 7,
-      '1m': 30,
-      '3m': 90,
-      '6m': 180,
-      '1y': 365,
-      '5y': 1825,
-      '10y': 3650,
-      'all': 3650 // Default to 10 years for "all time"
-    }
-    const days = daysMap[timeRange]
-    const data: any[] = []
-    
-    for (let i = days; i >= 0; i--) {
-      const date = new Date()
-      date.setDate(date.getDate() - i)
+    try {
+      // Prepare wallet data for API call
+      const walletsWithBalances = filteredWallets
+        .map(wallet => {
+          const balance = balances[wallet.address]
+          if (!balance?.balance) return null
+          
+          // Parse balance to get token amount
+          const tokenAmount = typeof balance.balance === 'number' 
+            ? balance.balance 
+            : parseFloat(balance.balance)
+          
+          if (isNaN(tokenAmount) || tokenAmount <= 0) return null
+          
+          return {
+            wallet_name: wallet.wallet_name,
+            blockchain: wallet.blockchain,
+            balance: tokenAmount
+          }
+        })
+        .filter((w): w is NonNullable<typeof w> => w !== null)
       
-      const dataPoint: any = {
-        date: date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-        fullDate: date.toISOString()
+      if (walletsWithBalances.length === 0) {
+        console.log('📊 No wallets with valid balances to chart')
+        setChartData([])
+        setLoading(false)
+        return
       }
       
-      // Add each wallet's balance for this date
-      filteredWallets.forEach(wallet => {
-        const balance = balances[wallet.address]
-        if (balance?.usd_value) {
-          // Generate mock historical data with some variance
-          // In production, fetch real historical prices
-          const usdValue = typeof balance.usd_value === 'number' ? balance.usd_value : parseFloat(balance.usd_value)
-          if (!isNaN(usdValue) && usdValue > 0) {
-            const variance = (Math.random() - 0.5) * 0.3 // ±15% variance
-            const historicalValue = usdValue * (1 + variance * (i / days))
-            dataPoint[wallet.wallet_name] = parseFloat(historicalValue.toFixed(2))
-          }
-        }
+      console.log('📊 Fetching historical data for wallets:', walletsWithBalances)
+      
+      // Fetch real historical price data from CoinGecko
+      const data = await fetchWalletPortfolioHistory(walletsWithBalances, timeRange)
+      
+      console.log('📊 Chart data generated:', {
+        wallets: walletsWithBalances.map(w => w.wallet_name),
+        dataPoints: data.length,
+        sampleData: data[0],
+        lastData: data[data.length - 1]
       })
       
-      data.push(dataPoint)
+      setChartData(data)
+    } catch (error) {
+      console.error('📊 Error fetching chart data:', error)
+      setChartData([])
+    } finally {
+      setLoading(false)
     }
-    
-    console.log('📊 Chart data generated:', {
-      wallets: filteredWallets.map(w => w.wallet_name),
-      dataPoints: data.length,
-      sampleData: data[0],
-      balances: Object.keys(balances)
-    })
-    setChartData(data)
-    setLoading(false)
   }, [filteredWallets, balances, timeRange])
 
   useEffect(() => {
