@@ -60,10 +60,10 @@ export default function Home() {
               <img 
                 src="/ronin-logo.png" 
                 alt="Ronin Logo" 
-                className="w-20 h-20 animate-flame-pulse-big"
+                className="w-32 h-32 animate-flame-pulse-big"
                 style={{ 
-                  filter: 'invert(1) drop-shadow(0 0 15px rgba(230,57,70,0.7))',
-                  WebkitFilter: 'invert(1) drop-shadow(0 0 15px rgba(230,57,70,0.7))'
+                  filter: 'brightness(0) invert(1) drop-shadow(0 0 20px rgba(230,57,70,0.8))',
+                  WebkitFilter: 'brightness(0) invert(1) drop-shadow(0 0 20px rgba(230,57,70,0.8))'
                 }}
               />
             </div>
