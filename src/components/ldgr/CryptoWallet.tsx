@@ -17,7 +17,7 @@ import {
   type WalletBalance,
   type MultiTokenBalance
 } from '../../lib/ldgr/cryptoWallets'
-import { detectBlockchainFromAddress, getAddressFormatMessage, validateAddressForBlockchain } from '../../lib/ldgr/addressDetection'
+import { detectBlockchainFromAddress, getAddressFormatMessage } from '../../lib/ldgr/addressDetection'
 
 const BLOCKCHAINS = {
   ethereum: { name: 'Ethereum', icon: '⟠', color: 'blue', symbol: 'ETH' },
@@ -627,19 +627,35 @@ function WalletModal({
           </div>
           
           <div>
-            <label className="block text-white font-semibold mb-2">Blockchain</label>
+            <label className="block text-white font-semibold mb-2">
+              Blockchain
+              {detectedBlockchains.length > 0 && detectedBlockchains.length < Object.keys(BLOCKCHAINS).length && (
+                <span className="text-xs text-white/60 ml-2">(filtered by address format)</span>
+              )}
+            </label>
             <select
               value={blockchain}
-              onChange={(e) => setBlockchain(e.target.value)}
+              onChange={(e) => handleBlockchainChange(e.target.value)}
               className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white focus:border-samurai-red focus:outline-none"
               required
             >
-              {Object.entries(BLOCKCHAINS).map(([key, chain]) => (
-                <option key={key} value={key}>
-                  {chain.icon} {chain.name}
-                </option>
-              ))}
+              {Object.entries(BLOCKCHAINS)
+                .filter(([key]) => 
+                  detectedBlockchains.length === 0 || 
+                  detectedBlockchains.includes(key) ||
+                  key === 'other'
+                )
+                .map(([key, chain]) => (
+                  <option key={key} value={key}>
+                    {chain.icon} {chain.name}
+                  </option>
+                ))}
             </select>
+            {validationError && (
+              <p className="text-xs text-yellow-500 mt-1">
+                ⚠️ {validationError}
+              </p>
+            )}
           </div>
           
           <div>

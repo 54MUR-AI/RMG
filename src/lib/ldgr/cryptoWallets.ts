@@ -523,18 +523,18 @@ async function fetchRippleBalance(address: string): Promise<string> {
   }
 }
 
-// Cronos (CRO) balance via Cronoscan API (similar to Etherscan)
+// Cronos (CRO) balance via Cronos Explorer API
 async function fetchCronosBalance(address: string): Promise<string> {
   try {
-    // Using Cronoscan API (free tier, no key needed for basic queries)
+    // Using Cronos Explorer API (public endpoint)
     const response = await fetch(
-      `https://api.cronoscan.com/api?module=account&action=balance&address=${address}`
+      `https://explorer-api.cronos.org/mainnet/api/v1/accounts/${address}`
     )
     const data = await response.json()
     
-    if (data.status === '1' && data.result) {
-      // Convert from wei to CRO (18 decimals)
-      const balanceInCro = (parseInt(data.result) / 1e18).toFixed(4)
+    if (data && data.result && data.result.balance) {
+      // Balance is already in CRO format from Cronos Explorer
+      const balanceInCro = parseFloat(data.result.balance).toFixed(4)
       return balanceInCro
     }
     return '0.00'

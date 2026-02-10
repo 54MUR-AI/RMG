@@ -13,7 +13,7 @@ export interface TokenInfo {
 // Map blockchain to their explorer API endpoints
 const EXPLORER_APIS: Record<string, string> = {
   ethereum: 'https://api.etherscan.io/api',
-  cronos: 'https://api.cronoscan.com/api',
+  cronos: 'https://explorer-api.cronos.org/mainnet/api/v1',
   polygon: 'https://api.polygonscan.com/api',
   binance: 'https://api.bscscan.com/api',
   avalanche: 'https://api.snowtrace.io/api'
