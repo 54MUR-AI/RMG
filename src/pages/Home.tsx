@@ -1,4 +1,4 @@
-import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Lock, Brain, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
+import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Anvil, Lock, Brain, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
@@ -55,20 +55,12 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center animate-slide-up">
-            {/* Ronin logo with animation */}
+            {/* Crossed Katanas logo with animation */}
             <div className="flex justify-center mb-8 relative" style={{ zIndex: 10, transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}>
-              <div className="relative w-48 h-48">
-                <img 
-                  src="/ronin-logo.png" 
-                  alt="Ronin Logo" 
-                  className="w-full h-full animate-flame-pulse-big"
-                  style={{ 
-                    filter: 'invert(1) brightness(2) drop-shadow(0 0 25px rgba(230,57,70,1))',
-                    WebkitFilter: 'invert(1) brightness(2) drop-shadow(0 0 25px rgba(230,57,70,1))',
-                    mixBlendMode: 'screen'
-                  }}
-                />
-              </div>
+              <CrossedKatanasIcon 
+                size={192}
+                className="text-white drop-shadow-[0_0_25px_rgba(230,57,70,1)] animate-flame-pulse-big"
+              />
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 neon-text tracking-tight">
@@ -113,7 +105,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center mb-16">
             <div className="mb-6 relative" style={{ zIndex: 10, transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}>
-              <CrossedKatanasIcon size={80} className="text-samurai-red mx-auto animate-flame-flicker" />
+              <Hammer size={80} className="text-samurai-red mx-auto animate-flame-flicker" />
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white mb-4 sm:mb-6 neon-text">
               ARSENAL
@@ -492,7 +484,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div id="forge" className="text-center mb-16">
             <div className="inline-block mb-4">
-              <Hammer className="w-12 h-12 text-samurai-red mx-auto" />
+              <Anvil className="w-12 h-12 text-samurai-red mx-auto" />
             </div>
             <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
               FORGE
