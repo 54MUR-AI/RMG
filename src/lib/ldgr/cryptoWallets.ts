@@ -231,8 +231,13 @@ const COINGECKO_IDS: Record<string, string> = {
   binance: 'binancecoin',
   avalanche: 'avalanche-2',
   cardano: 'cardano',
-  ripple: 'ripple'
+  ripple: 'ripple',
+  cronos: 'cronos'
 }
+
+// Simple in-memory cache for CoinGecko prices (5 minute TTL)
+const priceCache: Record<string, { price: number, timestamp: number }> = {}
+const CACHE_TTL = 5 * 60 * 1000 // 5 minutes
 
 // Fetch crypto price in USD from CoinGecko (free, no API key needed)
 export async function fetchCryptoPrice(blockchain: string): Promise<number> {
@@ -240,17 +245,33 @@ export async function fetchCryptoPrice(blockchain: string): Promise<number> {
     const coinId = COINGECKO_IDS[blockchain]
     if (!coinId) return 0
     
+    // Check cache first
+    const cached = priceCache[blockchain]
+    if (cached && Date.now() - cached.timestamp < CACHE_TTL) {
+      console.log(`💰 Using cached price for ${blockchain}: $${cached.price}`)
+      return cached.price
+    }
+    
     const response = await fetch(
       `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
     )
     const data = await response.json()
     
     if (data[coinId] && data[coinId].usd) {
-      return data[coinId].usd
+      const price = data[coinId].usd
+      // Cache the price
+      priceCache[blockchain] = { price, timestamp: Date.now() }
+      console.log(`💰 Fetched fresh price for ${blockchain}: $${price}`)
+      return price
     }
     return 0
   } catch (error) {
     console.error(`Error fetching ${blockchain} price:`, error)
+    // Return cached price if available, even if expired
+    if (priceCache[blockchain]) {
+      console.log(`⚠️ Using stale cached price for ${blockchain} due to API error`)
+      return priceCache[blockchain].price
+    }
     return 0
   }
 }
