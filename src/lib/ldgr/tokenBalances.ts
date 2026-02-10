@@ -11,9 +11,9 @@ export interface TokenInfo {
 }
 
 // Map blockchain to their explorer API endpoints
+// Note: Cronos Explorer API requires authentication, so it's excluded
 const EXPLORER_APIS: Record<string, string> = {
   ethereum: 'https://api.etherscan.io/api',
-  cronos: 'https://explorer-api.cronos.org/mainnet/api/v1',
   polygon: 'https://api.polygonscan.com/api',
   binance: 'https://api.bscscan.com/api',
   avalanche: 'https://api.snowtrace.io/api'
