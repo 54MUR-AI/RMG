@@ -116,11 +116,11 @@ export default function ApiKeyManager() {
   }
   
   const filteredKeys = apiKeys.filter(key => {
-    const matchesCategory = filterCategory === 'all' || 
-      API_SERVICES[key.service_name as keyof typeof API_SERVICES]?.category === filterCategory
+    const service = API_SERVICES[key.service_name as keyof typeof API_SERVICES]
+    const matchesCategory = filterCategory === 'all' || service?.category === filterCategory
     const matchesSearch = !searchQuery || 
       key.key_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      API_SERVICES[key.service_name as keyof typeof API_SERVICES]?.name.toLowerCase().includes(searchQuery.toLowerCase())
+      (service?.name && service.name.toLowerCase().includes(searchQuery.toLowerCase()))
     return matchesCategory && matchesSearch
   })
 
@@ -153,6 +153,18 @@ export default function ApiKeyManager() {
           <Plus className="w-4 h-4" />
           Add Key
         </button>
+      </div>
+
+      {/* Search Bar */}
+      <div className="relative">
+        <input
+          type="text"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search API keys..."
+          className="w-full px-4 py-3 pl-10 bg-samurai-grey-darker border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none"
+        />
+        <Key className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/50" />
       </div>
 
       {/* Category Filter */}
