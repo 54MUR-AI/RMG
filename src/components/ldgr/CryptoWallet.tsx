@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, TrendingUp, RefreshCw } from 'lucide-react'
+import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, ExternalLink, RefreshCw } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import FilterDropdown from './FilterDropdown'
 import MultiChainWalletImport from './MultiChainWalletImport'
 import {
   getUserWallets,
@@ -223,24 +224,19 @@ export default function CryptoWallet() {
       </div>
 
       {/* Blockchain Filter */}
-      <div className="flex flex-wrap gap-2 sm:gap-3">
-        {blockchains.map(blockchain => {
-          const chain = blockchain === 'all' ? null : BLOCKCHAINS[blockchain as keyof typeof BLOCKCHAINS]
-          return (
-            <button
-              key={blockchain}
-              onClick={() => setFilterBlockchain(blockchain)}
-              className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex-shrink-0 ${
-                filterBlockchain === blockchain
-                  ? 'bg-samurai-red text-white'
-                  : 'bg-samurai-grey-dark text-white/70 hover:bg-samurai-grey'
-              }`}
-            >
-              {chain ? `${chain.icon} ${chain.name}` : 'All'}
-            </button>
-          )
-        })}
-      </div>
+      <FilterDropdown
+        label="Filter by Blockchain"
+        value={filterBlockchain}
+        onChange={setFilterBlockchain}
+        options={[
+          { value: 'all', label: 'All Blockchains' },
+          ...Object.entries(BLOCKCHAINS).map(([key, chain]) => ({
+            value: key,
+            label: chain.name,
+            icon: chain.icon
+          }))
+        ]}
+      />
 
       {/* Wallets List */}
       {filteredWallets.length === 0 ? (

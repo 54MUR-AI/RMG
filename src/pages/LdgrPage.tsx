@@ -215,7 +215,7 @@ export default function LdgrPage() {
             }`}
           >
             <FolderOpen className="w-5 h-5" />
-            <span className={activeTab === 'files' ? 'underline decoration-2 underline-offset-4' : ''}>
+            <span className={`hidden md:inline ${activeTab === 'files' ? 'underline decoration-2 underline-offset-4' : ''}`}>
               Files
             </span>
           </button>
@@ -228,7 +228,7 @@ export default function LdgrPage() {
             }`}
           >
             <Lock className="w-5 h-5" />
-            <span className={activeTab === 'passwords' ? 'underline decoration-2 underline-offset-4' : ''}>
+            <span className={`hidden md:inline ${activeTab === 'passwords' ? 'underline decoration-2 underline-offset-4' : ''}`}>
               Passwords
             </span>
           </button>
@@ -241,7 +241,7 @@ export default function LdgrPage() {
             }`}
           >
             <Wallet className="w-5 h-5" />
-            <span className={activeTab === 'crypto' ? 'underline decoration-2 underline-offset-4' : ''}>
+            <span className={`hidden md:inline ${activeTab === 'crypto' ? 'underline decoration-2 underline-offset-4' : ''}`}>
               Crypto
             </span>
           </button>
@@ -254,7 +254,7 @@ export default function LdgrPage() {
             }`}
           >
             <Key className="w-5 h-5" />
-            <span className={activeTab === 'api-keys' ? 'underline decoration-2 underline-offset-4' : ''}>
+            <span className={`hidden md:inline ${activeTab === 'api-keys' ? 'underline decoration-2 underline-offset-4' : ''}`}>
               API Keys
             </span>
           </button>

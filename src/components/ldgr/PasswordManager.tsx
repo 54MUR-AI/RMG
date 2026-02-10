@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Lock, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, Globe } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import FilterDropdown from './FilterDropdown'
 import {
   getUserPasswords,
   addPassword,
@@ -165,24 +166,19 @@ export default function PasswordManager() {
       </div>
 
       {/* Category Filter */}
-      <div className="flex flex-wrap gap-2 sm:gap-3">
-        {categories.map(category => {
-          const catInfo = category === 'all' ? null : PASSWORD_CATEGORIES[category as keyof typeof PASSWORD_CATEGORIES]
-          return (
-            <button
-              key={category}
-              onClick={() => setFilterCategory(category)}
-              className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all flex-shrink-0 ${
-                filterCategory === category
-                  ? 'bg-samurai-red text-white'
-                  : 'bg-samurai-grey-dark text-white/70 hover:bg-samurai-grey'
-              }`}
-            >
-              {catInfo ? `${catInfo.icon} ${catInfo.name}` : 'All'}
-            </button>
-          )
-        })}
-      </div>
+      <FilterDropdown
+        label="Filter by Category"
+        value={filterCategory}
+        onChange={setFilterCategory}
+        options={[
+          { value: 'all', label: 'All Categories' },
+          ...Object.entries(PASSWORD_CATEGORIES).map(([key, cat]) => ({
+            value: key,
+            label: cat.name,
+            icon: cat.icon
+          }))
+        ]}
+      />
 
       {/* Passwords List */}
       {filteredPasswords.length === 0 ? (
