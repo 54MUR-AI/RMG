@@ -34,9 +34,10 @@ const BLOCKCHAINS = {
 export default function CryptoWallet() {
   const { user } = useAuth()
   const [wallets, setWallets] = useState<CryptoWallet[]>([])
-  const [balances, setBalances] = useState<Record<string, WalletBalance>>({})
+  const [balances, setBalances] = useState<Record<string, WalletBalance | MultiTokenBalance>>({})
   const [loading, setLoading] = useState(true)
   const [loadingBalances, setLoadingBalances] = useState(false)
+  const [expandedTokens, setExpandedTokens] = useState<Set<string>>(new Set())
   const [showAddModal, setShowAddModal] = useState(false)
   const [showMultiChainImport, setShowMultiChainImport] = useState(false)
   const [editingWallet, setEditingWallet] = useState<CryptoWallet | null>(null)
@@ -63,9 +64,16 @@ export default function CryptoWallet() {
         setLoadingBalances(true)
         for (const wallet of data) {
           try {
-            const balance = await fetchWalletBalance(wallet.address, wallet.blockchain)
-            if (balance) {
-              setBalances(prev => ({ ...prev, [wallet.address]: balance }))
+            // Try multi-token balance first
+            const multiBalance = await fetchWalletBalanceWithTokens(wallet.address, wallet.blockchain)
+            if (multiBalance) {
+              setBalances(prev => ({ ...prev, [wallet.address]: multiBalance }))
+            } else {
+              // Fallback to simple balance
+              const balance = await fetchWalletBalance(wallet.address, wallet.blockchain)
+              if (balance) {
+                setBalances(prev => ({ ...prev, [wallet.address]: balance }))
+              }
             }
           } catch (error) {
             console.error(`Error loading balance for ${wallet.wallet_name}:`, error)
@@ -154,12 +162,37 @@ export default function CryptoWallet() {
     }
   }
 
+  // Helper to check if balance is MultiTokenBalance
+  const isMultiTokenBalance = (balance: WalletBalance | MultiTokenBalance): balance is MultiTokenBalance => {
+    return 'native_token' in balance && 'tokens' in balance
+  }
+
+  // Toggle token list expansion
+  const toggleTokenExpansion = (walletId: string) => {
+    setExpandedTokens(prev => {
+      const next = new Set(prev)
+      if (next.has(walletId)) {
+        next.delete(walletId)
+      } else {
+        next.add(walletId)
+      }
+      return next
+    })
+  }
+
   const loadWalletBalance = async (address: string, blockchain: string) => {
     setLoadingBalances(true)
     try {
-      const balance = await fetchWalletBalance(address, blockchain)
-      if (balance) {
-        setBalances(prev => ({ ...prev, [address]: balance }))
+      // Try to fetch multi-token balance first
+      const multiBalance = await fetchWalletBalanceWithTokens(address, blockchain)
+      if (multiBalance) {
+        setBalances(prev => ({ ...prev, [address]: multiBalance }))
+      } else {
+        // Fallback to simple balance if multi-token fails
+        const balance = await fetchWalletBalance(address, blockchain)
+        if (balance) {
+          setBalances(prev => ({ ...prev, [address]: balance }))
+        }
       }
     } catch (error) {
       console.error('Error loading balance:', error)
@@ -329,14 +362,57 @@ export default function CryptoWallet() {
                   {/* Balance */}
                   {balance && (
                     <div className="bg-samurai-black rounded-lg p-3 sm:p-4 border-2 border-samurai-grey">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-white/60 text-xs mb-1">Balance</p>
-                          <p className="text-xl sm:text-2xl font-bold text-white">{balance.balance} {chain.symbol || wallet.blockchain}</p>
-                          <p className="text-white/60 text-xs sm:text-sm mt-1">{balance.usd_value}</p>
+                      {isMultiTokenBalance(balance) ? (
+                        // Multi-token balance display
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div className="flex-1">
+                              <p className="text-white/60 text-xs mb-1">Total Portfolio Value</p>
+                              <p className="text-xl sm:text-2xl font-bold text-white">{balance.total_usd_value}</p>
+                              <p className="text-white/60 text-xs mt-1">
+                                {balance.native_token.balance} {balance.native_token.symbol}
+                                {balance.tokens.length > 0 && ` + ${balance.tokens.length} token${balance.tokens.length !== 1 ? 's' : ''}`}
+                              </p>
+                            </div>
+                            <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+                          </div>
+                          
+                          {/* Token list toggle */}
+                          {balance.tokens.length > 0 && (
+                            <button
+                              onClick={() => toggleTokenExpansion(wallet.id)}
+                              className="w-full text-left text-xs text-samurai-red hover:text-samurai-red-dark transition-colors font-semibold"
+                            >
+                              {expandedTokens.has(wallet.id) ? '▼ Hide tokens' : `▶ Show ${balance.tokens.length} token${balance.tokens.length !== 1 ? 's' : ''}`}
+                            </button>
+                          )}
+                          
+                          {/* Expanded token list */}
+                          {expandedTokens.has(wallet.id) && balance.tokens.length > 0 && (
+                            <div className="space-y-2 pt-2 border-t border-samurai-grey">
+                              {balance.tokens.map((token, idx) => (
+                                <div key={idx} className="flex items-center justify-between text-xs">
+                                  <div>
+                                    <span className="text-white font-semibold">{token.symbol}</span>
+                                    <span className="text-white/50 ml-2">{token.balance}</span>
+                                  </div>
+                                  <span className="text-white/70">{token.usd_value}</span>
+                                </div>
+                              ))}
+                            </div>
+                          )}
                         </div>
-                        <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
-                      </div>
+                      ) : (
+                        // Simple balance display
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <p className="text-white/60 text-xs mb-1">Balance</p>
+                            <p className="text-xl sm:text-2xl font-bold text-white">{balance.balance} {chain.symbol || wallet.blockchain}</p>
+                            <p className="text-white/60 text-xs sm:text-sm mt-1">{balance.usd_value}</p>
+                          </div>
+                          <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+                        </div>
+                      )}
                     </div>
                   )}
 

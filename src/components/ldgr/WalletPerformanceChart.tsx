@@ -1,12 +1,12 @@
 import { useState, useEffect, useMemo, useCallback } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { TrendingUp, Calendar } from 'lucide-react'
-import type { CryptoWallet, WalletBalance } from '../../lib/ldgr/cryptoWallets'
+import type { CryptoWallet, WalletBalance, MultiTokenBalance } from '../../lib/ldgr/cryptoWallets'
 import { fetchWalletPortfolioHistory } from '../../lib/ldgr/cryptoPrices'
 
 interface WalletPerformanceChartProps {
   wallets: CryptoWallet[]
-  balances: Record<string, WalletBalance>
+  balances: Record<string, WalletBalance | MultiTokenBalance>
   filterBlockchain: string
 }
 
@@ -50,12 +50,20 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
             hasBalance: !!balance,
             balanceData: balance
           })
-          if (!balance?.balance) return null
           
-          // Parse balance to get token amount
-          const tokenAmount = typeof balance.balance === 'number' 
-            ? balance.balance 
-            : parseFloat(balance.balance)
+          if (!balance) return null
+          
+          // Get token amount based on balance type
+          let tokenAmount = 0
+          if (isMultiTokenBalance(balance)) {
+            // For multi-token, use native token balance
+            tokenAmount = parseFloat(balance.native_token.balance)
+          } else {
+            // For simple balance
+            tokenAmount = typeof balance.balance === 'number' 
+              ? balance.balance 
+              : parseFloat(balance.balance)
+          }
           
           if (isNaN(tokenAmount) || tokenAmount <= 0) return null
           
@@ -100,6 +108,11 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     generateChartData()
   }, [generateChartData])
 
+  // Helper to check if balance is MultiTokenBalance
+  const isMultiTokenBalance = (balance: WalletBalance | MultiTokenBalance): balance is MultiTokenBalance => {
+    return 'native_token' in balance && 'tokens' in balance && 'total_usd_value' in balance
+  }
+
   // Calculate total portfolio value
   const totalValue = useMemo(() => {
     const total = filteredWallets.reduce((sum, wallet) => {
@@ -107,15 +120,26 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
       if (!balance) return sum
       
       let value = 0
-      if (typeof balance.usd_value === 'number') {
-        value = balance.usd_value
-      } else if (typeof balance.usd_value === 'string') {
-        value = parseFloat(balance.usd_value)
+      
+      // Check if it's MultiTokenBalance
+      if (isMultiTokenBalance(balance)) {
+        // Use total_usd_value for multi-token balances
+        const usdValue = balance.total_usd_value
+        if (typeof usdValue === 'string') {
+          value = parseFloat(usdValue.replace('$', ''))
+        }
+      } else {
+        // Use usd_value for simple balances
+        if (typeof balance.usd_value === 'number') {
+          value = balance.usd_value
+        } else if (typeof balance.usd_value === 'string') {
+          value = parseFloat(balance.usd_value.replace('$', ''))
+        }
       }
       
       // Skip if value is NaN
       if (isNaN(value)) {
-        console.warn(`Invalid USD value for wallet ${wallet.wallet_name}:`, balance.usd_value)
+        console.warn(`Invalid USD value for wallet ${wallet.wallet_name}:`, balance)
         return sum
       }
       
