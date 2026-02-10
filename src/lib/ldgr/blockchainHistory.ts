@@ -159,62 +159,14 @@ export async function fetchWalletTransactionHistory(
  */
 export function calculateHistoricalBalances(
   _transactions: Transaction[],
-  currentBalance: number,
-  currentPrice: number,
-  days: number
+  _currentBalance: number,
+  _currentPrice: number,
+  _days: number
 ): HistoricalBalance[] {
-  const now = Date.now()
-  
-  // Determine granularity based on timeframe
-  let intervalMs: number
-  let numPoints: number
-  
-  if (days <= 1) {
-    // 1 day: hourly data (24 points)
-    intervalMs = 60 * 60 * 1000 // 1 hour
-    numPoints = 24
-  } else if (days <= 3) {
-    // 3 days: 2-hourly data (36 points)
-    intervalMs = 2 * 60 * 60 * 1000 // 2 hours
-    numPoints = Math.floor((days * 24) / 2)
-  } else if (days <= 7) {
-    // 1 week: 4-hourly data (42 points)
-    intervalMs = 4 * 60 * 60 * 1000 // 4 hours
-    numPoints = Math.floor((days * 24) / 4)
-  } else if (days <= 30) {
-    // 1 month: 6-hourly data (120 points)
-    intervalMs = 6 * 60 * 60 * 1000 // 6 hours
-    numPoints = Math.floor((days * 24) / 6)
-  } else {
-    // Longer periods: daily data
-    intervalMs = 24 * 60 * 60 * 1000 // 1 day
-    numPoints = days
-  }
-  
-  console.log(`📊 Generating ${numPoints} data points with ${intervalMs / (60 * 60 * 1000)}h intervals for ${days} days`)
-  
-  const historicalBalances: HistoricalBalance[] = []
-  
-  // Generate data points at the determined interval
-  for (let i = numPoints; i >= 0; i--) {
-    const timestamp = now - (i * intervalMs)
-    
-    // Use current balance with price variance to simulate historical value
-    // Create more volatile movement for shorter timeframes
-    const volatility = days <= 7 ? 0.08 : 0.15 // Higher volatility for short timeframes
-    const variance = (Math.sin(i / numPoints * Math.PI * 4) * volatility) + 
-                    (Math.random() - 0.5) * (volatility / 2)
-    const historicalPrice = currentPrice * (1 + variance)
-    
-    historicalBalances.push({
-      timestamp,
-      balance: currentBalance,
-      usdValue: currentBalance * historicalPrice
-    })
-  }
-
-  console.log(`📊 Generated ${historicalBalances.length} historical balance points`)
-  return historicalBalances
+  // This function is no longer used for generating fake data
+  // Real historical prices come from CoinGecko API via cryptoPrices.ts
+  console.log(`📊 calculateHistoricalBalances called but not used - using real price data instead`)
+  return []
 }
 
 /**

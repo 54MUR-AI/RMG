@@ -2,8 +2,8 @@
 import { getWalletHistoricalData } from './blockchainHistory'
 
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3'
-const USE_CORS_PROXY = false // CORS proxy blocked, using fallback data
-const CORS_PROXY = 'https://corsproxy.io/?' // Public CORS proxy
+const USE_CORS_PROXY = true // Try CORS proxy for real price data
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=' // Alternative CORS proxy
 const USE_REAL_BLOCKCHAIN_DATA = true // Use real blockchain transaction history
 
 // Cache for API responses to avoid rate limiting
@@ -72,11 +72,8 @@ export async function fetchHistoricalPrices(
     
     const response = await fetch(url)
     if (!response.ok) {
-      if (response.status === 429) {
-        console.warn(`Rate limited by CoinGecko, using fallback data for ${coinId}`)
-        return generateFallbackPrices(coinId, days)
-      }
-      throw new Error(`CoinGecko API error: ${response.status}`)
+      console.error(`CoinGecko API error: ${response.status}`)
+      return []
     }
     
     const data = await response.json()
@@ -87,14 +84,15 @@ export async function fetchHistoricalPrices(
       price
     }))
     
+    console.log(`📊 Fetched ${prices.length} real price points from CoinGecko for ${coinId}`)
+    
     // Cache the result
     priceCache.set(cacheKey, { data: prices, timestamp: Date.now() })
     
     return prices
   } catch (error) {
     console.error(`Failed to fetch prices for ${coinId}:`, error)
-    // Return fallback data instead of empty array
-    return generateFallbackPrices(coinId, days)
+    return []
   }
 }
 
@@ -246,15 +244,25 @@ export async function fetchWalletPortfolioHistory(
           continue
         }
       } catch (error) {
-        console.warn(`Failed to get real data for ${wallet.wallet_name}, using fallback`)
+        console.warn(`Failed to get real blockchain data for ${wallet.wallet_name}`)
       }
     }
     
-    // Fallback to simulated data
+    // Try to fetch real historical prices from CoinGecko
     const coinId = BLOCKCHAIN_TO_COINGECKO_ID[wallet.blockchain]
-    if (!coinId) continue
+    if (!coinId) {
+      console.warn(`No CoinGecko ID for ${wallet.blockchain}`)
+      continue
+    }
     
+    console.log(`📊 Fetching real historical prices for ${coinId}`)
     const prices = await fetchHistoricalPrices(coinId, days)
+    
+    if (prices.length === 0) {
+      console.error(`No price data available for ${wallet.wallet_name}`)
+      continue
+    }
+    
     const walletValues = calculateHistoricalWalletValues(
       wallet.balance,
       prices
