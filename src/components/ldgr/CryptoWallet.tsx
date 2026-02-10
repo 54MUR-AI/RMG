@@ -3,6 +3,7 @@ import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, RefreshCw, Trend
 import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
 import MultiChainWalletImport from './MultiChainWalletImport'
+import WalletPerformanceChart from './WalletPerformanceChart'
 import {
   getUserWallets,
   addWallet,
