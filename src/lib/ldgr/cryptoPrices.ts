@@ -66,7 +66,7 @@ export async function fetchHistoricalPrices(
       return cached.data
     }
     
-    const baseUrl = `${COINGECKO_API_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${daysParam}`
+    const baseUrl = `${COINGECKO_API_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
     const url = USE_CORS_PROXY ? `${CORS_PROXY}${encodeURIComponent(baseUrl)}` : baseUrl
     
     const response = await fetch(url)

@@ -261,6 +261,11 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
           Showing {filteredWallets.length} wallet{filteredWallets.length !== 1 ? 's' : ''} • 
           Real historical price data from CoinGecko
         </p>
+        {(['5y', '10y', 'all'] as TimeRange[]).includes(timeRange) && (
+          <p className="text-xs text-yellow-500 text-center mt-2">
+            ⚠️ CoinGecko free API limits historical data to 365 days
+          </p>
+        )}
       </div>
     </div>
   )
