@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Shield, Loader2, Lock, BookOpen, Settings } from 'lucide-react'
+import { MessageSquare, Loader2, Lock, BookOpen, Settings } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import ReadmePopup from '../components/ReadmePopup'
 
@@ -76,7 +76,7 @@ export default function WsprPage() {
       <div className="bg-samurai-black-light border-b border-samurai-grey-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center gap-3">
-            <Shield className="w-8 h-8 text-samurai-red" />
+            <MessageSquare className="w-8 h-8 text-samurai-red" />
             <div>
               <h1 className="text-2xl font-bold neon-text">WSPR</h1>
               <p className="text-sm text-samurai-steel">Web Secure P2P Relay</p>
@@ -102,7 +102,7 @@ export default function WsprPage() {
       {error && !isLoading && (
         <div className="flex items-center justify-center h-[calc(100vh-200px)]">
           <div className="glass-card p-8 rounded-xl max-w-md text-center">
-            <Shield className="w-16 h-16 text-samurai-red mx-auto mb-4" />
+            <MessageSquare className="w-16 h-16 text-samurai-red mx-auto mb-4" />
             <h2 className="text-xl font-bold mb-2">Service Unavailable</h2>
             <p className="text-samurai-steel mb-4">{error}</p>
             <button
