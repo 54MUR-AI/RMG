@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Key, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check } from 'lucide-react'
+import { Key, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, Power } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
 import {
