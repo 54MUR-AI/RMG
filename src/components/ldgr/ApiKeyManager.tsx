@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Key, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, Power } from 'lucide-react'
+import { Key, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
 import {
@@ -113,8 +113,6 @@ export default function ApiKeyManager() {
       alert('Failed to copy key. Please try again.')
     }
   }
-
-  const categories = ['all', ...new Set(Object.values(API_SERVICES).map(s => s.category))]
   
   const filteredKeys = filterCategory === 'all' 
     ? apiKeys 

@@ -111,8 +111,6 @@ export default function PasswordManager() {
       alert('Failed to copy password. Please try again.')
     }
   }
-
-  const categories = ['all', ...Object.keys(PASSWORD_CATEGORIES)]
   
   const filteredPasswords = passwords.filter(pwd => {
     const matchesCategory = filterCategory === 'all' || pwd.category === filterCategory

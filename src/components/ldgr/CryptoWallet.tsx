@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, ExternalLink, RefreshCw } from 'lucide-react'
+import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, RefreshCw, TrendingUp } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
 import MultiChainWalletImport from './MultiChainWalletImport'
@@ -150,8 +150,6 @@ export default function CryptoWallet() {
       await loadWalletBalance(wallet.address, wallet.blockchain)
     }
   }
-
-  const blockchains = ['all', ...Object.keys(BLOCKCHAINS)]
   
   const filteredWallets = wallets.filter(wallet => {
     const matchesBlockchain = filterBlockchain === 'all' || wallet.blockchain === filterBlockchain
