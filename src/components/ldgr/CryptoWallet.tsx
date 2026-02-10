@@ -25,6 +25,7 @@ const BLOCKCHAINS = {
   avalanche: { name: 'Avalanche', icon: '🔺', color: 'red', symbol: 'AVAX' },
   cardano: { name: 'Cardano', icon: '₳', color: 'blue', symbol: 'ADA' },
   ripple: { name: 'Ripple', icon: '◈', color: 'blue', symbol: 'XRP' },
+  cronos: { name: 'Cronos', icon: '🔷', color: 'blue', symbol: 'CRO' },
   other: { name: 'Other', icon: '🪙', color: 'gray', symbol: '' }
 }
 

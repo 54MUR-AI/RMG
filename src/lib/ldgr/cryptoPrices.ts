@@ -20,6 +20,7 @@ export const BLOCKCHAIN_TO_COINGECKO_ID: Record<string, string> = {
   avalanche: 'avalanche-2',
   cardano: 'cardano',
   ripple: 'ripple',
+  cronos: 'crypto-com-chain',
   other: '' // Will need manual mapping
 }
 
@@ -32,7 +33,8 @@ export const BLOCKCHAIN_NATIVE_TOKENS: Record<string, string> = {
   binance: 'BNB',
   avalanche: 'AVAX',
   cardano: 'ADA',
-  ripple: 'XRP'
+  ripple: 'XRP',
+  cronos: 'CRO'
 }
 
 interface HistoricalPrice {
