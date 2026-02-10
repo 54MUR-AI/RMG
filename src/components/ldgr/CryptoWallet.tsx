@@ -277,17 +277,17 @@ export default function CryptoWallet() {
             return (
               <div
                 key={wallet.id}
-                className="bg-samurai-grey-darker border-2 border-samurai-steel-dark rounded-lg p-4 hover:border-samurai-red/50 transition-all"
+                className="bg-samurai-grey-darker border-2 border-samurai-steel-dark rounded-lg p-3 sm:p-4 hover:border-samurai-red/50 transition-all"
               >
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-3 sm:gap-4">
                   {/* Header */}
-                  <div className="flex items-start justify-between gap-4">
+                  <div className="flex items-start justify-between gap-2 sm:gap-4">
                     <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-2xl">{chain.icon}</span>
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="text-xl sm:text-2xl">{chain.icon}</span>
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-lg font-bold text-white truncate">{wallet.wallet_name}</h3>
-                          <p className="text-sm text-white/60">{chain.name === 'Other' ? wallet.blockchain : chain.name}</p>
+                          <h3 className="text-base sm:text-lg font-bold text-white truncate">{wallet.wallet_name}</h3>
+                          <p className="text-xs sm:text-sm text-white/60">{chain.name === 'Other' ? wallet.blockchain : chain.name}</p>
                         </div>
                       </div>
                     </div>
@@ -321,21 +321,21 @@ export default function CryptoWallet() {
 
                   {/* Balance */}
                   {balance && (
-                    <div className="bg-samurai-black rounded-lg p-4 border-2 border-samurai-grey">
+                    <div className="bg-samurai-black rounded-lg p-3 sm:p-4 border-2 border-samurai-grey">
                       <div className="flex items-center justify-between">
                         <div>
                           <p className="text-white/60 text-xs mb-1">Balance</p>
-                          <p className="text-2xl font-bold text-white">{balance.balance} {chain.symbol || wallet.blockchain}</p>
-                          <p className="text-white/60 text-sm mt-1">{balance.usd_value}</p>
+                          <p className="text-xl sm:text-2xl font-bold text-white">{balance.balance} {chain.symbol || wallet.blockchain}</p>
+                          <p className="text-white/60 text-xs sm:text-sm mt-1">{balance.usd_value}</p>
                         </div>
-                        <TrendingUp className="w-8 h-8 text-green-500" />
+                        <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
                       </div>
                     </div>
                   )}
 
                   {/* Address */}
                   <div>
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between mb-1 sm:mb-2">
                       <p className="text-white/60 text-xs font-semibold">WALLET ADDRESS</p>
                       <button
                         onClick={() => handleCopyAddress(wallet.address, wallet.id)}
@@ -356,7 +356,7 @@ export default function CryptoWallet() {
 
                   {/* Seed Phrase */}
                   <div>
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between mb-1 sm:mb-2">
                       <p className="text-white/60 text-xs font-semibold">SEED PHRASE</p>
                       <div className="flex gap-1">
                         <button
