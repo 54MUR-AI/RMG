@@ -143,8 +143,10 @@ export async function addWallet(
   userEmail: string,
   input: CryptoWalletInput
 ): Promise<CryptoWallet> {
-  // Encrypt the seed phrase
-  const encryptedSeedPhrase = await encryptSeedPhrase(input.seed_phrase, userEmail)
+  // Encrypt the seed phrase only if provided
+  const encryptedSeedPhrase = input.seed_phrase 
+    ? await encryptSeedPhrase(input.seed_phrase, userEmail)
+    : null
   
   const { data, error } = await supabase
     .from('crypto_wallets')

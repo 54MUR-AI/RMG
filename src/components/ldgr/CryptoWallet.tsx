@@ -296,10 +296,10 @@ export default function CryptoWallet() {
                       </div>
                     </div>
                     
-                    <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2">
+                    <div className="flex items-center gap-1">
                       <button
                         onClick={() => loadWalletBalance(wallet.address, wallet.blockchain)}
-                        className="p-2 rounded hover:bg-samurai-grey transition-colors"
+                        className="p-1.5 rounded hover:bg-samurai-grey transition-colors"
                         title="Refresh balance"
                       >
                         <RefreshCw className={`w-4 h-4 text-white/70 ${loadingBalances ? 'animate-spin' : ''}`} />
@@ -307,7 +307,7 @@ export default function CryptoWallet() {
                       
                       <button
                         onClick={() => setEditingWallet(wallet)}
-                        className="p-2 rounded hover:bg-samurai-grey transition-colors"
+                        className="p-1.5 rounded hover:bg-samurai-grey transition-colors"
                         title="Edit wallet"
                       >
                         <Edit2 className="w-4 h-4 text-white/70" />
@@ -315,7 +315,7 @@ export default function CryptoWallet() {
                       
                       <button
                         onClick={() => handleDeleteWallet(wallet.id, wallet.wallet_name)}
-                        className="p-2 rounded hover:bg-red-600 transition-colors"
+                        className="p-1.5 rounded hover:bg-red-600 transition-colors"
                         title="Delete wallet"
                       >
                         <Trash2 className="w-4 h-4 text-white/70" />
