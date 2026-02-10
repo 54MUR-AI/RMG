@@ -120,7 +120,7 @@ export default function WsprPage() {
         <div className="h-[calc(100vh-200px)]">
           <iframe
             ref={iframeRef}
-            src={`https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}`}
+            src={`https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}&v=${Date.now()}`}
             className="w-full h-full border-0"
             title="WSPR - Web Secure P2P Relay"
             allow="camera; microphone; clipboard-write"
