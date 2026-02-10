@@ -97,45 +97,6 @@ export async function fetchHistoricalPrices(
 }
 
 /**
- * Generate fallback price data when API fails
- * Uses approximate current prices and generates historical data with realistic variance
- */
-function generateFallbackPrices(coinId: string, days: number | 'max'): HistoricalPrice[] {
-  // Current market prices (updated Feb 2026)
-  const currentPrices: Record<string, number> = {
-    bitcoin: 95000,
-    ethereum: 3500,
-    ripple: 1.40,
-    solana: 150,
-    'matic-network': 0.90,
-    binancecoin: 600,
-    'avalanche-2': 40,
-    cardano: 0.60
-  }
-  
-  const currentPrice = currentPrices[coinId] || 1.0
-  const numDays = days === 'max' ? 365 : days
-  const prices: HistoricalPrice[] = []
-  
-  for (let i = numDays; i >= 0; i--) {
-    const date = new Date()
-    date.setDate(date.getDate() - i)
-    
-    // Generate price with realistic variance (±20% over the period)
-    const variance = (Math.sin(i / numDays * Math.PI * 2) * 0.2) + (Math.random() - 0.5) * 0.1
-    const historicalPrice = currentPrice * (1 + variance)
-    
-    prices.push({
-      timestamp: date.getTime(),
-      price: historicalPrice
-    })
-  }
-  
-  console.log(`📊 Generated ${prices.length} fallback price points for ${coinId}`)
-  return prices
-}
-
-/**
  * Get the appropriate CoinGecko days parameter for a time range
  */
 export function getCoingeckoDaysParam(timeRange: string): number | 'max' {
