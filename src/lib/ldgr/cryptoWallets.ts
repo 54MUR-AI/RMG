@@ -1,4 +1,5 @@
 import { supabase } from '../supabase'
+import { fetchMultiTokenBalance } from './multiTokenBalance'
 
 export interface CryptoWallet {
   id: string
@@ -23,6 +24,23 @@ export interface CryptoWalletInput {
 export interface WalletBalance {
   balance: string
   usd_value: string
+  last_updated: string
+}
+
+export interface TokenBalance {
+  symbol: string
+  name: string
+  balance: string
+  decimals: number
+  contract_address?: string
+  usd_value: string
+  price_per_token: number
+}
+
+export interface MultiTokenBalance {
+  native_token: TokenBalance
+  tokens: TokenBalance[]
+  total_usd_value: string
   last_updated: string
 }
 
@@ -217,7 +235,7 @@ const COINGECKO_IDS: Record<string, string> = {
 }
 
 // Fetch crypto price in USD from CoinGecko (free, no API key needed)
-async function fetchCryptoPrice(blockchain: string): Promise<number> {
+export async function fetchCryptoPrice(blockchain: string): Promise<number> {
   try {
     const coinId = COINGECKO_IDS[blockchain]
     if (!coinId) return 0
@@ -291,6 +309,57 @@ export async function fetchWalletBalance(
     }
   } catch (error) {
     console.error(`Error fetching ${blockchain} balance:`, error)
+    return null
+  }
+}
+
+// Fetch wallet balance with all tokens (native + ERC-20)
+export async function fetchWalletBalanceWithTokens(
+  address: string,
+  blockchain: string
+): Promise<MultiTokenBalance | null> {
+  try {
+    // First fetch native balance
+    let nativeBalance = '0.00'
+    
+    switch (blockchain) {
+      case 'ethereum':
+        nativeBalance = await fetchEthereumBalance(address)
+        break
+      case 'bitcoin':
+        nativeBalance = await fetchBitcoinBalance(address)
+        break
+      case 'solana':
+        nativeBalance = await fetchSolanaBalance(address)
+        break
+      case 'polygon':
+        nativeBalance = await fetchPolygonBalance(address)
+        break
+      case 'binance':
+        nativeBalance = await fetchBinanceBalance(address)
+        break
+      case 'avalanche':
+        nativeBalance = await fetchAvalancheBalance(address)
+        break
+      case 'cardano':
+        nativeBalance = await fetchCardanoBalance(address)
+        break
+      case 'ripple':
+        nativeBalance = await fetchRippleBalance(address)
+        break
+      case 'cronos':
+        nativeBalance = await fetchCronosBalance(address)
+        break
+      default:
+        console.warn(`Blockchain ${blockchain} not supported for balance fetching`)
+        return null
+    }
+    
+    // Fetch multi-token balance (includes native + ERC-20 tokens)
+    return await fetchMultiTokenBalance(address, blockchain, nativeBalance)
+    
+  } catch (error) {
+    console.error(`Error fetching multi-token balance for ${blockchain}:`, error)
     return null
   }
 }

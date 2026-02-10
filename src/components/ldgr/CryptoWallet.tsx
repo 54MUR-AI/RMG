@@ -11,9 +11,11 @@ import {
   deleteWallet,
   decryptSeedPhrase,
   fetchWalletBalance,
+  fetchWalletBalanceWithTokens,
   type CryptoWallet,
   type CryptoWalletInput,
-  type WalletBalance
+  type WalletBalance,
+  type MultiTokenBalance
 } from '../../lib/ldgr/cryptoWallets'
 
 const BLOCKCHAINS = {
