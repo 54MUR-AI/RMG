@@ -208,17 +208,32 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
               tickFormatter={(value: number) => `$${value.toLocaleString()}`}
             />
             <Tooltip
-              contentStyle={{
-                backgroundColor: '#1A1A1A',
-                border: '1px solid #E63946',
-                borderRadius: '8px',
-                color: '#FFFFFF'
+              content={({ active, payload, label }) => {
+                if (!active || !payload || !payload.length) return null
+                
+                return (
+                  <div className="bg-samurai-black-lighter border border-samurai-red rounded-lg p-2 shadow-lg">
+                    <p className="text-xs text-samurai-steel mb-1">{label}</p>
+                    {payload.map((entry: any, index: number) => (
+                      <div key={index} className="flex items-center gap-2 mb-0.5">
+                        <div 
+                          className="w-2 h-2 rounded-full" 
+                          style={{ backgroundColor: entry.color }}
+                        />
+                        <span className="text-xs text-white font-medium">{entry.name}:</span>
+                        <span className="text-xs text-samurai-steel">
+                          ${Number(entry.value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
+                      </div>
+                    ))}
+                    <div className="mt-1 pt-1 border-t border-samurai-grey-dark">
+                      <span className="text-xs text-samurai-steel">
+                        Total: ${payload.reduce((sum: number, entry: any) => sum + Number(entry.value || 0), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </span>
+                    </div>
+                  </div>
+                )
               }}
-              formatter={(value: number | undefined) => {
-                if (value === undefined) return ['N/A', '']
-                return [`$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, '']
-              }}
-              labelStyle={{ color: '#9CA3AF' }}
             />
             <Legend 
               wrapperStyle={{ paddingTop: '20px' }}
@@ -232,7 +247,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 stroke={BLOCKCHAIN_COLORS[wallet.blockchain] || '#6B7280'}
                 strokeWidth={2}
                 dot={{ r: 3, fill: BLOCKCHAIN_COLORS[wallet.blockchain] || '#6B7280' }}
-                activeDot={{ r: 5 }}
+                activeDot={{ r: 6, fill: '#E63946', stroke: '#E63946', strokeWidth: 2 }}
                 connectNulls={true}
               />
             ))}
