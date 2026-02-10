@@ -177,7 +177,7 @@ export default function CryptoWallet() {
             <Wallet className="w-6 h-6 text-samurai-red" />
             Crypto Wallets
           </h2>
-          <p className="text-white/70 text-sm mt-1">
+          <p className="text-white/70 text-sm mt-1 hidden sm:block">
             Securely store seed phrases and track wallet balances across blockchains
           </p>
         </div>
@@ -201,7 +201,7 @@ export default function CryptoWallet() {
           */}
           <button
             onClick={() => setShowAddModal(true)}
-            className="flex items-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all"
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flex-1 sm:flex-none"
           >
             <Plus className="w-4 h-4" />
             Add Wallet

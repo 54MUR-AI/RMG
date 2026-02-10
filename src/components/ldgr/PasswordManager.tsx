@@ -138,7 +138,7 @@ export default function PasswordManager() {
             <Lock className="w-6 h-6 text-samurai-red" />
             Password Manager
           </h2>
-          <p className="text-white/70 text-sm mt-1">
+          <p className="text-white/70 text-sm mt-1 hidden sm:block">
             Securely store and manage your passwords with military-grade encryption
           </p>
         </div>

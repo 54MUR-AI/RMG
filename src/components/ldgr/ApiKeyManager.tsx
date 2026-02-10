@@ -142,7 +142,7 @@ export default function ApiKeyManager() {
             <Key className="w-6 h-6 text-samurai-red" />
             API Keys
           </h2>
-          <p className="text-white/70 text-sm mt-1">
+          <p className="text-white/70 text-sm mt-1 hidden sm:block">
             Securely store and manage API keys for use across RMG applications
           </p>
         </div>
