@@ -158,7 +158,7 @@ export async function fetchWalletTransactionHistory(
  * Calculate historical balances from transaction history
  */
 export function calculateHistoricalBalances(
-  transactions: Transaction[],
+  _transactions: Transaction[],
   currentBalance: number,
   currentPrice: number,
   days: number
