@@ -544,18 +544,26 @@ async function fetchRippleBalance(address: string): Promise<string> {
   }
 }
 
-// Cronos (CRO) balance via Cronos Explorer API
+// Cronos (CRO) balance via public RPC endpoint
 async function fetchCronosBalance(address: string): Promise<string> {
   try {
-    // Using Cronos Explorer API (public endpoint)
-    const response = await fetch(
-      `https://explorer-api.cronos.org/mainnet/api/v1/accounts/${address}`
-    )
+    // Using Cronos public RPC endpoint (no auth required)
+    const response = await fetch('https://evm.cronos.org', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        jsonrpc: '2.0',
+        method: 'eth_getBalance',
+        params: [address, 'latest'],
+        id: 1
+      })
+    })
     const data = await response.json()
     
-    if (data && data.result && data.result.balance) {
-      // Balance is already in CRO format from Cronos Explorer
-      const balanceInCro = parseFloat(data.result.balance).toFixed(4)
+    if (data && data.result) {
+      // Convert from wei (hex) to CRO (18 decimals)
+      const balanceWei = parseInt(data.result, 16)
+      const balanceInCro = (balanceWei / 1e18).toFixed(4)
       return balanceInCro
     }
     return '0.00'
