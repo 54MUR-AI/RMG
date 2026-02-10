@@ -126,6 +126,10 @@ export default function CryptoWallet() {
 
   const handleCopySeed = async (wallet: CryptoWallet) => {
     if (!user?.email) return
+    if (!wallet.encrypted_seed_phrase) {
+      alert('No seed phrase stored for this wallet')
+      return
+    }
     try {
       const decrypted = await decryptSeedPhrase(wallet.encrypted_seed_phrase, user.email)
       await navigator.clipboard.writeText(decrypted)
@@ -354,43 +358,45 @@ export default function CryptoWallet() {
                     </code>
                   </div>
 
-                  {/* Seed Phrase */}
-                  <div>
-                    <div className="flex items-center justify-between mb-1 sm:mb-2">
-                      <p className="text-white/60 text-xs font-semibold">SEED PHRASE</p>
-                      <div className="flex gap-1">
-                        <button
-                          onClick={() => handleRevealSeed(wallet.id)}
-                          className="p-1 rounded hover:bg-samurai-grey transition-colors"
-                          title={isRevealed ? 'Hide seed phrase' : 'Reveal seed phrase'}
-                        >
-                          {isRevealed ? (
-                            <EyeOff className="w-3 h-3 text-white/70" />
-                          ) : (
-                            <Eye className="w-3 h-3 text-white/70" />
-                          )}
-                        </button>
-                        <button
-                          onClick={() => handleCopySeed(wallet)}
-                          className="p-1 rounded hover:bg-samurai-grey transition-colors"
-                          title="Copy seed phrase"
-                        >
-                          {copiedItem === `seed-${wallet.id}` ? (
-                            <Check className="w-3 h-3 text-green-500" />
-                          ) : (
-                            <Copy className="w-3 h-3 text-white/70" />
-                          )}
-                        </button>
+                  {/* Seed Phrase - Only show if seed phrase exists */}
+                  {wallet.encrypted_seed_phrase && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1 sm:mb-2">
+                        <p className="text-white/60 text-xs font-semibold">SEED PHRASE</p>
+                        <div className="flex gap-1">
+                          <button
+                            onClick={() => handleRevealSeed(wallet.id)}
+                            className="p-1 rounded hover:bg-samurai-grey transition-colors"
+                            title={isRevealed ? 'Hide seed phrase' : 'Reveal seed phrase'}
+                          >
+                            {isRevealed ? (
+                              <EyeOff className="w-3 h-3 text-white/70" />
+                            ) : (
+                              <Eye className="w-3 h-3 text-white/70" />
+                            )}
+                          </button>
+                          <button
+                            onClick={() => handleCopySeed(wallet)}
+                            className="p-1 rounded hover:bg-samurai-grey transition-colors"
+                            title="Copy seed phrase"
+                          >
+                            {copiedItem === `seed-${wallet.id}` ? (
+                              <Check className="w-3 h-3 text-green-500" />
+                            ) : (
+                              <Copy className="w-3 h-3 text-white/70" />
+                            )}
+                          </button>
+                        </div>
                       </div>
+                      <code className="block px-3 py-2 bg-samurai-black rounded text-white/90 text-xs font-mono break-all">
+                        {isRevealed ? (
+                          <SeedPhraseDisplay wallet={wallet} userEmail={user?.email || ''} />
+                        ) : (
+                          '•••••••••••••••••••••••••••••••••••••••••••••••'
+                        )}
+                      </code>
                     </div>
-                    <code className="block px-3 py-2 bg-samurai-black rounded text-white/90 text-xs font-mono break-all">
-                      {isRevealed ? (
-                        <SeedPhraseDisplay wallet={wallet} userEmail={user?.email || ''} />
-                      ) : (
-                        '•••••••••••••••••••••••••••••••••••••••••••••••'
-                      )}
-                    </code>
-                  </div>
+                  )}
 
                   {wallet.notes && (
                     <p className="text-white/50 text-xs">{wallet.notes}</p>
@@ -436,6 +442,10 @@ function SeedPhraseDisplay({ wallet, userEmail }: { wallet: CryptoWallet; userEm
   const [decrypted, setDecrypted] = useState<string>('Loading...')
   
   useEffect(() => {
+    if (!wallet.encrypted_seed_phrase) {
+      setDecrypted('No seed phrase stored')
+      return
+    }
     decryptSeedPhrase(wallet.encrypted_seed_phrase, userEmail)
       .then(setDecrypted)
       .catch(() => setDecrypted('Error decrypting'))
