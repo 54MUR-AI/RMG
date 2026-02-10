@@ -1,7 +1,7 @@
 // CoinGecko API integration for fetching historical cryptocurrency prices
 
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3'
-const USE_CORS_PROXY = true // Use CORS proxy for client-side requests
+const USE_CORS_PROXY = false // CORS proxy blocked, using fallback data
 const CORS_PROXY = 'https://corsproxy.io/?' // Public CORS proxy
 
 // Cache for API responses to avoid rate limiting

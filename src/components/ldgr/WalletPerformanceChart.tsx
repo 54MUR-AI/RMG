@@ -222,7 +222,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
       <div className="mt-4 pt-4 border-t border-samurai-grey-dark">
         <p className="text-xs text-samurai-steel text-center">
           Showing {filteredWallets.length} wallet{filteredWallets.length !== 1 ? 's' : ''} • 
-          Historical data is simulated for demonstration
+          Historical data simulated based on current market prices
         </p>
       </div>
     </div>
