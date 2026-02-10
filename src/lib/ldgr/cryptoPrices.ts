@@ -259,7 +259,8 @@ function getCurrentPrice(blockchain: string): number {
     polygon: 0.90,
     binance: 600,
     avalanche: 40,
-    cardano: 0.60
+    cardano: 0.60,
+    cronos: 0.15
   }
   return currentPrices[blockchain] || 1.0
 }

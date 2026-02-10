@@ -101,14 +101,30 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
   }, [generateChartData])
 
   // Calculate total portfolio value
-  const totalValue = useMemo(() => 
-    filteredWallets.reduce((sum, wallet) => {
+  const totalValue = useMemo(() => {
+    const total = filteredWallets.reduce((sum, wallet) => {
       const balance = balances[wallet.address]
-      const value = typeof balance?.usd_value === 'number' ? balance.usd_value : parseFloat(balance?.usd_value || '0')
+      if (!balance) return sum
+      
+      let value = 0
+      if (typeof balance.usd_value === 'number') {
+        value = balance.usd_value
+      } else if (typeof balance.usd_value === 'string') {
+        value = parseFloat(balance.usd_value)
+      }
+      
+      // Skip if value is NaN
+      if (isNaN(value)) {
+        console.warn(`Invalid USD value for wallet ${wallet.wallet_name}:`, balance.usd_value)
+        return sum
+      }
+      
       return sum + value
-    }, 0),
-    [filteredWallets, balances]
-  )
+    }, 0)
+    
+    console.log('📊 Total portfolio value:', total, 'from', filteredWallets.length, 'wallets')
+    return total
+  }, [filteredWallets, balances])
 
   // Calculate gain/loss for selected timeframe from chart data
   const { changePercent, isPositive, periodLabel } = useMemo(() => {
