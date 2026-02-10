@@ -72,15 +72,23 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
           // Generate mock historical data with some variance
           // In production, fetch real historical prices
           const usdValue = typeof balance.usd_value === 'number' ? balance.usd_value : parseFloat(balance.usd_value)
-          const variance = (Math.random() - 0.5) * 0.3 // ±15% variance
-          const historicalValue = usdValue * (1 + variance * (i / days))
-          dataPoint[wallet.wallet_name] = parseFloat(historicalValue.toFixed(2))
+          if (!isNaN(usdValue) && usdValue > 0) {
+            const variance = (Math.random() - 0.5) * 0.3 // ±15% variance
+            const historicalValue = usdValue * (1 + variance * (i / days))
+            dataPoint[wallet.wallet_name] = parseFloat(historicalValue.toFixed(2))
+          }
         }
       })
       
       data.push(dataPoint)
     }
     
+    console.log('📊 Chart data generated:', {
+      wallets: filteredWallets.map(w => w.wallet_name),
+      dataPoints: data.length,
+      sampleData: data[0],
+      balances: Object.keys(balances)
+    })
     setChartData(data)
     setLoading(false)
   }, [filteredWallets, balances, timeRange])
@@ -199,8 +207,9 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 dataKey={wallet.wallet_name}
                 stroke={BLOCKCHAIN_COLORS[wallet.blockchain] || '#6B7280'}
                 strokeWidth={2}
-                dot={false}
-                activeDot={{ r: 4 }}
+                dot={{ r: 3, fill: BLOCKCHAIN_COLORS[wallet.blockchain] || '#6B7280' }}
+                activeDot={{ r: 5 }}
+                connectNulls={true}
               />
             ))}
           </LineChart>
