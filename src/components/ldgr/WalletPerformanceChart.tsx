@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { TrendingUp, Calendar } from 'lucide-react'
 import type { CryptoWallet, WalletBalance } from '../../lib/ldgr/cryptoWallets'
-import { fetchWalletPortfolioHistory, BLOCKCHAIN_NATIVE_TOKENS } from '../../lib/ldgr/cryptoPrices'
+import { fetchWalletPortfolioHistory } from '../../lib/ldgr/cryptoPrices'
 
 interface WalletPerformanceChartProps {
   wallets: CryptoWallet[]

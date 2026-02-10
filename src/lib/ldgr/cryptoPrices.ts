@@ -93,7 +93,6 @@ export function getCoingeckoDaysParam(timeRange: string): number | 'max' {
  * Calculate historical wallet values based on current balance and historical prices
  */
 export function calculateHistoricalWalletValues(
-  walletName: string,
   currentBalance: number,
   historicalPrices: HistoricalPrice[]
 ): Map<number, number> {
@@ -111,8 +110,7 @@ export function calculateHistoricalWalletValues(
  * Merge multiple wallet historical values into chart data points
  */
 export function mergeWalletDataIntoChartPoints(
-  walletHistoricalData: Map<string, Map<number, number>>,
-  timeRange: string
+  walletHistoricalData: Map<string, Map<number, number>>
 ): PriceDataPoint[] {
   // Get all unique timestamps
   const allTimestamps = new Set<number>()
@@ -172,7 +170,6 @@ export async function fetchWalletPortfolioHistory(
     
     const prices = blockchainPrices.get(wallet.blockchain)!
     const walletValues = calculateHistoricalWalletValues(
-      wallet.wallet_name,
       wallet.balance,
       prices
     )
@@ -180,5 +177,5 @@ export async function fetchWalletPortfolioHistory(
     walletHistoricalData.set(wallet.wallet_name, walletValues)
   }
   
-  return mergeWalletDataIntoChartPoints(walletHistoricalData, timeRange)
+  return mergeWalletDataIntoChartPoints(walletHistoricalData)
 }
