@@ -110,16 +110,35 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     [filteredWallets, balances]
   )
 
-  // Calculate 24h change (mock data - would be real in production)
-  // Use a stable seed based on the first wallet's address to prevent constant recalculation
-  const change24h = useMemo(() => {
-    if (filteredWallets.length === 0) return 0
-    // Use wallet address as seed for consistent random value
-    const seed = filteredWallets[0].address.charCodeAt(0) % 100
-    return (seed / 100 - 0.5) * 10 // Convert to ±5% range
-  }, [filteredWallets])
-  
-  const isPositive = change24h >= 0
+  // Calculate gain/loss for selected timeframe from chart data
+  const { changePercent, isPositive, periodLabel } = useMemo(() => {
+    if (chartData.length < 2) {
+      return { changePercent: 0, isPositive: true, periodLabel: timeRange.toUpperCase() }
+    }
+    
+    // Get first and last values from chart data
+    const firstPoint = chartData[0]
+    const lastPoint = chartData[chartData.length - 1]
+    
+    // Calculate total value at start and end
+    let startValue = 0
+    let endValue = 0
+    
+    filteredWallets.forEach(wallet => {
+      const walletName = wallet.wallet_name
+      if (firstPoint[walletName]) startValue += Number(firstPoint[walletName])
+      if (lastPoint[walletName]) endValue += Number(lastPoint[walletName])
+    })
+    
+    // Calculate percentage change
+    const change = startValue > 0 ? ((endValue - startValue) / startValue) * 100 : 0
+    
+    return {
+      changePercent: change,
+      isPositive: change >= 0,
+      periodLabel: timeRange.toUpperCase()
+    }
+  }, [chartData, filteredWallets, timeRange])
 
   if (filteredWallets.length === 0) {
     return null
@@ -141,7 +160,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
               ${totalValue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
             <span className={`text-sm font-semibold ${isPositive ? 'text-green-400' : 'text-red-400'}`}>
-              {isPositive ? '+' : ''}{change24h.toFixed(2)}% (24h)
+              {isPositive ? '+' : ''}{changePercent.toFixed(2)}% ({periodLabel})
             </span>
           </div>
         </div>
