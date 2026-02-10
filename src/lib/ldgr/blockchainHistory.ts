@@ -26,6 +26,8 @@ const XRP_API_ENDPOINTS = [
  */
 async function fetchXRPTransactionHistory(address: string): Promise<Transaction[]> {
   try {
+    console.log(`📊 Fetching XRP transactions for address: ${address}`)
+    
     // Use XRP Ledger JSON-RPC API
     const response = await fetch(XRP_API_ENDPOINTS[0], {
       method: 'POST',
@@ -43,14 +45,18 @@ async function fetchXRPTransactionHistory(address: string): Promise<Transaction[
     })
 
     if (!response.ok) {
+      console.error(`📊 XRP API HTTP error: ${response.status}`)
       throw new Error(`XRP API error: ${response.status}`)
     }
 
     const data = await response.json()
     
-    console.log('📊 XRP Ledger API response:', {
+    console.log('📊 XRP Ledger API full response:', data)
+    console.log('📊 XRP Ledger API response summary:', {
       status: data.result?.status,
-      transactionCount: data.result?.transactions?.length || 0
+      transactionCount: data.result?.transactions?.length || 0,
+      error: data.result?.error,
+      errorMessage: data.result?.error_message
     })
     
     if (data.result?.status !== 'success') {
@@ -206,25 +212,11 @@ export async function getWalletHistoricalData(
     console.log(`📊 Found ${transactions.length} transactions for ${blockchain} wallet`)
     
     if (transactions.length === 0) {
-      console.log('📊 No transaction history found, generating historical points from current balance')
-      // Generate historical data points even without transactions
-      // This shows what the current balance would have been worth historically
-      const dataPoints: { timestamp: number; value: number }[] = []
-      const now = Date.now()
-      
-      for (let i = days; i >= 0; i--) {
-        const timestamp = now - (i * 24 * 60 * 60 * 1000)
-        // Use current balance with slight variance to show realistic price movement
-        const variance = (Math.sin(i / days * Math.PI * 2) * 0.15) + (Math.random() - 0.5) * 0.05
-        const historicalPrice = currentPrice * (1 + variance)
-        dataPoints.push({
-          timestamp,
-          value: currentBalance * historicalPrice
-        })
-      }
-      
-      console.log(`📊 Generated ${dataPoints.length} historical points from current balance`)
-      return dataPoints
+      console.log('📊 No transaction history found, will use current balance with historical prices')
+      // Even without transaction history, we can show historical value
+      // by using current balance × historical price for each day
+      // This will be handled by the fallback in cryptoPrices.ts
+      return []
     }
 
     const historicalBalances = calculateHistoricalBalances(
