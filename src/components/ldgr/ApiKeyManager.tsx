@@ -23,6 +23,7 @@ export default function ApiKeyManager() {
   const [revealedKeys, setRevealedKeys] = useState<Set<string>>(new Set())
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const [filterCategory, setFilterCategory] = useState<string>('all')
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     if (user) {
@@ -114,9 +115,14 @@ export default function ApiKeyManager() {
     }
   }
   
-  const filteredKeys = filterCategory === 'all' 
-    ? apiKeys 
-    : apiKeys.filter(key => API_SERVICES[key.service_name as keyof typeof API_SERVICES]?.category === filterCategory)
+  const filteredKeys = apiKeys.filter(key => {
+    const matchesCategory = filterCategory === 'all' || 
+      API_SERVICES[key.service_name as keyof typeof API_SERVICES]?.category === filterCategory
+    const matchesSearch = !searchQuery || 
+      key.key_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      API_SERVICES[key.service_name as keyof typeof API_SERVICES]?.name.toLowerCase().includes(searchQuery.toLowerCase())
+    return matchesCategory && matchesSearch
+  })
 
   if (loading) {
     return (
