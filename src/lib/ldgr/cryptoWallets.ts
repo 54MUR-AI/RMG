@@ -270,6 +270,9 @@ export async function fetchWalletBalance(
       case 'ripple':
         balance = await fetchRippleBalance(address)
         break
+      case 'cronos':
+        balance = await fetchCronosBalance(address)
+        break
       default:
         console.warn(`Blockchain ${blockchain} not supported for balance fetching`)
         return null
