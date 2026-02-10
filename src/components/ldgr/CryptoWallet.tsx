@@ -17,6 +17,7 @@ import {
   type WalletBalance,
   type MultiTokenBalance
 } from '../../lib/ldgr/cryptoWallets'
+import { detectBlockchainFromAddress, getAddressFormatMessage, validateAddressForBlockchain } from '../../lib/ldgr/addressDetection'
 
 const BLOCKCHAINS = {
   ethereum: { name: 'Ethereum', icon: '⟠', color: 'blue', symbol: 'ETH' },
@@ -549,6 +550,43 @@ function WalletModal({
   const [seedPhrase, setSeedPhrase] = useState('')
   const [notes, setNotes] = useState(existingWallet?.notes || '')
   const [saving, setSaving] = useState(false)
+  const [detectedBlockchains, setDetectedBlockchains] = useState<string[]>([])
+  const [addressFormatMessage, setAddressFormatMessage] = useState('')
+  const [validationError, setValidationError] = useState('')
+
+  // Auto-detect blockchain when address changes
+  const handleAddressChange = (newAddress: string) => {
+    setAddress(newAddress)
+    setValidationError('')
+    
+    if (newAddress.trim().length === 0) {
+      setDetectedBlockchains([])
+      setAddressFormatMessage('')
+      return
+    }
+
+    const detection = detectBlockchainFromAddress(newAddress)
+    setDetectedBlockchains(detection.detectedBlockchains)
+    setAddressFormatMessage(getAddressFormatMessage(newAddress))
+
+    // Auto-select blockchain if only one detected
+    if (detection.detectedBlockchains.length === 1 && !existingWallet) {
+      setBlockchain(detection.detectedBlockchains[0])
+    }
+  }
+
+  // Validate blockchain selection matches address format
+  const handleBlockchainChange = (newBlockchain: string) => {
+    setBlockchain(newBlockchain)
+    
+    if (address.trim().length > 0 && detectedBlockchains.length > 0) {
+      if (!detectedBlockchains.includes(newBlockchain)) {
+        setValidationError(`Warning: Address format doesn't match ${newBlockchain}`)
+      } else {
+        setValidationError('')
+      }
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -609,11 +647,16 @@ function WalletModal({
             <input
               type="text"
               value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="0x..."
+              onChange={(e) => handleAddressChange(e.target.value)}
+              placeholder="0x... or blockchain address"
               className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none font-mono text-sm"
               required
             />
+            {addressFormatMessage && (
+              <p className="text-xs text-samurai-red mt-1">
+                {addressFormatMessage}
+              </p>
+            )}
           </div>
           
           <div>
