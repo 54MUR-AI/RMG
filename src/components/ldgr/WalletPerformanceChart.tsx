@@ -21,10 +21,10 @@ const BLOCKCHAIN_COLORS: Record<string, string> = {
   other: '#6B7280'
 }
 
-type TimeRange = '7d' | '30d' | '90d' | '1y'
+type TimeRange = '1d' | '3d' | '1w' | '1m' | '3m' | '6m' | '1y' | '5y' | '10y' | 'all'
 
 export default function WalletPerformanceChart({ wallets, balances, filterBlockchain }: WalletPerformanceChartProps) {
-  const [timeRange, setTimeRange] = useState<TimeRange>('30d')
+  const [timeRange, setTimeRange] = useState<TimeRange>('1m')
   const [chartData, setChartData] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
 
@@ -42,7 +42,19 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     
     // Generate mock historical data based on current balances
     // In production, this would fetch real historical price data from an API
-    const days = timeRange === '7d' ? 7 : timeRange === '30d' ? 30 : timeRange === '90d' ? 90 : 365
+    const daysMap: Record<TimeRange, number> = {
+      '1d': 1,
+      '3d': 3,
+      '1w': 7,
+      '1m': 30,
+      '3m': 90,
+      '6m': 180,
+      '1y': 365,
+      '5y': 1825,
+      '10y': 3650,
+      'all': 3650 // Default to 10 years for "all time"
+    }
+    const days = daysMap[timeRange]
     const data: any[] = []
     
     for (let i = days; i >= 0; i--) {
@@ -157,7 +169,10 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 borderRadius: '8px',
                 color: '#FFFFFF'
               }}
-              formatter={(value: number) => [`$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, '']}
+              formatter={(value: number | undefined) => {
+                if (value === undefined) return ['N/A', '']
+                return [`$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`, '']
+              }}
               labelStyle={{ color: '#9CA3AF' }}
             />
             <Legend 
