@@ -57,15 +57,18 @@ export default function Home() {
           <div className="text-center animate-slide-up">
             {/* Ronin logo with animation */}
             <div className="flex justify-center mb-8 relative" style={{ zIndex: 10, transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}>
-              <img 
-                src="/ronin-logo.png" 
-                alt="Ronin Logo" 
-                className="w-32 h-32 animate-flame-pulse-big"
-                style={{ 
-                  filter: 'brightness(0) invert(1) drop-shadow(0 0 20px rgba(230,57,70,0.8))',
-                  WebkitFilter: 'brightness(0) invert(1) drop-shadow(0 0 20px rgba(230,57,70,0.8))'
-                }}
-              />
+              <div className="relative w-48 h-48">
+                <img 
+                  src="/ronin-logo.png" 
+                  alt="Ronin Logo" 
+                  className="w-full h-full animate-flame-pulse-big"
+                  style={{ 
+                    filter: 'invert(1) brightness(2) drop-shadow(0 0 25px rgba(230,57,70,1))',
+                    WebkitFilter: 'invert(1) brightness(2) drop-shadow(0 0 25px rgba(230,57,70,1))',
+                    mixBlendMode: 'screen'
+                  }}
+                />
+              </div>
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 neon-text tracking-tight">
