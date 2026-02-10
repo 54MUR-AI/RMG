@@ -111,8 +111,8 @@ export async function fetchHistoricalPrices(
 /**
  * Get the appropriate CoinGecko days parameter for a time range
  */
-export function getCoingeckoDaysParam(timeRange: string): number | 'max' {
-  const daysMap: Record<string, number | 'max'> = {
+export function getCoingeckoDaysParam(timeRange: string): number {
+  const daysMap: Record<string, number> = {
     '1d': 1,
     '3d': 3,
     '1w': 7,
@@ -120,9 +120,11 @@ export function getCoingeckoDaysParam(timeRange: string): number | 'max' {
     '3m': 90,
     '6m': 180,
     '1y': 365,
-    '5y': 1825,
-    '10y': 3650,
-    'all': 'max'
+    // CoinGecko free API limits historical data to 365 days
+    // For longer periods, we cap at 365 days
+    '5y': 365,
+    '10y': 365,
+    'all': 365
   }
   return daysMap[timeRange] || 30
 }
