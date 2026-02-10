@@ -246,7 +246,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 dataKey={wallet.wallet_name}
                 stroke={BLOCKCHAIN_COLORS[wallet.blockchain] || '#6B7280'}
                 strokeWidth={2}
-                dot={{ r: 3, fill: BLOCKCHAIN_COLORS[wallet.blockchain] || '#6B7280' }}
+                dot={false}
                 activeDot={{ r: 6, fill: '#E63946', stroke: '#E63946', strokeWidth: 2 }}
                 connectNulls={true}
               />
@@ -259,7 +259,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
       <div className="mt-4 pt-4 border-t border-samurai-grey-dark">
         <p className="text-xs text-samurai-steel text-center">
           Showing {filteredWallets.length} wallet{filteredWallets.length !== 1 ? 's' : ''} • 
-          Historical data simulated based on current market prices
+          Real historical price data from CoinGecko
         </p>
       </div>
     </div>
