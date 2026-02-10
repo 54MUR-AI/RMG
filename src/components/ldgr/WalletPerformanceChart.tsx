@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo, useCallback } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import { TrendingUp, Calendar } from 'lucide-react'
 import type { CryptoWallet, WalletBalance } from '../../lib/ldgr/cryptoWallets'
@@ -29,15 +29,14 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
   const [loading, setLoading] = useState(false)
 
   // Filter wallets based on blockchain filter
-  const filteredWallets = wallets.filter(wallet => 
-    filterBlockchain === 'all' || wallet.blockchain === filterBlockchain
+  const filteredWallets = useMemo(() => 
+    wallets.filter(wallet => 
+      filterBlockchain === 'all' || wallet.blockchain === filterBlockchain
+    ),
+    [wallets, filterBlockchain]
   )
 
-  useEffect(() => {
-    generateChartData()
-  }, [filteredWallets, balances, timeRange])
-
-  const generateChartData = () => {
+  const generateChartData = useCallback(() => {
     setLoading(true)
     
     // Generate mock historical data based on current balances
@@ -84,17 +83,31 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     
     setChartData(data)
     setLoading(false)
-  }
+  }, [filteredWallets, balances, timeRange])
+
+  useEffect(() => {
+    generateChartData()
+  }, [generateChartData])
 
   // Calculate total portfolio value
-  const totalValue = filteredWallets.reduce((sum, wallet) => {
-    const balance = balances[wallet.address]
-    const value = typeof balance?.usd_value === 'number' ? balance.usd_value : parseFloat(balance?.usd_value || '0')
-    return sum + value
-  }, 0)
+  const totalValue = useMemo(() => 
+    filteredWallets.reduce((sum, wallet) => {
+      const balance = balances[wallet.address]
+      const value = typeof balance?.usd_value === 'number' ? balance.usd_value : parseFloat(balance?.usd_value || '0')
+      return sum + value
+    }, 0),
+    [filteredWallets, balances]
+  )
 
   // Calculate 24h change (mock data - would be real in production)
-  const change24h = (Math.random() - 0.5) * 10 // Random ±5%
+  // Use a stable seed based on the first wallet's address to prevent constant recalculation
+  const change24h = useMemo(() => {
+    if (filteredWallets.length === 0) return 0
+    // Use wallet address as seed for consistent random value
+    const seed = filteredWallets[0].address.charCodeAt(0) % 100
+    return (seed / 100 - 0.5) * 10 // Convert to ±5% range
+  }, [filteredWallets])
+  
   const isPositive = change24h >= 0
 
   if (filteredWallets.length === 0) {
