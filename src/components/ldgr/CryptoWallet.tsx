@@ -54,6 +54,22 @@ export default function CryptoWallet() {
       setLoading(true)
       const data = await getUserWallets(user.id)
       setWallets(data)
+      
+      // Auto-load balances for all wallets
+      if (data.length > 0) {
+        setLoadingBalances(true)
+        for (const wallet of data) {
+          try {
+            const balance = await fetchWalletBalance(wallet.address, wallet.blockchain)
+            if (balance) {
+              setBalances(prev => ({ ...prev, [wallet.address]: balance }))
+            }
+          } catch (error) {
+            console.error(`Error loading balance for ${wallet.wallet_name}:`, error)
+          }
+        }
+        setLoadingBalances(false)
+      }
     } catch (error) {
       console.error('Error loading wallets:', error)
     } finally {
