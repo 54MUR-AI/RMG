@@ -86,7 +86,7 @@ async function fetchXRPTransactionHistory(address: string): Promise<Transaction[
 /**
  * Fetch Ethereum wallet transaction history
  */
-async function fetchEthereumTransactionHistory(address: string): Promise<Transaction[]> {
+async function fetchEthereumTransactionHistory(_address: string): Promise<Transaction[]> {
   try {
     // Use Etherscan-like API (would need API key for production)
     // For now, return empty to use fallback
@@ -101,7 +101,7 @@ async function fetchEthereumTransactionHistory(address: string): Promise<Transac
 /**
  * Fetch Bitcoin wallet transaction history
  */
-async function fetchBitcoinTransactionHistory(address: string): Promise<Transaction[]> {
+async function fetchBitcoinTransactionHistory(_address: string): Promise<Transaction[]> {
   try {
     // Use Blockchain.info or similar API
     console.warn('Bitcoin transaction history not yet implemented')

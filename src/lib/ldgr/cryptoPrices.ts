@@ -225,7 +225,6 @@ export async function fetchWalletPortfolioHistory(
   for (const wallet of wallets) {
     // Try to use real blockchain data first
     if (USE_REAL_BLOCKCHAIN_DATA && wallet.address) {
-      const coinId = BLOCKCHAIN_TO_COINGECKO_ID[wallet.blockchain]
       const currentPrice = getCurrentPrice(wallet.blockchain)
       
       try {
