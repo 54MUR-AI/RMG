@@ -132,7 +132,9 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
         <div>
           <div className="flex items-center gap-2 mb-2">
             <TrendingUp className="w-5 h-5 text-samurai-red" />
-            <h3 className="text-lg font-bold text-white">Portfolio Performance</h3>
+            <h3 className="text-lg font-bold text-white">
+              {filterBlockchain === 'all' ? 'Portfolio Performance' : `${filterBlockchain.charAt(0).toUpperCase() + filterBlockchain.slice(1)} Performance`}
+            </h3>
           </div>
           <div className="flex items-baseline gap-3">
             <span className="text-2xl sm:text-3xl font-black text-white">
