@@ -1,11 +1,14 @@
-import { useState, useEffect } from 'react'
-import { Shield, Loader2, Lock } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { Shield, Loader2, Lock, BookOpen, Settings } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import ReadmePopup from '../components/ReadmePopup'
 
 export default function WsprPage() {
   const { user } = useAuth()
+  const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [showReadme, setShowReadme] = useState(false)
 
   useEffect(() => {
     // Only check health if user is authenticated
@@ -29,6 +32,16 @@ export default function WsprPage() {
 
     checkHealth()
   }, [user])
+
+  // Send settings toggle to iframe
+  const handleSettingsClick = () => {
+    if (iframeRef.current?.contentWindow) {
+      iframeRef.current.contentWindow.postMessage(
+        { type: 'RMG_TOGGLE_SETTINGS' },
+        'https://wspr-web.onrender.com'
+      )
+    }
+  }
 
   // Auth gate - require login
   if (!user) {
@@ -58,7 +71,7 @@ export default function WsprPage() {
   }
 
   return (
-    <div className="min-h-screen bg-samurai-black">
+    <div className="relative min-h-screen bg-samurai-black">
       {/* Header */}
       <div className="bg-samurai-black-light border-b border-samurai-grey-dark">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -106,6 +119,7 @@ export default function WsprPage() {
       {!isLoading && !error && user && (
         <div className="h-[calc(100vh-200px)]">
           <iframe
+            ref={iframeRef}
             src={`https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}`}
             className="w-full h-full border-0"
             title="WSPR - Web Secure P2P Relay"
@@ -113,6 +127,35 @@ export default function WsprPage() {
             sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
           />
         </div>
+      )}
+
+      {/* Floating Buttons */}
+      <div className="fixed bottom-20 right-6 flex flex-col gap-3 z-50">
+        {/* README Button */}
+        <button
+          onClick={() => setShowReadme(true)}
+          className="p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
+          aria-label="README"
+        >
+          <BookOpen className="w-6 h-6" />
+        </button>
+        
+        {/* Settings Button */}
+        <button
+          onClick={handleSettingsClick}
+          className="p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
+          aria-label="Settings"
+        >
+          <Settings className="w-6 h-6" />
+        </button>
+      </div>
+
+      {/* README Popup */}
+      {showReadme && (
+        <ReadmePopup
+          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/wspr-web/main/README.md"
+          onClose={() => setShowReadme(false)}
+        />
       )}
 
       {/* Footer Info */}
