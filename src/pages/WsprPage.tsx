@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react'
-import { Lock } from 'lucide-react'
+import { Shield, Loader2, Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import ReadmePopup from '../components/ReadmePopup'
 
 export default function WsprPage() {
+  const { user } = useAuth()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    // Only check health if user is authenticated
+    if (!user) return
+
     // Check if WSPR backend is healthy
     const checkHealth = async () => {
       try {
@@ -25,7 +28,34 @@ export default function WsprPage() {
     }
 
     checkHealth()
-  }, [])
+  }, [user])
+
+  // Auth gate - require login
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-samurai-black flex items-center justify-center p-4">
+        <div className="glass-card p-12 rounded-xl max-w-md text-center">
+          <Lock className="w-20 h-20 text-samurai-red mx-auto mb-6 animate-glow-pulse" />
+          <h1 className="text-4xl font-bold neon-text mb-4">WSPR</h1>
+          <p className="text-xl text-samurai-steel mb-6">Web Secure P2P Relay</p>
+          <p className="text-samurai-steel-light mb-8">
+            WSPR is a secure, encrypted messaging platform exclusively for RMG members.
+          </p>
+          <div className="bg-samurai-black-lighter border border-samurai-red/30 rounded-lg p-4 mb-6">
+            <p className="text-sm text-samurai-steel">
+              🔒 End-to-end encryption<br/>
+              🛡️ Quantum-resistant security<br/>
+              📁 LDGR file integration<br/>
+              🎥 Video/voice calls
+            </p>
+          </div>
+          <p className="text-samurai-red font-semibold">
+            Please sign in to access WSPR
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   return (
     <div className="min-h-screen bg-samurai-black">
@@ -73,10 +103,10 @@ export default function WsprPage() {
       )}
 
       {/* WSPR Iframe */}
-      {!isLoading && !error && (
+      {!isLoading && !error && user && (
         <div className="h-[calc(100vh-200px)]">
           <iframe
-            src="https://wspr-web.onrender.com"
+            src={`https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}`}
             className="w-full h-full border-0"
             title="WSPR - Web Secure P2P Relay"
             allow="camera; microphone; clipboard-write"
