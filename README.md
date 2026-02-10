@@ -331,14 +331,83 @@ Using Ollama means:
 - [Supabase](https://supabase.com) - Backend platform
 - [Crypto Libraries TODO](src/lib/ldgr/CRYPTO_LIBRARIES_TODO.md) - Multi-chain import roadmap
 
-## 📄 License
+## � Troubleshooting
+
+### Ollama 403 Forbidden Error
+If you see "403 Forbidden" when using Ollama:
+
+1. Set the `OLLAMA_ORIGINS` environment variable:
+```powershell
+# Windows PowerShell (as Administrator)
+[System.Environment]::SetEnvironmentVariable('OLLAMA_ORIGINS', '*', 'User')
+```
+
+2. Restart Ollama:
+```bash
+ollama serve
+```
+
+3. Reload the RMG Ollama Bridge extension in Chrome
+
+### Extension Not Working
+1. Go to `chrome://extensions/`
+2. Find "RMG Ollama Bridge"
+3. Click the reload icon
+4. Check that version is **1.0.1** or higher
+
+### Balance Not Loading
+- Check that you have a valid API connection
+- Some blockchains may have rate limits
+- Try refreshing after a few minutes
+- Ensure wallet address is correct for the blockchain
+
+### Supabase Connection Issues
+- Verify `.env` file has correct credentials
+- Check Supabase project is active
+- Ensure tables are created (run migrations)
+
+## 🚀 Roadmap
+
+### Planned Features
+- [ ] Multi-chain wallet import with real crypto libraries
+- [ ] Password generator with custom rules
+- [ ] File encryption/decryption in browser
+- [ ] Two-factor authentication
+- [ ] Backup/restore functionality
+- [ ] Mobile app (React Native)
+- [ ] Browser extension for password autofill
+- [ ] API key rotation automation
+- [ ] Collaborative features (shared vaults)
+
+### In Progress
+- [x] Ollama integration for local AI
+- [x] Crypto wallet balance tracking
+- [x] Web scraper with AI summarization
+- [x] GitHub OAuth authentication
+- [x] Client-side encryption
+
+## �📄 License
 
 MIT License - See LICENSE file for details
 
 ## 🤝 Contributing
 
-Contributions welcome! Please open an issue or submit a pull request.
+Contributions welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
+
+## 🙏 Acknowledgments
+
+- **Ollama** - Local AI models
+- **Supabase** - Backend infrastructure
+- **Lucide** - Beautiful icons
+- **TailwindCSS** - Utility-first styling
+- **CoinGecko** - Crypto price data
 
 ---
 
-Built with ❤️ by Ronin Media Group
+**Built with 🗡️ by Ronin Media Group**
+
+*Your AI-Powered Digital Arsenal*

@@ -1,9 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Lock } from 'lucide-react'
-import { useAuth } from '../contexts/AuthContext'
-import ReadmePopup from '../components/ReadmePopup'
+import { useEffect, useState } from 'react'
+import { Shield, Loader2 } from 'lucide-react'
 
-export default function WsprPage() {
+export default function WSPR() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -44,7 +42,7 @@ export default function WsprPage() {
 
       {/* Loading State */}
       {isLoading && (
-        <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+        <div className="flex items-center justify-center h-[calc(100vh-120px)]">
           <div className="text-center">
             <Loader2 className="w-12 h-12 text-samurai-red animate-spin mx-auto mb-4" />
             <p className="text-samurai-steel">Connecting to WSPR...</p>
@@ -57,7 +55,7 @@ export default function WsprPage() {
 
       {/* Error State */}
       {error && !isLoading && (
-        <div className="flex items-center justify-center h-[calc(100vh-200px)]">
+        <div className="flex items-center justify-center h-[calc(100vh-120px)]">
           <div className="glass-card p-8 rounded-xl max-w-md text-center">
             <Shield className="w-16 h-16 text-samurai-red mx-auto mb-4" />
             <h2 className="text-xl font-bold mb-2">Service Unavailable</h2>
@@ -74,7 +72,7 @@ export default function WsprPage() {
 
       {/* WSPR Iframe */}
       {!isLoading && !error && (
-        <div className="h-[calc(100vh-200px)]">
+        <div className="h-[calc(100vh-120px)]">
           <iframe
             src="https://wspr-web.onrender.com"
             className="w-full h-full border-0"
