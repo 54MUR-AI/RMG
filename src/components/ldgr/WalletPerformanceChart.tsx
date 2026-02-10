@@ -45,6 +45,11 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
       const walletsWithBalances = filteredWallets
         .map(wallet => {
           const balance = balances[wallet.address]
+          console.log(`📊 Checking wallet ${wallet.wallet_name}:`, {
+            address: wallet.address,
+            hasBalance: !!balance,
+            balanceData: balance
+          })
           if (!balance?.balance) return null
           
           // Parse balance to get token amount
