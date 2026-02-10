@@ -157,15 +157,6 @@ export default function WsprPage() {
           onClose={() => setShowReadme(false)}
         />
       )}
-
-      {/* Footer Info */}
-      <div className="bg-samurai-black-light border-t border-samurai-grey-dark py-3">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs text-samurai-steel text-center">
-            End-to-end encrypted messaging • Quantum-resistant security • Privacy-first communication
-          </p>
-        </div>
-      </div>
     </div>
   )
 }
