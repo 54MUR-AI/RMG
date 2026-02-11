@@ -270,6 +270,14 @@ export default function LdgrPage() {
         {/* Files Tab */}
         {activeTab === 'files' && (
           <>
+            {/* Header */}
+            <div className="mb-6">
+              <h2 className="text-2xl font-black text-white flex items-center gap-2">
+                <FolderOpen className="w-6 h-6 text-samurai-red" />
+                File Manager
+              </h2>
+            </div>
+
             <FileUpload onFileUpload={handleFileUpload} uploading={uploading} />
 
             <div className="mt-8">
