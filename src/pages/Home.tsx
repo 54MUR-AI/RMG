@@ -483,8 +483,8 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div id="forge" className="text-center mb-16">
-            <div className="inline-block mb-4">
-              <Anvil size={80} className="text-samurai-red mx-auto" />
+            <div className="mb-6 relative" style={{ zIndex: 10, transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}>
+              <Anvil size={80} className="text-samurai-red mx-auto animate-flame-flicker" />
             </div>
             <h2 className="text-5xl md:text-6xl font-black text-white mb-6">
               FORGE
