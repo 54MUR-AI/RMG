@@ -58,6 +58,7 @@ CREATE POLICY "Workspace owners can manage folder access"
 
 -- Update files RLS to include shared folder access
 DROP POLICY IF EXISTS "Users can view their files" ON files;
+DROP POLICY IF EXISTS "Users can view their files or files in shared folders" ON files;
 CREATE POLICY "Users can view their files or files in shared folders"
   ON files FOR SELECT
   USING (
