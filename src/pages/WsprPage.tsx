@@ -218,16 +218,18 @@ export default function WsprPage() {
         
         // TODO: Implement file download from LDGR
         // This will need to:
-        // 1. Fetch file from LDGR by ID
-        // 2. Trigger browser download
+        // 1. Fetch file metadata from LDGR by ID
+        // 2. Use downloadFile from storage.ts
+        // 3. Trigger browser download
         
-        try {
-          const { downloadFile } = await import('../lib/ldgr/files')
-          await downloadFile(event.data.fileId, event.data.filename)
-          console.log('✅ File download initiated:', event.data.filename)
-        } catch (error) {
-          console.error('❌ Failed to download file:', error)
-        }
+        console.log('⚠️ File download not yet fully implemented')
+        // try {
+        //   const { downloadFile } = await import('../lib/ldgr/storage')
+        //   // Need to fetch file metadata first, then call downloadFile
+        //   console.log('✅ File download initiated:', event.data.filename)
+        // } catch (error) {
+        //   console.error('❌ Failed to download file:', error)
+        // }
       }
     }
 
