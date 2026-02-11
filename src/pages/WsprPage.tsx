@@ -186,7 +186,7 @@ export default function WsprPage() {
             key={Date.now()}
             ref={iframeRef}
             src={(() => {
-              const username = user.user_metadata?.username || user.email?.split('@')[0] || ''
+              const username = user.user_metadata?.display_name || user.email?.split('@')[0] || ''
               console.log('RMG: Passing to WSPR - userId:', user.id, 'email:', user.email, 'username:', username, 'user_metadata:', user.user_metadata)
               return `https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}&username=${encodeURIComponent(username)}&v=${Date.now()}`
             })()}
