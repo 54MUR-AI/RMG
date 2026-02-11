@@ -25,15 +25,21 @@ export default function AdminResourcesTab() {
     const { data: users } = await supabase.from('user_roles').select('user_id, email')
     if (!users) return
 
+    // Fetch all display names via RPC function
+    const { data: displayNames } = await supabase.rpc('get_user_display_names')
+    const displayNameMap = new Map(displayNames?.map((d: any) => [d.user_id, d.display_name]) || [])
+
     const userStats = await Promise.all(users.map(async (u) => {
       const { data: files } = await supabase.from('files').select('size').eq('user_id', u.user_id)
       const { count: folders } = await supabase.from('folders').select('*', { count: 'exact', head: true }).eq('user_id', u.user_id)
       const { count: messages } = await supabase.from('wspr_messages').select('*', { count: 'exact', head: true }).eq('user_id', u.user_id)
       
+      const displayName = displayNameMap.get(u.user_id) as string | undefined
+      
       return {
         userId: u.user_id,
         email: u.email || '',
-        displayName: u.email?.split('@')[0] || 'Unknown',
+        displayName: displayName || u.email?.split('@')[0] || 'Unknown',
         isOnline: false,
         totalFiles: files?.length || 0,
         totalFolders: folders || 0,

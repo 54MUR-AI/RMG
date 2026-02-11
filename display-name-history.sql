@@ -16,6 +16,11 @@ CREATE INDEX IF NOT EXISTS idx_display_name_history_changed_at ON display_name_h
 -- Enable RLS
 ALTER TABLE display_name_history ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view own display name history" ON display_name_history;
+DROP POLICY IF EXISTS "Admins can view all display name history" ON display_name_history;
+DROP POLICY IF EXISTS "System can insert display name history" ON display_name_history;
+
 -- Policy: Users can view their own history
 CREATE POLICY "Users can view own display name history"
   ON display_name_history
