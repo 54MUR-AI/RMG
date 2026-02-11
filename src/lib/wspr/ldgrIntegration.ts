@@ -4,13 +4,27 @@ import { grantFolderAccess, syncWorkspaceFolderAccess, revokeFolderAccess } from
 
 /**
  * Create LDGR folder for a workspace
- * Returns the folder ID
+ * Returns the folder ID (existing or newly created)
  */
 export async function createWorkspaceFolder(
   workspaceName: string,
   ownerId: string
 ): Promise<string> {
   try {
+    // Check if folder already exists for this workspace
+    const { data: existingFolders } = await supabase
+      .from('folders')
+      .select('id')
+      .eq('user_id', ownerId)
+      .eq('name', workspaceName)
+      .is('parent_id', null)
+      .limit(1)
+    
+    if (existingFolders && existingFolders.length > 0) {
+      console.log(`📁 Using existing LDGR folder for workspace "${workspaceName}": ${existingFolders[0].id}`)
+      return existingFolders[0].id
+    }
+    
     // Create folder in LDGR with workspace name
     const folder = await createFolder(ownerId, workspaceName, null)
     
