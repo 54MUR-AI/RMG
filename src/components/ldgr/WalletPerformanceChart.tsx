@@ -11,15 +11,16 @@ interface WalletPerformanceChartProps {
 }
 
 const BLOCKCHAIN_COLORS: Record<string, string> = {
-  ethereum: '#627EEA',
-  bitcoin: '#F7931A',
-  solana: '#9945FF',
-  polygon: '#8247E5',
-  binance: '#F3BA2F',
-  avalanche: '#E84142',
-  cardano: '#0033AD',
-  ripple: '#23292F',
-  other: '#6B7280'
+  ethereum: '#E63946',    // samurai-red
+  bitcoin: '#FF4757',     // bright red
+  solana: '#C1121F',      // samurai-red-dark
+  polygon: '#FF6B7A',     // light red
+  binance: '#8B0000',     // samurai-red-darker
+  avalanche: '#FF8A95',   // lighter red
+  cardano: '#A01020',     // medium dark red
+  ripple: '#FF5C6C',      // medium light red
+  cronos: '#D32F2F',      // deep red
+  other: '#B71C1C'        // dark red fallback
 }
 
 type TimeRange = '1d' | '3d' | '1w' | '1m' | '3m' | '6m' | '1y' | '5y' | '10y' | 'all'
