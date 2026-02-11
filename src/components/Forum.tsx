@@ -68,7 +68,7 @@ export default function Forum() {
 
   const handlePinThread = async (e: React.MouseEvent, threadId: string, isPinned: boolean) => {
     e.stopPropagation()
-    if (!isAdmin) return
+    if (!isModerator) return
     
     try {
       await toggleThreadPin(threadId, !isPinned)
@@ -80,7 +80,7 @@ export default function Forum() {
 
   const handleLockThread = async (e: React.MouseEvent, threadId: string, isLocked: boolean) => {
     e.stopPropagation()
-    if (!isAdmin) return
+    if (!isModerator) return
     
     try {
       await toggleThreadLock(threadId, !isLocked)
@@ -92,7 +92,7 @@ export default function Forum() {
 
   const handleDeleteThread = async (e: React.MouseEvent, threadId: string) => {
     e.stopPropagation()
-    if (!isAdmin) return
+    if (!isModerator) return
     
     if (!confirm('Are you sure you want to delete this thread? This cannot be undone.')) return
     
@@ -273,7 +273,7 @@ export default function Forum() {
                           {thread.author_name.charAt(0).toUpperCase()}
                         </div>
                         <span className="font-medium">{thread.author_name}</span>
-                        {isAdmin && thread.author_id && (
+                        {isModerator && thread.author_id && (
                           <UserIdBadge userId={thread.author_id} />
                         )}
                       </div>
@@ -295,8 +295,8 @@ export default function Forum() {
                       </div>
                     </div>
 
-                    {/* Admin Controls */}
-                    {isAdmin && (
+                    {/* Moderator Controls */}
+                    {isModerator && (
                       <div className="flex items-center gap-2 flex-shrink-0">
                         <button
                           onClick={(e) => handlePinThread(e, thread.id, thread.is_pinned)}
