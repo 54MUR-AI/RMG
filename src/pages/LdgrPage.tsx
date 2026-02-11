@@ -325,10 +325,10 @@ export default function LdgrPage() {
         />
       )}
 
-      {/* README Button */}
+      {/* Floating README Button */}
       <button
         onClick={() => setShowReadme(true)}
-        className="fixed bottom-20 right-6 p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110 z-50"
+        className="fixed bottom-20 left-6 p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110 z-50"
         aria-label="README"
       >
         <BookOpen className="w-6 h-6" />

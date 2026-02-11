@@ -181,7 +181,7 @@ export default function WsprPage() {
           <iframe
             key={Date.now()}
             ref={iframeRef}
-            src={`https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}&v=${Date.now()}`}
+            src={`https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}&username=${encodeURIComponent(user.user_metadata?.username || user.email?.split('@')[0] || '')}&v=${Date.now()}`}
             className="w-full h-full border-0"
             title="WSPR - Web Secure P2P Relay"
             allow="camera; microphone; clipboard-write"
