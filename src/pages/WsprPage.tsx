@@ -93,6 +93,87 @@ export default function WsprPage() {
     }
   }, [user])
 
+  // Handle LDGR folder creation from WSPR
+  useEffect(() => {
+    const handleWsprMessage = async (event: MessageEvent) => {
+      // Only accept messages from WSPR
+      if (!event.origin.includes('wspr-web.onrender.com') && !event.origin.includes('localhost')) {
+        return
+      }
+
+      if (event.data.type === 'WSPR_CREATE_LDGR_FOLDER') {
+        console.log('RMG: Received LDGR folder creation request:', event.data)
+        
+        try {
+          const { createWorkspaceFolder, linkWorkspaceToFolder } = await import('../lib/wspr/ldgrIntegration')
+          
+          // Create folder in LDGR
+          const folderId = await createWorkspaceFolder(
+            event.data.workspaceName,
+            event.data.ownerId
+          )
+          
+          // Link workspace to folder
+          await linkWorkspaceToFolder(event.data.workspaceId, folderId)
+          
+          // Send success response back to WSPR
+          if (iframeRef.current?.contentWindow) {
+            iframeRef.current.contentWindow.postMessage({
+              type: 'LDGR_FOLDER_CREATED',
+              workspaceId: event.data.workspaceId,
+              folderId: folderId
+            }, '*')
+          }
+          
+          console.log('✅ LDGR folder created and linked:', folderId)
+        } catch (error) {
+          console.error('❌ Failed to create LDGR folder:', error)
+          
+          // Send error response back to WSPR
+          if (iframeRef.current?.contentWindow) {
+            iframeRef.current.contentWindow.postMessage({
+              type: 'LDGR_FOLDER_ERROR',
+              workspaceId: event.data.workspaceId,
+              error: error instanceof Error ? error.message : 'Unknown error'
+            }, '*')
+          }
+        }
+      } else if (event.data.type === 'WSPR_CREATE_CHANNEL_FOLDER') {
+        console.log('RMG: Received channel folder creation request:', event.data)
+        
+        try {
+          const { createChannelFolder, linkChannelToFolder } = await import('../lib/wspr/ldgrIntegration')
+          
+          // Create subfolder in workspace folder
+          const folderId = await createChannelFolder(
+            event.data.channelName,
+            event.data.workspaceFolderId,
+            event.data.ownerId
+          )
+          
+          // Link channel to folder
+          await linkChannelToFolder(event.data.channelId, folderId)
+          
+          // Send success response back to WSPR
+          if (iframeRef.current?.contentWindow) {
+            iframeRef.current.contentWindow.postMessage({
+              type: 'LDGR_CHANNEL_FOLDER_CREATED',
+              channelId: event.data.channelId,
+              folderId: folderId
+            }, '*')
+          }
+          
+          console.log('✅ LDGR channel folder created and linked:', folderId)
+        } catch (error) {
+          console.error('❌ Failed to create channel folder:', error)
+        }
+      }
+    }
+
+    window.addEventListener('message', handleWsprMessage)
+    return () => window.removeEventListener('message', handleWsprMessage)
+  }, [])
+
   // Send settings toggle to iframe
   const handleSettingsClick = () => {
     console.log('RMG: Settings button clicked')
