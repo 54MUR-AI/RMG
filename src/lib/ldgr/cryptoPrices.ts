@@ -2,7 +2,7 @@
 import { getWalletHistoricalData } from './blockchainHistory'
 
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3'
-const USE_CORS_PROXY = true // Enable CORS proxy to avoid rate limiting and CORS errors
+const USE_CORS_PROXY = false // Direct API works fine, just need better caching
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=' // Alternative CORS proxy
 const USE_REAL_BLOCKCHAIN_DATA = true // Use real blockchain transaction history
 
