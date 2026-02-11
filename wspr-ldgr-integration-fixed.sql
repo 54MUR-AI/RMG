@@ -24,6 +24,11 @@ CREATE TABLE IF NOT EXISTS folder_access (
 -- Enable RLS on folder_access
 ALTER TABLE folder_access ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist
+DROP POLICY IF EXISTS "Users can view their folder access" ON folder_access;
+DROP POLICY IF EXISTS "Folder owners can manage access" ON folder_access;
+DROP POLICY IF EXISTS "Workspace owners can manage folder access" ON folder_access;
+
 -- Policy: Users can see their own folder access
 CREATE POLICY "Users can view their folder access"
   ON folder_access FOR SELECT
