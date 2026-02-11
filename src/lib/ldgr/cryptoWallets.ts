@@ -232,7 +232,7 @@ const COINGECKO_IDS: Record<string, string> = {
   avalanche: 'avalanche-2',
   cardano: 'cardano',
   ripple: 'ripple',
-  cronos: 'cronos'
+  cronos: 'crypto-com-chain'
 }
 
 // Simple in-memory cache for CoinGecko prices (5 minute TTL)
