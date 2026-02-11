@@ -167,6 +167,19 @@ export default function WsprPage() {
         } catch (error) {
           console.error('❌ Failed to create channel folder:', error)
         }
+      } else if (event.data.type === 'WSPR_DELETE_LDGR_FOLDER') {
+        console.log('RMG: Received LDGR folder deletion request:', event.data)
+        
+        try {
+          const { deleteFolder } = await import('../lib/ldgr/folders')
+          
+          // Delete folder (cascades to subfolders and files)
+          await deleteFolder(event.data.folderId)
+          
+          console.log('✅ LDGR folder deleted:', event.data.folderId)
+        } catch (error) {
+          console.error('❌ Failed to delete LDGR folder:', error)
+        }
       }
     }
 
