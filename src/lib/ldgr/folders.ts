@@ -11,17 +11,44 @@ export interface Folder {
 }
 
 /**
- * Get all folders for the current user
+ * Get all folders for the current user (owned + shared)
  */
 export async function getUserFolders(userId: string): Promise<Folder[]> {
-  const { data, error } = await supabase
+  // Get owned folders
+  const { data: ownedFolders, error: ownedError } = await supabase
     .from('folders')
     .select('*')
     .eq('user_id', userId)
     .order('name', { ascending: true })
   
-  if (error) throw error
-  return data as Folder[]
+  if (ownedError) throw ownedError
+
+  // Get shared folder IDs
+  const { data: sharedAccess, error: sharedError } = await supabase
+    .from('folder_access')
+    .select('folder_id')
+    .eq('user_id', userId)
+
+  if (sharedError) throw sharedError
+
+  // Get shared folders
+  if (sharedAccess && sharedAccess.length > 0) {
+    const sharedFolderIds = sharedAccess.map(a => a.folder_id)
+    const { data: sharedFolders, error: sharedFoldersError } = await supabase
+      .from('folders')
+      .select('*')
+      .in('id', sharedFolderIds)
+      .order('name', { ascending: true })
+
+    if (sharedFoldersError) throw sharedFoldersError
+
+    // Combine and deduplicate
+    const allFolders = [...(ownedFolders || []), ...(sharedFolders || [])]
+    const uniqueFolders = Array.from(new Map(allFolders.map(f => [f.id, f])).values())
+    return uniqueFolders.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  return ownedFolders as Folder[]
 }
 
 /**
