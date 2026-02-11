@@ -126,6 +126,29 @@ export async function renameFolder(folderId: string, newName: string): Promise<F
  * Delete a folder (and all its contents)
  */
 export async function deleteFolder(folderId: string): Promise<void> {
+  // Check if this folder is linked to a WSPR workspace
+  const { data: workspace } = await supabase
+    .from('wspr_workspaces')
+    .select('id, name')
+    .eq('ldgr_folder_id', folderId)
+    .single()
+
+  if (workspace) {
+    throw new Error(`Cannot delete folder: it is linked to WSPR workspace "${workspace.name}". Delete the workspace instead.`)
+  }
+
+  // Check if this folder is linked to a WSPR channel
+  const { data: channel } = await supabase
+    .from('wspr_channels')
+    .select('id, name')
+    .eq('ldgr_folder_id', folderId)
+    .single()
+
+  if (channel) {
+    throw new Error(`Cannot delete folder: it is linked to WSPR channel "${channel.name}". Delete the channel instead.`)
+  }
+
+  // Proceed with deletion if not linked to WSPR
   const { error } = await supabase
     .from('folders')
     .delete()

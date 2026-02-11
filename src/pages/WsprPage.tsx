@@ -180,6 +180,54 @@ export default function WsprPage() {
         } catch (error) {
           console.error('❌ Failed to delete LDGR folder:', error)
         }
+      } else if (event.data.type === 'WSPR_UPLOAD_FILE') {
+        console.log('RMG: Received file upload request:', event.data)
+        
+        // TODO: Implement file upload to LDGR
+        // This will need to:
+        // 1. Open file picker or receive file data
+        // 2. Upload to LDGR
+        // 3. Return file ID to WSPR
+        
+        if (iframeRef.current?.contentWindow) {
+          iframeRef.current.contentWindow.postMessage({
+            type: 'LDGR_FILE_UPLOAD_ERROR',
+            error: 'File upload not yet implemented'
+          }, '*')
+        }
+      } else if (event.data.type === 'WSPR_BROWSE_LDGR') {
+        console.log('RMG: Received LDGR browse request:', event.data)
+        
+        // TODO: Implement LDGR file browser
+        // This will need to:
+        // 1. Open LDGR file browser modal
+        // 2. Let user select a file
+        // 3. Return file metadata to WSPR
+        
+        if (iframeRef.current?.contentWindow) {
+          iframeRef.current.contentWindow.postMessage({
+            type: 'LDGR_FILE_SELECTED',
+            fileId: 'placeholder-file-id',
+            filename: 'placeholder.txt',
+            fileSize: 1024,
+            mimeType: 'text/plain'
+          }, '*')
+        }
+      } else if (event.data.type === 'WSPR_DOWNLOAD_FILE') {
+        console.log('RMG: Received file download request:', event.data)
+        
+        // TODO: Implement file download from LDGR
+        // This will need to:
+        // 1. Fetch file from LDGR by ID
+        // 2. Trigger browser download
+        
+        try {
+          const { downloadFile } = await import('../lib/ldgr/files')
+          await downloadFile(event.data.fileId, event.data.filename)
+          console.log('✅ File download initiated:', event.data.filename)
+        } catch (error) {
+          console.error('❌ Failed to download file:', error)
+        }
       }
     }
 
