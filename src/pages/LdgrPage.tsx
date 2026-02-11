@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FolderOpen, Key, Lock, Wallet, BookOpen } from 'lucide-react'
+import { FolderOpen, Key, Lock, Wallet, BookOpen, Settings } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import FileUpload from '../components/ldgr/FileUpload'
 import FileList from '../components/ldgr/FileList'
@@ -8,6 +8,7 @@ import ApiKeyManager from '../components/ldgr/ApiKeyManager'
 import PasswordManager from '../components/ldgr/PasswordManager'
 import CryptoWallet from '../components/ldgr/CryptoWallet'
 import ReadmePopup from '../components/ReadmePopup'
+import LdgrSettings from '../components/ldgr/LdgrSettings'
 import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
 import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, countSubfoldersInFolder, ensureDefaultFolders } from '../lib/ldgr/folders'
@@ -23,6 +24,7 @@ export default function LdgrPage() {
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [showReadme, setShowReadme] = useState(false)
+  const [showSettings, setShowSettings] = useState(false)
   const [activeTab, setActiveTab] = useState<'files' | 'passwords' | 'crypto' | 'api-keys'>('files')
   const { user } = useAuth()
 
@@ -202,9 +204,16 @@ export default function LdgrPage() {
     <div className="relative bg-samurai-black text-white h-screen overflow-y-auto">
       <main className="relative z-10 max-w-7xl mx-auto px-6 py-4">
         <div className="text-center mb-6">
-          <div className="flex items-center justify-center gap-3 mb-2">
+          <div className="flex items-center justify-center gap-3 mb-2 relative">
             <Lock className="w-8 h-8 text-samurai-red" />
             <h1 className="text-3xl font-black neon-text">LDGR</h1>
+            <button
+              onClick={() => setShowSettings(true)}
+              className="absolute right-0 p-2 hover:bg-samurai-grey-dark rounded-lg transition-colors"
+              title="Settings"
+            >
+              <Settings className="w-6 h-6 text-samurai-red" />
+            </button>
           </div>
           <p className="text-sm text-white/60 mb-4">
             Layered Decentralized Global Registry
@@ -353,6 +362,9 @@ export default function LdgrPage() {
       >
         <BookOpen className="w-6 h-6" />
       </button>
+
+      {/* Settings Modal */}
+      <LdgrSettings isOpen={showSettings} onClose={() => setShowSettings(false)} />
     </div>
   )
 }
