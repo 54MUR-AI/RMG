@@ -86,7 +86,7 @@ export default function ScraperPage() {
   }
 
   return (
-    <div className="relative bg-samurai-black h-screen">
+    <div className="relative bg-samurai-black h-full">
       {/* Fullscreen iframe */}
       <iframe
         ref={iframeRef}

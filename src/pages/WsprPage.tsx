@@ -323,7 +323,7 @@ export default function WsprPage() {
   }
 
   return (
-    <div className="relative h-screen bg-samurai-black">
+    <div className="relative h-full bg-samurai-black">
       {/* Loading State */}
       {isLoading && (
         <div className="flex items-center justify-center h-screen">
@@ -356,7 +356,7 @@ export default function WsprPage() {
 
       {/* WSPR Iframe */}
       {!isLoading && !error && user && (
-        <div className="h-screen">
+        <div className="h-full">
           <iframe
             key={Date.now()}
             ref={iframeRef}
