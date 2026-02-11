@@ -204,16 +204,9 @@ export default function LdgrPage() {
     <div className="relative bg-samurai-black text-white h-screen overflow-y-auto">
       <main className="relative z-10 max-w-7xl mx-auto px-6 py-4">
         <div className="text-center mb-6">
-          <div className="flex items-center justify-center gap-3 mb-2 relative">
+          <div className="flex items-center justify-center gap-3 mb-2">
             <Lock className="w-8 h-8 text-samurai-red" />
             <h1 className="text-3xl font-black neon-text">LDGR</h1>
-            <button
-              onClick={() => setShowSettings(true)}
-              className="absolute right-0 p-2 hover:bg-samurai-grey-dark rounded-lg transition-colors"
-              title="Settings"
-            >
-              <Settings className="w-6 h-6 text-samurai-red" />
-            </button>
           </div>
           <p className="text-sm text-white/60 mb-4">
             Layered Decentralized Global Registry
@@ -354,14 +347,26 @@ export default function LdgrPage() {
         />
       )}
 
-      {/* Floating README Button */}
-      <button
-        onClick={() => setShowReadme(true)}
-        className="fixed bottom-20 left-6 p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110 z-50"
-        aria-label="README"
-      >
-        <BookOpen className="w-6 h-6" />
-      </button>
+      {/* Floating Buttons */}
+      <div className="fixed bottom-20 left-6 flex flex-col gap-3 z-50">
+        {/* README Button */}
+        <button
+          onClick={() => setShowReadme(true)}
+          className="p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
+          aria-label="README"
+        >
+          <BookOpen className="w-6 h-6" />
+        </button>
+        
+        {/* Settings Button */}
+        <button
+          onClick={() => setShowSettings(true)}
+          className="p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
+          aria-label="Settings"
+        >
+          <Settings className="w-6 h-6" />
+        </button>
+      </div>
 
       {/* Settings Modal */}
       <LdgrSettings isOpen={showSettings} onClose={() => setShowSettings(false)} />
