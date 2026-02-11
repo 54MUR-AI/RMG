@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { X, Users, Database, Server, Settings, Shield } from 'lucide-react'
 import { useAdmin } from '../contexts/AdminContext'
 import ModalPortal from './ModalPortal'
