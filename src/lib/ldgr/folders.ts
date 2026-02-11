@@ -276,6 +276,26 @@ export async function reorderFolders(folders: Folder[]): Promise<void> {
 }
 
 /**
+ * Count subfolders in a folder
+ */
+export async function countSubfoldersInFolder(folderId: string | null): Promise<number> {
+  const query = supabase
+    .from('folders')
+    .select('id', { count: 'exact', head: true })
+  
+  if (folderId === null) {
+    query.is('parent_id', null)
+  } else {
+    query.eq('parent_id', folderId)
+  }
+  
+  const { count, error } = await query
+  
+  if (error) throw error
+  return count || 0
+}
+
+/**
  * Ensure default folders exist for user
  * NOTE: Folders are now created automatically by database trigger (handle_new_user)
  * This function is kept for backwards compatibility but does nothing

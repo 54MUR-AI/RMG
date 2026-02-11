@@ -10,7 +10,7 @@ import CryptoWallet from '../components/ldgr/CryptoWallet'
 import ReadmePopup from '../components/ReadmePopup'
 import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
-import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, ensureDefaultFolders } from '../lib/ldgr/folders'
+import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, countSubfoldersInFolder, ensureDefaultFolders } from '../lib/ldgr/folders'
 import type { Folder } from '../lib/ldgr/folders'
 
 export default function LdgrPage() {
@@ -19,6 +19,7 @@ export default function LdgrPage() {
   const [currentFolderId, setCurrentFolderId] = useState<string | null>(null)
   const [currentPath, setCurrentPath] = useState<Folder[]>([])
   const [folderFileCounts, setFolderFileCounts] = useState<Record<string, number>>({})
+  const [folderSubfolderCounts, setFolderSubfolderCounts] = useState<Record<string, number>>({})
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(true)
   const [showReadme, setShowReadme] = useState(false)
@@ -57,12 +58,18 @@ export default function LdgrPage() {
       const userFolders = await getFoldersByParent(user.id, currentFolderId)
       setFolders(userFolders)
       
-      const counts: Record<string, number> = {}
+      const fileCounts: Record<string, number> = {}
+      const subfolderCounts: Record<string, number> = {}
+      
       for (const folder of userFolders) {
-        counts[folder.id] = await countFilesInFolder(folder.id)
+        fileCounts[folder.id] = await countFilesInFolder(folder.id)
+        subfolderCounts[folder.id] = await countSubfoldersInFolder(folder.id)
       }
-      counts[currentFolderId || 'root'] = await countFilesInFolder(currentFolderId)
-      setFolderFileCounts(counts)
+      fileCounts[currentFolderId || 'root'] = await countFilesInFolder(currentFolderId)
+      subfolderCounts[currentFolderId || 'root'] = await countSubfoldersInFolder(currentFolderId)
+      
+      setFolderFileCounts(fileCounts)
+      setFolderSubfolderCounts(subfolderCounts)
     } catch (error) {
       console.error('Error loading folders:', error)
     }
@@ -275,6 +282,7 @@ export default function LdgrPage() {
                 onDeleteFolder={handleDeleteFolder}
                 onReorderFolders={handleReorderFolders}
                 fileCount={folderFileCounts}
+                subfolderCount={folderSubfolderCounts}
                 onMoveFile={handleMoveFile}
                 userId={user.id}
               />
