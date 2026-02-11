@@ -276,6 +276,7 @@ export default function LdgrPage() {
                 onReorderFolders={handleReorderFolders}
                 fileCount={folderFileCounts}
                 onMoveFile={handleMoveFile}
+                userId={user.id}
               />
             </div>
 

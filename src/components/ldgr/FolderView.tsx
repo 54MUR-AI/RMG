@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Folder as FolderIcon, FolderPlus, Edit2, Trash2, ChevronRight, Home } from 'lucide-react'
+import { Folder as FolderIcon, FolderPlus, Edit2, Trash2, ChevronRight, Home, Users } from 'lucide-react'
 import type { Folder } from '../../lib/ldgr/folders'
 
 interface FolderViewProps {
@@ -12,6 +12,7 @@ interface FolderViewProps {
   onReorderFolders: (folders: Folder[]) => void | Promise<void>
   fileCount: Record<string, number>
   onMoveFile?: (fileId: string, folderId: string | null) => void
+  userId: string
 }
 
 export default function FolderView({
@@ -23,7 +24,8 @@ export default function FolderView({
   onDeleteFolder,
   onReorderFolders,
   fileCount,
-  onMoveFile
+  onMoveFile,
+  userId
 }: FolderViewProps) {
   const [isCreating, setIsCreating] = useState(false)
   const [newFolderName, setNewFolderName] = useState('')
@@ -298,10 +300,18 @@ export default function FolderView({
                     className="w-full text-left"
                   >
                     <div className="flex flex-col items-center gap-2 mb-2">
-                      <FolderIcon className="w-12 h-12 text-samurai-red/80" />
+                      <div className="relative">
+                        <FolderIcon className="w-12 h-12 text-samurai-red/80" />
+                        {folder.user_id !== userId && (
+                          <div className="absolute -top-1 -right-1 bg-blue-500 rounded-full p-1" title="Shared folder">
+                            <Users className="w-3 h-3 text-white" />
+                          </div>
+                        )}
+                      </div>
                       <div className="w-full">
                         <h3 className="font-bold text-white truncate text-center">{folder.name}</h3>
                         <p className="text-xs text-white/50 text-center">
+                          {folder.user_id !== userId && <span className="text-blue-400">Shared • </span>}
                           {fileCount[folder.id] || 0} files
                         </p>
                       </div>
