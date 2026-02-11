@@ -191,7 +191,7 @@ export default function WsprPage() {
       )}
 
       {/* Floating Buttons */}
-      <div className="fixed bottom-20 right-6 flex flex-col gap-3 z-50">
+      <div className="fixed bottom-20 left-6 flex flex-col gap-3 z-50">
         {/* README Button */}
         <button
           onClick={() => setShowReadme(true)}
