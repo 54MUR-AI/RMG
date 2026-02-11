@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { MessageSquare, Loader2, Lock, BookOpen, Settings } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import ReadmePopup from '../components/ReadmePopup'
+import { supabase } from '../lib/supabase'
 
 export default function WsprPage() {
   const { user } = useAuth()
@@ -183,18 +184,52 @@ export default function WsprPage() {
       } else if (event.data.type === 'WSPR_UPLOAD_FILE') {
         console.log('RMG: Received file upload request:', event.data)
         
-        // TODO: Implement file upload to LDGR
-        // This will need to:
-        // 1. Open file picker or receive file data
-        // 2. Upload to LDGR
-        // 3. Return file ID to WSPR
+        // Create file input element
+        const fileInput = document.createElement('input')
+        fileInput.type = 'file'
+        fileInput.style.display = 'none'
+        document.body.appendChild(fileInput)
         
-        if (iframeRef.current?.contentWindow) {
-          iframeRef.current.contentWindow.postMessage({
-            type: 'LDGR_FILE_UPLOAD_ERROR',
-            error: 'File upload not yet implemented'
-          }, '*')
+        fileInput.onchange = async (e: Event) => {
+          const target = e.target as HTMLInputElement
+          const file = target.files?.[0]
+          
+          if (file && user) {
+            try {
+              // Get channel's LDGR folder ID from event data
+              const channelFolderId = event.data.channelFolderId
+              
+              // Upload file to LDGR
+              const { uploadFile } = await import('../lib/ldgr/storage')
+              const fileMetadata = await uploadFile(file, user.id, user.email!, channelFolderId)
+              
+              // Send success response back to WSPR
+              if (iframeRef.current?.contentWindow) {
+                iframeRef.current.contentWindow.postMessage({
+                  type: 'LDGR_FILE_UPLOADED',
+                  fileId: fileMetadata.id,
+                  filename: fileMetadata.name,
+                  fileSize: fileMetadata.size,
+                  mimeType: fileMetadata.type
+                }, '*')
+              }
+              
+              console.log('✅ File uploaded to LDGR:', fileMetadata)
+            } catch (error) {
+              console.error('❌ File upload failed:', error)
+              if (iframeRef.current?.contentWindow) {
+                iframeRef.current.contentWindow.postMessage({
+                  type: 'LDGR_FILE_UPLOAD_ERROR',
+                  error: error instanceof Error ? error.message : 'Upload failed'
+                }, '*')
+              }
+            }
+          }
+          
+          document.body.removeChild(fileInput)
         }
+        
+        fileInput.click()
       } else if (event.data.type === 'WSPR_BROWSE_LDGR') {
         console.log('RMG: Received LDGR browse request:', event.data)
         
@@ -216,20 +251,29 @@ export default function WsprPage() {
       } else if (event.data.type === 'WSPR_DOWNLOAD_FILE') {
         console.log('RMG: Received file download request:', event.data)
         
-        // TODO: Implement file download from LDGR
-        // This will need to:
-        // 1. Fetch file metadata from LDGR by ID
-        // 2. Use downloadFile from storage.ts
-        // 3. Trigger browser download
-        
-        console.log('⚠️ File download not yet fully implemented')
-        // try {
-        //   const { downloadFile } = await import('../lib/ldgr/storage')
-        //   // Need to fetch file metadata first, then call downloadFile
-        //   console.log('✅ File download initiated:', event.data.filename)
-        // } catch (error) {
-        //   console.error('❌ Failed to download file:', error)
-        // }
+        if (user) {
+          try {
+            // Fetch file metadata from LDGR
+            const { data: fileMetadata, error } = await supabase
+              .from('files')
+              .select('*')
+              .eq('id', event.data.fileId)
+              .single()
+            
+            if (error || !fileMetadata) {
+              throw new Error('File not found')
+            }
+            
+            // Download file
+            const { downloadFile } = await import('../lib/ldgr/storage')
+            await downloadFile(fileMetadata, user.id, user.email!)
+            
+            console.log('✅ File download initiated:', event.data.filename)
+          } catch (error) {
+            console.error('❌ Failed to download file:', error)
+            alert('Failed to download file: ' + (error instanceof Error ? error.message : 'Unknown error'))
+          }
+        }
       }
     }
 
