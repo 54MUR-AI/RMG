@@ -138,34 +138,6 @@ export default function WsprPage() {
             }, '*')
           }
         }
-      } else if (event.data.type === 'WSPR_CREATE_WORKSPACE_FOLDER') {
-        console.log('RMG: Received workspace folder creation request:', event.data)
-        
-        try {
-          const { createWorkspaceFolder, linkWorkspaceToFolder } = await import('../lib/wspr/ldgrIntegration')
-          
-          // Create workspace folder in LDGR
-          const folderId = await createWorkspaceFolder(
-            event.data.workspaceName,
-            event.data.ownerId
-          )
-          
-          // Link workspace to folder
-          await linkWorkspaceToFolder(event.data.workspaceId, folderId)
-          
-          // Send success response back to WSPR
-          if (iframeRef.current?.contentWindow) {
-            iframeRef.current.contentWindow.postMessage({
-              type: 'LDGR_WORKSPACE_FOLDER_CREATED',
-              workspaceId: event.data.workspaceId,
-              folderId: folderId
-            }, '*')
-          }
-          
-          console.log('✅ LDGR workspace folder created and linked:', folderId)
-        } catch (error) {
-          console.error('❌ Failed to create workspace folder:', error)
-        }
       } else if (event.data.type === 'WSPR_CREATE_CHANNEL_FOLDER') {
         console.log('RMG: Received channel folder creation request:', event.data)
         
