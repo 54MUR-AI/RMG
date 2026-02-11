@@ -10,7 +10,7 @@ import UserIdBadge from './UserIdBadge'
 
 export default function Forum() {
   const { user } = useAuth()
-  const { isAdmin } = useAdmin()
+  const { isModerator } = useAdmin()
   const [threads, setThreads] = useState<ForumThread[]>([])
   const [categories, setCategories] = useState<ForumCategory[]>([])
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>()

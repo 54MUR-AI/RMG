@@ -60,9 +60,9 @@ export async function getUserRole(userId?: string): Promise<UserRole | null> {
   return data
 }
 
-// Admin: Pin/Unpin thread
+// Moderator: Pin/Unpin thread
 export async function toggleThreadPin(threadId: string, isPinned: boolean): Promise<boolean> {
-  if (!await isAdmin()) return false
+  if (!await isModerator()) return false
 
   const { error } = await supabase
     .from('forum_threads')
@@ -72,9 +72,9 @@ export async function toggleThreadPin(threadId: string, isPinned: boolean): Prom
   return !error
 }
 
-// Admin: Lock/Unlock thread
+// Moderator: Lock/Unlock thread
 export async function toggleThreadLock(threadId: string, isLocked: boolean): Promise<boolean> {
-  if (!await isAdmin()) return false
+  if (!await isModerator()) return false
 
   const { error } = await supabase
     .from('forum_threads')
@@ -84,9 +84,9 @@ export async function toggleThreadLock(threadId: string, isLocked: boolean): Pro
   return !error
 }
 
-// Admin: Delete any thread
+// Moderator: Delete any thread
 export async function deleteThread(threadId: string): Promise<boolean> {
-  if (!await isAdmin()) return false
+  if (!await isModerator()) return false
 
   const { error } = await supabase
     .from('forum_threads')
@@ -96,9 +96,9 @@ export async function deleteThread(threadId: string): Promise<boolean> {
   return !error
 }
 
-// Admin: Delete any post
+// Moderator: Delete any post
 export async function deletePost(postId: string): Promise<boolean> {
-  if (!await isAdmin()) return false
+  if (!await isModerator()) return false
 
   const { error } = await supabase
     .from('forum_posts')

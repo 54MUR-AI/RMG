@@ -15,7 +15,7 @@ interface ThreadViewModalProps {
 
 export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadViewModalProps) {
   const { user } = useAuth()
-  const { isAdmin } = useAdmin()
+  const { isModerator } = useAdmin()
   const [posts, setPosts] = useState<ForumPost[]>([])
   const [replyContent, setReplyContent] = useState('')
   const [isAnonymous, setIsAnonymous] = useState(false)
@@ -111,7 +111,7 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
   }
 
   const handleAdminDeletePost = async (postId: string) => {
-    if (!isAdmin || !confirm('Delete this reply? (Admin action)')) return
+    if (!isModerator || !confirm('Delete this reply? (Moderator action)')) return
 
     try {
       await adminDeletePost(postId)
@@ -124,7 +124,7 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
   }
 
   const handlePinThread = async () => {
-    if (!isAdmin) return
+    if (!isModerator) return
 
     try {
       await toggleThreadPin(thread.id, !thread.is_pinned)
@@ -136,7 +136,7 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
   }
 
   const handleLockThread = async () => {
-    if (!isAdmin) return
+    if (!isModerator) return
 
     try {
       await toggleThreadLock(thread.id, !thread.is_locked)
@@ -148,7 +148,7 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
   }
 
   const handleDeleteThread = async () => {
-    if (!isAdmin || !confirm('Delete this entire thread? This cannot be undone.')) return
+    if (!isModerator || !confirm('Delete this entire thread? This cannot be undone.')) return
 
     try {
       await deleteThread(thread.id)
@@ -178,8 +178,8 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
           <div className="flex items-start justify-between mb-2">
             <h2 className="text-2xl font-black text-white flex-1">{thread.title}</h2>
             <div className="flex items-center gap-2">
-              {/* Admin Controls */}
-              {isAdmin && (
+              {/* Moderator Controls */}
+              {isModerator && (
                 <>
                   <button
                     onClick={handlePinThread}
@@ -349,16 +349,16 @@ export default function ThreadViewModal({ thread, onClose, onUpdate }: ThreadVie
                         {post.author_name.charAt(0).toUpperCase()}
                       </div>
                       <span className="text-white font-semibold">{post.author_name}</span>
-                      {isAdmin && post.author_id && (
+                      {isModerator && post.author_id && (
                         <UserIdBadge userId={post.author_id} />
                       )}
                       <span className="text-white/50 text-sm">{formatTimeAgo(post.created_at)}</span>
                     </div>
-                    {(user && post.author_id === user.id) || isAdmin ? (
+                    {(user && post.author_id === user.id) || isModerator ? (
                       <button
-                        onClick={() => isAdmin && post.author_id !== user?.id ? handleAdminDeletePost(post.id) : handleDeletePost(post.id)}
+                        onClick={() => isModerator && post.author_id !== user?.id ? handleAdminDeletePost(post.id) : handleDeletePost(post.id)}
                         className="text-white/50 hover:text-samurai-red transition-colors"
-                        title={isAdmin && post.author_id !== user?.id ? 'Delete (Admin)' : 'Delete'}
+                        title={isModerator && post.author_id !== user?.id ? 'Delete (Moderator)' : 'Delete'}
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
