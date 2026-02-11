@@ -279,23 +279,10 @@ export default function WsprPage() {
   }
 
   return (
-    <div className="relative min-h-screen bg-samurai-black">
-      {/* Header */}
-      <div className="bg-samurai-black-light border-b border-samurai-grey-dark">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center gap-3">
-            <MessageSquare className="w-8 h-8 text-samurai-red" />
-            <div>
-              <h1 className="text-2xl font-bold neon-text">WSPR</h1>
-              <p className="text-sm text-samurai-steel">Web Secure P2P Relay</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
+    <div className="relative h-screen bg-samurai-black">
       {/* Loading State */}
       {isLoading && (
-        <div className="flex items-center justify-center h-[calc(100vh-80px)]">
+        <div className="flex items-center justify-center h-screen">
           <div className="text-center">
             <Loader2 className="w-12 h-12 text-samurai-red animate-spin mx-auto mb-4" />
             <p className="text-samurai-steel">Connecting to WSPR...</p>
@@ -308,7 +295,7 @@ export default function WsprPage() {
 
       {/* Error State */}
       {error && !isLoading && (
-        <div className="flex items-center justify-center h-[calc(100vh-80px)]">
+        <div className="flex items-center justify-center h-screen">
           <div className="glass-card p-8 rounded-xl max-w-md text-center">
             <MessageSquare className="w-16 h-16 text-samurai-red mx-auto mb-4" />
             <h2 className="text-xl font-bold mb-2">Service Unavailable</h2>
@@ -325,7 +312,7 @@ export default function WsprPage() {
 
       {/* WSPR Iframe */}
       {!isLoading && !error && user && (
-        <div className="h-[calc(100vh-80px)]">
+        <div className="h-screen">
           <iframe
             key={Date.now()}
             ref={iframeRef}
