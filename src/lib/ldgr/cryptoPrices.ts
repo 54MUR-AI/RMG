@@ -10,6 +10,10 @@ const USE_REAL_BLOCKCHAIN_DATA = true // Use real blockchain transaction history
 const priceCache = new Map<string, { data: HistoricalPrice[], timestamp: number }>()
 const CACHE_DURATION = 10 * 60 * 1000 // 10 minutes (increased to reduce API calls)
 
+// Rate limiting: track last API call time
+let lastApiCall = 0
+const MIN_API_DELAY = 1500 // 1.5 seconds between API calls
+
 // Map blockchain names to CoinGecko coin IDs
 export const BLOCKCHAIN_TO_COINGECKO_ID: Record<string, string> = {
   ethereum: 'ethereum',
@@ -68,9 +72,19 @@ export async function fetchHistoricalPrices(
       return cached.data
     }
     
+    // Rate limiting: wait if we made an API call recently
+    const now = Date.now()
+    const timeSinceLastCall = now - lastApiCall
+    if (timeSinceLastCall < MIN_API_DELAY) {
+      const waitTime = MIN_API_DELAY - timeSinceLastCall
+      console.log(`⏳ Rate limiting: waiting ${waitTime}ms before API call`)
+      await new Promise(resolve => setTimeout(resolve, waitTime))
+    }
+    
     const baseUrl = `${COINGECKO_API_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`
     const url = USE_CORS_PROXY ? `${CORS_PROXY}${encodeURIComponent(baseUrl)}` : baseUrl
     
+    lastApiCall = Date.now()
     const response = await fetch(url)
     if (!response.ok) {
       console.error(`CoinGecko API error: ${response.status} ${response.statusText}`)
