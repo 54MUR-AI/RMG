@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, RefreshCw, TrendingUp } from 'lucide-react'
+import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, RefreshCw, TrendingUp, TrendingDown } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
 import MultiChainWalletImport from './MultiChainWalletImport'
@@ -375,7 +375,16 @@ export default function CryptoWallet() {
                                 {balance.tokens.length > 0 && ` + ${balance.tokens.length} token${balance.tokens.length !== 1 ? 's' : ''}`}
                               </p>
                             </div>
-                            <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+                            {(() => {
+                              // TODO: Replace with actual 24h change from balance.change_24h when available
+                              const change24h = 0 // Placeholder: balance.change_24h || 0
+                              const isPositive = change24h >= 0
+                              return isPositive ? (
+                                <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+                              ) : (
+                                <TrendingDown className="w-6 h-6 sm:w-8 sm:h-8 text-red-500" />
+                              )
+                            })()}
                           </div>
                           
                           {/* Token list toggle */}
@@ -411,7 +420,16 @@ export default function CryptoWallet() {
                             <p className="text-xl sm:text-2xl font-bold text-white">{balance.balance} {chain.symbol || wallet.blockchain}</p>
                             <p className="text-white/60 text-xs sm:text-sm mt-1">{balance.usd_value}</p>
                           </div>
-                          <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+                          {(() => {
+                            // TODO: Replace with actual 24h change from balance.change_24h when available
+                            const change24h = 0 // Placeholder: balance.change_24h || 0
+                            const isPositive = change24h >= 0
+                            return isPositive ? (
+                              <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />
+                            ) : (
+                              <TrendingDown className="w-6 h-6 sm:w-8 sm:h-8 text-red-500" />
+                            )
+                          })()}
                         </div>
                       )}
                     </div>
