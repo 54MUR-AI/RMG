@@ -252,9 +252,10 @@ export async function fetchCryptoPrice(blockchain: string): Promise<number> {
       return cached.price
     }
     
-    const response = await fetch(
-      `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
-    )
+    const baseUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`
+    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(baseUrl)}`
+    
+    const response = await fetch(url)
     const data = await response.json()
     
     if (data[coinId] && data[coinId].usd) {

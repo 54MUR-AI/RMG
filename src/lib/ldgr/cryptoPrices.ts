@@ -2,13 +2,13 @@
 import { getWalletHistoricalData } from './blockchainHistory'
 
 const COINGECKO_API_BASE = 'https://api.coingecko.com/api/v3'
-const USE_CORS_PROXY = false // Try direct API call first
+const USE_CORS_PROXY = true // Enable CORS proxy to avoid rate limiting and CORS errors
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=' // Alternative CORS proxy
 const USE_REAL_BLOCKCHAIN_DATA = true // Use real blockchain transaction history
 
 // Cache for API responses to avoid rate limiting
 const priceCache = new Map<string, { data: HistoricalPrice[], timestamp: number }>()
-const CACHE_DURATION = 5 * 60 * 1000 // 5 minutes
+const CACHE_DURATION = 10 * 60 * 1000 // 10 minutes (increased to reduce API calls)
 
 // Map blockchain names to CoinGecko coin IDs
 export const BLOCKCHAIN_TO_COINGECKO_ID: Record<string, string> = {
