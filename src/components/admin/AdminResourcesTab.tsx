@@ -22,18 +22,18 @@ export default function AdminResourcesTab() {
   }, [])
 
   const loadStats = async () => {
-    const { data: profiles } = await supabase.from('profiles').select('id, email, display_name')
-    if (!profiles) return
+    const { data: users } = await supabase.from('user_roles').select('user_id, email')
+    if (!users) return
 
-    const userStats = await Promise.all(profiles.map(async (p) => {
-      const { data: files } = await supabase.from('files').select('size').eq('user_id', p.id)
-      const { count: folders } = await supabase.from('folders').select('*', { count: 'exact', head: true }).eq('user_id', p.id)
-      const { count: messages } = await supabase.from('wspr_messages').select('*', { count: 'exact', head: true }).eq('user_id', p.id)
+    const userStats = await Promise.all(users.map(async (u) => {
+      const { data: files } = await supabase.from('files').select('size').eq('user_id', u.user_id)
+      const { count: folders } = await supabase.from('folders').select('*', { count: 'exact', head: true }).eq('user_id', u.user_id)
+      const { count: messages } = await supabase.from('wspr_messages').select('*', { count: 'exact', head: true }).eq('user_id', u.user_id)
       
       return {
-        userId: p.id,
-        email: p.email || '',
-        displayName: p.display_name || 'Unknown',
+        userId: u.user_id,
+        email: u.email || '',
+        displayName: u.email?.split('@')[0] || 'Unknown',
         isOnline: false,
         totalFiles: files?.length || 0,
         totalFolders: folders || 0,
