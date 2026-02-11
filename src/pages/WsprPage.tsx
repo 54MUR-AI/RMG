@@ -95,11 +95,15 @@ export default function WsprPage() {
 
   // Send settings toggle to iframe
   const handleSettingsClick = () => {
+    console.log('RMG: Settings button clicked')
     if (iframeRef.current?.contentWindow) {
+      console.log('RMG: Sending RMG_TOGGLE_SETTINGS to WSPR iframe')
       iframeRef.current.contentWindow.postMessage(
         { type: 'RMG_TOGGLE_SETTINGS' },
-        'https://wspr-web.onrender.com'
+        '*' // Use wildcard for development, change to specific origin in production
       )
+    } else {
+      console.error('RMG: iframe contentWindow not available')
     }
   }
 
