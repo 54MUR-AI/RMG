@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Flame, Key, User, LogOut } from 'lucide-react'
+import { Menu, X, Flame, Key, User, LogOut, Shield } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import DiscordIcon from './DiscordIcon'
 import AuthPopup from './AuthPopup'
@@ -7,6 +7,7 @@ import ProfileDropdown from './ProfileDropdown'
 import ProfilePopup from './ProfilePopup'
 import AdminModal from './AdminModal'
 import { useAuth } from '../contexts/AuthContext'
+import { useAdmin } from '../contexts/AdminContext'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -17,6 +18,7 @@ export default function Navbar() {
   const location = useLocation()
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
+  const { isAdmin } = useAdmin()
   const profileRef = useRef<HTMLDivElement>(null)
   const profileButtonRef = useRef<HTMLButtonElement>(null)
   const profileDropdownRef = useRef<HTMLDivElement>(null)
@@ -311,6 +313,18 @@ export default function Navbar() {
                     <User size={24} className="mr-3" />
                     <span>VIEW PROFILE</span>
                   </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => {
+                        setIsOpen(false)
+                        setShowAdminModal(true)
+                      }}
+                      className="w-full flex items-center px-4 py-3 rounded-lg font-bold transition-all touch-manipulation text-samurai-red hover:bg-samurai-red hover:text-white"
+                    >
+                      <Shield size={24} className="mr-3" />
+                      <span>ADMIN PANEL</span>
+                    </button>
+                  )}
                   <button
                     onClick={async () => {
                       setIsOpen(false)
