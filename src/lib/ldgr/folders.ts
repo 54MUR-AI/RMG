@@ -53,24 +53,52 @@ export async function getUserFolders(userId: string): Promise<Folder[]> {
 
 /**
  * Get folders in a specific parent folder (or root if parentId is null)
+ * Includes both owned folders and shared folders
  */
 export async function getFoldersByParent(userId: string, parentId: string | null): Promise<Folder[]> {
-  const query = supabase
+  // Get owned folders
+  const ownedQuery = supabase
     .from('folders')
     .select('*')
     .eq('user_id', userId)
     .order('display_order', { ascending: true })
   
   if (parentId === null) {
-    query.is('parent_id', null)
+    ownedQuery.is('parent_id', null)
   } else {
-    query.eq('parent_id', parentId)
+    ownedQuery.eq('parent_id', parentId)
   }
   
-  const { data, error } = await query
+  const { data: ownedFolders, error: ownedError } = await ownedQuery
   
-  if (error) throw error
-  return data as Folder[]
+  if (ownedError) throw ownedError
+  
+  // If at root level, also get shared folders
+  if (parentId === null) {
+    const { data: sharedAccess } = await supabase
+      .from('folder_access')
+      .select('folder_id')
+      .eq('user_id', userId)
+    
+    if (sharedAccess && sharedAccess.length > 0) {
+      const sharedFolderIds = sharedAccess.map(a => a.folder_id)
+      const { data: sharedFolders } = await supabase
+        .from('folders')
+        .select('*')
+        .in('id', sharedFolderIds)
+        .is('parent_id', null) // Only root-level shared folders
+        .order('display_order', { ascending: true })
+      
+      if (sharedFolders && sharedFolders.length > 0) {
+        // Combine and deduplicate
+        const allFolders = [...(ownedFolders || []), ...sharedFolders]
+        const uniqueFolders = Array.from(new Map(allFolders.map(f => [f.id, f])).values())
+        return uniqueFolders.sort((a, b) => a.display_order - b.display_order)
+      }
+    }
+  }
+  
+  return ownedFolders as Folder[]
 }
 
 /**
