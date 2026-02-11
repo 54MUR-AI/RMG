@@ -312,10 +312,14 @@ export default function FolderView({
                       </div>
                       <div className="w-full">
                         <h3 className="font-bold text-white truncate text-center">{folder.name}</h3>
-                        <p className="text-xs text-white/50 text-center">
-                          {folder.user_id !== userId && <span className="text-blue-400">Shared • </span>}
-                          {subfolderCount[folder.id] || 0} folders • {fileCount[folder.id] || 0} files
-                        </p>
+                        {((subfolderCount[folder.id] || 0) > 0 || (fileCount[folder.id] || 0) > 0) && (
+                          <p className="text-xs text-white/50 text-center">
+                            {folder.user_id !== userId && <span className="text-blue-400">Shared • </span>}
+                            {(subfolderCount[folder.id] || 0) > 0 && <>{subfolderCount[folder.id]} folders</>}
+                            {(subfolderCount[folder.id] || 0) > 0 && (fileCount[folder.id] || 0) > 0 && <> • </>}
+                            {(fileCount[folder.id] || 0) > 0 && <>{fileCount[folder.id]} files</>}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </button>
