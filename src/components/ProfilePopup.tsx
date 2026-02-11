@@ -32,6 +32,10 @@ export default function ProfilePopup({ onClose }: ProfilePopupProps) {
     setMessage(null)
 
     try {
+      // Check if display name changed
+      const oldDisplayName = user?.user_metadata?.display_name
+      const displayNameChanged = displayName !== oldDisplayName
+
       const { error } = await supabase.auth.updateUser({
         data: {
           display_name: displayName,
@@ -41,6 +45,18 @@ export default function ProfilePopup({ onClose }: ProfilePopupProps) {
       })
 
       if (error) throw error
+
+      // Track display name change in history
+      if (displayNameChanged && displayName && user?.id) {
+        await supabase
+          .from('display_name_history')
+          .insert({
+            user_id: user.id,
+            display_name: displayName,
+            changed_at: new Date().toISOString()
+          })
+      }
+
       setMessage('Profile updated successfully!')
       setTimeout(() => {
         onClose()
