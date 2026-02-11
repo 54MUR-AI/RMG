@@ -11,6 +11,7 @@ interface FolderViewProps {
   onDeleteFolder: (folderId: string) => void
   onReorderFolders: (folders: Folder[]) => void | Promise<void>
   fileCount: Record<string, number>
+  subfolderCount: Record<string, number>
   onMoveFile?: (fileId: string, folderId: string | null) => void
   userId: string
 }
@@ -24,6 +25,7 @@ export default function FolderView({
   onDeleteFolder,
   onReorderFolders,
   fileCount,
+  subfolderCount,
   onMoveFile,
   userId
 }: FolderViewProps) {
@@ -312,7 +314,7 @@ export default function FolderView({
                         <h3 className="font-bold text-white truncate text-center">{folder.name}</h3>
                         <p className="text-xs text-white/50 text-center">
                           {folder.user_id !== userId && <span className="text-blue-400">Shared • </span>}
-                          {fileCount[folder.id] || 0} files
+                          {subfolderCount[folder.id] || 0} folders • {fileCount[folder.id] || 0} files
                         </p>
                       </div>
                     </div>
