@@ -36,7 +36,7 @@ export default function StonksPage() {
       {/* Fullscreen iframe */}
       <iframe
         src="https://stonks-app.onrender.com"
-        className="w-full h-screen border-none"
+        className="w-full h-full border-none"
         title="STONKS - Smart Trading Options for Novices & Knowledgeable Speculators"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       />

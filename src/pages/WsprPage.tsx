@@ -326,7 +326,7 @@ export default function WsprPage() {
     <div className="relative h-full bg-samurai-black">
       {/* Loading State */}
       {isLoading && (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center min-h-screen">
           <div className="text-center">
             <Loader2 className="w-12 h-12 text-samurai-red animate-spin mx-auto mb-4" />
             <p className="text-samurai-steel">Connecting to WSPR...</p>
