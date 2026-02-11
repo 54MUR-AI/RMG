@@ -5,6 +5,7 @@ import DiscordIcon from './DiscordIcon'
 import AuthPopup from './AuthPopup'
 import ProfileDropdown from './ProfileDropdown'
 import ProfilePopup from './ProfilePopup'
+import AdminModal from './AdminModal'
 import { useAuth } from '../contexts/AuthContext'
 
 export default function Navbar() {
@@ -12,6 +13,7 @@ export default function Navbar() {
   const [showAuthPopup, setShowAuthPopup] = useState(false)
   const [showProfileDropdown, setShowProfileDropdown] = useState(false)
   const [showProfilePopup, setShowProfilePopup] = useState(false)
+  const [showAdminModal, setShowAdminModal] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
@@ -164,6 +166,7 @@ export default function Navbar() {
                 {showProfileDropdown && (
                   <ProfileDropdown
                     onViewProfile={() => setShowProfilePopup(true)}
+                    onViewAdmin={() => setShowAdminModal(true)}
                     onClose={() => setShowProfileDropdown(false)}
                     buttonRef={profileButtonRef}
                     dropdownRef={profileDropdownRef}
@@ -341,6 +344,9 @@ export default function Navbar() {
       
       {/* Profile Popup */}
       {showProfilePopup && <ProfilePopup onClose={() => setShowProfilePopup(false)} />}
+      
+      {/* Admin Modal */}
+      {showAdminModal && <AdminModal onClose={() => setShowAdminModal(false)} />}
     </nav>
   )
 }

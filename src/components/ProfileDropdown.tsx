@@ -1,16 +1,19 @@
-import { LogOut, User } from 'lucide-react'
+import { LogOut, User, Shield } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { useAdmin } from '../contexts/AdminContext'
 import ModalPortal from './ModalPortal'
 
 interface ProfileDropdownProps {
   onViewProfile: () => void
+  onViewAdmin: () => void
   onClose: () => void
   buttonRef: React.RefObject<HTMLButtonElement>
   dropdownRef: React.RefObject<HTMLDivElement>
 }
 
-export default function ProfileDropdown({ onViewProfile, onClose, buttonRef, dropdownRef }: ProfileDropdownProps) {
+export default function ProfileDropdown({ onViewProfile, onViewAdmin, onClose, buttonRef, dropdownRef }: ProfileDropdownProps) {
   const { user, signOut } = useAuth()
+  const { isAdmin } = useAdmin()
 
   const handleLogout = async () => {
     await signOut()
@@ -61,6 +64,16 @@ export default function ProfileDropdown({ onViewProfile, onClose, buttonRef, dro
           <User size={18} />
           <span>View Profile</span>
         </button>
+        
+        {isAdmin && (
+          <button
+            onClick={() => { onViewAdmin(); onClose(); }}
+            className="w-full px-4 py-3 flex items-center gap-3 text-samurai-red hover:bg-samurai-red/20 transition-colors font-bold"
+          >
+            <Shield size={18} />
+            <span>Admin Panel</span>
+          </button>
+        )}
         
         <button
           onClick={handleLogout}
