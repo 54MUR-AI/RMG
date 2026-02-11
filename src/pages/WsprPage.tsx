@@ -31,6 +31,66 @@ export default function WsprPage() {
     }
 
     checkHealth()
+
+    // Send Supabase auth token to WSPR iframe
+    const sendAuthToken = () => {
+      if (!iframeRef.current?.contentWindow) return
+
+      // Get Supabase auth token from localStorage
+      const possibleKeys = [
+        'sb-meqfiyuaxgwbstcdmjgz-auth-token',
+        'supabase.auth.token',
+        'sb-auth-token'
+      ]
+
+      let authToken = null
+      for (const key of possibleKeys) {
+        const data = localStorage.getItem(key)
+        if (data) {
+          try {
+            const parsed = JSON.parse(data)
+            if (parsed.access_token || parsed.token) {
+              authToken = data
+              break
+            }
+          } catch (e) {
+            continue
+          }
+        }
+      }
+
+      if (authToken) {
+        iframeRef.current.contentWindow.postMessage(
+          {
+            type: 'RMG_AUTH_TOKEN',
+            authToken: authToken
+          },
+          'https://wspr-web.onrender.com'
+        )
+      }
+    }
+
+    // Listen for auth requests from WSPR iframe
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data.type === 'WSPR_REQUEST_AUTH') {
+        sendAuthToken()
+      }
+    }
+
+    window.addEventListener('message', handleMessage)
+
+    // Send auth token when iframe loads
+    const iframe = iframeRef.current
+    if (iframe) {
+      iframe.addEventListener('load', sendAuthToken)
+    }
+
+    return () => {
+      window.removeEventListener('message', handleMessage)
+      if (iframe) {
+        iframe.removeEventListener('load', sendAuthToken)
+      }
+    }
   }, [user])
 
   // Send settings toggle to iframe
