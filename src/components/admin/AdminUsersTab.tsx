@@ -28,11 +28,11 @@ export default function AdminUsersTab() {
     
     // Fetch all display names via RPC function
     const { data: displayNames } = await supabase.rpc('get_user_display_names')
-    const displayNameMap = new Map(displayNames?.map(d => [d.user_id, d.display_name]) || [])
+    const displayNameMap = new Map(displayNames?.map((d: any) => [d.user_id, d.display_name]) || [])
     
     // Fetch display name history for each user
     const usersWithDisplayNames = await Promise.all(allUsers.map(async (user) => {
-      const displayName = displayNameMap.get(user.user_id)
+      const displayName = displayNameMap.get(user.user_id) as string | undefined
       
       // Get display name history
       const { data: history } = await supabase
