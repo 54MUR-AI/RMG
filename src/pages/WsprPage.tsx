@@ -299,24 +299,10 @@ export default function WsprPage() {
   if (!user) {
     return (
       <div className="bg-samurai-black flex items-center justify-center p-4 py-32">
-        <div className="glass-card p-12 rounded-xl max-w-md text-center">
-          <Lock className="w-20 h-20 text-samurai-red mx-auto mb-6 animate-glow-pulse" />
-          <h1 className="text-4xl font-bold neon-text mb-4">WSPR</h1>
-          <p className="text-xl text-samurai-steel mb-6">Web Secure P2P Relay</p>
-          <p className="text-samurai-steel-light mb-8">
-            WSPR is a secure, encrypted messaging platform exclusively for RMG members.
-          </p>
-          <div className="bg-samurai-black-lighter border border-samurai-red/30 rounded-lg p-4 mb-6">
-            <p className="text-sm text-samurai-steel">
-              🔒 End-to-end encryption<br/>
-              🛡️ Quantum-resistant security<br/>
-              📁 LDGR file integration<br/>
-              🎥 Video/voice calls
-            </p>
-          </div>
-          <p className="text-samurai-red font-semibold">
-            Please sign in to access WSPR
-          </p>
+        <div className="text-center">
+          <Lock className="w-16 h-16 text-samurai-red mx-auto mb-4" />
+          <h1 className="text-3xl font-black text-white mb-2 neon-text">WSPR</h1>
+          <p className="text-white/70 mb-6">Please sign in to access WSPR</p>
         </div>
       </div>
     )
