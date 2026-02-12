@@ -5,7 +5,7 @@
 -- ============================================================
 -- Helper function: check if a user is admin
 -- ============================================================
-DROP FUNCTION IF EXISTS public.is_admin(uuid);
+DROP FUNCTION IF EXISTS public.is_admin(uuid) CASCADE;
 CREATE FUNCTION public.is_admin(check_user_id uuid)
 RETURNS boolean AS $$
   SELECT EXISTS (
@@ -17,7 +17,7 @@ $$ LANGUAGE sql SECURITY DEFINER STABLE;
 -- ============================================================
 -- Helper function: check if a user is moderator or admin
 -- ============================================================
-DROP FUNCTION IF EXISTS public.is_moderator(uuid);
+DROP FUNCTION IF EXISTS public.is_moderator(uuid) CASCADE;
 CREATE FUNCTION public.is_moderator(check_user_id uuid)
 RETURNS boolean AS $$
   SELECT EXISTS (
