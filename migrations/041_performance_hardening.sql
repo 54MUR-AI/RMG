@@ -415,7 +415,7 @@ END $$;
 
 CREATE POLICY "rmg_contacts_select" ON rmg_contacts FOR SELECT TO authenticated
   USING (
-    user_id = (select auth.uid()) OR contact_user_id = (select auth.uid())
+    user_id = (select auth.uid()) OR contact_id = (select auth.uid())
   );
 
 CREATE POLICY "rmg_contacts_insert" ON rmg_contacts FOR INSERT TO authenticated
@@ -423,7 +423,7 @@ CREATE POLICY "rmg_contacts_insert" ON rmg_contacts FOR INSERT TO authenticated
 
 CREATE POLICY "rmg_contacts_update" ON rmg_contacts FOR UPDATE TO authenticated
   USING (
-    user_id = (select auth.uid()) OR contact_user_id = (select auth.uid())
+    user_id = (select auth.uid()) OR contact_id = (select auth.uid())
   );
 
 CREATE POLICY "rmg_contacts_delete" ON rmg_contacts FOR DELETE TO authenticated
