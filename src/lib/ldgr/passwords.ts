@@ -1,4 +1,5 @@
 import { supabase } from '../supabase'
+import { encryptText, decryptText, legacyDecryptText } from './encryption'
 
 export interface Password {
   id: string
@@ -22,90 +23,33 @@ export interface PasswordInput {
   notes?: string
 }
 
-// Encrypt password using Web Crypto API
-async function encryptPassword(password: string, userEmail: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(password)
-  
-  // Derive key from user email
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(userEmail),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits', 'deriveKey']
-  )
-  
-  const key = await crypto.subtle.deriveKey(
-    {
-      name: 'PBKDF2',
-      salt: encoder.encode('ldgr-passwords-salt'),
-      iterations: 100000,
-      hash: 'SHA-256'
-    },
-    keyMaterial,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['encrypt']
-  )
-  
-  const iv = crypto.getRandomValues(new Uint8Array(12))
-  const encryptedData = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    data
-  )
-  
-  // Combine IV and encrypted data
-  const combined = new Uint8Array(iv.length + encryptedData.byteLength)
-  combined.set(iv)
-  combined.set(new Uint8Array(encryptedData), iv.length)
-  
-  // Encode to base64
-  return btoa(String.fromCharCode(...combined))
+// Encrypt password using unified encryption (user ID + purpose-based key derivation)
+async function encryptPassword(password: string, userId: string): Promise<string> {
+  return encryptText(password, userId, 'passwords')
 }
 
-// Decrypt password
-export async function decryptPassword(encryptedPassword: string, userEmail: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const decoder = new TextDecoder()
-  
-  // Decode from base64
-  const combined = Uint8Array.from(atob(encryptedPassword), c => c.charCodeAt(0))
-  
-  // Extract IV and encrypted data
-  const iv = combined.slice(0, 12)
-  const encryptedData = combined.slice(12)
-  
-  // Derive key from user email
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(userEmail),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits', 'deriveKey']
-  )
-  
-  const key = await crypto.subtle.deriveKey(
-    {
-      name: 'PBKDF2',
-      salt: encoder.encode('ldgr-passwords-salt'),
-      iterations: 100000,
-      hash: 'SHA-256'
-    },
-    keyMaterial,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['decrypt']
-  )
-  
-  const decryptedData = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    encryptedData
-  )
-  
-  return decoder.decode(decryptedData)
+// Decrypt password — tries new system first, falls back to legacy email-based encryption
+export async function decryptPassword(encryptedPassword: string, userIdOrEmail: string, userId?: string): Promise<string> {
+  // If userId is provided separately, try new system with userId first
+  if (userId) {
+    try {
+      return await decryptText(encryptedPassword, userId, 'passwords')
+    } catch {
+      // Fall back to legacy email-based decryption (hardcoded salt)
+      const legacy = await legacyDecryptText(encryptedPassword, userIdOrEmail, 'ldgr-passwords-salt')
+      if (legacy !== null) return legacy
+      throw new Error('Failed to decrypt password')
+    }
+  }
+
+  // Legacy path: userIdOrEmail could be email (old) or userId (new)
+  try {
+    return await decryptText(encryptedPassword, userIdOrEmail, 'passwords')
+  } catch {
+    const legacy = await legacyDecryptText(encryptedPassword, userIdOrEmail, 'ldgr-passwords-salt')
+    if (legacy !== null) return legacy
+    throw new Error('Failed to decrypt password')
+  }
 }
 
 // Get all passwords for a user
@@ -136,11 +80,11 @@ export async function getPasswordsByCategory(userId: string, category: string): 
 // Add a new password
 export async function addPassword(
   userId: string,
-  userEmail: string,
+  _userIdOrEmail: string,
   input: PasswordInput
 ): Promise<Password> {
-  // Encrypt the password
-  const encryptedPassword = await encryptPassword(input.password, userEmail)
+  // Encrypt using userId (second param kept for API compatibility)
+  const encryptedPassword = await encryptPassword(input.password, userId)
   
   const { data, error } = await supabase
     .from('passwords')
@@ -163,10 +107,10 @@ export async function addPassword(
 // Update a password
 export async function updatePassword(
   passwordId: string,
-  userEmail: string,
+  userIdOrEmail: string,
   updates: Partial<PasswordInput>
 ): Promise<Password> {
-  const updateData: any = {}
+  const updateData: Record<string, string | null> = {}
   
   if (updates.title) updateData.title = updates.title
   if (updates.username) updateData.username = updates.username
@@ -176,7 +120,7 @@ export async function updatePassword(
   
   // Only encrypt if password is being updated
   if (updates.password) {
-    updateData.encrypted_password = await encryptPassword(updates.password, userEmail)
+    updateData.encrypted_password = await encryptPassword(updates.password, userIdOrEmail)
   }
   
   const { data, error } = await supabase

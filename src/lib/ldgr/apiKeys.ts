@@ -1,4 +1,5 @@
 import { supabase } from '../supabase'
+import { encryptText, decryptText, legacyDecryptText } from './encryption'
 
 export interface ApiKey {
   id: string
@@ -81,82 +82,34 @@ export const API_SERVICES = {
   'custom': { name: 'Custom API', category: 'Other', icon: '🔧' },
 }
 
-// Password-derived key encryption using Web Crypto API
-async function deriveEncryptionKey(password: string, salt: string): Promise<CryptoKey> {
-  const encoder = new TextEncoder()
-  const passwordKey = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(password),
-    'PBKDF2',
-    false,
-    ['deriveBits', 'deriveKey']
-  )
-  
-  return crypto.subtle.deriveKey(
-    {
-      name: 'PBKDF2',
-      salt: encoder.encode(salt),
-      iterations: 100000,
-      hash: 'SHA-256'
-    },
-    passwordKey,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['encrypt', 'decrypt']
-  )
+// Encrypt API key using unified encryption (user ID + purpose-based key derivation)
+export async function encryptApiKey(apiKey: string, userId: string): Promise<string> {
+  return encryptText(apiKey, userId, 'apikeys')
 }
 
-// Encrypt API key using user's email as password (they're already authenticated)
-export async function encryptApiKey(apiKey: string, userEmail: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(apiKey)
-  
-  // Use user email as salt (unique per user)
-  const salt = userEmail
-  const key = await deriveEncryptionKey(userEmail, salt)
-  
-  // Generate random IV
-  const iv = crypto.getRandomValues(new Uint8Array(12))
-  
-  // Encrypt
-  const encrypted = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    data
-  )
-  
-  // Combine IV and encrypted data
-  const combined = new Uint8Array(iv.length + encrypted.byteLength)
-  combined.set(iv, 0)
-  combined.set(new Uint8Array(encrypted), iv.length)
-  
-  // Convert to base64
-  return btoa(String.fromCharCode(...combined))
-}
+// Decrypt API key — tries new system first, falls back to legacy email-based encryption
+export async function decryptApiKey(encryptedKey: string, userIdOrEmail: string, userId?: string): Promise<string> {
+  // If userId is provided separately, try new system with userId first
+  if (userId) {
+    try {
+      return await decryptText(encryptedKey, userId, 'apikeys')
+    } catch {
+      // Fall back to legacy email-based decryption
+      const legacy = await legacyDecryptText(encryptedKey, userIdOrEmail, userIdOrEmail)
+      if (legacy !== null) return legacy
+      throw new Error('Failed to decrypt API key')
+    }
+  }
 
-// Decrypt API key
-export async function decryptApiKey(encryptedKey: string, userEmail: string): Promise<string> {
-  // Decode from base64
-  const combined = Uint8Array.from(atob(encryptedKey), c => c.charCodeAt(0))
-  
-  // Extract IV and encrypted data
-  const iv = combined.slice(0, 12)
-  const encrypted = combined.slice(12)
-  
-  // Derive key
-  const salt = userEmail
-  const key = await deriveEncryptionKey(userEmail, salt)
-  
-  // Decrypt
-  const decrypted = await crypto.subtle.decrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    encrypted
-  )
-  
-  // Convert to string
-  const decoder = new TextDecoder()
-  return decoder.decode(decrypted)
+  // Legacy path: userIdOrEmail is the email (old call sites)
+  // Try as userId first (new system), then as email (old system)
+  try {
+    return await decryptText(encryptedKey, userIdOrEmail, 'apikeys')
+  } catch {
+    const legacy = await legacyDecryptText(encryptedKey, userIdOrEmail, userIdOrEmail)
+    if (legacy !== null) return legacy
+    throw new Error('Failed to decrypt API key')
+  }
 }
 
 // Get all API keys for a user
@@ -188,11 +141,11 @@ export async function getApiKeysByService(userId: string, serviceName: string): 
 // Add new API key
 export async function addApiKey(
   userId: string,
-  userEmail: string,
+  _userEmail: string,
   input: ApiKeyInput
 ): Promise<ApiKey> {
-  // Encrypt the API key
-  const encryptedKey = await encryptApiKey(input.api_key, userEmail)
+  // Encrypt using userId (userEmail param kept for API compatibility)
+  const encryptedKey = await encryptApiKey(input.api_key, userId)
   
   const { data, error } = await supabase
     .from('api_keys')
@@ -214,15 +167,15 @@ export async function addApiKey(
 // Update API key
 export async function updateApiKey(
   keyId: string,
-  userEmail: string,
+  userIdOrEmail: string,
   updates: Partial<ApiKeyInput>
 ): Promise<ApiKey> {
-  const updateData: any = {}
+  const updateData: Record<string, string | boolean | null> = {}
   
   if (updates.key_name) updateData.key_name = updates.key_name
   if (updates.description !== undefined) updateData.description = updates.description
   if (updates.api_key) {
-    updateData.encrypted_key = await encryptApiKey(updates.api_key, userEmail)
+    updateData.encrypted_key = await encryptApiKey(updates.api_key, userIdOrEmail)
   }
   
   const { data, error } = await supabase

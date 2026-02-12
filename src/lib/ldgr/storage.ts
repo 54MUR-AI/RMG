@@ -1,5 +1,5 @@
 import { supabase } from '../supabase'
-import { encryptFile, decryptFile, generateEncryptionKey } from './encryption'
+import { encryptFile, decryptFile, generateEncryptionKey, legacyDecryptFile } from './encryption'
 
 export type FileMetadata = {
   id: string
@@ -61,7 +61,8 @@ export async function uploadFile(file: File, userId: string, userEmail: string, 
 }
 
 /**
- * Downloads and decrypts a file from Supabase Storage
+ * Downloads and decrypts a file from Supabase Storage.
+ * Tries new Web Crypto decryption first, falls back to legacy CryptoJS for old files.
  */
 export async function downloadFile(
   fileMetadata: FileMetadata,
@@ -76,15 +77,31 @@ export async function downloadFile(
     
     if (downloadError) throw downloadError
     
-    // Generate decryption key
+    // Generate key input (now just returns userId)
     const encryptionKey = generateEncryptionKey(userId, userEmail)
     
-    // Decrypt the file
-    const decryptedBlob = await decryptFile(
-      downloadData,
-      encryptionKey,
-      fileMetadata.type
-    )
+    let decryptedBlob: Blob
+
+    // Try new Web Crypto decryption first
+    try {
+      decryptedBlob = await decryptFile(
+        downloadData,
+        encryptionKey,
+        fileMetadata.type
+      )
+    } catch {
+      // Fall back to legacy CryptoJS decryption for old files
+      const legacyResult = await legacyDecryptFile(
+        downloadData,
+        userId,
+        userEmail,
+        fileMetadata.type
+      )
+      if (!legacyResult) {
+        throw new Error('Failed to decrypt file with both new and legacy systems')
+      }
+      decryptedBlob = legacyResult
+    }
     
     // Trigger download
     const url = URL.createObjectURL(decryptedBlob)

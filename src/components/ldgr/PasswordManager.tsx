@@ -53,9 +53,9 @@ export default function PasswordManager() {
   }
 
   const handleAddPassword = async (input: PasswordInput) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      await addPassword(user.id, user.email, input)
+      await addPassword(user.id, user.id, input)
       await loadPasswords()
       setShowAddModal(false)
     } catch (error) {
@@ -65,9 +65,9 @@ export default function PasswordManager() {
   }
 
   const handleUpdatePassword = async (passwordId: string, updates: Partial<PasswordInput>) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      await updatePassword(passwordId, user.email, updates)
+      await updatePassword(passwordId, user.id, updates)
       await loadPasswords()
       setEditingPassword(null)
     } catch (error) {
@@ -100,9 +100,9 @@ export default function PasswordManager() {
   }
 
   const handleCopyPassword = async (password: Password) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      const decrypted = await decryptPassword(password.encrypted_password, user.email)
+      const decrypted = await decryptPassword(password.encrypted_password, user.email || '', user.id)
       await navigator.clipboard.writeText(decrypted)
       setCopiedPassword(password.id)
       setTimeout(() => setCopiedPassword(null), 2000)
@@ -221,7 +221,7 @@ export default function PasswordManager() {
                     <div className="flex items-center gap-2 mb-2">
                       <code className="flex-1 px-3 py-2 bg-samurai-black rounded text-white/90 text-sm font-mono break-all">
                         {isRevealed ? (
-                          <PasswordDisplay password={password} userEmail={user?.email || ''} />
+                          <PasswordDisplay password={password} userEmail={user?.email || ''} userId={user?.id || ''} />
                         ) : (
                           '••••••••••••••••'
                         )}
@@ -300,14 +300,14 @@ export default function PasswordManager() {
 }
 
 // Component to display decrypted password
-function PasswordDisplay({ password, userEmail }: { password: Password; userEmail: string }) {
+function PasswordDisplay({ password, userEmail, userId }: { password: Password; userEmail: string; userId: string }) {
   const [decrypted, setDecrypted] = useState<string>('Loading...')
   
   useEffect(() => {
-    decryptPassword(password.encrypted_password, userEmail)
+    decryptPassword(password.encrypted_password, userEmail, userId)
       .then(setDecrypted)
       .catch(() => setDecrypted('Error decrypting'))
-  }, [password.encrypted_password, userEmail])
+  }, [password.encrypted_password, userEmail, userId])
   
   return <>{decrypted}</>
 }

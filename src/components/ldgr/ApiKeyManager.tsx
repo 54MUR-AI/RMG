@@ -45,9 +45,9 @@ export default function ApiKeyManager() {
   }
 
   const handleAddKey = async (input: ApiKeyInput) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      await addApiKey(user.id, user.email, input)
+      await addApiKey(user.id, user.email || '', input)
       await loadApiKeys()
       setShowAddModal(false)
     } catch (error) {
@@ -57,9 +57,9 @@ export default function ApiKeyManager() {
   }
 
   const handleUpdateKey = async (keyId: string, updates: Partial<ApiKeyInput>) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      await updateApiKey(keyId, user.email, updates)
+      await updateApiKey(keyId, user.id, updates)
       await loadApiKeys()
       setEditingKey(null)
     } catch (error) {
@@ -103,9 +103,9 @@ export default function ApiKeyManager() {
   }
 
   const handleCopyKey = async (key: ApiKey) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      const decrypted = await decryptApiKey(key.encrypted_key, user.email)
+      const decrypted = await decryptApiKey(key.encrypted_key, user.email || '', user.id)
       await navigator.clipboard.writeText(decrypted)
       setCopiedKey(key.id)
       setTimeout(() => setCopiedKey(null), 2000)
@@ -223,7 +223,7 @@ export default function ApiKeyManager() {
                     <div className="flex items-center gap-2 mb-2">
                       <code className="flex-1 px-3 py-2 bg-samurai-black rounded text-white/90 text-sm font-mono break-all">
                         {isRevealed ? (
-                          <KeyDisplay keyData={key} userEmail={user?.email || ''} />
+                          <KeyDisplay keyData={key} userEmail={user?.email || ''} userId={user?.id || ''} />
                         ) : (
                           '••••••••••••••••••••••••••••••••'
                         )}
@@ -316,14 +316,14 @@ export default function ApiKeyManager() {
 }
 
 // Component to display decrypted key
-function KeyDisplay({ keyData, userEmail }: { keyData: ApiKey; userEmail: string }) {
+function KeyDisplay({ keyData, userEmail, userId }: { keyData: ApiKey; userEmail: string; userId: string }) {
   const [decrypted, setDecrypted] = useState<string>('Loading...')
   
   useEffect(() => {
-    decryptApiKey(keyData.encrypted_key, userEmail)
+    decryptApiKey(keyData.encrypted_key, userEmail, userId)
       .then(setDecrypted)
       .catch(() => setDecrypted('Error decrypting'))
-  }, [keyData.encrypted_key, userEmail])
+  }, [keyData.encrypted_key, userEmail, userId])
   
   return <>{decrypted}</>
 }
