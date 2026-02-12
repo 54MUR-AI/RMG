@@ -509,14 +509,14 @@ END $$;
 
 CREATE POLICY "file_shares_select" ON wspr_file_shares FOR SELECT TO authenticated
   USING (
-    shared_by = (select auth.uid()) OR shared_with = (select auth.uid())
+    shared_by_user_id = (select auth.uid()) OR shared_with_user_id = (select auth.uid())
   );
 
 CREATE POLICY "file_shares_insert" ON wspr_file_shares FOR INSERT TO authenticated
-  WITH CHECK (shared_by = (select auth.uid()));
+  WITH CHECK (shared_by_user_id = (select auth.uid()));
 
 CREATE POLICY "file_shares_delete" ON wspr_file_shares FOR DELETE TO authenticated
-  USING (shared_by = (select auth.uid()));
+  USING (shared_by_user_id = (select auth.uid()));
 
 -- ============================================================
 -- PART 22: wspr_attachments — initplan fix
