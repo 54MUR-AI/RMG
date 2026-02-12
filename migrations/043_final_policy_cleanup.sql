@@ -278,7 +278,7 @@ CREATE POLICY "attachments_delete" ON wspr_attachments FOR DELETE TO authenticat
 CREATE POLICY "dm_attachments_select" ON wspr_dm_attachments FOR SELECT TO authenticated
   USING (
     uploaded_by = (select auth.uid())
-    OR dm_id IN (
+    OR dm_message_id IN (
       SELECT id FROM wspr_direct_messages
       WHERE sender_id = (select auth.uid()) OR recipient_id = (select auth.uid())
     )
