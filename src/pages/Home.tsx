@@ -280,7 +280,7 @@ export default function Home() {
                     <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
                       LDGR
                     </h3>
-                    <p className="text-xs text-samurai-red font-bold tracking-wider">Layered Data Gateway & Repository</p>
+                    <p className="text-xs text-samurai-red font-bold tracking-wider">Layered Decentralized Global Registry</p>
                   </div>
                 </div>
                 
