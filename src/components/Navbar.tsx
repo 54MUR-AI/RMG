@@ -99,14 +99,14 @@ export default function Navbar() {
                     isActive('/omni') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
-                <Link to="/scraper" className={`font-bold transition-all relative group ${
-                  isActive('/scraper') 
+                <Link to="/scrp" className={`font-bold transition-all relative group ${
+                  isActive('/scrp') 
                     ? 'text-samurai-red neon-text' 
                     : 'text-samurai-steel-light hover:text-samurai-red'
                 }`}>
                   SCRP
                   <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                    isActive('/scraper') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                    isActive('/scrp') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
                 <Link to="/ldgr" className={`font-bold transition-all relative group ${

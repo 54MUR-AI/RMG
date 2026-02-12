@@ -33,7 +33,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/reset-password" element={<ResetPassword />} />
               <Route path="/stonks" element={<StonksPage />} />
-              <Route path="/scraper" element={<ScraperPage />} />
+              <Route path="/scrp" element={<ScraperPage />} />
               <Route path="/ldgr" element={<LdgrPage />} />
               <Route path="/wspr" element={<WsprPage />} />
               <Route path="/omni" element={<OmniPage />} />
