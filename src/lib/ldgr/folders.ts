@@ -331,3 +331,32 @@ export async function ensureScrapesFolder(userId: string): Promise<Folder> {
   // Otherwise, create it
   return await createFolder(userId, 'Scrapes', null)
 }
+
+/**
+ * Ensure "Sources" subfolder exists under Scrapes
+ * Creates it if it doesn't exist, returns the folder either way
+ * Uses on-demand creation pattern - works for both new and existing users
+ */
+export async function ensureSourcesFolder(userId: string): Promise<Folder> {
+  // First ensure Scrapes folder exists (on-demand)
+  const scrapesFolder = await ensureScrapesFolder(userId)
+  
+  // Check if Sources subfolder already exists
+  const { data: existing, error: fetchError } = await supabase
+    .from('folders')
+    .select('*')
+    .eq('user_id', userId)
+    .eq('name', 'Sources')
+    .eq('parent_id', scrapesFolder.id)
+    .maybeSingle()
+  
+  if (fetchError) throw fetchError
+  
+  // If it exists, return it
+  if (existing) {
+    return existing as Folder
+  }
+  
+  // Otherwise, create it as a subfolder of Scrapes
+  return await createFolder(userId, 'Sources', scrapesFolder.id)
+}
