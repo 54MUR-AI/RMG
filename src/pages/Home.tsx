@@ -1,9 +1,11 @@
-import { TrendingUp, FileText, Sparkles, Zap, Flame, Hammer, Anvil, Lock, Brain, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
+import { Sparkles, Zap, Flame, Hammer, Anvil, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
 import AuthPopup from '../components/AuthPopup'
+import ArsenalCard from '../components/home/ArsenalCard'
+import { ARSENAL_CARDS } from '../components/home/arsenalData'
 import Forum from '../components/Forum'
 import { useAuth } from '../contexts/AuthContext'
 import { useState } from 'react'
@@ -24,22 +26,14 @@ export default function Home() {
     }
   }
 
-  // Helper to get CSS Grid order based on which card is featured
-  // Target layout: Col1[Card1, Card3], Col2[FEATURED (tall)], Col3[Card2, Card4]
-  // Grid positions: 1=left-top, 2=center-top, 3=right-top, 4=left-bottom, 5=center-bottom, 6=right-bottom
   const getCardOrder = (cardName: string) => {
-    if (!featuredCard) return 0 // Natural order when nothing featured
-    if (cardName === featuredCard) return 2 // Featured card in position 2 (center column, spans 2 rows)
-    
-    // Other 4 cards arranged around featured: positions 1, 3, 4, 6 (skipping 2 and 5 for featured)
-    // When OMNI featured: SCRP=1, LDGR=3, WSPR=4, STONKS=6
-    const allCards = ['OMNI', 'SCRP', 'LDGR', 'WSPR', 'STONKS']
+    if (!featuredCard) return 0
+    if (cardName === featuredCard) return 2
+    const allCards = ARSENAL_CARDS.map(c => c.name)
     const otherCards = allCards.filter(c => c !== featuredCard)
-    const positions = [1, 3, 4, 6] // Left-top, right-top, left-bottom, right-bottom
+    const positions = [1, 3, 4, 6]
     const orderMap: Record<string, number> = {}
-    otherCards.forEach((card, idx) => {
-      orderMap[card] = positions[idx]
-    })
+    otherCards.forEach((card, idx) => { orderMap[card] = positions[idx] })
     return orderMap[cardName] || 0
   }
 
@@ -116,363 +110,16 @@ export default function Home() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-[1fr_2fr_1fr] lg:grid-rows-2 gap-6 mb-12 lg:auto-rows-fr">
-            {/* OMNI Card */}
-            <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
-                featuredCard === 'OMNI' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
-              }`}
-              style={{ order: window.innerWidth >= 1024 ? getCardOrder('OMNI') : 0, transition: 'order 0s' }}
-              onClick={() => setFeaturedCard('OMNI')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-20 h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                    <Brain className="text-white group-hover:text-samurai-red transition-colors" size={24} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      OMNI
-                    </h3>
-                    <p className="text-xs text-samurai-red font-bold tracking-wider">Optimized Multi-Model Networked Intelligence</p>
-                  </div>
-                </div>
-                
-                {/* Thumbnail */}
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
-                  featuredCard === 'OMNI' ? 'h-48' : 'h-32'
-                }`}>
-                  <img 
-                    src="/thumbnails/omni-thumb.svg" 
-                    alt="OMNI UI Preview" 
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
-                
-                {/* Expanded Description */}
-                {featuredCard === 'OMNI' && (
-                  <div className="mb-4 animate-fade-in">
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      OMNI represents the pinnacle of AI model orchestration, providing a unified web-based command center for managing and interacting with multiple large language models simultaneously. Seamlessly integrated into the Ronin Media Group ecosystem, this sophisticated platform delivers real-time streaming responses and effortless model switching across providers including local Ollama models, Anthropic Claude, OpenAI GPT-4, Google Gemini, and Hugging Face—all through an elegant React-based interface.
-                    </p>
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      Powered by the innovative RMG Ollama Bridge Chrome extension, OMNI enables privacy-focused AI interactions by running models entirely on your local machine with zero cloud dependency. The platform features intelligent conversation management with full history tracking, markdown rendering with syntax highlighting for code blocks, and seamless authentication integration with RMG's unified login system. Advanced capabilities include model-specific parameter controls, conversation export functionality, and automatic context preservation across sessions. The system supports both cloud-based AI providers for maximum capability and local Ollama models for complete privacy, allowing you to choose the right tool for each task. Integration with LDGR's API Key Manager provides secure credential storage, while the RMG profile system ensures consistent identity across all applications.
-                    </p>
-                    <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
-                    <ul className="space-y-1 mb-4">
-                      {['Local Ollama Models (Privacy-First)', 'Cloud AI (GPT-4, Claude, Gemini)', 'RMG Ollama Bridge Integration', 'Conversation History & Export', 'Markdown & Code Highlighting', 'LDGR API Key Integration'].map((feature, idx) => (
-                        <li key={idx} className="flex items-start text-xs text-white/80">
-                          <span className="w-1.5 h-1.5 bg-samurai-red rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {/* Compact Description */}
-                {featuredCard !== 'OMNI' && (
-                  <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    Comprehensive AI dashboard providing multi-model interaction, plugin management, and performance monitoring.
-                  </p>
-                )}
-                
-                <button
-                  onClick={(e) => handleLaunchClick(e, '/omni')}
-                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                >
-                  <Zap className="mr-2" size={18} />
-                  Launch
-                </button>
-              </div>
-            </div>
-
-            {/* SCRP Card */}
-            <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
-                featuredCard === 'SCRP' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
-              }`}
-              style={{ order: window.innerWidth >= 1024 ? getCardOrder('SCRP') : 0, transition: 'order 0s' }}
-              onClick={() => setFeaturedCard('SCRP')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-20 h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                    <FileText className="text-white group-hover:text-samurai-red transition-colors" size={24} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      SCRP
-                    </h3>
-                    <p className="text-xs text-samurai-red font-bold tracking-wider">Smart Content Retrieval & Processing</p>
-                  </div>
-                </div>
-                
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
-                  featuredCard === 'SCRP' ? 'h-48' : 'h-32'
-                }`}>
-                  <img 
-                    src="/thumbnails/scrp-thumb.svg" 
-                    alt="SCRP UI Preview" 
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
-                
-                {featuredCard === 'SCRP' && (
-                  <div className="mb-4 animate-fade-in">
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      SCRP revolutionizes content intelligence by transforming disparate information sources into structured, actionable insights. This advanced platform employs cutting-edge natural language processing to extract, analyze, and synthesize content from web articles, YouTube videos, academic PDFs, and documentation with unprecedented accuracy and speed. Seamlessly integrated with the RMG ecosystem, SCRP leverages unified authentication and LDGR's API Key Manager for secure credential storage.
-                    </p>
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      Powered by multiple AI backends including GPT-4, Claude 3, Google Gemini, Hugging Face, and local Ollama models, SCRP performs intelligent content summarization with structured bullet-point extraction. The platform features a modern React frontend with FastAPI backend, providing real-time scraping progress indicators and comprehensive error handling. Integration with LDGR enables automatic storage of scraped content for future reference, while the API Key Manager eliminates the need to repeatedly enter credentials. The system generates concise 3-5 point summaries optimized for quick comprehension, supports multiple AI providers for flexibility between cloud power and local privacy, and maintains full conversation context for follow-up queries. Advanced features include source URL tracking, metadata preservation, batch processing capabilities, and seamless cross-app authentication via RMG's unified login system.
-                    </p>
-                    <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
-                    <ul className="space-y-1 mb-4">
-                      {['Multi-Source Scraping (Web, YouTube, PDFs)', 'AI Summarization (GPT-4, Claude, Gemini, Ollama)', 'LDGR API Key Integration', 'Auto-Save to LDGR Storage', 'Structured Bullet-Point Summaries', 'RMG Unified Authentication'].map((feature, idx) => (
-                        <li key={idx} className="flex items-start text-xs text-white/80">
-                          <span className="w-1.5 h-1.5 bg-samurai-red rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {featuredCard !== 'SCRP' && (
-                  <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    Smart Content Retrieval & Processing that transforms articles, videos, and PDFs into actionable intelligence.
-                  </p>
-                )}
-                
-                <button
-                  onClick={(e) => handleLaunchClick(e, '/scraper')}
-                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                >
-                  <Zap className="mr-2" size={18} />
-                  Launch
-                </button>
-              </div>
-            </div>
-
-            {/* LDGR Card */}
-            <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
-                featuredCard === 'LDGR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
-              }`}
-              style={{ order: window.innerWidth >= 1024 ? getCardOrder('LDGR') : 0, transition: 'order 0s' }}
-              onClick={() => setFeaturedCard('LDGR')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-20 h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                    <Lock className="text-white group-hover:text-samurai-red transition-colors" size={24} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      LDGR
-                    </h3>
-                    <p className="text-xs text-samurai-red font-bold tracking-wider">Layered Decentralized Global Registry</p>
-                  </div>
-                </div>
-                
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
-                  featuredCard === 'LDGR' ? 'h-48' : 'h-32'
-                }`}>
-                  <img 
-                    src="/thumbnails/ldgr-thumb.svg" 
-                    alt="LDGR UI Preview" 
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
-                
-                {featuredCard === 'LDGR' && (
-                  <div className="mb-4 animate-fade-in">
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      LDGR establishes a new paradigm in secure data management, providing a comprehensive encrypted vault for your most sensitive information. This unified security platform manages encrypted file storage across IPFS, cloud, and P2P networks, maintains password vaults with auto-fill capabilities, secures multi-chain cryptocurrency wallets, and protects API keys with role-based access control—all with military-grade AES-256-GCM encryption performed entirely client-side.
-                    </p>
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      Built on blockchain technology using the Ethereum network and Hardhat framework, LDGR ensures data immutability and cryptographic verification at every layer. The File Manager supports unlimited encrypted storage with automatic deduplication and versioning. The Password Manager features secure generation, breach monitoring, and encrypted sharing. The Crypto Wallet Manager provides multi-chain support with hardware wallet integration and transaction signing. The API Key Manager implements granular permissions, usage tracking, and automatic rotation. All data is encrypted before leaving your device, with zero-knowledge architecture ensuring the server never accesses plaintext content. Advanced features include smart contract-based access control, Merkle tree integrity verification, time-locked data release, and compliance-ready audit trails for GDPR, HIPAA, and SOC 2.
-                    </p>
-                    <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
-                    <ul className="space-y-1 mb-4">
-                      {['Encrypted File Storage (IPFS/Cloud/P2P)', 'Password Manager with Auto-Fill', 'Multi-Chain Crypto Wallet Manager', 'API Key Manager with Access Control', 'Client-Side AES-256-GCM Encryption', 'Blockchain-Backed Data Integrity'].map((feature, idx) => (
-                        <li key={idx} className="flex items-start text-xs text-white/80">
-                          <span className="w-1.5 h-1.5 bg-samurai-red rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {featuredCard !== 'LDGR' && (
-                  <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    Secure vault for files, passwords, crypto wallets, and API keys with military-grade encryption and blockchain-backed integrity.
-                  </p>
-                )}
-                
-                <button
-                  onClick={(e) => handleLaunchClick(e, '/ldgr')}
-                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                >
-                  <Zap className="mr-2" size={18} />
-                  Launch
-                </button>
-              </div>
-            </div>
-
-            {/* WSPR Card */}
-            <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
-                featuredCard === 'WSPR' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
-              }`}
-              style={{ order: window.innerWidth >= 1024 ? getCardOrder('WSPR') : 0, transition: 'order 0s' }}
-              onClick={() => setFeaturedCard('WSPR')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-20 h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                    <Zap className="text-white group-hover:text-samurai-red transition-colors" size={24} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      WSPR
-                    </h3>
-                    <p className="text-xs text-samurai-red font-bold tracking-wider">Web-Secure P2P Relay</p>
-                  </div>
-                </div>
-                
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
-                  featuredCard === 'WSPR' ? 'h-48' : 'h-32'
-                }`}>
-                  <img 
-                    src="/thumbnails/wspr-thumb.svg" 
-                    alt="WSPR UI Preview" 
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
-                
-                {featuredCard === 'WSPR' && (
-                  <div className="mb-4 animate-fade-in">
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      WSPR delivers military-grade secure communications through a sophisticated web-based platform that prioritizes user privacy above all else. The platform features encrypted workspace channels for team collaboration, private direct messaging with end-to-end encryption, and RMG-integrated contacts that work seamlessly across all applications. LDGR file sharing enables secure transmission of encrypted files directly within conversations, while real-time delivery ensures instant communication.
-                    </p>
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      Built with a modern React and TypeScript frontend paired with a hardened PostgreSQL backend, WSPR performs all encryption operations client-side using AES-256-GCM with authenticated encryption. The unified contacts system operates at the RMG level, allowing you to manage connections once and use them across WSPR, SCRP, OMNI, and future applications. Direct messages support read receipts, typing indicators, and message history with full encryption. File attachments leverage LDGR's encrypted storage, supporting multiple formats with client-side encryption before upload. Workspace channels provide organized team communication with member management, while the platform maintains zero-knowledge architecture where the server never accesses plaintext content. Real-time messaging operates over WebSocket connections with automatic reconnection and message queuing, ensuring reliable delivery even with unstable connections.
-                    </p>
-                    <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
-                    <ul className="space-y-1 mb-4">
-                      {['Direct Messages with E2E Encryption', 'RMG-Level Contacts Integration', 'LDGR Encrypted File Sharing', 'Workspace Channels & Teams', 'Real-Time WebSocket Delivery', 'Zero-Knowledge Architecture'].map((feature, idx) => (
-                        <li key={idx} className="flex items-start text-xs text-white/80">
-                          <span className="w-1.5 h-1.5 bg-samurai-red rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {featuredCard !== 'WSPR' && (
-                  <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    Secure messaging with direct messages, RMG contacts integration, LDGR file sharing, and encrypted workspace channels.
-                  </p>
-                )}
-                
-                <button
-                  onClick={(e) => handleLaunchClick(e, '/wspr')}
-                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                >
-                  <Zap className="mr-2" size={18} />
-                  Launch
-                </button>
-              </div>
-            </div>
-
-            {/* STONKS Card */}
-            <div 
-              className={`group card-hover bg-samurai-grey-darker rounded-3xl p-6 border-2 border-samurai-steel-dark relative overflow-hidden cursor-pointer transition-all duration-500 ease-in-out ${
-                featuredCard === 'STONKS' ? 'md:col-span-2 lg:col-span-1 lg:row-span-2' : ''
-              }`}
-              style={{ order: window.innerWidth >= 1024 ? getCardOrder('STONKS') : 0, transition: 'order 0s' }}
-              onClick={() => setFeaturedCard('STONKS')}
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-samurai-red/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              <div className="relative z-20 h-full flex flex-col">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-12 h-12 flex-shrink-0 steel-texture rounded-xl flex items-center justify-center group-hover:animate-glow-pulse">
-                    <TrendingUp className="text-white group-hover:text-samurai-red transition-colors" size={24} />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-2xl font-black text-white group-hover:text-samurai-red transition-colors">
-                      STONKS
-                    </h3>
-                    <p className="text-xs text-samurai-red font-bold tracking-wider">Smart Trading Options <span className="lowercase">for</span> Novices & Knowledgeable Speculators</p>
-                  </div>
-                </div>
-                
-                <div className={`mb-4 rounded-xl overflow-hidden border border-samurai-steel-dark bg-samurai-grey-dark ${
-                  featuredCard === 'STONKS' ? 'h-48' : 'h-32'
-                }`}>
-                  <img 
-                    src="/thumbnails/stonks-thumb.svg" 
-                    alt="STONKS UI Preview" 
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    decoding="async"
-                  />
-                </div>
-                
-                {featuredCard === 'STONKS' && (
-                  <div className="mb-4 animate-fade-in">
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      STONKS represents the convergence of advanced machine learning and quantitative finance, providing institutional-grade analytical capabilities for traders at all experience levels. The platform employs a sophisticated ensemble of neural network architectures including LSTM networks for time-series prediction, Transformer models for pattern recognition, WaveNet for high-frequency analysis, and Graph Neural Networks for correlation discovery across asset classes.
-                    </p>
-                    <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      The system ingests and processes real-time market data from multiple exchanges, performs sentiment analysis on financial news and social media using NLP models, calculates over 150 technical indicators, and generates probabilistic forecasts with confidence intervals. Portfolio optimization leverages modern portfolio theory combined with machine learning to balance risk-adjusted returns, while the backtesting engine supports walk-forward analysis, Monte Carlo simulation, and realistic slippage modeling. Advanced features include automated strategy generation using genetic algorithms, risk management with dynamic position sizing, real-time alert systems for market anomalies, integration with major brokerage APIs for live trading, and comprehensive performance analytics with Sharpe ratio, maximum drawdown, and alpha/beta calculations. The production infrastructure runs on Docker with Kubernetes orchestration, supports horizontal scaling, and includes comprehensive logging and monitoring.
-                    </p>
-                    <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
-                    <ul className="space-y-1 mb-4">
-                      {['LSTM, Transformer & GNN Neural Networks', 'News Intelligence & Sentiment Analysis', 'Portfolio Optimization & Risk Analytics', 'Production-Grade Infrastructure'].map((feature, idx) => (
-                        <li key={idx} className="flex items-start text-xs text-white/80">
-                          <span className="w-1.5 h-1.5 bg-samurai-red rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                
-                {featuredCard !== 'STONKS' && (
-                  <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.
-                  </p>
-                )}
-                
-                <button
-                  onClick={(e) => handleLaunchClick(e, '/stonks')}
-                  className="w-full inline-flex items-center justify-center px-4 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all flame-glow text-sm mt-auto"
-                >
-                  <Zap className="mr-2" size={18} />
-                  Launch
-                </button>
-              </div>
-            </div>
+            {ARSENAL_CARDS.map((card) => (
+              <ArsenalCard
+                key={card.name}
+                card={card}
+                isFeatured={featuredCard === card.name}
+                order={getCardOrder(card.name)}
+                onSelect={() => setFeaturedCard(card.name)}
+                onLaunch={handleLaunchClick}
+              />
+            ))}
           </div>
         </div>
       </section>

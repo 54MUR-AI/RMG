@@ -1,0 +1,103 @@
+import { Brain, FileText, Lock, Zap, TrendingUp } from 'lucide-react'
+import type { ArsenalCardData } from './ArsenalCard'
+
+export const ARSENAL_CARDS: ArsenalCardData[] = [
+  {
+    name: 'OMNI',
+    subtitle: 'Optimized Multi-Model Networked Intelligence',
+    icon: Brain,
+    thumbnail: '/thumbnails/omni-thumb.svg',
+    path: '/omni',
+    shortDescription: 'Comprehensive AI dashboard providing multi-model interaction, plugin management, and performance monitoring.',
+    longDescription: [
+      'OMNI represents the pinnacle of AI model orchestration, providing a unified web-based command center for managing and interacting with multiple large language models simultaneously. Seamlessly integrated into the Ronin Media Group ecosystem, this sophisticated platform delivers real-time streaming responses and effortless model switching across providers including local Ollama models, Anthropic Claude, OpenAI GPT-4, Google Gemini, and Hugging Face—all through an elegant React-based interface.',
+      'Powered by the innovative RMG Ollama Bridge Chrome extension, OMNI enables privacy-focused AI interactions by running models entirely on your local machine with zero cloud dependency. The platform features intelligent conversation management with full history tracking, markdown rendering with syntax highlighting for code blocks, and seamless authentication integration with RMG\'s unified login system. Advanced capabilities include model-specific parameter controls, conversation export functionality, and automatic context preservation across sessions. The system supports both cloud-based AI providers for maximum capability and local Ollama models for complete privacy, allowing you to choose the right tool for each task. Integration with LDGR\'s API Key Manager provides secure credential storage, while the RMG profile system ensures consistent identity across all applications.',
+    ],
+    features: [
+      'Local Ollama Models (Privacy-First)',
+      'Cloud AI (GPT-4, Claude, Gemini)',
+      'RMG Ollama Bridge Integration',
+      'Conversation History & Export',
+      'Markdown & Code Highlighting',
+      'LDGR API Key Integration',
+    ],
+  },
+  {
+    name: 'SCRP',
+    subtitle: 'Smart Content Retrieval & Processing',
+    icon: FileText,
+    thumbnail: '/thumbnails/scrp-thumb.svg',
+    path: '/scraper',
+    shortDescription: 'Smart Content Retrieval & Processing that transforms articles, videos, and PDFs into actionable intelligence.',
+    longDescription: [
+      'SCRP revolutionizes content intelligence by transforming disparate information sources into structured, actionable insights. This advanced platform employs cutting-edge natural language processing to extract, analyze, and synthesize content from web articles, YouTube videos, academic PDFs, and documentation with unprecedented accuracy and speed. Seamlessly integrated with the RMG ecosystem, SCRP leverages unified authentication and LDGR\'s API Key Manager for secure credential storage.',
+      'Powered by multiple AI backends including GPT-4, Claude 3, Google Gemini, Hugging Face, and local Ollama models, SCRP performs intelligent content summarization with structured bullet-point extraction. The platform features a modern React frontend with FastAPI backend, providing real-time scraping progress indicators and comprehensive error handling. Integration with LDGR enables automatic storage of scraped content for future reference, while the API Key Manager eliminates the need to repeatedly enter credentials. The system generates concise 3-5 point summaries optimized for quick comprehension, supports multiple AI providers for flexibility between cloud power and local privacy, and maintains full conversation context for follow-up queries. Advanced features include source URL tracking, metadata preservation, batch processing capabilities, and seamless cross-app authentication via RMG\'s unified login system.',
+    ],
+    features: [
+      'Multi-Source Scraping (Web, YouTube, PDFs)',
+      'AI Summarization (GPT-4, Claude, Gemini, Ollama)',
+      'LDGR API Key Integration',
+      'Auto-Save to LDGR Storage',
+      'Structured Bullet-Point Summaries',
+      'RMG Unified Authentication',
+    ],
+  },
+  {
+    name: 'LDGR',
+    subtitle: 'Layered Decentralized Global Registry',
+    icon: Lock,
+    thumbnail: '/thumbnails/ldgr-thumb.svg',
+    path: '/ldgr',
+    shortDescription: 'Secure vault for files, passwords, crypto wallets, and API keys with military-grade encryption and blockchain-backed integrity.',
+    longDescription: [
+      'LDGR establishes a new paradigm in secure data management, providing a comprehensive encrypted vault for your most sensitive information. This unified security platform manages encrypted file storage across IPFS, cloud, and P2P networks, maintains password vaults with auto-fill capabilities, secures multi-chain cryptocurrency wallets, and protects API keys with role-based access control—all with military-grade AES-256-GCM encryption performed entirely client-side.',
+      'Built on blockchain technology using the Ethereum network and Hardhat framework, LDGR ensures data immutability and cryptographic verification at every layer. The File Manager supports unlimited encrypted storage with automatic deduplication and versioning. The Password Manager features secure generation, breach monitoring, and encrypted sharing. The Crypto Wallet Manager provides multi-chain support with hardware wallet integration and transaction signing. The API Key Manager implements granular permissions, usage tracking, and automatic rotation. All data is encrypted before leaving your device, with zero-knowledge architecture ensuring the server never accesses plaintext content. Advanced features include smart contract-based access control, Merkle tree integrity verification, time-locked data release, and compliance-ready audit trails for GDPR, HIPAA, and SOC 2.',
+    ],
+    features: [
+      'Encrypted File Storage (IPFS/Cloud/P2P)',
+      'Password Manager with Auto-Fill',
+      'Multi-Chain Crypto Wallet Manager',
+      'API Key Manager with Access Control',
+      'Client-Side AES-256-GCM Encryption',
+      'Blockchain-Backed Data Integrity',
+    ],
+  },
+  {
+    name: 'WSPR',
+    subtitle: 'Web-Secure P2P Relay',
+    icon: Zap,
+    thumbnail: '/thumbnails/wspr-thumb.svg',
+    path: '/wspr',
+    shortDescription: 'Secure messaging with direct messages, RMG contacts integration, LDGR file sharing, and encrypted workspace channels.',
+    longDescription: [
+      'WSPR delivers military-grade secure communications through a sophisticated web-based platform that prioritizes user privacy above all else. The platform features encrypted workspace channels for team collaboration, private direct messaging with end-to-end encryption, and RMG-integrated contacts that work seamlessly across all applications. LDGR file sharing enables secure transmission of encrypted files directly within conversations, while real-time delivery ensures instant communication.',
+      'Built with a modern React and TypeScript frontend paired with a hardened PostgreSQL backend, WSPR performs all encryption operations client-side using AES-256-GCM with authenticated encryption. The unified contacts system operates at the RMG level, allowing you to manage connections once and use them across WSPR, SCRP, OMNI, and future applications. Direct messages support read receipts, typing indicators, and message history with full encryption. File attachments leverage LDGR\'s encrypted storage, supporting multiple formats with client-side encryption before upload. Workspace channels provide organized team communication with member management, while the platform maintains zero-knowledge architecture where the server never accesses plaintext content. Real-time messaging operates over WebSocket connections with automatic reconnection and message queuing, ensuring reliable delivery even with unstable connections.',
+    ],
+    features: [
+      'Direct Messages with E2E Encryption',
+      'RMG-Level Contacts Integration',
+      'LDGR Encrypted File Sharing',
+      'Workspace Channels & Teams',
+      'Real-Time WebSocket Delivery',
+      'Zero-Knowledge Architecture',
+    ],
+  },
+  {
+    name: 'STONKS',
+    subtitle: 'Smart Trading Options for Novices & Knowledgeable Speculators',
+    icon: TrendingUp,
+    thumbnail: '/thumbnails/stonks-thumb.svg',
+    path: '/stonks',
+    shortDescription: 'Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.',
+    longDescription: [
+      'STONKS represents the convergence of advanced machine learning and quantitative finance, providing institutional-grade analytical capabilities for traders at all experience levels. The platform employs a sophisticated ensemble of neural network architectures including LSTM networks for time-series prediction, Transformer models for pattern recognition, WaveNet for high-frequency analysis, and Graph Neural Networks for correlation discovery across asset classes.',
+      'The system ingests and processes real-time market data from multiple exchanges, performs sentiment analysis on financial news and social media using NLP models, calculates over 150 technical indicators, and generates probabilistic forecasts with confidence intervals. Portfolio optimization leverages modern portfolio theory combined with machine learning to balance risk-adjusted returns, while the backtesting engine supports walk-forward analysis, Monte Carlo simulation, and realistic slippage modeling. Advanced features include automated strategy generation using genetic algorithms, risk management with dynamic position sizing, real-time alert systems for market anomalies, integration with major brokerage APIs for live trading, and comprehensive performance analytics with Sharpe ratio, maximum drawdown, and alpha/beta calculations. The production infrastructure runs on Docker with Kubernetes orchestration, supports horizontal scaling, and includes comprehensive logging and monitoring.',
+    ],
+    features: [
+      'LSTM, Transformer & GNN Neural Networks',
+      'News Intelligence & Sentiment Analysis',
+      'Portfolio Optimization & Risk Analytics',
+      'Production-Grade Infrastructure',
+    ],
+  },
+]
