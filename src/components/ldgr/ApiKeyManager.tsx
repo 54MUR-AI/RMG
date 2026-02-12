@@ -13,6 +13,8 @@ import {
   type ApiKey,
   type ApiKeyInput
 } from '../../lib/ldgr/apiKeys'
+import { secureCopy } from '../../lib/ldgr/secureClipboard'
+import { useAutoLock } from '../../hooks/useAutoLock'
 
 export default function ApiKeyManager() {
   const { user } = useAuth()
@@ -24,6 +26,11 @@ export default function ApiKeyManager() {
   const [copiedKey, setCopiedKey] = useState<string | null>(null)
   const [filterCategory, setFilterCategory] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
+
+  useAutoLock(() => {
+    setRevealedKeys(new Set())
+    setCopiedKey(null)
+  })
 
   useEffect(() => {
     if (user) {
@@ -106,7 +113,7 @@ export default function ApiKeyManager() {
     if (!user) return
     try {
       const decrypted = await decryptApiKey(key.encrypted_key, user.email || '', user.id)
-      await navigator.clipboard.writeText(decrypted)
+      await secureCopy(decrypted)
       setCopiedKey(key.id)
       setTimeout(() => setCopiedKey(null), 2000)
     } catch (error) {

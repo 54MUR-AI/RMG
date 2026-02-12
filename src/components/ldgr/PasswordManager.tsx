@@ -11,6 +11,8 @@ import {
   type Password,
   type PasswordInput
 } from '../../lib/ldgr/passwords'
+import { secureCopy } from '../../lib/ldgr/secureClipboard'
+import { useAutoLock } from '../../hooks/useAutoLock'
 
 const PASSWORD_CATEGORIES = {
   social: { name: 'Social', icon: '👥', color: 'blue' },
@@ -32,6 +34,11 @@ export default function PasswordManager() {
   const [copiedPassword, setCopiedPassword] = useState<string | null>(null)
   const [filterCategory, setFilterCategory] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
+
+  useAutoLock(() => {
+    setRevealedPasswords(new Set())
+    setCopiedPassword(null)
+  })
 
   useEffect(() => {
     if (user) {
@@ -103,7 +110,7 @@ export default function PasswordManager() {
     if (!user) return
     try {
       const decrypted = await decryptPassword(password.encrypted_password, user.email || '', user.id)
-      await navigator.clipboard.writeText(decrypted)
+      await secureCopy(decrypted)
       setCopiedPassword(password.id)
       setTimeout(() => setCopiedPassword(null), 2000)
     } catch (error) {

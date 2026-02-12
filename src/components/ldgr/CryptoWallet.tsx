@@ -4,6 +4,9 @@ import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
 import MultiChainWalletImport from './MultiChainWalletImport'
 import WalletPerformanceChart from './WalletPerformanceChart'
+import { secureCopy } from '../../lib/ldgr/secureClipboard'
+import { useAutoLock } from '../../hooks/useAutoLock'
+import ReAuthGate from './ReAuthGate'
 import {
   getUserWallets,
   addWallet,
@@ -46,6 +49,12 @@ export default function CryptoWallet() {
   const [copiedItem, setCopiedItem] = useState<string | null>(null)
   const [filterBlockchain, setFilterBlockchain] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
+  const [pendingRevealId, setPendingRevealId] = useState<string | null>(null)
+
+  useAutoLock(() => {
+    setRevealedSeeds(new Set())
+    setCopiedItem(null)
+  })
 
   useEffect(() => {
     if (user) {
@@ -132,7 +141,15 @@ export default function CryptoWallet() {
         return next
       })
     } else {
-      setRevealedSeeds(prev => new Set(prev).add(walletId))
+      // Show re-auth gate before revealing seed phrase
+      setPendingRevealId(walletId)
+    }
+  }
+
+  const confirmRevealSeed = () => {
+    if (pendingRevealId) {
+      setRevealedSeeds(prev => new Set(prev).add(pendingRevealId))
+      setPendingRevealId(null)
     }
   }
 
@@ -144,7 +161,7 @@ export default function CryptoWallet() {
     }
     try {
       const decrypted = await decryptSeedPhrase(wallet.encrypted_seed_phrase, user.email || '', user.id)
-      await navigator.clipboard.writeText(decrypted)
+      await secureCopy(decrypted)
       setCopiedItem(`seed-${wallet.id}`)
       setTimeout(() => setCopiedItem(null), 2000)
     } catch (error) {
@@ -518,6 +535,16 @@ export default function CryptoWallet() {
             setShowAddModal(false)
             setEditingWallet(null)
           }}
+        />
+      )}
+
+      {/* Re-Auth Gate for Seed Phrase Reveal */}
+      {pendingRevealId && (
+        <ReAuthGate
+          title="Reveal Seed Phrase"
+          message="Seed phrases grant full access to your wallet funds. Make sure no one can see your screen before revealing."
+          onConfirm={confirmRevealSeed}
+          onCancel={() => setPendingRevealId(null)}
         />
       )}
 
