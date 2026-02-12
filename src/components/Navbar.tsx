@@ -160,10 +160,18 @@ export default function Navbar() {
                 <button
                   ref={profileButtonRef}
                   onClick={() => setShowProfileDropdown(!showProfileDropdown)}
-                  className="flex items-center justify-center w-8 h-8 rounded-full text-white font-bold cursor-pointer transition-all hover:scale-110"
-                  style={{ backgroundColor: user.user_metadata?.avatar_color || '#E63946' }}
+                  className="flex items-center justify-center w-8 h-8 rounded-full text-white font-bold cursor-pointer transition-all hover:scale-110 overflow-hidden"
+                  style={!user.user_metadata?.avatar_url ? { backgroundColor: user.user_metadata?.avatar_color || '#E63946' } : {}}
                 >
-                  {user.user_metadata?.display_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase() || 'U'}
+                  {user.user_metadata?.avatar_url ? (
+                    <img
+                      src={user.user_metadata.avatar_url}
+                      alt="Profile"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    user.user_metadata?.display_name?.charAt(0).toUpperCase() || user.email?.charAt(0).toUpperCase() || 'U'
+                  )}
                 </button>
                 {showProfileDropdown && (
                   <ProfileDropdown
