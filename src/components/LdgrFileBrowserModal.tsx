@@ -41,23 +41,36 @@ export default function LdgrFileBrowserModal({ isOpen, onClose, onSelectFile, us
     setIsLoading(true)
     try {
       // Load folders
-      const { data: foldersData, error: foldersError } = await supabase
+      const foldersQuery = supabase
         .from('folders')
         .select('*')
         .eq('user_id', userId)
-        .eq('parent_id', folderId)
         .order('name', { ascending: true })
 
+      if (folderId === null) {
+        foldersQuery.is('parent_id', null)
+      } else {
+        foldersQuery.eq('parent_id', folderId)
+      }
+
+      const { data: foldersData, error: foldersError } = await foldersQuery
       if (foldersError) throw foldersError
       setFolders(foldersData || [])
 
       // Load files
-      const { data: filesData, error: filesError } = await supabase
+      const filesQuery = supabase
         .from('files')
         .select('*')
         .eq('user_id', userId)
-        .eq('folder_id', folderId)
         .order('name', { ascending: true })
+
+      if (folderId === null) {
+        filesQuery.is('folder_id', null)
+      } else {
+        filesQuery.eq('folder_id', folderId)
+      }
+
+      const { data: filesData, error: filesError } = await filesQuery
 
       if (filesError) throw filesError
       setFiles(filesData || [])
