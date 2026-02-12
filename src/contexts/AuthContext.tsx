@@ -36,6 +36,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signOut = async () => {
     await supabase.auth.signOut()
+    
+    // Clear all Supabase auth tokens from localStorage
+    // This ensures the next login gets a fresh token
+    const keysToRemove = [
+      'sb-meqfiyuaxgwbstcdmjgz-auth-token',
+      'supabase.auth.token',
+      'sb-auth-token'
+    ]
+    
+    keysToRemove.forEach(key => {
+      localStorage.removeItem(key)
+    })
   }
 
   return (
