@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { MessageSquare, Loader2, Lock, BookOpen, Settings } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import ReadmePopup from '../components/ReadmePopup'
+import LdgrFileBrowserModal from '../components/LdgrFileBrowserModal'
 import { supabase } from '../lib/supabase'
 
 export default function WsprPage() {
@@ -10,6 +11,7 @@ export default function WsprPage() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [showReadme, setShowReadme] = useState(false)
+  const [showFileBrowser, setShowFileBrowser] = useState(false)
 
   useEffect(() => {
     // Only check health if user is authenticated
@@ -210,21 +212,8 @@ export default function WsprPage() {
       } else if (event.data.type === 'WSPR_BROWSE_LDGR') {
         console.log('RMG: Received LDGR browse request:', event.data)
         
-        // TODO: Implement LDGR file browser
-        // This will need to:
-        // 1. Open LDGR file browser modal
-        // 2. Let user select a file
-        // 3. Return file metadata to WSPR
-        
-        if (iframeRef.current?.contentWindow) {
-          iframeRef.current.contentWindow.postMessage({
-            type: 'LDGR_FILE_SELECTED',
-            fileId: 'placeholder-file-id',
-            filename: 'placeholder.txt',
-            fileSize: 1024,
-            mimeType: 'text/plain'
-          }, '*')
-        }
+        // Open LDGR file browser modal
+        setShowFileBrowser(true)
       } else if (event.data.type === 'WSPR_DOWNLOAD_FILE') {
         console.log('RMG: Received file download request:', event.data)
         
@@ -362,6 +351,36 @@ export default function WsprPage() {
         <ReadmePopup
           readmeUrl="https://raw.githubusercontent.com/54MUR-AI/wspr-web/main/README.md"
           onClose={() => setShowReadme(false)}
+        />
+      )}
+
+      {/* LDGR File Browser Modal */}
+      {showFileBrowser && user && (
+        <LdgrFileBrowserModal
+          isOpen={showFileBrowser}
+          onClose={() => {
+            setShowFileBrowser(false)
+            // Send cancel message to WSPR
+            if (iframeRef.current?.contentWindow) {
+              iframeRef.current.contentWindow.postMessage({
+                type: 'LDGR_BROWSE_CANCELLED'
+              }, '*')
+            }
+          }}
+          onSelectFile={(file) => {
+            // Send selected file metadata to WSPR
+            if (iframeRef.current?.contentWindow) {
+              iframeRef.current.contentWindow.postMessage({
+                type: 'LDGR_FILE_SELECTED',
+                fileId: file.id,
+                filename: file.name,
+                fileSize: file.size,
+                mimeType: file.type
+              }, '*')
+            }
+            setShowFileBrowser(false)
+          }}
+          userId={user.id}
         />
       )}
     </div>
