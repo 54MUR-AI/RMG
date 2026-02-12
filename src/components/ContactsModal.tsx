@@ -98,7 +98,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[10000] p-4">
       <div className="bg-samurai-black-lighter rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col border-2 border-samurai-red shadow-2xl shadow-samurai-red/20">
         {/* Header */}
         <div className="p-6 border-b border-samurai-grey-dark">
