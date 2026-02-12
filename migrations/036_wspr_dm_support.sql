@@ -120,6 +120,7 @@ RETURNS TABLE (
   contact_avatar_color TEXT,
   last_message TEXT,
   last_message_at TIMESTAMP WITH TIME ZONE,
+  last_message_sender_name TEXT,
   unread_count BIGINT
 )
 LANGUAGE plpgsql
@@ -142,7 +143,8 @@ BEGIN
     SELECT DISTINCT ON (cp.partner_id)
       cp.partner_id,
       dm.content,
-      dm.created_at
+      dm.created_at,
+      dm.sender_id
     FROM conversation_partners cp
     JOIN wspr_direct_messages dm ON (
       (dm.sender_id = user_id_param AND dm.recipient_id = cp.partner_id)
@@ -167,9 +169,11 @@ BEGIN
     COALESCE(wp.avatar_color, '#E63946') AS contact_avatar_color,
     lm.content AS last_message,
     lm.created_at AS last_message_at,
+    COALESCE(sp.display_name, 'Unknown') AS last_message_sender_name,
     COALESCE(uc.cnt, 0) AS unread_count
   FROM latest_messages lm
   LEFT JOIN wspr_profiles wp ON wp.id = lm.partner_id
+  LEFT JOIN wspr_profiles sp ON sp.id = lm.sender_id
   LEFT JOIN unread_counts uc ON uc.partner_id = lm.partner_id
   ORDER BY lm.created_at DESC;
 END;
