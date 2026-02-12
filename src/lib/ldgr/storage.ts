@@ -213,6 +213,32 @@ export async function getUserFiles(userId: string, folderId: string | null = nul
 }
 
 /**
+ * Fetches files shared with the user via wspr_file_shares (for Drops folder view)
+ */
+export async function getSharedFiles(userId: string): Promise<Array<FileMetadata & { shared_by_display_name: string; share_context: string }>> {
+  const { data, error } = await supabase
+    .rpc('get_shared_files', { user_id_param: userId })
+
+  if (error) {
+    console.error('Error fetching shared files:', error)
+    return []
+  }
+
+  return (data || []).map((item: any) => ({
+    id: item.file_id,
+    user_id: item.shared_by_user_id,
+    name: item.filename,
+    size: item.file_size,
+    type: item.file_type,
+    storage_path: item.storage_path,
+    folder_id: null,
+    created_at: item.shared_at,
+    shared_by_display_name: item.shared_by_display_name,
+    share_context: item.share_context
+  }))
+}
+
+/**
  * Moves a file to a different folder
  */
 export async function moveFile(fileId: string, newFolderId: string | null): Promise<FileMetadata> {

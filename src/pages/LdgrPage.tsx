@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { FolderOpen, Key, Lock, Wallet, BookOpen, Settings } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { supabase } from '../lib/supabase'
 import FileUpload from '../components/ldgr/FileUpload'
 import FileList from '../components/ldgr/FileList'
 import FolderView from '../components/ldgr/FolderView'
@@ -9,7 +10,7 @@ import PasswordManager from '../components/ldgr/PasswordManager'
 import CryptoWallet from '../components/ldgr/CryptoWallet'
 import ReadmePopup from '../components/ReadmePopup'
 import LdgrSettings from '../components/ldgr/LdgrSettings'
-import { uploadFile, getUserFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
+import { uploadFile, getUserFiles, getSharedFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
 import { getFoldersByParent, createFolder, renameFolder, deleteFolder, getFolderPath, countFilesInFolder, countSubfoldersInFolder, ensureDefaultFolders } from '../lib/ldgr/folders'
 import type { Folder } from '../lib/ldgr/folders'
@@ -26,6 +27,7 @@ export default function LdgrPage() {
   const [showReadme, setShowReadme] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [activeTab, setActiveTab] = useState<'files' | 'passwords' | 'crypto' | 'api-keys'>('files')
+  const [isDropsFolder, setIsDropsFolder] = useState(false)
   const { user } = useAuth()
 
   useEffect(() => {
@@ -45,6 +47,24 @@ export default function LdgrPage() {
     if (!user) return
     try {
       setLoading(true)
+
+      // Check if current folder is the Drops folder
+      if (currentFolderId) {
+        const { data: folderData } = await supabase
+          .from('folders')
+          .select('name, parent_id')
+          .eq('id', currentFolderId)
+          .single()
+
+        if (folderData?.name === 'Drops' && folderData?.parent_id === null) {
+          setIsDropsFolder(true)
+          const sharedFiles = await getSharedFiles(user.id)
+          setFiles(sharedFiles)
+          return
+        }
+      }
+
+      setIsDropsFolder(false)
       const userFiles = await getUserFiles(user.id, currentFolderId)
       setFiles(userFiles)
     } catch (error) {
@@ -283,7 +303,9 @@ export default function LdgrPage() {
               </p>
             </div>
 
-            <FileUpload onFileUpload={handleFileUpload} uploading={uploading} />
+            {!isDropsFolder && (
+              <FileUpload onFileUpload={handleFileUpload} uploading={uploading} />
+            )}
 
             <div className="mt-8">
               <FolderView
@@ -301,6 +323,13 @@ export default function LdgrPage() {
               />
             </div>
 
+            {isDropsFolder && (
+              <div className="mt-6 mb-4 glass-card p-4 rounded-xl border border-samurai-red/20">
+                <p className="text-samurai-red font-semibold text-sm">📥 Drops — Files shared with you</p>
+                <p className="text-white/50 text-xs mt-1">Files shared via WSPR DMs and channels appear here. Download to decrypt.</p>
+              </div>
+            )}
+
             {loading ? (
               <div className="mt-12 text-center">
                 <div className="inline-block w-8 h-8 border-4 border-samurai-red/30 border-t-samurai-red rounded-full animate-spin" />
@@ -311,13 +340,13 @@ export default function LdgrPage() {
                 <FileList 
                   files={files} 
                   onDownload={handleFileDownload}
-                  onDelete={handleFileDelete}
-                  onMoveFile={handleMoveFile}
+                  onDelete={isDropsFolder ? undefined : handleFileDelete}
+                  onMoveFile={isDropsFolder ? undefined : handleMoveFile}
                 />
               </div>
             ) : (
               <div className="mt-12 text-center text-white/50">
-                <p>No files yet. Upload your first file above!</p>
+                <p>{isDropsFolder ? 'No files have been shared with you yet.' : 'No files yet. Upload your first file above!'}</p>
               </div>
             )}
           </>

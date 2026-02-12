@@ -21,7 +21,8 @@ END $$;
 --    The actual file lives in LDGR storage once — this table
 --    records who has access and in what context.
 -- ============================================================
-CREATE TABLE IF NOT EXISTS wspr_file_shares (
+DROP TABLE IF EXISTS wspr_file_shares CASCADE;
+CREATE TABLE wspr_file_shares (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   file_id UUID NOT NULL REFERENCES files(id) ON DELETE CASCADE,
   shared_with_user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -163,7 +164,67 @@ BEGIN
 END $$;
 
 -- ============================================================
--- 6. RPC: Get files shared with a user (for Drops view)
+-- 6. DM Attachments table (parallel to wspr_attachments for channels)
+-- ============================================================
+DROP TABLE IF EXISTS wspr_dm_attachments CASCADE;
+CREATE TABLE wspr_dm_attachments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  dm_message_id UUID NOT NULL REFERENCES wspr_direct_messages(id) ON DELETE CASCADE,
+  ldgr_file_id UUID NOT NULL REFERENCES files(id) ON DELETE CASCADE,
+  filename TEXT NOT NULL,
+  file_size BIGINT NOT NULL DEFAULT 0,
+  mime_type TEXT,
+  uploaded_by UUID NOT NULL REFERENCES auth.users(id),
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_wspr_dm_attachments_message
+  ON wspr_dm_attachments(dm_message_id);
+
+ALTER TABLE wspr_dm_attachments ENABLE ROW LEVEL SECURITY;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'wspr_dm_attachments' AND policyname = 'Users can view DM attachments they sent or received'
+  ) THEN
+    CREATE POLICY "Users can view DM attachments they sent or received" ON wspr_dm_attachments
+      FOR SELECT USING (
+        auth.uid() = uploaded_by OR
+        auth.uid() IN (
+          SELECT recipient_id FROM wspr_direct_messages WHERE id = dm_message_id
+          UNION
+          SELECT sender_id FROM wspr_direct_messages WHERE id = dm_message_id
+        )
+      );
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'wspr_dm_attachments' AND policyname = 'Users can create DM attachments'
+  ) THEN
+    CREATE POLICY "Users can create DM attachments" ON wspr_dm_attachments
+      FOR INSERT WITH CHECK (auth.uid() = uploaded_by);
+  END IF;
+END $$;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1 FROM pg_policies
+    WHERE tablename = 'wspr_dm_attachments' AND policyname = 'Uploaders can delete DM attachments'
+  ) THEN
+    CREATE POLICY "Uploaders can delete DM attachments" ON wspr_dm_attachments
+      FOR DELETE USING (auth.uid() = uploaded_by);
+  END IF;
+END $$;
+
+-- ============================================================
+-- 7. RPC: Get files shared with a user (for Drops view)
 -- ============================================================
 CREATE OR REPLACE FUNCTION get_shared_files(user_id_param UUID)
 RETURNS TABLE (

@@ -4,7 +4,7 @@ import type { FileMetadata } from '../../lib/ldgr/storage'
 interface FileListProps {
   files: FileMetadata[]
   onDownload: (file: FileMetadata) => void
-  onDelete: (file: FileMetadata) => void
+  onDelete?: (file: FileMetadata) => void
   onMoveFile?: (fileId: string, folderId: string | null) => void
 }
 
@@ -81,12 +81,14 @@ export default function FileList({ files, onDownload, onDelete, onMoveFile }: Fi
               >
                 <Share2 className="w-4 h-4" />
               </button>
-              <button 
-                onClick={() => onDelete(file)}
-                className="flex items-center justify-center px-4 py-2 bg-samurai-grey-dark hover:bg-red-900/20 border border-samurai-red/30 hover:border-red-500 rounded-lg transition-all duration-300"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              {onDelete && (
+                <button 
+                  onClick={() => onDelete(file)}
+                  className="flex items-center justify-center px-4 py-2 bg-samurai-grey-dark hover:bg-red-900/20 border border-samurai-red/30 hover:border-red-500 rounded-lg transition-all duration-300"
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              )}
             </div>
           </div>
         ))}
