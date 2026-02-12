@@ -101,7 +101,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
   return (
     <ModalPortal>
       <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[10000] p-4">
-      <div className="bg-samurai-black-lighter rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col border-2 border-samurai-red shadow-2xl shadow-samurai-red/20">
+      <div className="bg-samurai-grey-darker rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col border-2 border-samurai-red shadow-2xl shadow-samurai-red/20">
         {/* Header */}
         <div className="p-6 border-b border-samurai-grey-dark">
           <div className="flex items-center justify-between mb-4">
