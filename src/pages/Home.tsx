@@ -247,7 +247,7 @@ export default function Home() {
                 
                 {featuredCard !== 'SCRP' && (
                   <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    AI-powered content extraction and summarization that transforms articles, videos, and PDFs into actionable intelligence.
+                    Smart Content Retrieval & Processing that transforms articles, videos, and PDFs into actionable intelligence.
                   </p>
                 )}
                 
