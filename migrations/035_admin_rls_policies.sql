@@ -9,8 +9,8 @@ DROP FUNCTION IF EXISTS public.is_admin(uuid) CASCADE;
 CREATE FUNCTION public.is_admin(check_user_id uuid)
 RETURNS boolean AS $$
   SELECT EXISTS (
-    SELECT 1 FROM public.user_roles
-    WHERE user_id = check_user_id AND is_admin = true
+    SELECT 1 FROM public.user_roles ur
+    WHERE ur.user_id = check_user_id AND ur.is_admin = true
   );
 $$ LANGUAGE sql SECURITY DEFINER STABLE;
 
@@ -21,8 +21,8 @@ DROP FUNCTION IF EXISTS public.is_moderator(uuid) CASCADE;
 CREATE FUNCTION public.is_moderator(check_user_id uuid)
 RETURNS boolean AS $$
   SELECT EXISTS (
-    SELECT 1 FROM public.user_roles
-    WHERE user_id = check_user_id AND (is_moderator = true OR is_admin = true)
+    SELECT 1 FROM public.user_roles ur
+    WHERE ur.user_id = check_user_id AND (ur.is_moderator = true OR ur.is_admin = true)
   );
 $$ LANGUAGE sql SECURITY DEFINER STABLE;
 
