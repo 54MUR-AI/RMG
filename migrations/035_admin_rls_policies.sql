@@ -5,7 +5,8 @@
 -- ============================================================
 -- Helper function: check if a user is admin
 -- ============================================================
-CREATE OR REPLACE FUNCTION public.is_admin(check_user_id uuid)
+DROP FUNCTION IF EXISTS public.is_admin(uuid);
+CREATE FUNCTION public.is_admin(check_user_id uuid)
 RETURNS boolean AS $$
   SELECT EXISTS (
     SELECT 1 FROM public.user_roles
@@ -16,7 +17,8 @@ $$ LANGUAGE sql SECURITY DEFINER STABLE;
 -- ============================================================
 -- Helper function: check if a user is moderator or admin
 -- ============================================================
-CREATE OR REPLACE FUNCTION public.is_moderator(check_user_id uuid)
+DROP FUNCTION IF EXISTS public.is_moderator(uuid);
+CREATE FUNCTION public.is_moderator(check_user_id uuid)
 RETURNS boolean AS $$
   SELECT EXISTS (
     SELECT 1 FROM public.user_roles
@@ -29,21 +31,21 @@ $$ LANGUAGE sql SECURITY DEFINER STABLE;
 -- ============================================================
 ALTER TABLE public.forum_threads ENABLE ROW LEVEL SECURITY;
 
--- Anyone authenticated can read threads
+DROP POLICY IF EXISTS "threads_select" ON public.forum_threads;
 CREATE POLICY "threads_select" ON public.forum_threads
   FOR SELECT USING (true);
 
--- Users can insert their own threads
+DROP POLICY IF EXISTS "threads_insert" ON public.forum_threads;
 CREATE POLICY "threads_insert" ON public.forum_threads
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
--- Users can update their own threads; moderators can update any thread
+DROP POLICY IF EXISTS "threads_update" ON public.forum_threads;
 CREATE POLICY "threads_update" ON public.forum_threads
   FOR UPDATE USING (
     auth.uid() = user_id OR public.is_moderator(auth.uid())
   );
 
--- Users can delete their own threads; moderators can delete any thread
+DROP POLICY IF EXISTS "threads_delete" ON public.forum_threads;
 CREATE POLICY "threads_delete" ON public.forum_threads
   FOR DELETE USING (
     auth.uid() = user_id OR public.is_moderator(auth.uid())
@@ -54,19 +56,19 @@ CREATE POLICY "threads_delete" ON public.forum_threads
 -- ============================================================
 ALTER TABLE public.forum_posts ENABLE ROW LEVEL SECURITY;
 
--- Anyone authenticated can read posts
+DROP POLICY IF EXISTS "posts_select" ON public.forum_posts;
 CREATE POLICY "posts_select" ON public.forum_posts
   FOR SELECT USING (true);
 
--- Users can insert their own posts
+DROP POLICY IF EXISTS "posts_insert" ON public.forum_posts;
 CREATE POLICY "posts_insert" ON public.forum_posts
   FOR INSERT WITH CHECK (auth.uid() = user_id);
 
--- Users can update their own posts
+DROP POLICY IF EXISTS "posts_update" ON public.forum_posts;
 CREATE POLICY "posts_update" ON public.forum_posts
   FOR UPDATE USING (auth.uid() = user_id);
 
--- Users can delete their own posts; moderators can delete any post
+DROP POLICY IF EXISTS "posts_delete" ON public.forum_posts;
 CREATE POLICY "posts_delete" ON public.forum_posts
   FOR DELETE USING (
     auth.uid() = user_id OR public.is_moderator(auth.uid())
@@ -77,17 +79,19 @@ CREATE POLICY "posts_delete" ON public.forum_posts
 -- ============================================================
 ALTER TABLE public.forum_categories ENABLE ROW LEVEL SECURITY;
 
--- Anyone can read categories
+DROP POLICY IF EXISTS "categories_select" ON public.forum_categories;
 CREATE POLICY "categories_select" ON public.forum_categories
   FOR SELECT USING (true);
 
--- Only admins can insert/update/delete categories
+DROP POLICY IF EXISTS "categories_insert" ON public.forum_categories;
 CREATE POLICY "categories_insert" ON public.forum_categories
   FOR INSERT WITH CHECK (public.is_admin(auth.uid()));
 
+DROP POLICY IF EXISTS "categories_update" ON public.forum_categories;
 CREATE POLICY "categories_update" ON public.forum_categories
   FOR UPDATE USING (public.is_admin(auth.uid()));
 
+DROP POLICY IF EXISTS "categories_delete" ON public.forum_categories;
 CREATE POLICY "categories_delete" ON public.forum_categories
   FOR DELETE USING (public.is_admin(auth.uid()));
 
@@ -96,16 +100,16 @@ CREATE POLICY "categories_delete" ON public.forum_categories
 -- ============================================================
 ALTER TABLE public.user_roles ENABLE ROW LEVEL SECURITY;
 
--- Users can read their own role; admins can read all
+DROP POLICY IF EXISTS "roles_select" ON public.user_roles;
 CREATE POLICY "roles_select" ON public.user_roles
   FOR SELECT USING (
     auth.uid() = user_id OR public.is_admin(auth.uid())
   );
 
--- Only admins can update roles
+DROP POLICY IF EXISTS "roles_update" ON public.user_roles;
 CREATE POLICY "roles_update" ON public.user_roles
   FOR UPDATE USING (public.is_admin(auth.uid()));
 
--- Only admins can delete roles
+DROP POLICY IF EXISTS "roles_delete" ON public.user_roles;
 CREATE POLICY "roles_delete" ON public.user_roles
   FOR DELETE USING (public.is_admin(auth.uid()));
