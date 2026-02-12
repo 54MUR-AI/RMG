@@ -298,7 +298,7 @@ export default function WsprPage() {
   // Auth gate - require login
   if (!user) {
     return (
-      <div className="min-h-screen bg-samurai-black flex items-center justify-center p-4">
+      <div className="bg-samurai-black flex items-center justify-center p-4 py-32">
         <div className="glass-card p-12 rounded-xl max-w-md text-center">
           <Lock className="w-20 h-20 text-samurai-red mx-auto mb-6 animate-glow-pulse" />
           <h1 className="text-4xl font-bold neon-text mb-4">WSPR</h1>
@@ -339,7 +339,7 @@ export default function WsprPage() {
 
       {/* Error State */}
       {error && !isLoading && (
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center min-h-screen">
           <div className="glass-card p-8 rounded-xl max-w-md text-center">
             <MessageSquare className="w-16 h-16 text-samurai-red mx-auto mb-4" />
             <h2 className="text-xl font-bold mb-2">Service Unavailable</h2>
