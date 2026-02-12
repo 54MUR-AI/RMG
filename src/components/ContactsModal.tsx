@@ -206,20 +206,20 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-2">
                       <button
                         onClick={() => setDmRecipient(contact)}
-                        className="flex items-center gap-2 px-4 py-2 bg-samurai-red hover:bg-samurai-red-dark text-white rounded-lg font-semibold transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 text-samurai-steel hover:text-samurai-red hover:bg-samurai-red/10 rounded-lg transition-colors"
                       >
-                        <MessageSquare size={16} />
+                        <MessageSquare size={18} />
                         Message
                       </button>
                       <button
                         onClick={() => handleRemoveContact(contact.contact_id)}
-                        className="p-2 text-samurai-steel hover:text-samurai-red transition-colors"
-                        title="Remove contact"
+                        className="flex items-center gap-2 px-4 py-2 text-samurai-steel hover:text-samurai-red hover:bg-samurai-red/10 rounded-lg transition-colors"
                       >
                         <Trash2 size={18} />
+                        Remove
                       </button>
                     </div>
                   </div>
