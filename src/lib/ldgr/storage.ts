@@ -61,8 +61,59 @@ export async function uploadFile(file: File, userId: string, userEmail: string, 
 }
 
 /**
+ * Uploads a file encrypted with the folder's key (for shared folders).
+ * Anyone with access to the folder can derive the same key and decrypt.
+ * Falls back to user-keyed encryption if no folderId is provided.
+ */
+export async function uploadSharedFile(
+  file: File,
+  userId: string,
+  _userEmail: string,
+  folderId: string
+) {
+  try {
+    // Encrypt with folder key so all folder members can decrypt
+    const encryptionKey = folderId
+    const encryptedBlob = await encryptFile(file, encryptionKey)
+    
+    const timestamp = Date.now()
+    const fileName = `${timestamp}_${file.name}.encrypted`
+    
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('files')
+      .upload(fileName, encryptedBlob, {
+        contentType: 'application/octet-stream',
+        upsert: false
+      })
+    
+    if (uploadError) throw uploadError
+    
+    const { data: metadataData, error: metadataError } = await supabase
+      .from('files')
+      .insert({
+        user_id: userId,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        storage_path: uploadData.path,
+        folder_id: folderId
+      })
+      .select()
+      .single()
+    
+    if (metadataError) throw metadataError
+    
+    return metadataData as FileMetadata
+  } catch (error) {
+    console.error('Shared upload error:', error)
+    throw error
+  }
+}
+
+/**
  * Downloads and decrypts a file from Supabase Storage.
- * Tries new Web Crypto decryption first, falls back to legacy CryptoJS for old files.
+ * Tries folder-keyed decryption first (for shared files), then user-keyed,
+ * then legacy CryptoJS for old files.
  */
 export async function downloadFile(
   fileMetadata: FileMetadata,
@@ -77,45 +128,66 @@ export async function downloadFile(
     
     if (downloadError) throw downloadError
     
-    // Generate key input (now just returns userId)
-    const encryptionKey = generateEncryptionKey(userId, userEmail)
-    
     let decryptedBlob: Blob
 
-    // Try new Web Crypto decryption first
+    // Try 1: Folder-keyed decryption (shared files)
+    if (fileMetadata.folder_id) {
+      try {
+        decryptedBlob = await decryptFile(
+          downloadData,
+          fileMetadata.folder_id,
+          fileMetadata.type
+        )
+        triggerDownload(decryptedBlob, fileMetadata.name)
+        return
+      } catch {
+        // Not folder-keyed, try next
+      }
+    }
+
+    // Try 2: User-keyed decryption (personal files)
+    const encryptionKey = generateEncryptionKey(userId, userEmail)
     try {
       decryptedBlob = await decryptFile(
         downloadData,
         encryptionKey,
         fileMetadata.type
       )
+      triggerDownload(decryptedBlob, fileMetadata.name)
+      return
     } catch {
-      // Fall back to legacy CryptoJS decryption for old files
-      const legacyResult = await legacyDecryptFile(
-        downloadData,
-        userId,
-        userEmail,
-        fileMetadata.type
-      )
-      if (!legacyResult) {
-        throw new Error('Failed to decrypt file with both new and legacy systems')
-      }
-      decryptedBlob = legacyResult
+      // Not user-keyed, try legacy
     }
-    
-    // Trigger download
-    const url = URL.createObjectURL(decryptedBlob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = fileMetadata.name
-    document.body.appendChild(a)
-    a.click()
-    document.body.removeChild(a)
-    URL.revokeObjectURL(url)
+
+    // Try 3: Legacy CryptoJS decryption
+    const legacyResult = await legacyDecryptFile(
+      downloadData,
+      userId,
+      userEmail,
+      fileMetadata.type
+    )
+    if (!legacyResult) {
+      throw new Error('Failed to decrypt file with all available methods')
+    }
+    triggerDownload(legacyResult, fileMetadata.name)
   } catch (error) {
     console.error('Download error:', error)
     throw error
   }
+}
+
+/**
+ * Helper to trigger a browser file download
+ */
+function triggerDownload(blob: Blob, filename: string) {
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = filename
+  document.body.appendChild(a)
+  a.click()
+  document.body.removeChild(a)
+  URL.revokeObjectURL(url)
 }
 
 /**
