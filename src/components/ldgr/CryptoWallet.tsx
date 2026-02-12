@@ -90,9 +90,9 @@ export default function CryptoWallet() {
   }
 
   const handleAddWallet = async (input: CryptoWalletInput) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      await addWallet(user.id, user.email, input)
+      await addWallet(user.id, user.email || '', input)
       await loadWallets()
       setShowAddModal(false)
     } catch (error) {
@@ -102,9 +102,9 @@ export default function CryptoWallet() {
   }
 
   const handleUpdateWallet = async (walletId: string, updates: Partial<CryptoWalletInput>) => {
-    if (!user?.email) return
+    if (!user) return
     try {
-      await updateWallet(walletId, user.email, updates)
+      await updateWallet(walletId, user.id, updates)
       await loadWallets()
       setEditingWallet(null)
     } catch (error) {
@@ -137,13 +137,13 @@ export default function CryptoWallet() {
   }
 
   const handleCopySeed = async (wallet: CryptoWallet) => {
-    if (!user?.email) return
+    if (!user) return
     if (!wallet.encrypted_seed_phrase) {
       alert('No seed phrase stored for this wallet')
       return
     }
     try {
-      const decrypted = await decryptSeedPhrase(wallet.encrypted_seed_phrase, user.email)
+      const decrypted = await decryptSeedPhrase(wallet.encrypted_seed_phrase, user.email || '', user.id)
       await navigator.clipboard.writeText(decrypted)
       setCopiedItem(`seed-${wallet.id}`)
       setTimeout(() => setCopiedItem(null), 2000)
@@ -488,7 +488,7 @@ export default function CryptoWallet() {
                       </div>
                       <code className="block px-3 py-2 bg-samurai-black rounded text-white/90 text-xs font-mono break-all">
                         {isRevealed ? (
-                          <SeedPhraseDisplay wallet={wallet} userEmail={user?.email || ''} />
+                          <SeedPhraseDisplay wallet={wallet} userEmail={user?.email || ''} userId={user?.id || ''} />
                         ) : (
                           '•••••••••••••••••••••••••••••••••••••••••••••••'
                         )}
@@ -536,7 +536,7 @@ export default function CryptoWallet() {
 }
 
 // Component to display decrypted seed phrase
-function SeedPhraseDisplay({ wallet, userEmail }: { wallet: CryptoWallet; userEmail: string }) {
+function SeedPhraseDisplay({ wallet, userEmail, userId }: { wallet: CryptoWallet; userEmail: string; userId: string }) {
   const [decrypted, setDecrypted] = useState<string>('Loading...')
   
   useEffect(() => {
@@ -544,10 +544,10 @@ function SeedPhraseDisplay({ wallet, userEmail }: { wallet: CryptoWallet; userEm
       setDecrypted('No seed phrase stored')
       return
     }
-    decryptSeedPhrase(wallet.encrypted_seed_phrase, userEmail)
+    decryptSeedPhrase(wallet.encrypted_seed_phrase, userEmail, userId)
       .then(setDecrypted)
       .catch(() => setDecrypted('Error decrypting'))
-  }, [wallet.encrypted_seed_phrase, userEmail])
+  }, [wallet.encrypted_seed_phrase, userEmail, userId])
   
   return <>{decrypted}</>
 }

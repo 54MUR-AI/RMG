@@ -1,5 +1,6 @@
 import { supabase } from '../supabase'
 import { fetchMultiTokenBalance } from './multiTokenBalance'
+import { encryptText, decryptText } from './encryption'
 
 export interface CryptoWallet {
   id: string
@@ -44,62 +45,39 @@ export interface MultiTokenBalance {
   last_updated: string
 }
 
-// Encrypt seed phrase using Web Crypto API
-async function encryptSeedPhrase(seedPhrase: string, userEmail: string): Promise<string> {
-  const encoder = new TextEncoder()
-  const data = encoder.encode(seedPhrase)
-  
-  // Derive key from user email
-  const keyMaterial = await crypto.subtle.importKey(
-    'raw',
-    encoder.encode(userEmail),
-    { name: 'PBKDF2' },
-    false,
-    ['deriveBits', 'deriveKey']
-  )
-  
-  const key = await crypto.subtle.deriveKey(
-    {
-      name: 'PBKDF2',
-      salt: encoder.encode('ldgr-crypto-salt'),
-      iterations: 100000,
-      hash: 'SHA-256'
-    },
-    keyMaterial,
-    { name: 'AES-GCM', length: 256 },
-    false,
-    ['encrypt']
-  )
-  
-  const iv = crypto.getRandomValues(new Uint8Array(12))
-  const encryptedData = await crypto.subtle.encrypt(
-    { name: 'AES-GCM', iv },
-    key,
-    data
-  )
-  
-  // Combine IV and encrypted data
-  const combined = new Uint8Array(iv.length + encryptedData.byteLength)
-  combined.set(iv)
-  combined.set(new Uint8Array(encryptedData), iv.length)
-  
-  // Encode to base64
-  return btoa(String.fromCharCode(...combined))
+// Encrypt seed phrase using unified encryption module (userId-based)
+async function encryptSeedPhrase(seedPhrase: string, userId: string): Promise<string> {
+  return encryptText(seedPhrase, userId, 'wallets')
 }
 
-// Decrypt seed phrase
-export async function decryptSeedPhrase(encryptedSeedPhrase: string, userEmail: string): Promise<string> {
+// Decrypt seed phrase — tries new userId-based key first, falls back to legacy email-based key
+export async function decryptSeedPhrase(
+  encryptedSeedPhrase: string,
+  userEmail: string,
+  userId?: string
+): Promise<string> {
+  // Try new userId-based decryption first
+  if (userId) {
+    try {
+      return await decryptText(encryptedSeedPhrase, userId, 'wallets')
+    } catch {
+      // Fall through to legacy
+    }
+  }
+
+  // Legacy: email-based decryption with hardcoded salt 'ldgr-crypto-salt'
+  return legacyDecryptSeedPhrase(encryptedSeedPhrase, userEmail)
+}
+
+// Legacy decryption for seed phrases encrypted with the old email-based system
+async function legacyDecryptSeedPhrase(encryptedSeedPhrase: string, userEmail: string): Promise<string> {
   const encoder = new TextEncoder()
   const decoder = new TextDecoder()
-  
-  // Decode from base64
+
   const combined = Uint8Array.from(atob(encryptedSeedPhrase), c => c.charCodeAt(0))
-  
-  // Extract IV and encrypted data
   const iv = combined.slice(0, 12)
   const encryptedData = combined.slice(12)
-  
-  // Derive key from user email
+
   const keyMaterial = await crypto.subtle.importKey(
     'raw',
     encoder.encode(userEmail),
@@ -107,7 +85,7 @@ export async function decryptSeedPhrase(encryptedSeedPhrase: string, userEmail: 
     false,
     ['deriveBits', 'deriveKey']
   )
-  
+
   const key = await crypto.subtle.deriveKey(
     {
       name: 'PBKDF2',
@@ -120,13 +98,13 @@ export async function decryptSeedPhrase(encryptedSeedPhrase: string, userEmail: 
     false,
     ['decrypt']
   )
-  
+
   const decryptedData = await crypto.subtle.decrypt(
     { name: 'AES-GCM', iv },
     key,
     encryptedData
   )
-  
+
   return decoder.decode(decryptedData)
 }
 
@@ -158,12 +136,12 @@ export async function getWalletsByBlockchain(userId: string, blockchain: string)
 // Add a new wallet
 export async function addWallet(
   userId: string,
-  userEmail: string,
+  _userEmail: string,
   input: CryptoWalletInput
 ): Promise<CryptoWallet> {
-  // Encrypt the seed phrase only if provided
+  // Encrypt the seed phrase with userId (new system)
   const encryptedSeedPhrase = input.seed_phrase 
-    ? await encryptSeedPhrase(input.seed_phrase, userEmail)
+    ? await encryptSeedPhrase(input.seed_phrase, userId)
     : null
   
   const { data, error } = await supabase
@@ -186,7 +164,7 @@ export async function addWallet(
 // Update a wallet
 export async function updateWallet(
   walletId: string,
-  userEmail: string,
+  userId: string,
   updates: Partial<CryptoWalletInput>
 ): Promise<CryptoWallet> {
   const updateData: any = {}
@@ -196,9 +174,9 @@ export async function updateWallet(
   if (updates.address) updateData.address = updates.address
   if (updates.notes !== undefined) updateData.notes = updates.notes || null
   
-  // Only encrypt if seed phrase is being updated
+  // Encrypt with userId (new system)
   if (updates.seed_phrase) {
-    updateData.encrypted_seed_phrase = await encryptSeedPhrase(updates.seed_phrase, userEmail)
+    updateData.encrypted_seed_phrase = await encryptSeedPhrase(updates.seed_phrase, userId)
   }
   
   const { data, error } = await supabase
