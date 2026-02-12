@@ -149,6 +149,34 @@ export default function WsprPage() {
           
           // Link channel to folder
           await linkChannelToFolder(event.data.channelId, folderId)
+
+          // Grant folder_access to all workspace members for this channel folder
+          const { data: channel } = await supabase
+            .from('wspr_channels')
+            .select('workspace_id')
+            .eq('id', event.data.channelId)
+            .single()
+
+          if (channel?.workspace_id) {
+            const { data: members } = await supabase
+              .from('wspr_workspace_members')
+              .select('user_id, role')
+              .eq('workspace_id', channel.workspace_id)
+
+            if (members) {
+              for (const member of members) {
+                const accessLevel = member.role === 'owner' || member.role === 'admin' ? 'write' : 'read'
+                await supabase
+                  .from('folder_access')
+                  .upsert({
+                    folder_id: folderId,
+                    user_id: member.user_id,
+                    access_level: accessLevel
+                  }, { onConflict: 'folder_id,user_id' })
+              }
+              console.log(`✅ Granted folder_access to ${members.length} workspace members`)
+            }
+          }
           
           // Send success response back to WSPR
           if (iframeRef.current?.contentWindow) {
@@ -190,9 +218,11 @@ export default function WsprPage() {
             // Get channel's LDGR folder ID from event data
             const channelFolderId = event.data.channelFolderId
             
-            // Upload file to LDGR
-            const { uploadFile } = await import('../lib/ldgr/storage')
-            const fileMetadata = await uploadFile(file, user.id, user.email!, channelFolderId)
+            // Upload file to LDGR — use folder-keyed encryption for channel files
+            const { uploadFile, uploadSharedFile } = await import('../lib/ldgr/storage')
+            const fileMetadata = channelFolderId
+              ? await uploadSharedFile(file, user.id, user.email!, channelFolderId)
+              : await uploadFile(file, user.id, user.email!)
             
             // Send success response back to WSPR
             if (iframeRef.current?.contentWindow) {
