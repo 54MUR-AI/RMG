@@ -112,6 +112,7 @@ END $$;
 --    Returns a list of DM conversations for a user, with contact
 --    info, last message, and unread count. Sorted by most recent.
 -- ============================================================
+DROP FUNCTION IF EXISTS get_dm_conversations(uuid);
 CREATE OR REPLACE FUNCTION get_dm_conversations(user_id_param UUID)
 RETURNS TABLE (
   contact_id UUID,
