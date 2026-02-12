@@ -170,52 +170,43 @@ export default function WsprPage() {
       } else if (event.data.type === 'WSPR_UPLOAD_FILE') {
         console.log('RMG: Received file upload request:', event.data)
         
-        // Create file input element
-        const fileInput = document.createElement('input')
-        fileInput.type = 'file'
-        fileInput.style.display = 'none'
-        document.body.appendChild(fileInput)
-        
-        fileInput.onchange = async (e: Event) => {
-          const target = e.target as HTMLInputElement
-          const file = target.files?.[0]
-          
-          if (file && user) {
-            try {
-              // Get channel's LDGR folder ID from event data
-              const channelFolderId = event.data.channelFolderId
-              
-              // Upload file to LDGR
-              const { uploadFile } = await import('../lib/ldgr/storage')
-              const fileMetadata = await uploadFile(file, user.id, user.email!, channelFolderId)
-              
-              // Send success response back to WSPR
-              if (iframeRef.current?.contentWindow) {
-                iframeRef.current.contentWindow.postMessage({
-                  type: 'LDGR_FILE_UPLOADED',
-                  fileId: fileMetadata.id,
-                  filename: fileMetadata.name,
-                  fileSize: fileMetadata.size,
-                  mimeType: fileMetadata.type
-                }, '*')
-              }
-              
-              console.log('✅ File uploaded to LDGR:', fileMetadata)
-            } catch (error) {
-              console.error('❌ File upload failed:', error)
-              if (iframeRef.current?.contentWindow) {
-                iframeRef.current.contentWindow.postMessage({
-                  type: 'LDGR_FILE_UPLOAD_ERROR',
-                  error: error instanceof Error ? error.message : 'Upload failed'
-                }, '*')
-              }
+        if (user && event.data.fileData) {
+          try {
+            // Convert base64 data URL to File object
+            const base64Data = event.data.fileData
+            const response = await fetch(base64Data)
+            const blob = await response.blob()
+            const file = new File([blob], event.data.fileName, { type: event.data.fileType })
+            
+            // Get channel's LDGR folder ID from event data
+            const channelFolderId = event.data.channelFolderId
+            
+            // Upload file to LDGR
+            const { uploadFile } = await import('../lib/ldgr/storage')
+            const fileMetadata = await uploadFile(file, user.id, user.email!, channelFolderId)
+            
+            // Send success response back to WSPR
+            if (iframeRef.current?.contentWindow) {
+              iframeRef.current.contentWindow.postMessage({
+                type: 'LDGR_FILE_UPLOADED',
+                fileId: fileMetadata.id,
+                filename: fileMetadata.name,
+                fileSize: fileMetadata.size,
+                mimeType: fileMetadata.type
+              }, '*')
+            }
+            
+            console.log('✅ File uploaded to LDGR:', fileMetadata)
+          } catch (error) {
+            console.error('❌ File upload failed:', error)
+            if (iframeRef.current?.contentWindow) {
+              iframeRef.current.contentWindow.postMessage({
+                type: 'LDGR_FILE_UPLOAD_ERROR',
+                error: error instanceof Error ? error.message : 'Upload failed'
+              }, '*')
             }
           }
-          
-          document.body.removeChild(fileInput)
         }
-        
-        fileInput.click()
       } else if (event.data.type === 'WSPR_BROWSE_LDGR') {
         console.log('RMG: Received LDGR browse request:', event.data)
         
