@@ -294,9 +294,10 @@ export default function WsprPage() {
               throw new Error('File not found')
             }
             
-            // Download file
+            // Download file — use file owner's userId for decryption
+            // (user-keyed files are encrypted with the uploader's userId)
             const { downloadFile } = await import('../lib/ldgr/storage')
-            await downloadFile(fileMetadata, user.id, user.email!)
+            await downloadFile(fileMetadata, fileMetadata.user_id, user.email!)
             
             console.log('✅ File download initiated:', event.data.filename)
           } catch (error) {
