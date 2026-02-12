@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { X, User, Shield, Palette } from 'lucide-react'
+import { X, User, Shield, Palette, Upload } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import ModalPortal from './ModalPortal'
@@ -13,6 +13,8 @@ export default function ProfilePopup({ onClose }: ProfilePopupProps) {
   const [displayName, setDisplayName] = useState(user?.user_metadata?.display_name || '')
   const [bio, setBio] = useState(user?.user_metadata?.bio || '')
   const [avatarColor, setAvatarColor] = useState(user?.user_metadata?.avatar_color || '#E63946')
+  const [avatarUrl, setAvatarUrl] = useState(user?.user_metadata?.avatar_url || '')
+  const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(false)
   const [message, setMessage] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
@@ -25,6 +27,51 @@ export default function ProfilePopup({ onClose }: ProfilePopupProps) {
     '#7209B7', // purple
     '#F72585', // pink
   ]
+
+  const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file || !user) return
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setError('Please upload an image file')
+      return
+    }
+
+    // Validate file size (max 2MB)
+    if (file.size > 2 * 1024 * 1024) {
+      setError('Image must be smaller than 2MB')
+      return
+    }
+
+    setUploading(true)
+    setError(null)
+
+    try {
+      // Upload to Supabase Storage
+      const fileExt = file.name.split('.').pop()
+      const fileName = `${user.id}-${Date.now()}.${fileExt}`
+      const filePath = `avatars/${fileName}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file, { upsert: true })
+
+      if (uploadError) throw uploadError
+
+      // Get public URL
+      const { data: { publicUrl } } = supabase.storage
+        .from('avatars')
+        .getPublicUrl(filePath)
+
+      setAvatarUrl(publicUrl)
+      setMessage('Avatar uploaded! Remember to save your profile.')
+    } catch (err: any) {
+      setError(err.message)
+    } finally {
+      setUploading(false)
+    }
+  }
 
   const handleSave = async () => {
     setLoading(true)
@@ -41,6 +88,7 @@ export default function ProfilePopup({ onClose }: ProfilePopupProps) {
           display_name: displayName,
           bio: bio,
           avatar_color: avatarColor,
+          avatar_url: avatarUrl,
         }
       })
 
@@ -86,12 +134,20 @@ export default function ProfilePopup({ onClose }: ProfilePopupProps) {
         <div className="p-6 space-y-6">
           {/* Avatar Preview */}
           <div className="flex justify-center">
-            <div
-              className="w-24 h-24 rounded-full flex items-center justify-center text-white text-4xl font-black shadow-lg"
-              style={{ backgroundColor: avatarColor }}
-            >
-              {displayName?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
-            </div>
+            {avatarUrl ? (
+              <img
+                src={avatarUrl}
+                alt="Avatar"
+                className="w-24 h-24 rounded-full object-cover shadow-lg"
+              />
+            ) : (
+              <div
+                className="w-24 h-24 rounded-full flex items-center justify-center text-white text-4xl font-black shadow-lg"
+                style={{ backgroundColor: avatarColor }}
+              >
+                {displayName?.charAt(0).toUpperCase() || user?.email?.charAt(0).toUpperCase() || 'U'}
+              </div>
+            )}
           </div>
 
           {/* Anonymity Notice */}
@@ -138,27 +194,64 @@ export default function ProfilePopup({ onClose }: ProfilePopupProps) {
             <p className="text-white/50 text-xs mt-1">{bio.length}/200 characters</p>
           </div>
 
-          {/* Avatar Color */}
+          {/* Avatar Upload */}
           <div>
             <label className="block text-sm font-medium text-white/80 mb-3 flex items-center gap-2">
-              <Palette size={16} />
-              Avatar Color
+              <Upload size={16} />
+              Profile Picture (Optional)
             </label>
-            <div className="flex gap-3 flex-wrap">
-              {colors.map((color) => (
+            <div className="flex gap-3 items-center">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleAvatarUpload}
+                className="hidden"
+                id="avatar-upload"
+                disabled={uploading}
+              />
+              <label
+                htmlFor="avatar-upload"
+                className={`px-4 py-2 bg-samurai-steel-dark hover:bg-samurai-steel text-white font-bold rounded-lg transition-all cursor-pointer ${
+                  uploading ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                {uploading ? 'Uploading...' : avatarUrl ? 'Change Picture' : 'Upload Picture'}
+              </label>
+              {avatarUrl && (
                 <button
-                  key={color}
-                  onClick={() => setAvatarColor(color)}
-                  className={`w-12 h-12 rounded-full transition-all ${
-                    avatarColor === color
-                      ? 'ring-4 ring-white scale-110'
-                      : 'hover:scale-105'
-                  }`}
-                  style={{ backgroundColor: color }}
-                />
-              ))}
+                  onClick={() => setAvatarUrl('')}
+                  className="px-4 py-2 bg-red-500/20 hover:bg-red-500/30 text-red-400 font-bold rounded-lg transition-all"
+                >
+                  Remove
+                </button>
+              )}
             </div>
+            <p className="text-white/50 text-xs mt-2">Max 2MB. Leave empty to use color badge.</p>
           </div>
+
+          {/* Avatar Color */}
+          {!avatarUrl && (
+            <div>
+              <label className="block text-sm font-medium text-white/80 mb-3 flex items-center gap-2">
+                <Palette size={16} />
+                Avatar Color
+              </label>
+              <div className="flex gap-3 flex-wrap">
+                {colors.map((color) => (
+                  <button
+                    key={color}
+                    onClick={() => setAvatarColor(color)}
+                    className={`w-12 h-12 rounded-full transition-all ${
+                      avatarColor === color
+                        ? 'ring-4 ring-white scale-110'
+                        : 'hover:scale-105'
+                    }`}
+                    style={{ backgroundColor: color }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Messages */}
           {error && (
