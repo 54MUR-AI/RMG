@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { X, Search, UserPlus, Check, Clock, Ban, Trash2, Users } from 'lucide-react'
+import { X, Search, UserPlus, Check, Clock, Ban, Trash2, Users, MessageSquare } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import ModalPortal from './ModalPortal'
 import {
@@ -12,6 +12,7 @@ import {
   removeContact
 } from '../lib/contacts'
 import type { Contact, PendingRequest, SearchResult } from '../lib/contacts'
+import QuickDMModal from './QuickDMModal'
 
 interface ContactsModalProps {
   isOpen: boolean
@@ -27,6 +28,7 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [isSearching, setIsSearching] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [dmRecipient, setDmRecipient] = useState<Contact | null>(null)
 
   useEffect(() => {
     if (isOpen && user) {
@@ -96,9 +98,9 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
     }
   }
 
-  if (!isOpen) return null
-
   return (
+    <>
+    {isOpen && (
     <ModalPortal>
       <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[10000] p-4">
       <div className="bg-samurai-grey-darker rounded-xl max-w-3xl w-full max-h-[85vh] flex flex-col border-2 border-samurai-red shadow-2xl shadow-samurai-red/20">
@@ -204,13 +206,22 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
                       </div>
                     </div>
 
-                    <button
-                      onClick={() => handleRemoveContact(contact.contact_id)}
-                      className="flex items-center gap-2 px-4 py-2 text-samurai-steel hover:text-samurai-red hover:bg-samurai-red/10 rounded-lg transition-colors"
-                    >
-                      <Trash2 size={18} />
-                      Remove
-                    </button>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setDmRecipient(contact)}
+                        className="flex items-center gap-2 px-4 py-2 text-samurai-steel hover:text-samurai-red hover:bg-samurai-red/10 rounded-lg transition-colors"
+                      >
+                        <MessageSquare size={18} />
+                        Message
+                      </button>
+                      <button
+                        onClick={() => handleRemoveContact(contact.contact_id)}
+                        className="flex items-center gap-2 px-4 py-2 text-samurai-steel hover:text-samurai-red hover:bg-samurai-red/10 rounded-lg transition-colors"
+                      >
+                        <Trash2 size={18} />
+                        Remove
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -376,5 +387,20 @@ export default function ContactsModal({ isOpen, onClose }: ContactsModalProps) {
       </div>
     </div>
     </ModalPortal>
+    )}
+
+    {/* Quick DM Modal */}
+    {dmRecipient && user && (
+      <QuickDMModal
+        isOpen={!!dmRecipient}
+        onClose={() => setDmRecipient(null)}
+        senderId={user.id}
+        recipientId={dmRecipient.contact_id}
+        recipientName={dmRecipient.contact_display_name}
+        recipientAvatarUrl={dmRecipient.contact_avatar_url}
+        recipientAvatarColor={dmRecipient.contact_avatar_color}
+      />
+    )}
+    </>
   )
 }
