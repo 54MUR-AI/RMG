@@ -1,19 +1,23 @@
-import { LogOut, User, Shield } from 'lucide-react'
+import { LogOut, User, Shield, Users } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useAdmin } from '../contexts/AdminContext'
+import { getPendingRequests } from '../lib/contacts'
+import { useState, useEffect } from 'react'
 import ModalPortal from './ModalPortal'
 
 interface ProfileDropdownProps {
   onViewProfile: () => void
   onViewAdmin: () => void
+  onViewContacts: () => void
   onClose: () => void
   buttonRef: React.RefObject<HTMLButtonElement>
   dropdownRef: React.RefObject<HTMLDivElement>
 }
 
-export default function ProfileDropdown({ onViewProfile, onViewAdmin, onClose, buttonRef, dropdownRef }: ProfileDropdownProps) {
+export default function ProfileDropdown({ onViewProfile, onViewAdmin, onViewContacts, onClose, buttonRef, dropdownRef }: ProfileDropdownProps) {
   const { user, signOut } = useAuth()
   const { isAdmin } = useAdmin()
+  const [pendingCount, setPendingCount] = useState(0)
 
   const handleLogout = async () => {
     await signOut()
@@ -24,6 +28,21 @@ export default function ProfileDropdown({ onViewProfile, onViewAdmin, onClose, b
     onViewProfile()
     onClose()
   }
+
+  const handleViewContacts = () => {
+    onViewContacts()
+    onClose()
+  }
+
+  useEffect(() => {
+    const loadPendingCount = async () => {
+      if (user) {
+        const requests = await getPendingRequests(user.id)
+        setPendingCount(requests.length)
+      }
+    }
+    loadPendingCount()
+  }, [user])
 
   // Calculate position based on button
   const buttonRect = buttonRef.current?.getBoundingClientRect()
@@ -71,6 +90,19 @@ export default function ProfileDropdown({ onViewProfile, onViewAdmin, onClose, b
         >
           <User size={18} />
           <span>View Profile</span>
+        </button>
+        
+        <button
+          onClick={handleViewContacts}
+          className="w-full px-4 py-3 flex items-center gap-3 text-white hover:bg-samurai-red/20 transition-colors relative"
+        >
+          <Users size={18} />
+          <span>Contacts</span>
+          {pendingCount > 0 && (
+            <span className="ml-auto w-5 h-5 bg-yellow-500 text-black text-xs rounded-full flex items-center justify-center font-bold">
+              {pendingCount}
+            </span>
+          )}
         </button>
         
         {isAdmin && (

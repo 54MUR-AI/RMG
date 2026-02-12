@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Flame, Key, User, LogOut, Shield, Users } from 'lucide-react'
+import { Menu, X, Flame, Key, User, LogOut, Shield } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import DiscordIcon from './DiscordIcon'
 import AuthPopup from './AuthPopup'
@@ -147,17 +147,6 @@ export default function Navbar() {
             {/* Separator */}
             <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
             
-            {/* Contacts Button (logged in only) */}
-            {user && (
-              <button
-                onClick={() => setShowContactsModal(true)}
-                className="group transition-all hover:scale-110"
-                aria-label="Contacts"
-              >
-                <Users size={28} className="text-samurai-steel-light group-hover:text-samurai-red transition-colors" />
-              </button>
-            )}
-            
             {/* Discord Link */}
             <Link
               to="/discord"
@@ -190,6 +179,7 @@ export default function Navbar() {
                   <ProfileDropdown
                     onViewProfile={() => setShowProfilePopup(true)}
                     onViewAdmin={() => setShowAdminModal(true)}
+                    onViewContacts={() => setShowContactsModal(true)}
                     onClose={() => setShowProfileDropdown(false)}
                     buttonRef={profileButtonRef}
                     dropdownRef={profileDropdownRef}
