@@ -34,33 +34,19 @@ export default function WsprPage() {
     checkHealth()
 
     // Send Supabase auth token to WSPR iframe
-    const sendAuthToken = () => {
+    const sendAuthToken = async () => {
       if (!iframeRef.current?.contentWindow) return
 
-      // Get Supabase auth token from localStorage
-      const possibleKeys = [
-        'sb-meqfiyuaxgwbstcdmjgz-auth-token',
-        'supabase.auth.token',
-        'sb-auth-token'
-      ]
-
-      let authToken = null
-      for (const key of possibleKeys) {
-        const data = localStorage.getItem(key)
-        if (data) {
-          try {
-            const parsed = JSON.parse(data)
-            if (parsed.access_token || parsed.token) {
-              authToken = data
-              break
-            }
-          } catch (e) {
-            continue
-          }
-        }
-      }
-
-      if (authToken) {
+      // Get current session from Supabase client (not localStorage)
+      // This ensures we always pass the currently logged-in user's token
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (session) {
+        const authToken = JSON.stringify({
+          access_token: session.access_token,
+          refresh_token: session.refresh_token
+        })
+        
         iframeRef.current.contentWindow.postMessage(
           {
             type: 'RMG_AUTH_TOKEN',
