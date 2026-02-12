@@ -246,6 +246,33 @@ export default function WsprPage() {
             }
           }
         }
+      } else if (event.data.type === 'WSPR_GRANT_FILE_ACCESS') {
+        console.log('RMG: Received file access grant request:', event.data)
+        
+        try {
+          // Look up the file's folder
+          const { data: file } = await supabase
+            .from('files')
+            .select('folder_id')
+            .eq('id', event.data.fileId)
+            .single()
+
+          if (file?.folder_id) {
+            // Grant read access to the recipient for this folder
+            await supabase
+              .from('folder_access')
+              .upsert({
+                folder_id: file.folder_id,
+                user_id: event.data.recipientId,
+                access_level: 'read',
+                granted_by: user?.id
+              }, { onConflict: 'folder_id,user_id' })
+
+            console.log('✅ Granted folder_access to recipient:', event.data.recipientId)
+          }
+        } catch (error) {
+          console.error('❌ Failed to grant file access:', error)
+        }
       } else if (event.data.type === 'WSPR_BROWSE_LDGR') {
         console.log('RMG: Received LDGR browse request:', event.data)
         
