@@ -299,14 +299,14 @@ export default function Home() {
                 {featuredCard === 'LDGR' && (
                   <div className="mb-4 animate-fade-in">
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      LDGR establishes a new paradigm in secure data management by fusing blockchain immutability with military-grade cryptographic protocols. Built on the Ethereum network using the Hardhat development framework, this system provides tamper-proof data storage with cryptographic verification at every layer of the stack.
+                      LDGR establishes a new paradigm in secure data management, providing a comprehensive encrypted vault for your most sensitive information. This unified security platform manages encrypted file storage across IPFS, cloud, and P2P networks, maintains password vaults with auto-fill capabilities, secures multi-chain cryptocurrency wallets, and protects API keys with role-based access control—all with military-grade AES-256-GCM encryption performed entirely client-side.
                     </p>
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      The architecture implements a multi-layered security model featuring AES-256-GCM encryption for data at rest, RSA-4096 for key exchange, and ECDSA for transaction signing. Smart contracts written in Solidity manage access control through role-based permissions, enforce data retention policies, and maintain comprehensive audit trails of all operations. The system supports atomic transactions with rollback capabilities, implements Merkle tree verification for data integrity, provides automatic backup and replication across nodes, and offers both public and private blockchain deployment options. Advanced features include time-locked data release, multi-signature authorization requirements, encrypted search capabilities, and compliance-ready logging for regulatory requirements including GDPR, HIPAA, and SOC 2.
+                      Built on blockchain technology using the Ethereum network and Hardhat framework, LDGR ensures data immutability and cryptographic verification at every layer. The File Manager supports unlimited encrypted storage with automatic deduplication and versioning. The Password Manager features secure generation, breach monitoring, and encrypted sharing. The Crypto Wallet Manager provides multi-chain support with hardware wallet integration and transaction signing. The API Key Manager implements granular permissions, usage tracking, and automatic rotation. All data is encrypted before leaving your device, with zero-knowledge architecture ensuring the server never accesses plaintext content. Advanced features include smart contract-based access control, Merkle tree integrity verification, time-locked data release, and compliance-ready audit trails for GDPR, HIPAA, and SOC 2.
                     </p>
                     <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
                     <ul className="space-y-1 mb-4">
-                      {['Blockchain Integration (Ethereum/Hardhat)', 'AES/RSA High-Level Encryption', 'Smart Contract Data Transactions', 'User-Friendly Database Management'].map((feature, idx) => (
+                      {['Encrypted File Storage (IPFS/Cloud/P2P)', 'Password Manager with Auto-Fill', 'Multi-Chain Crypto Wallet Manager', 'API Key Manager with Access Control', 'Client-Side AES-256-GCM Encryption', 'Blockchain-Backed Data Integrity'].map((feature, idx) => (
                         <li key={idx} className="flex items-start text-xs text-white/80">
                           <span className="w-1.5 h-1.5 bg-samurai-red rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
                           {feature}
@@ -318,7 +318,7 @@ export default function Home() {
                 
                 {featuredCard !== 'LDGR' && (
                   <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    Blockchain-powered database management with military-grade encryption and immutable data storage.
+                    Secure vault for files, passwords, crypto wallets, and API keys with military-grade encryption and blockchain-backed integrity.
                   </p>
                 )}
                 
@@ -370,14 +370,14 @@ export default function Home() {
                 {featuredCard === 'WSPR' && (
                   <div className="mb-4 animate-fade-in">
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      WSPR delivers military-grade secure communications through a sophisticated web-based platform that prioritizes user privacy above all else. Implementing the Signal Protocol's Double Ratchet algorithm, every message benefits from perfect forward secrecy, ensuring that compromised keys cannot decrypt past communications.
+                      WSPR delivers military-grade secure communications through a sophisticated web-based platform that prioritizes user privacy above all else. The platform features encrypted workspace channels for team collaboration, private direct messaging with end-to-end encryption, and RMG-integrated contacts that work seamlessly across all applications. LDGR file sharing enables secure transmission of encrypted files directly within conversations, while real-time delivery ensures instant communication.
                     </p>
                     <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                      Built with a modern React and TypeScript frontend paired with a hardened PostgreSQL backend, the platform performs all encryption operations client-side using AES-256-GCM with authenticated encryption. The system implements ECDH key exchange for establishing secure channels, supports ephemeral messaging with automatic deletion timers, provides verified device management with public key fingerprinting, and includes comprehensive two-factor authentication with TOTP and hardware key support. Real-time messaging operates over WebSocket connections with automatic reconnection and message queuing, while the platform maintains zero-knowledge architecture where the server never has access to plaintext content. Additional security features include screenshot detection, clipboard protection, secure file sharing with end-to-end encryption up to 100MB, and optional self-destructing messages with read receipts.
+                      Built with a modern React and TypeScript frontend paired with a hardened PostgreSQL backend, WSPR performs all encryption operations client-side using AES-256-GCM with authenticated encryption. The unified contacts system operates at the RMG level, allowing you to manage connections once and use them across WSPR, SCRP, OMNI, and future applications. Direct messages support read receipts, typing indicators, and message history with full encryption. File attachments leverage LDGR's encrypted storage, supporting multiple formats with client-side encryption before upload. Workspace channels provide organized team communication with member management, while the platform maintains zero-knowledge architecture where the server never accesses plaintext content. Real-time messaging operates over WebSocket connections with automatic reconnection and message queuing, ensuring reliable delivery even with unstable connections.
                     </p>
                     <h4 className="text-sm font-bold text-samurai-red mb-2">Key Features:</h4>
                     <ul className="space-y-1 mb-4">
-                      {['End-to-End AES-GCM Encryption', 'Real-Time Encrypted Messaging', 'Two-Factor Authentication (2FA)', 'React + TypeScript + PostgreSQL'].map((feature, idx) => (
+                      {['Direct Messages with E2E Encryption', 'RMG-Level Contacts Integration', 'LDGR Encrypted File Sharing', 'Workspace Channels & Teams', 'Real-Time WebSocket Delivery', 'Zero-Knowledge Architecture'].map((feature, idx) => (
                         <li key={idx} className="flex items-start text-xs text-white/80">
                           <span className="w-1.5 h-1.5 bg-samurai-red rounded-full mr-2 mt-1.5 flex-shrink-0"></span>
                           {feature}
@@ -389,7 +389,7 @@ export default function Home() {
                 
                 {featuredCard !== 'WSPR' && (
                   <p className="text-white/80 mb-4 text-sm leading-relaxed flex-1">
-                    Privacy-focused encrypted communication platform with end-to-end encryption and perfect forward secrecy.
+                    Secure messaging with direct messages, RMG contacts integration, LDGR file sharing, and encrypted workspace channels.
                   </p>
                 )}
                 
