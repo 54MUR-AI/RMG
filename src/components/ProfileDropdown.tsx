@@ -41,10 +41,18 @@ export default function ProfileDropdown({ onViewProfile, onViewAdmin, onClose, b
       <div className="p-4 border-b border-samurai-steel-dark">
         <div className="flex items-center gap-3">
           <div 
-            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"
-            style={{ backgroundColor: user?.user_metadata?.avatar_color || '#E63946' }}
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold overflow-hidden"
+            style={!user?.user_metadata?.avatar_url ? { backgroundColor: user?.user_metadata?.avatar_color || '#E63946' } : {}}
           >
-            {(user?.user_metadata?.display_name?.charAt(0) || user?.email?.charAt(0) || 'U').toUpperCase()}
+            {user?.user_metadata?.avatar_url ? (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="Profile"
+                className="w-full h-full object-cover"
+              />
+            ) : (
+              (user?.user_metadata?.display_name?.charAt(0) || user?.email?.charAt(0) || 'U').toUpperCase()
+            )}
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-white font-bold truncate">
