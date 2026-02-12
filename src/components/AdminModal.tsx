@@ -21,7 +21,7 @@ export default function AdminModal({ onClose }: AdminModalProps) {
 
   return (
     <ModalPortal>
-      <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-[10000] p-2 sm:p-4 overflow-hidden">
+      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-[10000] p-2 sm:p-4 overflow-hidden">
         <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-lg sm:rounded-xl shadow-2xl w-full max-w-7xl h-[calc(100vh-1rem)] sm:h-auto sm:max-h-[95vh] overflow-hidden flex flex-col">
           {/* Header */}
           <div className="bg-samurai-black border-b-2 border-samurai-red p-3 sm:p-6 flex items-center justify-between">
