@@ -144,7 +144,7 @@ export default function LdgrFileBrowserModal({ isOpen, onClose, onSelectFile, us
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
       <div className="glass-card rounded-xl max-w-3xl w-full max-h-[80vh] overflow-hidden flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-samurai-grey-dark">

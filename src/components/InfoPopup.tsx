@@ -35,7 +35,7 @@ export default function InfoPopup({ title, subtitle, description, features, icon
 
   return (
     <div 
-      className="bg-black/90 backdrop-blur-sm"
+      className="bg-black/80 backdrop-blur-sm"
       onClick={onClose}
       style={{ 
         position: 'fixed',

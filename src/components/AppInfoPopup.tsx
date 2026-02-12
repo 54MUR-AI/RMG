@@ -26,10 +26,9 @@ export default function AppInfoPopup({ title, description, features, githubUrl, 
   return (
     <ModalPortal>
       <div 
-        className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 transition-opacity duration-300 ${
+        className={`fixed inset-0 z-[9999] flex items-center justify-center p-4 bg-black/80 transition-opacity duration-300 ${
         isVisible ? 'opacity-100' : 'opacity-0'
       }`}
-      style={{ backgroundColor: 'rgba(10, 10, 10, 0.85)' }}
     >
       <div 
         className={`relative max-w-2xl w-full bg-samurai-grey-darker border-2 border-samurai-red rounded-2xl p-8 shadow-2xl shadow-samurai-red/50 transform transition-all duration-300 ${
