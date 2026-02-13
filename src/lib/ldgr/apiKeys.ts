@@ -78,6 +78,23 @@ export const API_SERVICES = {
   'algolia': { name: 'Algolia', category: 'Search', icon: '🔍' },
   'elasticsearch': { name: 'Elasticsearch', category: 'Search', icon: '🔎' },
   
+  // Financial & Market Data
+  'fred': { name: 'FRED (Federal Reserve)', category: 'Financial', icon: '🏛️' },
+  'alpha-vantage': { name: 'Alpha Vantage', category: 'Financial', icon: '📈' },
+  'polygon': { name: 'Polygon.io', category: 'Financial', icon: '📊' },
+  'finnhub': { name: 'Finnhub', category: 'Financial', icon: '🐟' },
+  'iex-cloud': { name: 'IEX Cloud', category: 'Financial', icon: '💹' },
+  'quandl': { name: 'Quandl (Nasdaq)', category: 'Financial', icon: '📉' },
+  'coinmarketcap': { name: 'CoinMarketCap', category: 'Financial', icon: '🪙' },
+  'coingecko': { name: 'CoinGecko Pro', category: 'Financial', icon: '🦎' },
+  'tradingview': { name: 'TradingView', category: 'Financial', icon: '📺' },
+  'morningstar': { name: 'Morningstar', category: 'Financial', icon: '⭐' },
+  'twelve-data': { name: 'Twelve Data', category: 'Financial', icon: '🔢' },
+  'marketstack': { name: 'Marketstack', category: 'Financial', icon: '📋' },
+  'tiingo': { name: 'Tiingo', category: 'Financial', icon: '🎯' },
+  'intrinio': { name: 'Intrinio', category: 'Financial', icon: '🏦' },
+  'eodhd': { name: 'EODHD', category: 'Financial', icon: '📆' },
+
   // Other
   'custom': { name: 'Custom API', category: 'Other', icon: '🔧' },
 }
