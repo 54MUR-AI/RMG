@@ -1,4 +1,4 @@
-import { Brain, FileText, Lock, Zap, TrendingUp } from 'lucide-react'
+import { Brain, FileText, Lock, Zap, Activity } from 'lucide-react'
 import type { ArsenalCardData } from './ArsenalCard'
 
 export const ARSENAL_CARDS: ArsenalCardData[] = [
@@ -83,21 +83,23 @@ export const ARSENAL_CARDS: ArsenalCardData[] = [
     ],
   },
   {
-    name: 'STONKS',
-    subtitle: 'Smart Trading Options for Novices & Knowledgeable Speculators',
-    icon: TrendingUp,
-    thumbnail: '/thumbnails/stonks-thumb.svg',
-    path: '/stonks',
-    shortDescription: 'Advanced ML platform wielding real-time analysis, predictive strategies, and news intelligence.',
+    name: 'INST',
+    subtitle: 'Intelligent Navigation & Strategic Telemetry',
+    icon: Activity,
+    thumbnail: '/thumbnails/inst-thumb.svg',
+    path: '/inst',
+    shortDescription: 'Financial command center with real-time market data, AI-powered analysis, prediction markets, and interactive visualizations.',
     longDescription: [
-      'STONKS represents the convergence of advanced machine learning and quantitative finance, providing institutional-grade analytical capabilities for traders at all experience levels. The platform employs a sophisticated ensemble of neural network architectures including LSTM networks for time-series prediction, Transformer models for pattern recognition, WaveNet for high-frequency analysis, and Graph Neural Networks for correlation discovery across asset classes.',
-      'The system ingests and processes real-time market data from multiple exchanges, performs sentiment analysis on financial news and social media using NLP models, calculates over 150 technical indicators, and generates probabilistic forecasts with confidence intervals. Portfolio optimization leverages modern portfolio theory combined with machine learning to balance risk-adjusted returns, while the backtesting engine supports walk-forward analysis, Monte Carlo simulation, and realistic slippage modeling. Advanced features include automated strategy generation using genetic algorithms, risk management with dynamic position sizing, real-time alert systems for market anomalies, integration with major brokerage APIs for live trading, and comprehensive performance analytics with Sharpe ratio, maximum drawdown, and alpha/beta calculations. The production infrastructure runs on Docker with Kubernetes orchestration, supports horizontal scaling, and includes comprehensive logging and monitoring.',
+      'INST is the magnum opus of the Ronin Media Group ecosystem—a comprehensive financial intelligence dashboard that transforms raw market data into actionable insights through stunning interactive visualizations. Designed as a command center for investors across every market, exchange, and industry, INST aggregates data from crypto markets, traditional equities, macroeconomic indicators, and prediction markets into a unified, customizable interface with draggable and resizable widget panels.',
+      'Powered by real-time data feeds from CoinGecko, Polymarket WebSocket streams, FRED (Federal Reserve Economic Data), and Finnhub, INST delivers live ticker tapes, crypto market heatmaps, Fear & Greed gauges, macro dashboards with yield curve animations, and prediction market odds tracking. The AI Briefing panel leverages the RMG Ollama Bridge for local LLM-powered trend detection, anomaly alerts, and cross-market synthesis—providing institutional-grade analysis without cloud dependency. Deep integration with LDGR enables secure API key management and wallet portfolio tracking, while SCRP feeds real-time news intelligence for sentiment analysis. Future capabilities include 3D globe visualizations, correlation matrices, money flow Sankey diagrams, network graphs, and a time machine for historical market replay.',
     ],
     features: [
-      'LSTM, Transformer & GNN Neural Networks',
-      'News Intelligence & Sentiment Analysis',
-      'Portfolio Optimization & Risk Analytics',
-      'Production-Grade Infrastructure',
+      'Real-Time Crypto & Market Heatmaps',
+      'Polymarket Prediction Markets (WebSocket)',
+      'AI Briefing via Ollama (Trend & Anomaly Detection)',
+      'FRED Macro Dashboard (Yield Curve, CPI, GDP)',
+      'LDGR API Key & Wallet Integration',
+      'Customizable Drag-and-Drop Widget Grid',
     ],
   },
 ]

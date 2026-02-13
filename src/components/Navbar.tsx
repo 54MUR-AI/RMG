@@ -131,14 +131,14 @@ export default function Navbar() {
                     isActive('/wspr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
-                <Link to="/stonks" className={`font-bold transition-all relative group ${
-                  isActive('/stonks') 
+                <Link to="/inst" className={`font-bold transition-all relative group ${
+                  isActive('/inst') 
                     ? 'text-samurai-red neon-text' 
                     : 'text-samurai-steel-light hover:text-samurai-red'
                 }`}>
-                  STONKS
+                  INST
                   <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                    isActive('/stonks') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                    isActive('/inst') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
               </>
@@ -287,15 +287,15 @@ export default function Navbar() {
                   WSPR
                 </Link>
                 <Link
-                  to="/stonks"
+                  to="/inst"
                   className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
-                    isActive('/stonks') 
+                    isActive('/inst') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  STONKS
+                  INST
                 </Link>
               </>
             )}

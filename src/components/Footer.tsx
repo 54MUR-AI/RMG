@@ -7,7 +7,7 @@ const APP_CONFIG: Record<string, { label: string }> = {
   '/scrp': { label: 'SCRP' },
   '/ldgr': { label: 'LDGR' },
   '/omni': { label: 'OMNI' },
-  '/stonks': { label: 'STONKS' },
+  '/inst': { label: 'INST' },
 }
 
 export default function Footer() {
