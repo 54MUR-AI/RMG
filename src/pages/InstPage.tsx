@@ -91,7 +91,7 @@ export default function InstPage() {
       {/* Fullscreen iframe */}
       <iframe
         ref={iframeRef}
-        src="https://inst-web.onrender.com"
+        src="https://inst-db.netlify.app"
         className="w-full h-full border-none"
         title="INST - Intelligent Navigation & Strategic Telemetry"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -100,7 +100,7 @@ export default function InstPage() {
       {/* README Popup */}
       {showReadme && (
         <ReadmePopup
-          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/inst/main/README.md"
+          readmeUrl="https://raw.githubusercontent.com/EvenfallAdvantage/inst/master/README.md"
           onClose={() => setShowReadme(false)}
         />
       )}
