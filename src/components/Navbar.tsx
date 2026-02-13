@@ -131,14 +131,14 @@ export default function Navbar() {
                     isActive('/wspr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
-                <Link to="/inst" className={`font-bold transition-all relative group ${
-                  isActive('/inst') 
+                <Link to="/nsit" className={`font-bold transition-all relative group ${
+                  isActive('/nsit') 
                     ? 'text-samurai-red neon-text' 
                     : 'text-samurai-steel-light hover:text-samurai-red'
                 }`}>
-                  INST
+                  NSIT
                   <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                    isActive('/inst') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
+                    isActive('/nsit') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
               </>
@@ -287,15 +287,15 @@ export default function Navbar() {
                   WSPR
                 </Link>
                 <Link
-                  to="/inst"
+                  to="/nsit"
                   className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
-                    isActive('/inst') 
+                    isActive('/nsit') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  INST
+                  NSIT
                 </Link>
               </>
             )}

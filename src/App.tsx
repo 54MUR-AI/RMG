@@ -4,7 +4,7 @@ import Footer from './components/Footer'
 import FloatingEmbers from './components/FloatingEmbers'
 import ErrorBoundary from './components/ErrorBoundary'
 import Home from './pages/Home'
-import InstPage from './pages/InstPage'
+import NsitPage from './pages/NsitPage'
 import ScraperPage from './pages/ScraperPage'
 import LdgrPage from './pages/LdgrPage'
 import WsprPage from './pages/WsprPage'
@@ -34,7 +34,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/inst" element={<InstPage />} />
+                <Route path="/nsit" element={<NsitPage />} />
                 <Route path="/scrp" element={<ScraperPage />} />
                 <Route path="/ldgr" element={<LdgrPage />} />
                 <Route path="/wspr" element={<WsprPage />} />

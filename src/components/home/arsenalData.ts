@@ -1,4 +1,4 @@
-import { Brain, FileText, Lock, Zap, Activity } from 'lucide-react'
+import { Brain, FileText, Lock, Zap, ScanEye } from 'lucide-react'
 import type { ArsenalCardData } from './ArsenalCard'
 
 export const ARSENAL_CARDS: ArsenalCardData[] = [
@@ -83,15 +83,15 @@ export const ARSENAL_CARDS: ArsenalCardData[] = [
     ],
   },
   {
-    name: 'INST',
-    subtitle: 'Intelligent Navigation & Strategic Telemetry',
-    icon: Activity,
-    thumbnail: '/thumbnails/inst-thumb.svg',
-    path: '/inst',
-    shortDescription: 'Financial command center with real-time market data, AI-powered analysis, prediction markets, and interactive visualizations.',
+    name: 'NSIT',
+    subtitle: 'Networked Speculation Intelligence Tool',
+    icon: ScanEye,
+    thumbnail: '/thumbnails/nsit-thumb.svg',
+    path: '/nsit',
+    shortDescription: 'Financial command center with real-time global equities, commodities, forex, crypto, AI-powered analysis, prediction markets, and interactive visualizations.',
     longDescription: [
-      'INST is the magnum opus of the Ronin Media Group ecosystem—a comprehensive financial intelligence dashboard that transforms raw market data into actionable insights through stunning interactive visualizations. Designed as a command center for investors across every market, exchange, and industry, INST aggregates data from crypto markets, traditional equities, macroeconomic indicators, and prediction markets into a unified, customizable interface with draggable and resizable widget panels.',
-      'Powered by real-time data feeds from CoinGecko, Polymarket WebSocket streams, FRED (Federal Reserve Economic Data), and Finnhub, INST delivers live ticker tapes, crypto market heatmaps, Fear & Greed gauges, macro dashboards with yield curve animations, and prediction market odds tracking. The AI Briefing panel leverages the RMG Ollama Bridge for local LLM-powered trend detection, anomaly alerts, and cross-market synthesis—providing institutional-grade analysis without cloud dependency. Deep integration with LDGR enables secure API key management and wallet portfolio tracking, while SCRP feeds real-time news intelligence for sentiment analysis. Future capabilities include 3D globe visualizations, correlation matrices, money flow Sankey diagrams, network graphs, and a time machine for historical market replay.',
+      'NSIT is the magnum opus of the Ronin Media Group ecosystem—a comprehensive financial intelligence dashboard that transforms raw market data into actionable insights through stunning interactive visualizations. Designed as a command center for investors across every market, exchange, and industry, NSIT aggregates data from global stock indices, commodities (COMEX metals, energy), forex, bonds, crypto markets, macroeconomic indicators, and prediction markets into a unified, customizable interface with draggable and resizable widget panels.',
+      'Powered by real-time data feeds from Yahoo Finance, CoinGecko, Polymarket, FRED (Federal Reserve Economic Data), and RSS news aggregation, NSIT delivers live ticker tapes, global indices tracking, Gold/Silver Ratio (GSR), US Treasury yield curves, crypto market heatmaps, Fear & Greed gauges, macro dashboards, and prediction market odds tracking. The AI Briefing panel leverages the RMG Ollama Bridge for local LLM-powered trend detection, anomaly alerts, and cross-market synthesis—providing institutional-grade analysis without cloud dependency. Deep integration with LDGR enables secure API key management, while SCRP feeds real-time news intelligence for sentiment analysis.',
     ],
     features: [
       'Real-Time Crypto & Market Heatmaps',
