@@ -100,7 +100,7 @@ export default function InstPage() {
       {/* README Popup */}
       {showReadme && (
         <ReadmePopup
-          readmeUrl="https://raw.githubusercontent.com/EvenfallAdvantage/inst/master/README.md"
+          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/inst/master/README.md"
           onClose={() => setShowReadme(false)}
         />
       )}
