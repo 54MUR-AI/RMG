@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BookOpen, Settings, Lock } from 'lucide-react'
+import { Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import ReadmePopup from '../components/ReadmePopup'
 
@@ -58,15 +58,24 @@ export default function OmniPage() {
     }
   }, [])
 
-  // Send settings toggle to iframe
-  const handleSettingsClick = () => {
-    if (iframeRef.current?.contentWindow) {
-      iframeRef.current.contentWindow.postMessage(
-        { type: 'RMG_TOGGLE_SETTINGS' },
-        'https://omni-lite-web.onrender.com'
-      )
+  // Listen for footer button events
+  useEffect(() => {
+    const onReadme = () => setShowReadme(true)
+    const onSettings = () => {
+      if (iframeRef.current?.contentWindow) {
+        iframeRef.current.contentWindow.postMessage(
+          { type: 'RMG_TOGGLE_SETTINGS' },
+          'https://omni-lite-web.onrender.com'
+        )
+      }
     }
-  }
+    window.addEventListener('rmg:readme', onReadme)
+    window.addEventListener('rmg:settings', onSettings)
+    return () => {
+      window.removeEventListener('rmg:readme', onReadme)
+      window.removeEventListener('rmg:settings', onSettings)
+    }
+  }, [])
 
   if (!user) {
     return (
@@ -90,27 +99,6 @@ export default function OmniPage() {
         title="OMNI-Lite - Optimized Multi-Model Networked Intelligence"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       />
-
-      {/* Floating Buttons */}
-      <div className="fixed bottom-4 right-4 sm:bottom-20 sm:left-6 sm:right-auto flex flex-col gap-2 sm:gap-3 z-50">
-        {/* README Button */}
-        <button
-          onClick={() => setShowReadme(true)}
-          className="p-2.5 sm:p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
-          aria-label="README"
-        >
-          <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-        
-        {/* Settings Button */}
-        <button
-          onClick={handleSettingsClick}
-          className="p-2.5 sm:p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
-          aria-label="Settings"
-        >
-          <Settings className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-      </div>
 
       {/* README Popup */}
       {showReadme && (

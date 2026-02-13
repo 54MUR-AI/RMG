@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
-import { MessageSquare, Loader2, Lock, BookOpen, Settings } from 'lucide-react'
+import { MessageSquare, Loader2, Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import ReadmePopup from '../components/ReadmePopup'
 import LdgrFileBrowserModal from '../components/LdgrFileBrowserModal'
@@ -312,19 +312,22 @@ export default function WsprPage() {
     return () => window.removeEventListener('message', handleWsprMessage)
   }, [])
 
-  // Send settings toggle to iframe
-  const handleSettingsClick = () => {
-    console.log('RMG: Settings button clicked')
-    if (iframeRef.current?.contentWindow) {
-      console.log('RMG: Sending RMG_TOGGLE_SETTINGS to WSPR iframe')
-      iframeRef.current.contentWindow.postMessage(
-        { type: 'RMG_TOGGLE_SETTINGS' },
-        '*' // Use wildcard for development, change to specific origin in production
-      )
-    } else {
-      console.error('RMG: iframe contentWindow not available')
+  // Listen for footer button events
+  useEffect(() => {
+    const onReadme = () => setShowReadme(true)
+    const onSettings = () => {
+      if (iframeRef.current?.contentWindow) {
+        iframeRef.current.contentWindow.postMessage({ type: 'RMG_TOGGLE_SETTINGS' }, '*')
+      }
     }
-  }
+    window.addEventListener('rmg:readme', onReadme)
+    window.addEventListener('rmg:settings', onSettings)
+    return () => {
+      window.removeEventListener('rmg:readme', onReadme)
+      window.removeEventListener('rmg:settings', onSettings)
+    }
+  }, [])
+
 
   // Auth gate - require login
   if (!user) {
@@ -385,27 +388,6 @@ export default function WsprPage() {
           />
         </div>
       )}
-
-      {/* Floating Buttons */}
-      <div className="fixed bottom-4 right-4 sm:bottom-20 sm:left-6 sm:right-auto flex flex-col gap-2 sm:gap-3 z-50">
-        {/* README Button */}
-        <button
-          onClick={() => setShowReadme(true)}
-          className="p-2.5 sm:p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
-          aria-label="README"
-        >
-          <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-        
-        {/* Settings Button */}
-        <button
-          onClick={handleSettingsClick}
-          className="p-2.5 sm:p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
-          aria-label="Settings"
-        >
-          <Settings className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-      </div>
 
       {/* README Popup */}
       {showReadme && (

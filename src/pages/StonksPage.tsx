@@ -11,6 +11,15 @@ export default function StonksPage() {
     window.scrollTo(0, 0)
   }, [])
 
+  // Listen for footer button events
+  useEffect(() => {
+    const onReadme = () => setShowPopup(true)
+    window.addEventListener('rmg:readme', onReadme)
+    return () => {
+      window.removeEventListener('rmg:readme', onReadme)
+    }
+  }, [])
+
   if (!user) {
     return (
       <div className="bg-samurai-black flex items-center justify-center p-4 py-32">

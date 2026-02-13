@@ -1,8 +1,19 @@
-import { Link } from 'react-router-dom'
-import { Github } from 'lucide-react'
+import { Link, useLocation } from 'react-router-dom'
+import { Github, BookOpen, Settings } from 'lucide-react'
 import DiscordIcon from './DiscordIcon'
 
+const APP_CONFIG: Record<string, { label: string }> = {
+  '/wspr': { label: 'WSPR' },
+  '/scrp': { label: 'SCRP' },
+  '/ldgr': { label: 'LDGR' },
+  '/omni': { label: 'OMNI' },
+  '/stonks': { label: 'STONKS' },
+}
+
 export default function Footer() {
+  const location = useLocation()
+  const appConfig = APP_CONFIG[location.pathname]
+
   return (
     <footer className="bg-samurai-black border-t-2 border-samurai-red text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
@@ -12,24 +23,56 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} <span className="font-bold text-white">RONIN MEDIA</span>
           </div>
 
-          {/* Social Links */}
-          <div className="flex items-center gap-3">
-            <a 
-              href="https://github.com/54MUR-AI" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
-              aria-label="GitHub"
-            >
-              <Github size={14} />
-            </a>
-            <Link 
-              to="/discord" 
-              className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
-              aria-label="Discord"
-            >
-              <DiscordIcon size={14} />
-            </Link>
+          {/* Center: App label when on an app page */}
+          {appConfig && (
+            <div className="text-xs font-bold text-samurai-red tracking-wider">
+              {appConfig.label}
+            </div>
+          )}
+
+          {/* Right side buttons */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            {appConfig ? (
+              <>
+                {/* README Button */}
+                <button
+                  onClick={() => window.dispatchEvent(new CustomEvent('rmg:readme'))}
+                  className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
+                  aria-label="README"
+                  title="README"
+                >
+                  <BookOpen size={14} />
+                </button>
+                {/* Settings Button */}
+                <button
+                  onClick={() => window.dispatchEvent(new CustomEvent('rmg:settings'))}
+                  className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
+                  aria-label="Settings"
+                  title="Settings"
+                >
+                  <Settings size={14} />
+                </button>
+              </>
+            ) : (
+              <>
+                <a 
+                  href="https://github.com/54MUR-AI" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
+                  aria-label="GitHub"
+                >
+                  <Github size={14} />
+                </a>
+                <Link 
+                  to="/discord" 
+                  className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
+                  aria-label="Discord"
+                >
+                  <DiscordIcon size={14} />
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </div>

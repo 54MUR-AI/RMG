@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FolderOpen, Key, Lock, Wallet, BookOpen, Settings } from 'lucide-react'
+import { FolderOpen, Key, Lock, Wallet } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import FileUpload from '../components/ldgr/FileUpload'
@@ -32,6 +32,18 @@ export default function LdgrPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
+  }, [])
+
+  // Listen for footer button events
+  useEffect(() => {
+    const onReadme = () => setShowReadme(true)
+    const onSettings = () => setShowSettings(true)
+    window.addEventListener('rmg:readme', onReadme)
+    window.addEventListener('rmg:settings', onSettings)
+    return () => {
+      window.removeEventListener('rmg:readme', onReadme)
+      window.removeEventListener('rmg:settings', onSettings)
+    }
   }, [])
 
   useEffect(() => {
@@ -375,27 +387,6 @@ export default function LdgrPage() {
           onClose={() => setShowReadme(false)}
         />
       )}
-
-      {/* Floating Buttons */}
-      <div className="fixed bottom-4 right-4 sm:bottom-20 sm:left-6 sm:right-auto flex flex-col gap-2 sm:gap-3 z-50">
-        {/* README Button */}
-        <button
-          onClick={() => setShowReadme(true)}
-          className="p-2.5 sm:p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
-          aria-label="README"
-        >
-          <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-        
-        {/* Settings Button */}
-        <button
-          onClick={() => setShowSettings(true)}
-          className="p-2.5 sm:p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
-          aria-label="Settings"
-        >
-          <Settings className="w-5 h-5 sm:w-6 sm:h-6" />
-        </button>
-      </div>
 
       {/* Settings Modal */}
       <LdgrSettings isOpen={showSettings} onClose={() => setShowSettings(false)} />
