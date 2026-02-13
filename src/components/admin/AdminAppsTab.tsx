@@ -14,8 +14,8 @@ export default function AdminAppsTab() {
   const checkApps = async () => {
     setLoading(true)
     const appList = [
-      { name: 'WSPR', url: 'https://wspr-web.onrender.com' },
-      { name: 'SCRP', url: 'https://scrp-backend.onrender.com' },
+      { name: 'WSPR', url: 'https://wspr-rmg.onrender.com' },
+      { name: 'SCRP', url: 'https://scrp-rmg.onrender.com' },
       { name: 'RMG', url: 'https://roninmedia.studio' },
     ]
 

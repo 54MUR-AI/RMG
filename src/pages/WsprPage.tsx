@@ -17,7 +17,7 @@ export default function WsprPage() {
   const wsprUrl = useMemo(() => {
     if (!user) return ''
     const username = user.user_metadata?.display_name || user.email?.split('@')[0] || ''
-    return `https://wspr-web.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}&username=${encodeURIComponent(username)}`
+    return `https://wspr-rmg.onrender.com?userId=${user.id}&email=${encodeURIComponent(user.email || '')}&username=${encodeURIComponent(username)}`
   }, [user?.id, user?.email, user?.user_metadata?.display_name])
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function WsprPage() {
     // Check if WSPR backend is healthy
     const checkHealth = async () => {
       try {
-        const response = await fetch('https://wspr-backend.onrender.com/api/health')
+        const response = await fetch('https://wspr-api.onrender.com/api/health')
         if (response.ok) {
           setIsLoading(false)
         } else {
@@ -61,7 +61,7 @@ export default function WsprPage() {
             type: 'RMG_AUTH_TOKEN',
             authToken: authToken
           },
-          'https://wspr-web.onrender.com'
+          'https://wspr-rmg.onrender.com'
         )
       }
     }
@@ -93,7 +93,7 @@ export default function WsprPage() {
   useEffect(() => {
     const handleWsprMessage = async (event: MessageEvent) => {
       // Only accept messages from WSPR
-      if (!event.origin.includes('wspr-web.onrender.com') && !event.origin.includes('localhost')) {
+      if (!event.origin.includes('wspr-rmg.onrender.com') && !event.origin.includes('localhost')) {
         return
       }
 

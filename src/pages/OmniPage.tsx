@@ -45,7 +45,7 @@ export default function OmniPage() {
             type: 'RMG_AUTH_TOKEN',
             authToken: authToken
           },
-          'https://omni-lite-web.onrender.com'
+          'https://omni-rmg.onrender.com'
         )
       }
     }
@@ -65,7 +65,7 @@ export default function OmniPage() {
       if (iframeRef.current?.contentWindow) {
         iframeRef.current.contentWindow.postMessage(
           { type: 'RMG_TOGGLE_SETTINGS' },
-          'https://omni-lite-web.onrender.com'
+          'https://omni-rmg.onrender.com'
         )
       }
     }
@@ -94,7 +94,7 @@ export default function OmniPage() {
       {/* Fullscreen iframe */}
       <iframe
         ref={iframeRef}
-        src="https://omni-lite-web.onrender.com"
+        src="https://omni-rmg.onrender.com"
         className="w-full h-full border-none"
         title="OMNI-Lite - Optimized Multi-Model Networked Intelligence"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
