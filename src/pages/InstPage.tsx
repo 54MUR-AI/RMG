@@ -91,7 +91,7 @@ export default function InstPage() {
       {/* Fullscreen iframe */}
       <iframe
         ref={iframeRef}
-        src="https://inst-db.netlify.app"
+        src="https://inst-dashboard.onrender.com"
         className="w-full h-full border-none"
         title="INST - Intelligent Navigation & Strategic Telemetry"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
