@@ -387,23 +387,23 @@ export default function WsprPage() {
       )}
 
       {/* Floating Buttons */}
-      <div className="fixed bottom-20 left-6 flex flex-col gap-3 z-50">
+      <div className="fixed bottom-4 right-4 sm:bottom-20 sm:left-6 sm:right-auto flex flex-col gap-2 sm:gap-3 z-50">
         {/* README Button */}
         <button
           onClick={() => setShowReadme(true)}
-          className="p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
+          className="p-2.5 sm:p-4 bg-samurai-grey-dark text-white rounded-full shadow-lg hover:bg-samurai-red transition-all hover:scale-110"
           aria-label="README"
         >
-          <BookOpen className="w-6 h-6" />
+          <BookOpen className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
         
         {/* Settings Button */}
         <button
           onClick={handleSettingsClick}
-          className="p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
+          className="p-2.5 sm:p-4 bg-samurai-red text-white rounded-full shadow-lg shadow-samurai-red/50 hover:bg-samurai-red-dark transition-all hover:scale-110"
           aria-label="Settings"
         >
-          <Settings className="w-6 h-6" />
+          <Settings className="w-5 h-5 sm:w-6 sm:h-6" />
         </button>
       </div>
 
