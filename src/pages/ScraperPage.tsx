@@ -45,7 +45,7 @@ export default function ScraperPage() {
             type: 'RMG_AUTH_TOKEN',
             authToken: authToken
           },
-          'https://scraper-frontend-3hnj.onrender.com'
+          'https://scraper-frontend-wcc5.onrender.com'
         )
       }
     }
@@ -65,7 +65,7 @@ export default function ScraperPage() {
       if (iframeRef.current?.contentWindow) {
         iframeRef.current.contentWindow.postMessage(
           { type: 'RMG_TOGGLE_SETTINGS' },
-          'https://scraper-frontend-3hnj.onrender.com'
+          'https://scraper-frontend-wcc5.onrender.com'
         )
       }
     }
@@ -94,7 +94,7 @@ export default function ScraperPage() {
       {/* Fullscreen iframe */}
       <iframe
         ref={iframeRef}
-        src="https://scraper-frontend-3hnj.onrender.com"
+        src="https://scraper-frontend-wcc5.onrender.com"
         className="w-full h-full border-none"
         title="SCRP - Smart Content Retrieval & Processing"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
