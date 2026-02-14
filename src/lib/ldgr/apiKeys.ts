@@ -94,6 +94,33 @@ export const API_SERVICES = {
   'tiingo': { name: 'Tiingo', category: 'Financial', icon: '🎯' },
   'intrinio': { name: 'Intrinio', category: 'Financial', icon: '🏦' },
   'eodhd': { name: 'EODHD', category: 'Financial', icon: '📆' },
+  'polymarket': { name: 'Polymarket', category: 'Financial', icon: '🎰' },
+  'yahoo-finance': { name: 'Yahoo Finance (RapidAPI)', category: 'Financial', icon: '💰' },
+
+  // SIGINT & Tracking
+  'opensky': { name: 'OpenSky Network', category: 'SIGINT', icon: '✈️' },
+  'adsb-exchange': { name: 'ADS-B Exchange', category: 'SIGINT', icon: '📡' },
+  'flightradar24': { name: 'Flightradar24', category: 'SIGINT', icon: '🛩️' },
+  'marinetraffic': { name: 'MarineTraffic (AIS)', category: 'SIGINT', icon: '🚢' },
+  'vesselfinder': { name: 'VesselFinder', category: 'SIGINT', icon: '⚓' },
+  'ais-hub': { name: 'AIS Hub', category: 'SIGINT', icon: '🌊' },
+
+  // OSINT & Intelligence
+  'newsapi': { name: 'NewsAPI', category: 'OSINT', icon: '📰' },
+  'gdelt': { name: 'GDELT Project', category: 'OSINT', icon: '🌐' },
+  'acled': { name: 'ACLED (Conflict Data)', category: 'OSINT', icon: '⚔️' },
+  'nasa-firms': { name: 'NASA FIRMS (Fire/Hotspot)', category: 'OSINT', icon: '🔥' },
+  'nasa-earthdata': { name: 'NASA Earthdata', category: 'OSINT', icon: '🛰️' },
+  'sentinel-hub': { name: 'Sentinel Hub', category: 'OSINT', icon: '🗺️' },
+
+  // Cybersecurity
+  'shodan': { name: 'Shodan', category: 'Cybersecurity', icon: '🔓' },
+  'virustotal': { name: 'VirusTotal', category: 'Cybersecurity', icon: '🦠' },
+  'abuseipdb': { name: 'AbuseIPDB', category: 'Cybersecurity', icon: '🚫' },
+  'nvd': { name: 'NVD (NIST CVE)', category: 'Cybersecurity', icon: '🛡️' },
+  'greynoise': { name: 'GreyNoise', category: 'Cybersecurity', icon: '📻' },
+  'censys': { name: 'Censys', category: 'Cybersecurity', icon: '🔎' },
+  'urlscan': { name: 'urlscan.io', category: 'Cybersecurity', icon: '🌐' },
 
   // Other
   'custom': { name: 'Custom API', category: 'Other', icon: '🔧' },

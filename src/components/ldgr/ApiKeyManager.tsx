@@ -350,6 +350,8 @@ function ApiKeyModal({
   const [apiKey, setApiKey] = useState('')
   const [description, setDescription] = useState(existingKey?.description || '')
   const [saving, setSaving] = useState(false)
+  const [serviceSearch, setServiceSearch] = useState('')
+  const [serviceDropdownOpen, setServiceDropdownOpen] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -368,6 +370,24 @@ function ApiKeyModal({
     }
   }
 
+  const filteredServices = Object.entries(API_SERVICES).filter(([key, service]) => {
+    if (!serviceSearch) return true
+    const q = serviceSearch.toLowerCase()
+    return key.toLowerCase().includes(q) ||
+      service.name.toLowerCase().includes(q) ||
+      service.category.toLowerCase().includes(q)
+  })
+
+  // Group filtered services by category
+  const groupedServices = filteredServices.reduce<Record<string, [string, typeof API_SERVICES[keyof typeof API_SERVICES]][]>>((acc, entry) => {
+    const cat = entry[1].category
+    if (!acc[cat]) acc[cat] = []
+    acc[cat].push(entry)
+    return acc
+  }, {})
+
+  const selectedService = serviceName ? API_SERVICES[serviceName as keyof typeof API_SERVICES] : null
+
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
       <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
@@ -376,22 +396,85 @@ function ApiKeyModal({
         </h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Searchable Service Selector */}
           <div>
             <label className="block text-white font-semibold mb-2">Service</label>
-            <select
-              value={serviceName}
-              onChange={(e) => setServiceName(e.target.value)}
-              className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white focus:border-samurai-red focus:outline-none"
-              required
-              disabled={!!existingKey}
-            >
-              <option value="">Select a service...</option>
-              {Object.entries(API_SERVICES).map(([key, service]) => (
-                <option key={key} value={key}>
-                  {service.icon} {service.name} ({service.category})
-                </option>
-              ))}
-            </select>
+            {existingKey ? (
+              <div className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white/70">
+                {selectedService ? `${selectedService.icon} ${selectedService.name}` : serviceName}
+              </div>
+            ) : (
+              <div className="relative">
+                {/* Selected service display / search input */}
+                <div
+                  className={`w-full px-4 py-3 bg-samurai-black border-2 rounded-lg text-white cursor-pointer flex items-center gap-2 ${
+                    serviceDropdownOpen ? 'border-samurai-red' : 'border-samurai-grey'
+                  }`}
+                  onClick={() => setServiceDropdownOpen(!serviceDropdownOpen)}
+                >
+                  {serviceName && selectedService ? (
+                    <>
+                      <span>{selectedService.icon}</span>
+                      <span className="flex-1">{selectedService.name}</span>
+                      <span className="text-xs text-white/50">{selectedService.category}</span>
+                    </>
+                  ) : (
+                    <span className="text-white/50 flex-1">Select a service...</span>
+                  )}
+                  <svg className={`w-4 h-4 text-white/50 transition-transform ${serviceDropdownOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                </div>
+
+                {/* Dropdown */}
+                {serviceDropdownOpen && (
+                  <div className="absolute z-50 mt-1 w-full bg-samurai-black border-2 border-samurai-red rounded-lg shadow-xl max-h-72 flex flex-col">
+                    {/* Search input */}
+                    <div className="p-2 border-b border-samurai-grey-dark">
+                      <input
+                        type="text"
+                        value={serviceSearch}
+                        onChange={(e) => setServiceSearch(e.target.value)}
+                        placeholder="Search services..."
+                        className="w-full px-3 py-2 bg-samurai-grey-darker border border-samurai-grey rounded text-white text-sm placeholder-white/40 focus:border-samurai-red focus:outline-none"
+                        autoFocus
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    </div>
+                    {/* Results */}
+                    <div className="overflow-y-auto flex-1">
+                      {Object.keys(groupedServices).length === 0 ? (
+                        <div className="px-4 py-3 text-white/50 text-sm text-center">No services match "{serviceSearch}"</div>
+                      ) : (
+                        Object.entries(groupedServices).map(([category, services]) => (
+                          <div key={category}>
+                            <div className="px-3 py-1.5 text-[10px] font-bold text-samurai-red uppercase tracking-wider bg-samurai-grey-darker/50 sticky top-0">
+                              {category}
+                            </div>
+                            {services.map(([key, service]) => (
+                              <button
+                                key={key}
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation()
+                                  setServiceName(key)
+                                  setServiceDropdownOpen(false)
+                                  setServiceSearch('')
+                                }}
+                                className={`w-full text-left px-4 py-2 flex items-center gap-2 hover:bg-samurai-red/20 transition-colors text-sm ${
+                                  serviceName === key ? 'bg-samurai-red/10 text-samurai-red' : 'text-white'
+                                }`}
+                              >
+                                <span className="text-base">{service.icon}</span>
+                                <span className="flex-1">{service.name}</span>
+                              </button>
+                            ))}
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
           
           <div>
