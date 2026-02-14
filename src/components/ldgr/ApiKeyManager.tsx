@@ -487,6 +487,9 @@ function ApiKeyModal({
               className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none"
               required
             />
+            <p className="text-[10px] text-white/40 mt-1.5">
+              For APIs that require a <span className="text-cyan-400/70">client ID</span> or <span className="text-cyan-400/70">username</span> (e.g. OpenSky), use the Key Name as your client ID and the API Key field for your secret/password.
+            </p>
           </div>
           
           <div>
