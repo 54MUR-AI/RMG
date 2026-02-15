@@ -68,6 +68,7 @@ export default function WsprPage() {
 
     // Listen for auth requests from WSPR iframe
     const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== 'https://wspr-rmg.onrender.com') return
       if (event.data.type === 'WSPR_REQUEST_AUTH') {
         sendAuthToken()
       }
@@ -118,7 +119,7 @@ export default function WsprPage() {
               type: 'LDGR_FOLDER_CREATED',
               workspaceId: event.data.workspaceId,
               folderId: folderId
-            }, '*')
+            }, 'https://wspr-rmg.onrender.com')
           }
           
           console.log('✅ LDGR folder created and linked:', folderId)
@@ -131,7 +132,7 @@ export default function WsprPage() {
               type: 'LDGR_FOLDER_ERROR',
               workspaceId: event.data.workspaceId,
               error: error instanceof Error ? error.message : 'Unknown error'
-            }, '*')
+            }, 'https://wspr-rmg.onrender.com')
           }
         }
       } else if (event.data.type === 'WSPR_CREATE_CHANNEL_FOLDER') {
@@ -184,7 +185,7 @@ export default function WsprPage() {
               type: 'LDGR_CHANNEL_FOLDER_CREATED',
               channelId: event.data.channelId,
               folderId: folderId
-            }, '*')
+            }, 'https://wspr-rmg.onrender.com')
           }
           
           console.log('✅ LDGR channel folder created and linked:', folderId)
@@ -232,7 +233,7 @@ export default function WsprPage() {
                 filename: fileMetadata.name,
                 fileSize: fileMetadata.size,
                 mimeType: fileMetadata.type
-              }, '*')
+              }, 'https://wspr-rmg.onrender.com')
             }
             
             console.log('✅ File uploaded to LDGR:', fileMetadata)
@@ -242,7 +243,7 @@ export default function WsprPage() {
               iframeRef.current.contentWindow.postMessage({
                 type: 'LDGR_FILE_UPLOAD_ERROR',
                 error: error instanceof Error ? error.message : 'Upload failed'
-              }, '*')
+              }, 'https://wspr-rmg.onrender.com')
             }
           }
         }
@@ -317,7 +318,7 @@ export default function WsprPage() {
     const onReadme = () => setShowReadme(true)
     const onSettings = () => {
       if (iframeRef.current?.contentWindow) {
-        iframeRef.current.contentWindow.postMessage({ type: 'RMG_TOGGLE_SETTINGS' }, '*')
+        iframeRef.current.contentWindow.postMessage({ type: 'RMG_TOGGLE_SETTINGS' }, 'https://wspr-rmg.onrender.com')
       }
     }
     window.addEventListener('rmg:readme', onReadme)
@@ -407,7 +408,7 @@ export default function WsprPage() {
             if (iframeRef.current?.contentWindow) {
               iframeRef.current.contentWindow.postMessage({
                 type: 'LDGR_BROWSE_CANCELLED'
-              }, '*')
+              }, 'https://wspr-rmg.onrender.com')
             }
           }}
           onSelectFile={(file) => {
@@ -419,7 +420,7 @@ export default function WsprPage() {
                 filename: file.name,
                 fileSize: file.size,
                 mimeType: file.type
-              }, '*')
+              }, 'https://wspr-rmg.onrender.com')
             }
             setShowFileBrowser(false)
           }}

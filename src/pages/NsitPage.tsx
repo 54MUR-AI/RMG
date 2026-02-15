@@ -32,6 +32,7 @@ export default function NsitPage() {
 
     // Listen for auth refresh requests from the NSIT iframe
     const handleMessage = (event: MessageEvent) => {
+      if (event.origin !== 'https://nsit-rmg.onrender.com') return
       if (event.data?.type === 'NSIT_REQUEST_AUTH') {
         sendAuthToken()
       }
@@ -59,7 +60,7 @@ export default function NsitPage() {
       if (iframeRef.current?.contentWindow) {
         iframeRef.current.contentWindow.postMessage(
           { type: 'RMG_TOGGLE_SETTINGS' },
-          '*'
+          'https://nsit-rmg.onrender.com'
         )
       }
     }
