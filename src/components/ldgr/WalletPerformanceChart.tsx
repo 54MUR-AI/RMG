@@ -17,29 +17,30 @@ interface WalletPerformanceChartProps {
 }
 
 const ASSET_COLORS: Record<string, string> = {
-  stock: '#22c55e',     // green
-  etf: '#10b981',       // emerald
-  mutf: '#059669',      // teal-green
-  gold: '#eab308',      // yellow/gold
-  silver: '#94a3b8',    // silver/slate
-  platinum: '#e2e8f0',  // light platinum
-  palladium: '#cbd5e1', // pale palladium
+  stock: '#3b82f6',     // blue
+  etf: '#60a5fa',       // light blue
+  mutf: '#2563eb',      // darker blue
+  gold: '#fbbf24',      // gold
+  silver: '#c0c0c0',    // silver
+  platinum: '#e5e4e2',  // platinum
+  palladium: '#b8b0a0', // palladium
   metal_other: '#a8a29e', // stone
   commodity: '#f97316', // orange
-  tokenized: '#8b5cf6', // purple
+  crypto: '#a855f7',    // purple
+  tokenized: '#8b5cf6', // violet
 }
 
 const BLOCKCHAIN_COLORS: Record<string, string> = {
-  ethereum: '#E63946',    // samurai-red
-  bitcoin: '#FF4757',     // bright red
-  solana: '#C1121F',      // samurai-red-dark
-  polygon: '#FF6B7A',     // light red
-  binance: '#8B0000',     // samurai-red-darker
-  avalanche: '#FF8A95',   // lighter red
-  cardano: '#A01020',     // medium dark red
-  ripple: '#FF5C6C',      // medium light red
-  cronos: '#D32F2F',      // deep red
-  other: '#B71C1C'        // dark red fallback
+  ethereum: '#a855f7',    // purple
+  bitcoin: '#f59e0b',     // amber/orange (BTC brand)
+  solana: '#9333ea',      // dark purple
+  polygon: '#8b5cf6',     // violet
+  binance: '#c084fc',     // light purple
+  avalanche: '#7c3aed',   // deep violet
+  cardano: '#6d28d9',     // indigo-purple
+  ripple: '#d8b4fe',      // lavender
+  cronos: '#a78bfa',      // medium purple
+  other: '#7e22ce'        // purple fallback
 }
 
 type TimeRange = '1d' | '3d' | '1w' | '1m' | '3m' | '6m' | '1y' | '5y' | '10y' | 'all'
@@ -312,22 +313,22 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 if (!active || !payload || !payload.length) return null
                 
                 return (
-                  <div className="bg-samurai-black-lighter border border-samurai-red rounded-lg p-2 shadow-lg">
-                    <p className="text-xs text-samurai-steel mb-1">{label}</p>
+                  <div className="bg-[#0a0a0a] border border-samurai-red/60 rounded-lg p-3 shadow-xl" style={{ opacity: 1 }}>
+                    <p className="text-xs text-white/70 mb-1.5 font-mono">{label}</p>
                     {payload.map((entry: any, index: number) => (
-                      <div key={index} className="flex items-center gap-2 mb-0.5">
+                      <div key={index} className="flex items-center gap-2 mb-1">
                         <div 
-                          className="w-2 h-2 rounded-full" 
+                          className="w-2.5 h-2.5 rounded-full flex-shrink-0" 
                           style={{ backgroundColor: entry.color }}
                         />
-                        <span className="text-xs text-white font-medium">{entry.name}:</span>
-                        <span className="text-xs text-samurai-steel">
+                        <span className="text-xs text-white font-semibold">{entry.name}:</span>
+                        <span className="text-xs text-white/80 font-mono">
                           ${Number(entry.value).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                         </span>
                       </div>
                     ))}
-                    <div className="mt-1 pt-1 border-t border-samurai-grey-dark">
-                      <span className="text-xs text-samurai-steel">
+                    <div className="mt-1.5 pt-1.5 border-t border-white/20">
+                      <span className="text-sm text-white font-bold">
                         Total: ${payload.reduce((sum: number, entry: any) => sum + Number(entry.value || 0), 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                       </span>
                     </div>
@@ -347,7 +348,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 stroke={BLOCKCHAIN_COLORS[wallet.blockchain] || '#6B7280'}
                 strokeWidth={2}
                 dot={false}
-                activeDot={{ r: 6, fill: '#E63946', stroke: '#E63946', strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: BLOCKCHAIN_COLORS[wallet.blockchain] || '#7e22ce', stroke: BLOCKCHAIN_COLORS[wallet.blockchain] || '#7e22ce', strokeWidth: 2 }}
                 connectNulls={true}
               />
             ))}
@@ -356,10 +357,10 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 key={a.id}
                 type="monotone"
                 dataKey={a.asset_name}
-                stroke={ASSET_COLORS[a.asset_type] || '#22c55e'}
+                stroke={ASSET_COLORS[a.asset_type] || '#3b82f6'}
                 strokeWidth={2}
                 dot={false}
-                activeDot={{ r: 6, fill: '#22c55e', stroke: '#22c55e', strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: ASSET_COLORS[a.asset_type] || '#3b82f6', stroke: ASSET_COLORS[a.asset_type] || '#3b82f6', strokeWidth: 2 }}
                 connectNulls={true}
               />
             ))}
@@ -371,7 +372,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 stroke={ASSET_COLORS[a.asset_type] || '#eab308'}
                 strokeWidth={2}
                 dot={false}
-                activeDot={{ r: 6, fill: '#eab308', stroke: '#eab308', strokeWidth: 2 }}
+                activeDot={{ r: 6, fill: ASSET_COLORS[a.asset_type] || '#fbbf24', stroke: ASSET_COLORS[a.asset_type] || '#fbbf24', strokeWidth: 2 }}
                 connectNulls={true}
               />
             ))}
