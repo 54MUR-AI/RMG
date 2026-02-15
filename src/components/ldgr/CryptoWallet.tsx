@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, RefreshCw, TrendingUp, TrendingDown } from 'lucide-react'
+import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, RefreshCw, TrendingUp, TrendingDown, Briefcase, BarChart3, Gem, Link2 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
 import MultiChainWalletImport from './MultiChainWalletImport'
@@ -7,6 +7,8 @@ import WalletPerformanceChart from './WalletPerformanceChart'
 import { secureCopy } from '../../lib/ldgr/secureClipboard'
 import { useAutoLock } from '../../hooks/useAutoLock'
 import ReAuthGate from './ReAuthGate'
+import StockAssets from './StockAssets'
+import MetalAssets from './MetalAssets'
 import {
   getUserWallets,
   addWallet,
@@ -15,12 +17,14 @@ import {
   decryptSeedPhrase,
   fetchWalletBalance,
   fetchWalletBalanceWithTokens,
-  type CryptoWallet,
+  type CryptoWallet as CryptoWalletType,
   type CryptoWalletInput,
   type WalletBalance,
   type MultiTokenBalance
 } from '../../lib/ldgr/cryptoWallets'
 import { detectBlockchainFromAddress, getAddressFormatMessage } from '../../lib/ldgr/addressDetection'
+
+type AssetSubTab = 'wallets' | 'stocks' | 'metals' | 'tokenized'
 
 const BLOCKCHAINS = {
   ethereum: { name: 'Ethereum', icon: '⟠', color: 'blue', symbol: 'ETH' },
@@ -35,16 +39,93 @@ const BLOCKCHAINS = {
   other: { name: 'Other', icon: '🪙', color: 'gray', symbol: '' }
 }
 
-export default function CryptoWallet() {
+export default function CryptoWalletPage() {
+  const [subTab, setSubTab] = useState<AssetSubTab>('wallets')
+
+  const SUB_TABS: { key: AssetSubTab; label: string; icon: typeof Wallet }[] = [
+    { key: 'wallets', label: 'Wallets', icon: Wallet },
+    { key: 'stocks', label: 'Stocks', icon: BarChart3 },
+    { key: 'metals', label: 'Metals', icon: Gem },
+    { key: 'tokenized', label: 'Tokenized', icon: Link2 },
+  ]
+
+  return (
+    <div className="space-y-6">
+      {/* Assets Header */}
+      <div className="text-center">
+        <h2 className="text-2xl font-black text-white flex items-center justify-center gap-2">
+          <Briefcase className="w-6 h-6 text-samurai-red" />
+          Assets
+        </h2>
+        <p className="text-white/70 text-sm mt-1">
+          Manage crypto wallets, equities, metals, and tokenized assets
+        </p>
+      </div>
+
+      {/* Sub-tab navigation */}
+      <div className="flex justify-center gap-1 bg-samurai-grey-darker rounded-lg p-1 border border-samurai-grey">
+        {SUB_TABS.map(t => {
+          const Icon = t.icon
+          return (
+            <button
+              key={t.key}
+              onClick={() => setSubTab(t.key)}
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-md text-sm font-semibold transition-all ${
+                subTab === t.key
+                  ? 'bg-samurai-red text-white shadow-lg'
+                  : 'text-white/60 hover:text-white hover:bg-samurai-grey-dark'
+              }`}
+            >
+              <Icon className="w-4 h-4" />
+              <span className="hidden sm:inline">{t.label}</span>
+            </button>
+          )
+        })}
+      </div>
+
+      {/* Sub-tab content */}
+      {subTab === 'wallets' && <CryptoWalletSection />}
+      {subTab === 'stocks' && <StockAssets />}
+      {subTab === 'metals' && <MetalAssets />}
+      {subTab === 'tokenized' && <TokenizedPlaceholder />}
+    </div>
+  )
+}
+
+// Tokenized assets placeholder
+function TokenizedPlaceholder() {
+  return (
+    <div className="text-center py-16 bg-samurai-grey-darker rounded-lg border-2 border-samurai-grey">
+      <Link2 className="w-16 h-16 text-samurai-red/30 mx-auto mb-4" />
+      <h3 className="text-xl font-bold text-white mb-2">Tokenized Assets</h3>
+      <p className="text-white/60 text-sm max-w-md mx-auto mb-4">
+        Coming soon — register physical assets on-chain. Scan PSA graded cards,
+        ANACS graded coins, and other certified collectibles to create verifiable
+        digital tokens backed by real-world items.
+      </p>
+      <div className="flex flex-wrap justify-center gap-3 text-xs text-white/40">
+        <span className="bg-samurai-grey px-3 py-1 rounded-full">PSA Graded Cards</span>
+        <span className="bg-samurai-grey px-3 py-1 rounded-full">ANACS Graded Coins</span>
+        <span className="bg-samurai-grey px-3 py-1 rounded-full">NGC Certified</span>
+        <span className="bg-samurai-grey px-3 py-1 rounded-full">CGC Comics</span>
+        <span className="bg-samurai-grey px-3 py-1 rounded-full">Fine Art</span>
+      </div>
+    </div>
+  )
+}
+
+// ── Crypto Wallets Section (original CryptoWallet component) ──
+
+function CryptoWalletSection() {
   const { user } = useAuth()
-  const [wallets, setWallets] = useState<CryptoWallet[]>([])
+  const [wallets, setWallets] = useState<CryptoWalletType[]>([])
   const [balances, setBalances] = useState<Record<string, WalletBalance | MultiTokenBalance>>({})
   const [loading, setLoading] = useState(true)
   const [loadingBalances, setLoadingBalances] = useState(false)
   const [expandedTokens, setExpandedTokens] = useState<Set<string>>(new Set())
   const [showAddModal, setShowAddModal] = useState(false)
   const [showMultiChainImport, setShowMultiChainImport] = useState(false)
-  const [editingWallet, setEditingWallet] = useState<CryptoWallet | null>(null)
+  const [editingWallet, setEditingWallet] = useState<CryptoWalletType | null>(null)
   const [revealedSeeds, setRevealedSeeds] = useState<Set<string>>(new Set())
   const [copiedItem, setCopiedItem] = useState<string | null>(null)
   const [filterBlockchain, setFilterBlockchain] = useState<string>('all')
@@ -141,7 +222,6 @@ export default function CryptoWallet() {
         return next
       })
     } else {
-      // Show re-auth gate before revealing seed phrase
       setPendingRevealId(walletId)
     }
   }
@@ -153,7 +233,7 @@ export default function CryptoWallet() {
     }
   }
 
-  const handleCopySeed = async (wallet: CryptoWallet) => {
+  const handleCopySeed = async (wallet: CryptoWalletType) => {
     if (!user) return
     if (!wallet.encrypted_seed_phrase) {
       alert('No seed phrase stored for this wallet')
@@ -563,7 +643,7 @@ export default function CryptoWallet() {
 }
 
 // Component to display decrypted seed phrase
-function SeedPhraseDisplay({ wallet, userEmail, userId }: { wallet: CryptoWallet; userEmail: string; userId: string }) {
+function SeedPhraseDisplay({ wallet, userEmail, userId }: { wallet: CryptoWalletType; userEmail: string; userId: string }) {
   const [decrypted, setDecrypted] = useState<string>('Loading...')
   
   useEffect(() => {
@@ -585,7 +665,7 @@ function WalletModal({
   onSave,
   onClose
 }: {
-  existingWallet: CryptoWallet | null
+  existingWallet: CryptoWalletType | null
   onSave: (input: CryptoWalletInput) => Promise<void>
   onClose: () => void
 }) {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FolderOpen, Key, Lock, Vault, Wallet } from 'lucide-react'
+import { FolderOpen, Key, Lock, Vault, Briefcase } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import FileUpload from '../components/ldgr/FileUpload'
@@ -26,7 +26,7 @@ export default function LdgrPage() {
   const [loading, setLoading] = useState(true)
   const [showReadme, setShowReadme] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
-  const [activeTab, setActiveTab] = useState<'files' | 'passwords' | 'crypto' | 'api-keys'>('files')
+  const [activeTab, setActiveTab] = useState<'files' | 'passwords' | 'assets' | 'api-keys'>('files')
   const [isDropsFolder, setIsDropsFolder] = useState(false)
   const { user } = useAuth()
 
@@ -274,16 +274,16 @@ export default function LdgrPage() {
             </span>
           </button>
           <button
-            onClick={() => setActiveTab('crypto')}
+            onClick={() => setActiveTab('assets')}
             className={`flex items-center gap-2 px-4 py-2 font-semibold transition-all relative ${
-              activeTab === 'crypto'
+              activeTab === 'assets'
                 ? 'text-samurai-red'
                 : 'text-white/70 hover:text-white'
             }`}
           >
-            <Wallet className="w-5 h-5" />
-            <span className={`hidden md:inline ${activeTab === 'crypto' ? 'underline decoration-2 underline-offset-4' : ''}`}>
-              Crypto
+            <Briefcase className="w-5 h-5" />
+            <span className={`hidden md:inline ${activeTab === 'assets' ? 'underline decoration-2 underline-offset-4' : ''}`}>
+              Assets
             </span>
           </button>
           <button
@@ -369,8 +369,8 @@ export default function LdgrPage() {
           <PasswordManager />
         )}
 
-        {/* Crypto Tab */}
-        {activeTab === 'crypto' && (
+        {/* Assets Tab */}
+        {activeTab === 'assets' && (
           <CryptoWallet />
         )}
 
