@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
+import { supabase } from '../lib/supabase'
 import ReadmePopup from '../components/ReadmePopup'
 
 export default function NsitPage() {
@@ -10,50 +11,46 @@ export default function NsitPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    if (!user) return
 
-    // Send auth token to iframe when it loads
-    const sendAuthToken = () => {
-      if (!iframeRef.current) return
+    // Send a fresh auth token to the iframe via getSession()
+    const sendAuthToken = async () => {
+      if (!iframeRef.current?.contentWindow) return
 
-      const possibleKeys = [
-        'sb-meqfiyuaxgwbstcdmjgz-auth-token',
-        'supabase.auth.token',
-        'sb-auth-token'
-      ]
-
-      let authToken = null
-      for (const key of possibleKeys) {
-        const data = localStorage.getItem(key)
-        if (data) {
-          try {
-            const parsed = JSON.parse(data)
-            if (parsed.access_token || parsed.token) {
-              authToken = data
-              break
-            }
-          } catch (e) {
-            continue
-          }
-        }
-      }
-
-      if (authToken && iframeRef.current.contentWindow) {
+      const { data: { session } } = await supabase.auth.getSession()
+      if (session) {
+        const authToken = JSON.stringify({
+          access_token: session.access_token,
+          refresh_token: session.refresh_token
+        })
         iframeRef.current.contentWindow.postMessage(
-          {
-            type: 'RMG_AUTH_TOKEN',
-            authToken: authToken
-          },
-          '*'
+          { type: 'RMG_AUTH_TOKEN', authToken },
+          'https://nsit-rmg.onrender.com'
         )
       }
     }
 
+    // Listen for auth refresh requests from the NSIT iframe
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'NSIT_REQUEST_AUTH') {
+        sendAuthToken()
+      }
+    }
+    window.addEventListener('message', handleMessage)
+
+    // Send token when iframe loads
     const iframe = iframeRef.current
     if (iframe) {
       iframe.addEventListener('load', sendAuthToken)
-      return () => iframe.removeEventListener('load', sendAuthToken)
     }
-  }, [])
+
+    return () => {
+      window.removeEventListener('message', handleMessage)
+      if (iframe) {
+        iframe.removeEventListener('load', sendAuthToken)
+      }
+    }
+  }, [user])
 
   // Listen for footer button events
   useEffect(() => {
