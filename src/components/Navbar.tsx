@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Flame, Key, User, LogOut, Shield, ChevronDown } from 'lucide-react'
+import { Menu, X, Flame, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import AuthPopup from './AuthPopup'
 import ProfileDropdown from './ProfileDropdown'
@@ -141,11 +141,12 @@ export default function Navbar() {
                   )}
                 </div>
 
-                <Link to="/ldgr" className={`font-bold transition-all relative group ${
+                <Link to="/ldgr" className={`font-bold transition-all relative group flex items-center gap-1.5 ${
                   isActive('/ldgr') 
                     ? 'text-samurai-red neon-text' 
                     : 'text-samurai-steel-light hover:text-samurai-red'
                 }`}>
+                  <Vault size={16} />
                   LDGR
                   <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
                     isActive('/ldgr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
@@ -235,8 +236,9 @@ export default function Navbar() {
                   }
                 }
               }}
-              className="block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white cursor-pointer"
+              className="flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white cursor-pointer"
             >
+              <Anvil size={20} />
               FORGE
             </a>
             
@@ -246,47 +248,51 @@ export default function Navbar() {
                 <div className="px-4 py-2 text-xs font-bold text-samurai-steel-dark uppercase tracking-wider">Apps</div>
                 <Link
                   to="/nsit"
-                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/nsit') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
+                  <ScanEye size={20} />
                   N-SIT
                 </Link>
                 <Link
                   to="/omni"
-                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/omni') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
+                  <Brain size={20} />
                   OMNI
                 </Link>
                 <Link
                   to="/scrp"
-                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/scrp') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
+                  <ScanLine size={20} />
                   SCRP
                 </Link>
                 <div className="px-4 py-2 text-xs font-bold text-samurai-steel-dark uppercase tracking-wider mt-2">Tools</div>
                 <Link
                   to="/ldgr"
-                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
                     isActive('/ldgr') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
+                  <Vault size={20} />
                   LDGR
                 </Link>
               </>
