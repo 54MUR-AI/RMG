@@ -414,6 +414,23 @@ function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => voi
     return matchesBlockchain && matchesSearch
   })
 
+  // Compute total crypto portfolio value
+  const walletTotalValue = Object.values(balances).reduce((sum, bal) => {
+    if ('native_token' in bal && 'total_usd_value' in bal) {
+      return sum + parseFloat((bal as MultiTokenBalance).total_usd_value || '0')
+    }
+    return sum + parseFloat((bal as WalletBalance).usd_value || '0')
+  }, 0)
+  const manualTotalCost = manualCrypto.reduce((s, a) => s + a.quantity * a.cost_basis, 0)
+  const cryptoTotalValue = walletTotalValue + manualTotalCost
+  const hasCryptoValue = cryptoTotalValue > 0
+
+  const fmtCrypto = (n: number) => {
+    if (Math.abs(n) >= 1e6) return `$${(n / 1e6).toFixed(2)}M`
+    if (Math.abs(n) >= 1e3) return `$${(n / 1e3).toFixed(1)}K`
+    return `$${n.toFixed(2)}`
+  }
+
   if (loading) {
     return (
       <div className="text-center py-12">
@@ -463,6 +480,27 @@ function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => voi
           </button>
         </div>
       </div>
+
+      {/* Summary Card */}
+      {hasCryptoValue && (
+        <div className="bg-samurai-grey-darker border-2 border-samurai-grey rounded-lg p-4 flex items-center justify-between">
+          <div>
+            <p className="text-white/60 text-xs">Total Crypto Value</p>
+            <p className="text-2xl font-bold text-white">{fmtCrypto(cryptoTotalValue)}</p>
+          </div>
+          <div className="text-right">
+            <p className="text-white/60 text-xs">Wallets: {wallets.length} &middot; Positions: {manualCrypto.length}</p>
+            <div className="flex items-center gap-3 justify-end mt-1">
+              {walletTotalValue > 0 && (
+                <span className="text-xs text-purple-400 font-mono">{fmtCrypto(walletTotalValue)} on-chain</span>
+              )}
+              {manualTotalCost > 0 && (
+                <span className="text-xs text-white/50 font-mono">{fmtCrypto(manualTotalCost)} manual</span>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Search Bar */}
       <div className="relative">
