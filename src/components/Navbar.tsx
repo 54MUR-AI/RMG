@@ -113,28 +113,31 @@ export default function Navbar() {
                       <Link
                         to="/nsit"
                         onClick={() => setShowAppsDropdown(false)}
-                        className={`block px-4 py-3 font-bold transition-all ${
+                        className={`flex items-center gap-2.5 px-4 py-3 font-bold transition-all ${
                           isActive('/nsit') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
                         }`}
                       >
+                        <ScanEye size={16} />
                         N-SIT
                       </Link>
                       <Link
                         to="/omni"
                         onClick={() => setShowAppsDropdown(false)}
-                        className={`block px-4 py-3 font-bold transition-all ${
+                        className={`flex items-center gap-2.5 px-4 py-3 font-bold transition-all ${
                           isActive('/omni') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
                         }`}
                       >
+                        <Brain size={16} />
                         OMNI
                       </Link>
                       <Link
                         to="/scrp"
                         onClick={() => setShowAppsDropdown(false)}
-                        className={`block px-4 py-3 font-bold transition-all ${
+                        className={`flex items-center gap-2.5 px-4 py-3 font-bold transition-all ${
                           isActive('/scrp') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
                         }`}
                       >
+                        <ScanLine size={16} />
                         SCRP
                       </Link>
                     </div>

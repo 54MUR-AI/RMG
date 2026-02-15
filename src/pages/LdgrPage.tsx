@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { FolderOpen, Key, Lock, Wallet } from 'lucide-react'
+import { FolderOpen, Key, Lock, Vault, Wallet } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import FileUpload from '../components/ldgr/FileUpload'
@@ -224,7 +224,7 @@ export default function LdgrPage() {
     return (
       <div className="bg-samurai-black flex items-center justify-center p-4 py-32">
         <div className="text-center">
-          <Lock className="w-16 h-16 text-samurai-red mx-auto mb-4" />
+          <Vault className="w-16 h-16 text-samurai-red mx-auto mb-4" />
           <h2 className="text-3xl font-black text-white mb-2 neon-text">LDGR</h2>
           <p className="text-white/70 mb-6">Please sign in to access your secure vault</p>
         </div>
@@ -237,7 +237,7 @@ export default function LdgrPage() {
       <main className="relative z-10 max-w-7xl mx-auto px-6 py-4">
         <div className="text-center mb-6">
           <div className="flex items-center justify-center gap-3 mb-2">
-            <Lock className="w-8 h-8 text-samurai-red" />
+            <Vault className="w-8 h-8 text-samurai-red" />
             <h1 className="text-3xl font-black neon-text">LDGR</h1>
           </div>
           <p className="text-sm text-white/60 mb-4">
