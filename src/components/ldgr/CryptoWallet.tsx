@@ -9,7 +9,7 @@ import { useAutoLock } from '../../hooks/useAutoLock'
 import ReAuthGate from './ReAuthGate'
 import StockAssets from './StockAssets'
 import MetalAssets from './MetalAssets'
-import { getUserAssets, enrichAssetsWithPrices, addAsset, type AssetWithPrice, type LdgrAssetInput } from '../../lib/ldgr/assets'
+import { getUserAssets, enrichAssetsWithPrices, addAsset, getAssetsByType, deleteAsset, type AssetWithPrice, type LdgrAsset, type LdgrAssetInput } from '../../lib/ldgr/assets'
 import {
   getUserWallets,
   addWallet,
@@ -179,6 +179,7 @@ function TokenizedPlaceholder() {
 function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => void }) {
   const { user } = useAuth()
   const [wallets, setWallets] = useState<CryptoWalletType[]>([])
+  const [manualCrypto, setManualCrypto] = useState<LdgrAsset[]>([])
   const [balances, setBalances] = useState<Record<string, WalletBalance | MultiTokenBalance>>({})
   const [loading, setLoading] = useState(true)
   const [loadingBalances, setLoadingBalances] = useState(false)
@@ -203,12 +204,23 @@ function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => voi
     }
   }, [user])
 
+  const loadManualCrypto = async () => {
+    if (!user) return
+    try {
+      const data = await getAssetsByType(user.id, ['crypto'])
+      setManualCrypto(data)
+    } catch (error) {
+      console.error('Error loading manual crypto positions:', error)
+    }
+  }
+
   const loadWallets = async () => {
     if (!user) return
     try {
       setLoading(true)
       const data = await getUserWallets(user.id)
       setWallets(data)
+      await loadManualCrypto()
       
       // Auto-load balances for all wallets
       if (data.length > 0) {
@@ -256,11 +268,24 @@ function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => voi
     if (!user) return
     try {
       await addAsset(user.id, input)
+      await loadManualCrypto()
       onWalletsChanged()
       setShowAddModal(false)
     } catch (error) {
       console.error('Error adding manual crypto position:', error)
       alert('Failed to add position. Please try again.')
+    }
+  }
+
+  const handleDeleteManualCrypto = async (assetId: string, name: string) => {
+    if (!confirm(`Delete position "${name}"?`)) return
+    try {
+      await deleteAsset(assetId)
+      await loadManualCrypto()
+      onWalletsChanged()
+    } catch (error) {
+      console.error('Error deleting manual crypto position:', error)
+      alert('Failed to delete position. Please try again.')
     }
   }
 
@@ -668,6 +693,61 @@ function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => voi
               </div>
             )
           })}
+        </div>
+      )}
+
+      {/* Manual Crypto Positions (from ldgr_assets) */}
+      {manualCrypto.length > 0 && (
+        <div className="space-y-3">
+          <h3 className="text-sm font-bold text-white/70 uppercase tracking-wider flex items-center gap-2">
+            <BarChart3 className="w-4 h-4 text-purple-400" />
+            Manual Positions
+          </h3>
+          <div className="grid gap-3">
+            {manualCrypto.map(asset => (
+              <div
+                key={asset.id}
+                className="bg-samurai-grey-darker border-2 border-purple-500/30 rounded-lg p-3 sm:p-4 hover:border-purple-500/60 transition-all"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="text-xl">🪙</span>
+                    <div>
+                      <h4 className="text-base font-bold text-white">{asset.asset_name}</h4>
+                      <p className="text-xs text-white/50">
+                        {asset.quantity} {asset.symbol || 'units'}
+                        {asset.cost_basis > 0 && (
+                          <span className="ml-2 text-white/40">
+                            @ ${asset.cost_basis.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}/unit
+                          </span>
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    {asset.cost_basis > 0 && (
+                      <div className="text-right mr-3">
+                        <p className="text-sm font-bold text-white">
+                          ${(asset.quantity * asset.cost_basis).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </p>
+                        <p className="text-[10px] text-white/40">cost basis</p>
+                      </div>
+                    )}
+                    <button
+                      onClick={() => handleDeleteManualCrypto(asset.id, asset.asset_name)}
+                      className="p-1.5 rounded hover:bg-red-500/20 transition-colors"
+                      title="Delete position"
+                    >
+                      <Trash2 className="w-4 h-4 text-white/50 hover:text-red-400" />
+                    </button>
+                  </div>
+                </div>
+                {asset.notes && (
+                  <p className="text-white/40 text-xs mt-2">{asset.notes}</p>
+                )}
+              </div>
+            ))}
+          </div>
         </div>
       )}
 
