@@ -84,8 +84,9 @@ export default function Navbar() {
                   }
                 }
               }}
-              className="font-bold transition-all relative group text-samurai-steel-light hover:text-samurai-red cursor-pointer"
+              className="font-bold transition-all relative group flex items-center gap-1.5 text-samurai-steel-light hover:text-samurai-red cursor-pointer"
             >
+              <Anvil size={16} />
               FORGE
               <span className="absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all w-0 group-hover:w-full"></span>
             </a>
@@ -105,7 +106,7 @@ export default function Navbar() {
                         : 'text-samurai-steel-light hover:text-samurai-red'
                     }`}
                   >
-                    {isActive('/nsit') ? 'N-SIT' : isActive('/omni') ? 'OMNI' : isActive('/scrp') ? 'SCRP' : 'APPS'}
+                    {isActive('/nsit') ? <><ScanEye size={16} /> N-SIT</> : isActive('/omni') ? <><Brain size={16} /> OMNI</> : isActive('/scrp') ? <><ScanLine size={16} /> SCRP</> : 'APPS'}
                     <ChevronDown size={16} className={`transition-transform ${showAppsDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   {showAppsDropdown && (
