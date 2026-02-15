@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Flame, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault } from 'lucide-react'
+import { Menu, X, Flame, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault, Zap } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import AuthPopup from './AuthPopup'
 import ProfileDropdown from './ProfileDropdown'
@@ -101,16 +101,26 @@ export default function Navbar() {
                   <button
                     onClick={() => setShowAppsDropdown(!showAppsDropdown)}
                     className={`font-bold transition-all flex items-center gap-1 ${
-                      ['/nsit', '/omni', '/scrp'].some(p => isActive(p))
+                      ['/wspr', '/nsit', '/omni', '/scrp'].some(p => isActive(p))
                         ? 'text-samurai-red neon-text'
                         : 'text-samurai-steel-light hover:text-samurai-red'
                     }`}
                   >
-                    {isActive('/nsit') ? <><ScanEye size={16} /> N-SIT</> : isActive('/omni') ? <><Brain size={16} /> OMNI</> : isActive('/scrp') ? <><ScanLine size={16} /> SCRP</> : 'APPS'}
+                    {isActive('/wspr') ? <><Zap size={16} /> WSPR</> : isActive('/nsit') ? <><ScanEye size={16} /> N-SIT</> : isActive('/omni') ? <><Brain size={16} /> OMNI</> : isActive('/scrp') ? <><ScanLine size={16} /> SCRP</> : 'APPS'}
                     <ChevronDown size={16} className={`transition-transform ${showAppsDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   {showAppsDropdown && (
                     <div className="absolute top-full mt-2 left-0 w-44 bg-samurai-grey-darker border-2 border-samurai-red rounded-lg shadow-2xl shadow-samurai-red/20 overflow-hidden z-[200]">
+                      <Link
+                        to="/wspr"
+                        onClick={() => setShowAppsDropdown(false)}
+                        className={`flex items-center gap-2.5 px-4 py-3 font-bold transition-all ${
+                          isActive('/wspr') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
+                        }`}
+                      >
+                        <Zap size={16} />
+                        WSPR
+                      </Link>
                       <Link
                         to="/nsit"
                         onClick={() => setShowAppsDropdown(false)}
@@ -250,6 +260,18 @@ export default function Navbar() {
             {user && (
               <>
                 <div className="px-4 py-2 text-xs font-bold text-samurai-steel-dark uppercase tracking-wider">Apps</div>
+                <Link
+                  to="/wspr"
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
+                    isActive('/wspr') 
+                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <Zap size={20} />
+                  WSPR
+                </Link>
                 <Link
                   to="/nsit"
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
