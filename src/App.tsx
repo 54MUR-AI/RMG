@@ -79,13 +79,21 @@ function PersistentApps() {
 }
 
 function App() {
+  const [embersOn, setEmbersOn] = useState(() => localStorage.getItem('rmg-embers') !== 'off')
+
+  useEffect(() => {
+    const handler = (e: Event) => setEmbersOn((e as CustomEvent).detail)
+    window.addEventListener('rmg:embers', handler)
+    return () => window.removeEventListener('rmg:embers', handler)
+  }, [])
+
   return (
     <AuthProvider>
       <AdminProvider>
         <Router>
         <div className="fixed inset-0 flex flex-col bg-samurai-black">
-          {/* Floating embers - persists across all pages */}
-          <FloatingEmbers />
+          {/* Floating embers - toggled via footer flame button */}
+          {embersOn && <FloatingEmbers />}
           
           {/* Fixed Header — z-[200] so navbar dropdowns render above app content */}
           <div className="flex-shrink-0 z-[200] relative">

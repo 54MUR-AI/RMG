@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { Github, BookOpen, Settings } from 'lucide-react'
+import { Github, BookOpen, Settings, Flame } from 'lucide-react'
 
 const APP_CONFIG: Record<string, { label: string }> = {
   '/wspr': { label: 'WSPR' },
@@ -12,6 +13,14 @@ const APP_CONFIG: Record<string, { label: string }> = {
 export default function Footer() {
   const location = useLocation()
   const appConfig = APP_CONFIG[location.pathname]
+  const [embersOn, setEmbersOn] = useState(() => localStorage.getItem('rmg-embers') !== 'off')
+
+  const toggleEmbers = () => {
+    const next = !embersOn
+    setEmbersOn(next)
+    localStorage.setItem('rmg-embers', next ? 'on' : 'off')
+    window.dispatchEvent(new CustomEvent('rmg:embers', { detail: next }))
+  }
 
   return (
     <footer className="bg-samurai-black border-t-2 border-samurai-red text-white">
@@ -50,6 +59,19 @@ export default function Footer() {
                   title="Settings"
                 >
                   <Settings size={14} />
+                </button>
+                {/* Embers Toggle */}
+                <button
+                  onClick={toggleEmbers}
+                  className={`w-7 h-7 steel-texture rounded-lg flex items-center justify-center transition-all ${
+                    embersOn
+                      ? 'text-orange-400 hover:bg-orange-500 hover:text-white'
+                      : 'text-samurai-steel hover:bg-samurai-grey hover:text-white'
+                  }`}
+                  aria-label="Toggle embers"
+                  title={embersOn ? 'Embers: ON' : 'Embers: OFF'}
+                >
+                  <Flame size={14} />
                 </button>
               </>
             ) : (
