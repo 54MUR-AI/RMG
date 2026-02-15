@@ -12,7 +12,7 @@ import { useState } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
-  const [featuredCard, setFeaturedCard] = useState<string | null>('OMNI')
+  const [featuredCard, setFeaturedCard] = useState<string | null>('N-SIT')
   const [showAuthPopup, setShowAuthPopup] = useState(false)
   const { user } = useAuth()
   const navigate = useNavigate()

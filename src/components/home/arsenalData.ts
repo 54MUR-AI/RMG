@@ -1,7 +1,27 @@
-import { Brain, FileText, Lock, MessageSquareLock, ScanEye } from 'lucide-react'
+import { Brain, ScanLine, Vault, MessageSquareLock, ScanEye } from 'lucide-react'
 import type { ArsenalCardData } from './ArsenalCard'
 
 export const ARSENAL_CARDS: ArsenalCardData[] = [
+  {
+    name: 'N-SIT',
+    subtitle: 'Networked - Strategic Intelligence Tool',
+    icon: ScanEye,
+    thumbnail: '/thumbnails/nsit-thumb.svg',
+    path: '/nsit',
+    shortDescription: 'Financial command center with real-time global equities, commodities, forex, crypto, AI-powered analysis, prediction markets, and interactive visualizations.',
+    longDescription: [
+      'N-SIT is the magnum opus of the Ronin Media Group ecosystem—a comprehensive strategic intelligence dashboard that transforms raw market and geopolitical data into actionable insights through stunning interactive visualizations. Designed as a command center for analysts across every market, conflict zone, and supply chain, N-SIT aggregates data from global stock indices, commodities (COMEX metals, energy), forex, bonds, crypto markets, macroeconomic indicators, prediction markets, live aircraft tracking, AIS vessel monitoring, and military airbase activity into a unified, customizable interface with draggable and resizable widget panels.',
+      'Powered by real-time data feeds from Yahoo Finance, CoinGecko, Polymarket, FRED (Federal Reserve Economic Data), OpenSky Network, Digitraffic AIS, NASA FIRMS, and RSS news aggregation, N-SIT delivers live ticker tapes, global indices tracking, Gold/Silver Ratio (GSR), US Treasury yield curves, crypto market heatmaps, Fear & Greed gauges, macro dashboards, prediction market odds, conflict event mapping, cyber threat feeds, and supply chain chokepoint monitoring. The AI Briefing panel leverages the RMG Ollama Bridge for local LLM-powered trend detection, anomaly alerts, and cross-market synthesis—providing institutional-grade analysis without cloud dependency. Deep integration with LDGR enables secure API key management, while SCRP feeds real-time news intelligence for sentiment analysis.',
+    ],
+    features: [
+      'Real-Time Crypto & Market Heatmaps',
+      'Polymarket Prediction Markets (WebSocket)',
+      'AI Briefing via Ollama (Trend & Anomaly Detection)',
+      'FRED Macro Dashboard (Yield Curve, CPI, GDP)',
+      'LDGR API Key & Wallet Integration',
+      'Customizable Drag-and-Drop Widget Grid',
+    ],
+  },
   {
     name: 'OMNI',
     subtitle: 'Optimized Multi-Model Networked Intelligence',
@@ -25,7 +45,7 @@ export const ARSENAL_CARDS: ArsenalCardData[] = [
   {
     name: 'SCRP',
     subtitle: 'Smart Content Retrieval & Processing',
-    icon: FileText,
+    icon: ScanLine,
     thumbnail: '/thumbnails/scrp-thumb.svg',
     path: '/scraper',
     shortDescription: 'Smart Content Retrieval & Processing that transforms articles, videos, and PDFs into actionable intelligence.',
@@ -45,7 +65,7 @@ export const ARSENAL_CARDS: ArsenalCardData[] = [
   {
     name: 'LDGR',
     subtitle: 'Layered Decentralized Global Registry',
-    icon: Lock,
+    icon: Vault,
     thumbnail: '/thumbnails/ldgr-thumb.svg',
     path: '/ldgr',
     shortDescription: 'Secure vault for files, passwords, crypto wallets, and API keys with military-grade encryption and blockchain-backed integrity.',
@@ -80,26 +100,6 @@ export const ARSENAL_CARDS: ArsenalCardData[] = [
       'Workspace Channels & Teams',
       'Real-Time WebSocket Delivery',
       'Zero-Knowledge Architecture',
-    ],
-  },
-  {
-    name: 'N-SIT',
-    subtitle: 'Networked - Strategic Intelligence Tool',
-    icon: ScanEye,
-    thumbnail: '/thumbnails/nsit-thumb.svg',
-    path: '/nsit',
-    shortDescription: 'Financial command center with real-time global equities, commodities, forex, crypto, AI-powered analysis, prediction markets, and interactive visualizations.',
-    longDescription: [
-      'N-SIT is the magnum opus of the Ronin Media Group ecosystem—a comprehensive strategic intelligence dashboard that transforms raw market and geopolitical data into actionable insights through stunning interactive visualizations. Designed as a command center for analysts across every market, conflict zone, and supply chain, N-SIT aggregates data from global stock indices, commodities (COMEX metals, energy), forex, bonds, crypto markets, macroeconomic indicators, prediction markets, live aircraft tracking, AIS vessel monitoring, and military airbase activity into a unified, customizable interface with draggable and resizable widget panels.',
-      'Powered by real-time data feeds from Yahoo Finance, CoinGecko, Polymarket, FRED (Federal Reserve Economic Data), OpenSky Network, Digitraffic AIS, NASA FIRMS, and RSS news aggregation, N-SIT delivers live ticker tapes, global indices tracking, Gold/Silver Ratio (GSR), US Treasury yield curves, crypto market heatmaps, Fear & Greed gauges, macro dashboards, prediction market odds, conflict event mapping, cyber threat feeds, and supply chain chokepoint monitoring. The AI Briefing panel leverages the RMG Ollama Bridge for local LLM-powered trend detection, anomaly alerts, and cross-market synthesis—providing institutional-grade analysis without cloud dependency. Deep integration with LDGR enables secure API key management, while SCRP feeds real-time news intelligence for sentiment analysis.',
-    ],
-    features: [
-      'Real-Time Crypto & Market Heatmaps',
-      'Polymarket Prediction Markets (WebSocket)',
-      'AI Briefing via Ollama (Trend & Anomaly Detection)',
-      'FRED Macro Dashboard (Yield Curve, CPI, GDP)',
-      'LDGR API Key & Wallet Integration',
-      'Customizable Drag-and-Drop Widget Grid',
     ],
   },
 ]
