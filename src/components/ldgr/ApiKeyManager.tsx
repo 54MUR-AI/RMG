@@ -488,7 +488,7 @@ function ApiKeyModal({
               required
             />
             <p className="text-[10px] text-white/40 mt-1.5">
-              For APIs that require a <span className="text-cyan-400/70">client ID</span> or <span className="text-cyan-400/70">username</span> (e.g. OpenSky), use the Key Name as your client ID and the API Key field for your secret/password.
+              For APIs that require a <span className="text-cyan-400/70">client_id</span> (e.g. OpenSky OAuth2), use the Key Name as your <span className="text-cyan-400/70">client_id</span> and the API Key field for your <span className="text-cyan-400/70">client_secret</span>. NSIT will handle the token exchange automatically.
             </p>
           </div>
           
