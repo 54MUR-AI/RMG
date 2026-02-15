@@ -1,13 +1,11 @@
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { Github, BookOpen, Settings } from 'lucide-react'
-import DiscordIcon from './DiscordIcon'
 
 const APP_CONFIG: Record<string, { label: string }> = {
-  '/wspr': { label: 'WSPR' },
   '/scrp': { label: 'SCRP' },
   '/ldgr': { label: 'LDGR' },
   '/omni': { label: 'OMNI' },
-  '/nsit': { label: 'NSIT' },
+  '/nsit': { label: 'N-SIT' },
 }
 
 export default function Footer() {
@@ -64,13 +62,6 @@ export default function Footer() {
                 >
                   <Github size={14} />
                 </a>
-                <Link 
-                  to="/discord" 
-                  className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
-                  aria-label="Discord"
-                >
-                  <DiscordIcon size={14} />
-                </Link>
               </>
             )}
           </div>

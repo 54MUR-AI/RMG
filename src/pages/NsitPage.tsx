@@ -93,7 +93,7 @@ export default function NsitPage() {
         ref={iframeRef}
         src="https://nsit-rmg.onrender.com"
         className="w-full h-full border-none"
-        title="NSIT - Networked Speculation Intelligence Tool"
+        title="N-SIT - Networked - Strategic Intelligence Tool"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       />
 

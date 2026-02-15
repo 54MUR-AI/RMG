@@ -114,6 +114,17 @@ export default function ProfileDropdown({ onViewProfile, onViewAdmin, onViewCont
             <span>Admin Panel</span>
           </button>
         )}
+
+        <a
+          href="https://discord.gg/roninmedia"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full px-4 py-3 flex items-center gap-3 text-white hover:bg-samurai-red/20 transition-colors"
+          onClick={onClose}
+        >
+          <img src="/discord-logo.svg" alt="Discord" className="w-[18px] h-[18px] brightness-0 invert" />
+          <span>Enter Dojo</span>
+        </a>
         
         <button
           onClick={handleLogout}

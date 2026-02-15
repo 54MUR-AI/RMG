@@ -1,7 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Flame, Key, User, LogOut, Shield } from 'lucide-react'
+import { Menu, X, Flame, Key, User, LogOut, Shield, ChevronDown } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
-import DiscordIcon from './DiscordIcon'
 import AuthPopup from './AuthPopup'
 import ProfileDropdown from './ProfileDropdown'
 import ProfilePopup from './ProfilePopup'
@@ -17,6 +16,7 @@ export default function Navbar() {
   const [showProfilePopup, setShowProfilePopup] = useState(false)
   const [showAdminModal, setShowAdminModal] = useState(false)
   const [showContactsModal, setShowContactsModal] = useState(false)
+  const [showAppsDropdown, setShowAppsDropdown] = useState(false)
   const location = useLocation()
   const navigate = useNavigate()
   const { user, signOut } = useAuth()
@@ -24,6 +24,7 @@ export default function Navbar() {
   const profileRef = useRef<HTMLDivElement>(null)
   const profileButtonRef = useRef<HTMLButtonElement>(null)
   const profileDropdownRef = useRef<HTMLDivElement>(null)
+  const appsDropdownRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,16 +35,20 @@ export default function Navbar() {
       if (isOutsideButton && isOutsideDropdown) {
         setShowProfileDropdown(false)
       }
+
+      if (appsDropdownRef.current && !appsDropdownRef.current.contains(target)) {
+        setShowAppsDropdown(false)
+      }
     }
 
-    if (showProfileDropdown) {
+    if (showProfileDropdown || showAppsDropdown) {
       document.addEventListener('mousedown', handleClickOutside)
     }
 
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
-  }, [showProfileDropdown])
+  }, [showProfileDropdown, showAppsDropdown])
 
   const isActive = (path: string) => location.pathname === path
 
@@ -85,32 +90,57 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all w-0 group-hover:w-full"></span>
             </a>
             
-            {/* Project Links - Only show when logged in */}
+            {/* Separator */}
+            <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
+
+            {/* APPS dropdown - Only show when logged in */}
             {user && (
               <>
-                {/* Separator */}
-                <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
-                
-                <Link to="/omni" className={`font-bold transition-all relative group ${
-                  isActive('/omni') 
-                    ? 'text-samurai-red neon-text' 
-                    : 'text-samurai-steel-light hover:text-samurai-red'
-                }`}>
-                  OMNI
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                    isActive('/omni') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-                  }`}></span>
-                </Link>
-                <Link to="/scrp" className={`font-bold transition-all relative group ${
-                  isActive('/scrp') 
-                    ? 'text-samurai-red neon-text' 
-                    : 'text-samurai-steel-light hover:text-samurai-red'
-                }`}>
-                  SCRP
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                    isActive('/scrp') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-                  }`}></span>
-                </Link>
+                <div className="relative" ref={appsDropdownRef}>
+                  <button
+                    onClick={() => setShowAppsDropdown(!showAppsDropdown)}
+                    className={`font-bold transition-all flex items-center gap-1 ${
+                      ['/nsit', '/omni', '/scrp'].some(p => isActive(p))
+                        ? 'text-samurai-red neon-text'
+                        : 'text-samurai-steel-light hover:text-samurai-red'
+                    }`}
+                  >
+                    APPS
+                    <ChevronDown size={16} className={`transition-transform ${showAppsDropdown ? 'rotate-180' : ''}`} />
+                  </button>
+                  {showAppsDropdown && (
+                    <div className="absolute top-full mt-2 left-0 w-44 bg-samurai-grey-darker border-2 border-samurai-red rounded-lg shadow-2xl shadow-samurai-red/20 overflow-hidden z-[200]">
+                      <Link
+                        to="/nsit"
+                        onClick={() => setShowAppsDropdown(false)}
+                        className={`block px-4 py-3 font-bold transition-all ${
+                          isActive('/nsit') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
+                        }`}
+                      >
+                        N-SIT
+                      </Link>
+                      <Link
+                        to="/omni"
+                        onClick={() => setShowAppsDropdown(false)}
+                        className={`block px-4 py-3 font-bold transition-all ${
+                          isActive('/omni') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
+                        }`}
+                      >
+                        OMNI
+                      </Link>
+                      <Link
+                        to="/scrp"
+                        onClick={() => setShowAppsDropdown(false)}
+                        className={`block px-4 py-3 font-bold transition-all ${
+                          isActive('/scrp') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
+                        }`}
+                      >
+                        SCRP
+                      </Link>
+                    </div>
+                  )}
+                </div>
+
                 <Link to="/ldgr" className={`font-bold transition-all relative group ${
                   isActive('/ldgr') 
                     ? 'text-samurai-red neon-text' 
@@ -121,40 +151,11 @@ export default function Navbar() {
                     isActive('/ldgr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
                   }`}></span>
                 </Link>
-                <Link to="/wspr" className={`font-bold transition-all relative group ${
-                  isActive('/wspr') 
-                    ? 'text-samurai-red neon-text' 
-                    : 'text-samurai-steel-light hover:text-samurai-red'
-                }`}>
-                  WSPR
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                    isActive('/wspr') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-                  }`}></span>
-                </Link>
-                <Link to="/nsit" className={`font-bold transition-all relative group ${
-                  isActive('/nsit') 
-                    ? 'text-samurai-red neon-text' 
-                    : 'text-samurai-steel-light hover:text-samurai-red'
-                }`}>
-                  NSIT
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all ${
-                    isActive('/nsit') ? 'w-full shadow-[0_0_10px_rgba(230,57,70,0.8)]' : 'w-0 group-hover:w-full'
-                  }`}></span>
-                </Link>
               </>
             )}
             
             {/* Separator */}
             <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
-            
-            {/* Discord Link */}
-            <Link
-              to="/discord"
-              className="group transition-all hover:scale-110"
-              aria-label="Join our Discord"
-            >
-              <DiscordIcon size={28} className="text-samurai-steel-light group-hover:text-samurai-red transition-colors" />
-            </Link>
             
             {/* Auth Icon */}
             {user ? (
@@ -242,6 +243,18 @@ export default function Navbar() {
             {/* Only show project links when logged in */}
             {user && (
               <>
+                <div className="px-4 py-2 text-xs font-bold text-samurai-steel-dark uppercase tracking-wider">Apps</div>
+                <Link
+                  to="/nsit"
+                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
+                    isActive('/nsit') 
+                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
+                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  N-SIT
+                </Link>
                 <Link
                   to="/omni"
                   className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
@@ -254,9 +267,9 @@ export default function Navbar() {
                   OMNI
                 </Link>
                 <Link
-                  to="/scraper"
+                  to="/scrp"
                   className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
-                    isActive('/scraper') 
+                    isActive('/scrp') 
                       ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
                       : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
                   }`}
@@ -264,6 +277,7 @@ export default function Navbar() {
                 >
                   SCRP
                 </Link>
+                <div className="px-4 py-2 text-xs font-bold text-samurai-steel-dark uppercase tracking-wider mt-2">Tools</div>
                 <Link
                   to="/ldgr"
                   className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
@@ -275,40 +289,8 @@ export default function Navbar() {
                 >
                   LDGR
                 </Link>
-                <Link
-                  to="/wspr"
-                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
-                    isActive('/wspr') 
-                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  WSPR
-                </Link>
-                <Link
-                  to="/nsit"
-                  className={`block px-4 py-3 rounded-lg font-bold transition-all touch-manipulation ${
-                    isActive('/nsit') 
-                      ? 'bg-samurai-red text-white shadow-lg shadow-samurai-red/50' 
-                      : 'text-samurai-steel-light hover:bg-samurai-red hover:text-white'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  NSIT
-                </Link>
               </>
             )}
-            
-            {/* Discord Link */}
-            <Link
-              to="/discord"
-              className="flex items-center px-4 py-3 rounded-lg transition-all touch-manipulation text-samurai-steel-light hover:bg-samurai-red hover:text-white"
-              onClick={() => setIsOpen(false)}
-            >
-              <DiscordIcon size={24} className="mr-3" />
-              <span className="font-bold">DISCORD</span>
-            </Link>
 
             {/* Auth Section */}
             <div className="border-t-2 border-samurai-steel-dark mt-2 pt-2">
