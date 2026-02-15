@@ -105,7 +105,7 @@ export default function Navbar() {
                         : 'text-samurai-steel-light hover:text-samurai-red'
                     }`}
                   >
-                    APPS
+                    {isActive('/nsit') ? 'N-SIT' : isActive('/omni') ? 'OMNI' : isActive('/scrp') ? 'SCRP' : 'APPS'}
                     <ChevronDown size={16} className={`transition-transform ${showAppsDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   {showAppsDropdown && (

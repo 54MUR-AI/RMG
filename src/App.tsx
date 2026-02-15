@@ -87,8 +87,8 @@ function App() {
           {/* Floating embers - persists across all pages */}
           <FloatingEmbers />
           
-          {/* Fixed Header */}
-          <div className="flex-shrink-0 z-10">
+          {/* Fixed Header — z-[200] so navbar dropdowns render above app content */}
+          <div className="flex-shrink-0 z-[200] relative">
             <Navbar />
           </div>
           
