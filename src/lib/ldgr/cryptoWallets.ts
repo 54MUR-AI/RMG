@@ -301,11 +301,16 @@ export async function fetchWalletBalance(
     const usdAmount = balanceNum * price
     const usdValue = usdAmount > 0 ? `$${usdAmount.toFixed(2)}` : '$0.00'
     
-    return {
+    const result: WalletBalance = {
       balance,
       usd_value: usdValue,
       last_updated: new Date().toISOString()
     }
+
+    // Cache balance in Supabase for N-SIT to read
+    cacheWalletBalance(address, balance, usdAmount).catch(() => {})
+
+    return result
   } catch (error) {
     console.error(`Error fetching ${blockchain} balance:`, error)
     return null
@@ -355,11 +360,35 @@ export async function fetchWalletBalanceWithTokens(
     }
     
     // Fetch multi-token balance (includes native + ERC-20 tokens)
-    return await fetchMultiTokenBalance(address, blockchain, nativeBalance)
+    const result = await fetchMultiTokenBalance(address, blockchain, nativeBalance)
+
+    // Cache total USD value in Supabase for N-SIT to read
+    if (result) {
+      const usd = parseFloat(result.total_usd_value || '0')
+      cacheWalletBalance(address, nativeBalance, usd).catch(() => {})
+    }
+
+    return result
     
   } catch (error) {
     console.error(`Error fetching multi-token balance for ${blockchain}:`, error)
     return null
+  }
+}
+
+// Write cached balance to Supabase so N-SIT can read without re-fetching
+async function cacheWalletBalance(address: string, balance: string, usdValue: number): Promise<void> {
+  try {
+    await supabase
+      .from('crypto_wallets')
+      .update({
+        cached_balance: balance,
+        cached_usd_value: usdValue,
+        balance_updated_at: new Date().toISOString(),
+      })
+      .eq('address', address)
+  } catch {
+    // Non-critical — silently ignore cache write failures
   }
 }
 
