@@ -11,7 +11,7 @@ import {
   type LdgrAsset, type LdgrAssetInput, type AssetWithPrice, type AssetType,
 } from '../../lib/ldgr/assets'
 
-export default function StockAssets() {
+export default function StockAssets({ onAssetsChanged }: { onAssetsChanged?: () => void }) {
   const { user } = useAuth()
   const [assets, setAssets] = useState<AssetWithPrice[]>([])
   const [loading, setLoading] = useState(true)
@@ -26,6 +26,7 @@ export default function StockAssets() {
       const raw = await getAssetsByType(user.id, EQUITY_TYPES)
       const enriched = await enrichAssetsWithPrices(raw)
       setAssets(enriched)
+      onAssetsChanged?.()
     } catch (err) {
       console.error('Error loading stock assets:', err)
     } finally {

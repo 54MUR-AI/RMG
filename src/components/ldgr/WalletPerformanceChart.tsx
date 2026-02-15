@@ -3,11 +3,30 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import { TrendingUp, Calendar } from 'lucide-react'
 import type { CryptoWallet, WalletBalance, MultiTokenBalance } from '../../lib/ldgr/cryptoWallets'
 import { fetchWalletPortfolioHistory } from '../../lib/ldgr/cryptoPrices'
+import { fetchYahooHistory, toTroyOz, type AssetWithPrice, EQUITY_TYPES, METAL_TYPES } from '../../lib/ldgr/assets'
+
+const METAL_YAHOO: Record<string, string> = {
+  gold: 'GC=F', silver: 'SI=F', platinum: 'PL=F', palladium: 'PA=F',
+}
 
 interface WalletPerformanceChartProps {
   wallets: CryptoWallet[]
   balances: Record<string, WalletBalance | MultiTokenBalance>
   filterBlockchain: string
+  assets?: AssetWithPrice[]
+}
+
+const ASSET_COLORS: Record<string, string> = {
+  stock: '#22c55e',     // green
+  etf: '#10b981',       // emerald
+  mutf: '#059669',      // teal-green
+  gold: '#eab308',      // yellow/gold
+  silver: '#94a3b8',    // silver/slate
+  platinum: '#e2e8f0',  // light platinum
+  palladium: '#cbd5e1', // pale palladium
+  metal_other: '#a8a29e', // stone
+  commodity: '#f97316', // orange
+  tokenized: '#8b5cf6', // purple
 }
 
 const BLOCKCHAIN_COLORS: Record<string, string> = {
@@ -25,7 +44,7 @@ const BLOCKCHAIN_COLORS: Record<string, string> = {
 
 type TimeRange = '1d' | '3d' | '1w' | '1m' | '3m' | '6m' | '1y' | '5y' | '10y' | 'all'
 
-export default function WalletPerformanceChart({ wallets, balances, filterBlockchain }: WalletPerformanceChartProps) {
+export default function WalletPerformanceChart({ wallets, balances, filterBlockchain, assets = [] }: WalletPerformanceChartProps) {
   const [timeRange, setTimeRange] = useState<TimeRange>('1m')
   const [chartData, setChartData] = useState<any[]>([])
   const [loading, setLoading] = useState(false)
@@ -38,29 +57,24 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     [wallets, filterBlockchain]
   )
 
+  // Equity and metal assets that have a symbol for historical data
+  const equityAssets = useMemo(() => assets.filter(a => EQUITY_TYPES.includes(a.asset_type) && a.symbol), [assets])
+  const metalAssets = useMemo(() => assets.filter(a => METAL_TYPES.includes(a.asset_type) && a.asset_type !== 'metal_other'), [assets])
+
   const generateChartData = useCallback(async () => {
     setLoading(true)
     
     try {
-      // Prepare wallet data for API call
+      // ── Crypto wallet data ──
       const walletsWithBalances = filteredWallets
         .map(wallet => {
           const balance = balances[wallet.address]
-          console.log(`📊 Checking wallet ${wallet.wallet_name}:`, {
-            address: wallet.address,
-            hasBalance: !!balance,
-            balanceData: balance
-          })
-          
           if (!balance) return null
           
-          // Get token amount based on balance type
           let tokenAmount = 0
           if (isMultiTokenBalance(balance)) {
-            // For multi-token, use native token balance
             tokenAmount = parseFloat(balance.native_token.balance)
           } else {
-            // For simple balance
             tokenAmount = typeof balance.balance === 'number' 
               ? balance.balance 
               : parseFloat(balance.balance)
@@ -76,34 +90,91 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
           }
         })
         .filter((w): w is NonNullable<typeof w> => w !== null)
-      
-      if (walletsWithBalances.length === 0) {
-        console.log('📊 No wallets with valid balances to chart')
+
+      const hasCrypto = walletsWithBalances.length > 0
+      const hasEquities = equityAssets.length > 0
+      const hasMetals = metalAssets.length > 0
+
+      if (!hasCrypto && !hasEquities && !hasMetals) {
         setChartData([])
         setLoading(false)
         return
       }
-      
-      console.log('📊 Fetching historical data for wallets:', walletsWithBalances)
-      
-      // Fetch real historical price data from CoinGecko
-      const data = await fetchWalletPortfolioHistory(walletsWithBalances, timeRange)
-      
-      console.log('📊 Chart data generated:', {
-        wallets: walletsWithBalances.map(w => w.wallet_name),
-        dataPoints: data.length,
-        sampleData: data[0],
-        lastData: data[data.length - 1]
-      })
-      
-      setChartData(data)
+
+      // Fetch crypto history
+      let cryptoData: any[] = []
+      if (hasCrypto) {
+        cryptoData = await fetchWalletPortfolioHistory(walletsWithBalances, timeRange)
+      }
+
+      // ── Equity / Metal history via Yahoo Finance ──
+      const yahooSymbols: { label: string; symbol: string; qty: number }[] = []
+      for (const a of equityAssets) {
+        yahooSymbols.push({ label: a.asset_name, symbol: a.symbol!, qty: a.quantity })
+      }
+      for (const a of metalAssets) {
+        const ySym = METAL_YAHOO[a.asset_type]
+        if (ySym) {
+          const qty = a.weight_unit ? toTroyOz(a.quantity, a.weight_unit) : a.quantity
+          yahooSymbols.push({ label: a.asset_name, symbol: ySym, qty })
+        }
+      }
+
+      // Fetch all Yahoo histories in parallel
+      const yahooHistories = await Promise.all(
+        yahooSymbols.map(s => fetchYahooHistory(s.symbol, timeRange))
+      )
+
+      // Merge Yahoo data into chart points
+      // Use crypto dates as base if available, otherwise build from Yahoo data
+      let merged: any[] = cryptoData.length > 0 ? cryptoData : []
+
+      if (yahooSymbols.length > 0) {
+        // Build a date→index map from the longest Yahoo series
+        const longestIdx = yahooHistories.reduce((best, h, i) => h.length > (yahooHistories[best]?.length || 0) ? i : best, 0)
+        const yahooDates = yahooHistories[longestIdx]?.map(p => p.date) || []
+
+        if (merged.length === 0) {
+          // No crypto data — build chart from Yahoo dates
+          merged = yahooDates.map(d => ({ date: d }))
+        }
+
+        // For each Yahoo symbol, map its values onto the merged array
+        for (let si = 0; si < yahooSymbols.length; si++) {
+          const { label, qty } = yahooSymbols[si]
+          const hist = yahooHistories[si]
+          if (!hist || hist.length === 0) continue
+
+          // Build a date→close map for this symbol
+          const dateMap = new Map(hist.map(p => [p.date, p.close]))
+
+          // If merged was built from crypto (different dates), interpolate by index ratio
+          if (cryptoData.length > 0 && hist.length > 0) {
+            for (let i = 0; i < merged.length; i++) {
+              const ratio = hist.length > 1 ? i / (merged.length - 1) : 0
+              const hi = Math.min(Math.round(ratio * (hist.length - 1)), hist.length - 1)
+              merged[i][label] = +(hist[hi].close * qty).toFixed(2)
+            }
+          } else {
+            // Dates match (Yahoo-only chart)
+            for (let i = 0; i < merged.length; i++) {
+              const close = dateMap.get(merged[i].date)
+              if (close != null) {
+                merged[i][label] = +(close * qty).toFixed(2)
+              }
+            }
+          }
+        }
+      }
+
+      setChartData(merged)
     } catch (error) {
       console.error('📊 Error fetching chart data:', error)
       setChartData([])
     } finally {
       setLoading(false)
     }
-  }, [filteredWallets, balances, timeRange])
+  }, [filteredWallets, balances, timeRange, equityAssets, metalAssets])
 
   useEffect(() => {
     generateChartData()
@@ -114,42 +185,29 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     return 'native_token' in balance && 'tokens' in balance && 'total_usd_value' in balance
   }
 
-  // Calculate total portfolio value
+  // Calculate total portfolio value (crypto + stocks + metals)
   const totalValue = useMemo(() => {
-    const total = filteredWallets.reduce((sum, wallet) => {
+    // Crypto wallets
+    const cryptoTotal = filteredWallets.reduce((sum, wallet) => {
       const balance = balances[wallet.address]
       if (!balance) return sum
       
       let value = 0
-      
-      // Check if it's MultiTokenBalance
       if (isMultiTokenBalance(balance)) {
-        // Use total_usd_value for multi-token balances
         const usdValue = balance.total_usd_value
-        if (typeof usdValue === 'string') {
-          value = parseFloat(usdValue.replace('$', ''))
-        }
+        if (typeof usdValue === 'string') value = parseFloat(usdValue.replace('$', ''))
       } else {
-        // Use usd_value for simple balances
-        if (typeof balance.usd_value === 'number') {
-          value = balance.usd_value
-        } else if (typeof balance.usd_value === 'string') {
-          value = parseFloat(balance.usd_value.replace('$', ''))
-        }
+        if (typeof balance.usd_value === 'number') value = balance.usd_value
+        else if (typeof balance.usd_value === 'string') value = parseFloat(balance.usd_value.replace('$', ''))
       }
-      
-      // Skip if value is NaN
-      if (isNaN(value)) {
-        console.warn(`Invalid USD value for wallet ${wallet.wallet_name}:`, balance)
-        return sum
-      }
-      
-      return sum + value
+      return sum + (isNaN(value) ? 0 : value)
     }, 0)
-    
-    console.log('📊 Total portfolio value:', total, 'from', filteredWallets.length, 'wallets')
-    return total
-  }, [filteredWallets, balances])
+
+    // Stocks + metals
+    const assetTotal = assets.reduce((sum, a) => sum + (a.currentValue || 0), 0)
+
+    return cryptoTotal + assetTotal
+  }, [filteredWallets, balances, assets])
 
   // Calculate gain/loss for selected timeframe from chart data
   const { changePercent, isPositive, periodLabel } = useMemo(() => {
@@ -165,10 +223,11 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     let startValue = 0
     let endValue = 0
     
-    filteredWallets.forEach(wallet => {
-      const walletName = wallet.wallet_name
-      if (firstPoint[walletName]) startValue += Number(firstPoint[walletName])
-      if (lastPoint[walletName]) endValue += Number(lastPoint[walletName])
+    // Sum all series (crypto wallets + stock/metal assets)
+    const allKeys = Object.keys(firstPoint).filter(k => k !== 'date' && k !== 'fullDate')
+    allKeys.forEach(key => {
+      if (firstPoint[key]) startValue += Number(firstPoint[key])
+      if (lastPoint[key]) endValue += Number(lastPoint[key])
     })
     
     // Calculate percentage change
@@ -179,9 +238,9 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
       isPositive: change >= 0,
       periodLabel: timeRange.toUpperCase()
     }
-  }, [chartData, filteredWallets, timeRange])
+  }, [chartData, timeRange])
 
-  if (filteredWallets.length === 0) {
+  if (filteredWallets.length === 0 && assets.length === 0) {
     return null
   }
 
@@ -292,6 +351,30 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
                 connectNulls={true}
               />
             ))}
+            {equityAssets.map((a) => (
+              <Line
+                key={a.id}
+                type="monotone"
+                dataKey={a.asset_name}
+                stroke={ASSET_COLORS[a.asset_type] || '#22c55e'}
+                strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 6, fill: '#22c55e', stroke: '#22c55e', strokeWidth: 2 }}
+                connectNulls={true}
+              />
+            ))}
+            {metalAssets.map((a) => (
+              <Line
+                key={a.id}
+                type="monotone"
+                dataKey={a.asset_name}
+                stroke={ASSET_COLORS[a.asset_type] || '#eab308'}
+                strokeWidth={2}
+                dot={false}
+                activeDot={{ r: 6, fill: '#eab308', stroke: '#eab308', strokeWidth: 2 }}
+                connectNulls={true}
+              />
+            ))}
           </LineChart>
         </ResponsiveContainer>
       )}
@@ -299,8 +382,8 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
       {/* Legend Info */}
       <div className="mt-4 pt-4 border-t border-samurai-grey-dark">
         <p className="text-xs text-samurai-steel text-center">
-          Showing {filteredWallets.length} wallet{filteredWallets.length !== 1 ? 's' : ''} • 
-          Real historical price data from CoinGecko
+          Showing {filteredWallets.length} wallet{filteredWallets.length !== 1 ? 's' : ''}{assets.length > 0 ? ` + ${assets.length} asset${assets.length !== 1 ? 's' : ''}` : ''} • 
+          Price data from CoinGecko & Yahoo Finance
         </p>
         {(['5y', '10y', 'all'] as TimeRange[]).includes(timeRange) && (
           <p className="text-xs text-yellow-500 text-center mt-2">

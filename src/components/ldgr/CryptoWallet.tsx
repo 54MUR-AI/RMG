@@ -9,6 +9,7 @@ import { useAutoLock } from '../../hooks/useAutoLock'
 import ReAuthGate from './ReAuthGate'
 import StockAssets from './StockAssets'
 import MetalAssets from './MetalAssets'
+import { getUserAssets, enrichAssetsWithPrices, type AssetWithPrice } from '../../lib/ldgr/assets'
 import {
   getUserWallets,
   addWallet,
@@ -44,6 +45,7 @@ export default function CryptoWalletPage() {
   const [subTab, setSubTab] = useState<AssetSubTab>('wallets')
   const [wallets, setWallets] = useState<CryptoWalletType[]>([])
   const [balances, setBalances] = useState<Record<string, WalletBalance | MultiTokenBalance>>({})
+  const [allAssets, setAllAssets] = useState<AssetWithPrice[]>([])
 
   // Load wallets at the page level so the chart can use them
   const loadWallets = useCallback(async () => {
@@ -73,7 +75,24 @@ export default function CryptoWalletPage() {
     }
   }, [user])
 
-  useEffect(() => { if (user) loadWallets() }, [user, loadWallets])
+  // Load all non-crypto assets (stocks, metals, etc.) for the chart
+  const loadAssets = useCallback(async () => {
+    if (!user) return
+    try {
+      const raw = await getUserAssets(user.id)
+      const enriched = await enrichAssetsWithPrices(raw)
+      setAllAssets(enriched)
+    } catch (err) {
+      console.error('Error loading assets for chart:', err)
+    }
+  }, [user])
+
+  useEffect(() => {
+    if (user) {
+      loadWallets()
+      loadAssets()
+    }
+  }, [user, loadWallets, loadAssets])
 
   const SUB_TABS: { key: AssetSubTab; label: string; icon: typeof Wallet }[] = [
     { key: 'wallets', label: 'Wallets', icon: Wallet },
@@ -100,6 +119,7 @@ export default function CryptoWalletPage() {
         wallets={wallets}
         balances={balances}
         filterBlockchain="all"
+        assets={allAssets}
       />
 
       {/* Sub-tab navigation */}
@@ -125,8 +145,8 @@ export default function CryptoWalletPage() {
 
       {/* Sub-tab content */}
       {subTab === 'wallets' && <CryptoWalletSection onWalletsChanged={loadWallets} />}
-      {subTab === 'stocks' && <StockAssets />}
-      {subTab === 'metals' && <MetalAssets />}
+      {subTab === 'stocks' && <StockAssets onAssetsChanged={loadAssets} />}
+      {subTab === 'metals' && <MetalAssets onAssetsChanged={loadAssets} />}
       {subTab === 'tokenized' && <TokenizedPlaceholder />}
     </div>
   )

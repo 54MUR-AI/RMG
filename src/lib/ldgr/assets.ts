@@ -155,25 +155,27 @@ function normalizeAsset(row: any): LdgrAsset {
 
 // ── Pricing ──
 
-// Stock/ETF/MUTF pricing via Yahoo Finance (through stonks-api proxy)
-const STONKS_API = 'https://stonks-api-jlb2.onrender.com'
-const stockPriceCache: Record<string, { price: number; ts: number }> = {}
-const STOCK_CACHE_TTL = 300_000 // 5 min
+// Reuse N-SIT's Yahoo Finance proxy (same pipeline that powers all NSIT widgets).
+// Yahoo v8/finance/chart endpoint — free, no API key, covers stocks/ETFs/mutf/metals/commodities.
+const YAHOO_PROXY = 'https://nsit-rmg.onrender.com/api/yahoo'
+const priceCache: Record<string, { price: number; ts: number }> = {}
+const PRICE_CACHE_TTL = 300_000 // 5 min
 
-export async function fetchStockPrice(symbol: string): Promise<number> {
-  const upper = symbol.toUpperCase()
-  const cached = stockPriceCache[upper]
-  if (cached && Date.now() - cached.ts < STOCK_CACHE_TTL) return cached.price
+async function fetchYahooPrice(symbol: string): Promise<number> {
+  const key = symbol.toUpperCase()
+  const cached = priceCache[key]
+  if (cached && Date.now() - cached.ts < PRICE_CACHE_TTL) return cached.price
 
   try {
-    const res = await fetch(`${STONKS_API}/api/quote/${upper}`, {
-      signal: AbortSignal.timeout(10000),
-    })
+    const res = await fetch(
+      `${YAHOO_PROXY}/v8/finance/chart/${encodeURIComponent(key)}?interval=1d&range=1d`,
+      { signal: AbortSignal.timeout(10000) },
+    )
     if (!res.ok) return cached?.price || 0
-    const data = await res.json()
-    const price = data?.regularMarketPrice || data?.price || 0
+    const json = await res.json()
+    const price = json.chart?.result?.[0]?.meta?.regularMarketPrice ?? 0
     if (price > 0) {
-      stockPriceCache[upper] = { price, ts: Date.now() }
+      priceCache[key] = { price, ts: Date.now() }
     }
     return price
   } catch {
@@ -181,41 +183,82 @@ export async function fetchStockPrice(symbol: string): Promise<number> {
   }
 }
 
-// Metal pricing via free metals API
-const metalPriceCache: Record<string, { price: number; ts: number }> = {}
-const METAL_CACHE_TTL = 600_000 // 10 min
+export async function fetchStockPrice(symbol: string): Promise<number> {
+  return fetchYahooPrice(symbol)
+}
 
-// Metal spot prices in USD per troy oz
-const METAL_SYMBOLS: Record<string, string> = {
-  gold: 'XAU',
-  silver: 'XAG',
-  platinum: 'XPT',
-  palladium: 'XPD',
+// Metal futures symbols on Yahoo Finance (USD per troy oz)
+const METAL_YAHOO: Record<string, string> = {
+  gold: 'GC=F',
+  silver: 'SI=F',
+  platinum: 'PL=F',
+  palladium: 'PA=F',
 }
 
 export async function fetchMetalPrice(metalType: string): Promise<number> {
-  const cached = metalPriceCache[metalType]
-  if (cached && Date.now() - cached.ts < METAL_CACHE_TTL) return cached.price
+  const yahooSymbol = METAL_YAHOO[metalType]
+  if (!yahooSymbol) return 0
+  return fetchYahooPrice(yahooSymbol)
+}
 
-  const symbol = METAL_SYMBOLS[metalType]
-  if (!symbol) return cached?.price || 0
+// Fetch Yahoo Finance historical closes for a symbol (reuses N-SIT proxy)
+const histCache: Record<string, { data: { date: string; close: number }[]; ts: number }> = {}
+const HIST_CACHE_TTL = 600_000 // 10 min
+
+function yahooRange(timeRange: string): string {
+  const map: Record<string, string> = {
+    '1d': '1d', '3d': '5d', '1w': '5d', '1m': '1mo',
+    '3m': '3mo', '6m': '6mo', '1y': '1y', '5y': '5y', '10y': '10y', 'all': 'max',
+  }
+  return map[timeRange] || '1mo'
+}
+
+function yahooInterval(timeRange: string): string {
+  const map: Record<string, string> = {
+    '1d': '5m', '3d': '15m', '1w': '1h', '1m': '1d',
+    '3m': '1d', '6m': '1d', '1y': '1wk', '5y': '1wk', '10y': '1mo', 'all': '1mo',
+  }
+  return map[timeRange] || '1d'
+}
+
+export async function fetchYahooHistory(
+  symbol: string,
+  timeRange: string,
+): Promise<{ date: string; close: number }[]> {
+  const key = `${symbol.toUpperCase()}-${timeRange}`
+  const cached = histCache[key]
+  if (cached && Date.now() - cached.ts < HIST_CACHE_TTL) return cached.data
 
   try {
-    // Use metals.live free API (no key needed)
-    const res = await fetch('https://api.metals.live/v1/spot', {
-      signal: AbortSignal.timeout(10000),
-    })
-    if (!res.ok) return cached?.price || 0
-    const data = await res.json()
-    // data is array of { gold, silver, platinum, palladium } with USD prices
-    const latest = Array.isArray(data) ? data[data.length - 1] : data
-    const price = latest?.[metalType] || 0
-    if (price > 0) {
-      metalPriceCache[metalType] = { price, ts: Date.now() }
+    const range = yahooRange(timeRange)
+    const interval = yahooInterval(timeRange)
+    const res = await fetch(
+      `${YAHOO_PROXY}/v8/finance/chart/${encodeURIComponent(symbol.toUpperCase())}?interval=${interval}&range=${range}`,
+      { signal: AbortSignal.timeout(12000) },
+    )
+    if (!res.ok) return cached?.data || []
+    const json = await res.json()
+    const result = json.chart?.result?.[0]
+    if (!result) return []
+
+    const timestamps: number[] = result.timestamp || []
+    const closes: (number | null)[] = result.indicators?.quote?.[0]?.close || []
+    const points: { date: string; close: number }[] = []
+
+    for (let i = 0; i < timestamps.length; i++) {
+      const c = closes[i]
+      if (c == null) continue
+      const d = new Date(timestamps[i] * 1000)
+      const label = ['1d', '3d', '1w'].includes(timeRange)
+        ? d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+        : d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+      points.push({ date: label, close: c })
     }
-    return price
+
+    histCache[key] = { data: points, ts: Date.now() }
+    return points
   } catch {
-    return cached?.price || 0
+    return cached?.data || []
   }
 }
 

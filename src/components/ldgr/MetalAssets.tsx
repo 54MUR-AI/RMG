@@ -11,7 +11,7 @@ import {
   type LdgrAsset, type LdgrAssetInput, type AssetWithPrice, type AssetType,
 } from '../../lib/ldgr/assets'
 
-export default function MetalAssets() {
+export default function MetalAssets({ onAssetsChanged }: { onAssetsChanged?: () => void }) {
   const { user } = useAuth()
   const [assets, setAssets] = useState<AssetWithPrice[]>([])
   const [loading, setLoading] = useState(true)
@@ -27,6 +27,7 @@ export default function MetalAssets() {
       const raw = await getAssetsByType(user.id, types)
       const enriched = await enrichAssetsWithPrices(raw)
       setAssets(enriched)
+      onAssetsChanged?.()
     } catch (err) {
       console.error('Error loading metal assets:', err)
     } finally {
