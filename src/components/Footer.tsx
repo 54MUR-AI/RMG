@@ -19,7 +19,7 @@ export default function Footer() {
         <div className="flex items-center justify-between">
           {/* Copyright */}
           <div className="text-xs text-samurai-steel-light">
-            &copy; {new Date().getFullYear()} <span className="font-bold text-white">RONIN MEDIA</span>
+            &copy; {new Date().getFullYear()} <span className="font-bold text-white">RONIN MEDIA</span> <span className="font-extralight text-white">GROUP</span>
           </div>
 
           {/* Center: App label when on an app page */}
