@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom'
 import { Github, BookOpen, Settings } from 'lucide-react'
 
 const APP_CONFIG: Record<string, { label: string }> = {
+  '/wspr': { label: 'WSPR' },
   '/scrp': { label: 'SCRP' },
   '/ldgr': { label: 'LDGR' },
   '/omni': { label: 'OMNI' },
