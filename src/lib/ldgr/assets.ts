@@ -155,9 +155,9 @@ function normalizeAsset(row: any): LdgrAsset {
 
 // ── Pricing ──
 
-// Reuse N-SIT's Yahoo Finance proxy (same pipeline that powers all NSIT widgets).
+// Yahoo Finance proxy via scrp-api (CORS-enabled for roninmedia.studio).
 // Yahoo v8/finance/chart endpoint — free, no API key, covers stocks/ETFs/mutf/metals/commodities.
-const YAHOO_PROXY = 'https://nsit-rmg.onrender.com/api/yahoo'
+const YAHOO_PROXY = 'https://scrp-api.onrender.com/yahoo'
 const priceCache: Record<string, { price: number; ts: number }> = {}
 const PRICE_CACHE_TTL = 300_000 // 5 min
 
