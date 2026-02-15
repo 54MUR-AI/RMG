@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault, Zap } from 'lucide-react'
+import { Menu, X, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault, MessageSquareLock } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import AuthPopup from './AuthPopup'
 import ProfileDropdown from './ProfileDropdown'
@@ -106,7 +106,7 @@ export default function Navbar() {
                         : 'text-samurai-steel-light hover:text-samurai-red'
                     }`}
                   >
-                    {isActive('/wspr') ? <><Zap size={16} /> WSPR</> : isActive('/nsit') ? <><ScanEye size={16} /> N-SIT</> : isActive('/omni') ? <><Brain size={16} /> OMNI</> : isActive('/scrp') ? <><ScanLine size={16} /> SCRP</> : 'APPS'}
+                    {isActive('/wspr') ? <><MessageSquareLock size={16} /> WSPR</> : isActive('/nsit') ? <><ScanEye size={16} /> N-SIT</> : isActive('/omni') ? <><Brain size={16} /> OMNI</> : isActive('/scrp') ? <><ScanLine size={16} /> SCRP</> : 'APPS'}
                     <ChevronDown size={16} className={`transition-transform ${showAppsDropdown ? 'rotate-180' : ''}`} />
                   </button>
                   {showAppsDropdown && (
@@ -118,7 +118,7 @@ export default function Navbar() {
                           isActive('/wspr') ? 'bg-samurai-red/20 text-samurai-red' : 'text-white hover:bg-samurai-red/10 hover:text-samurai-red'
                         }`}
                       >
-                        <Zap size={16} />
+                        <MessageSquareLock size={16} />
                         WSPR
                       </Link>
                       <Link
@@ -269,7 +269,7 @@ export default function Navbar() {
                   }`}
                   onClick={() => setIsOpen(false)}
                 >
-                  <Zap size={20} />
+                  <MessageSquareLock size={20} />
                   WSPR
                 </Link>
                 <Link

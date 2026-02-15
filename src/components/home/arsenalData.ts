@@ -1,4 +1,4 @@
-import { Brain, FileText, Lock, Zap, ScanEye } from 'lucide-react'
+import { Brain, FileText, Lock, MessageSquareLock, ScanEye } from 'lucide-react'
 import type { ArsenalCardData } from './ArsenalCard'
 
 export const ARSENAL_CARDS: ArsenalCardData[] = [
@@ -65,7 +65,7 @@ export const ARSENAL_CARDS: ArsenalCardData[] = [
   {
     name: 'WSPR',
     subtitle: 'Web-Secure P2P Relay',
-    icon: Zap,
+    icon: MessageSquareLock,
     thumbnail: '/thumbnails/wspr-thumb.svg',
     path: '/wspr',
     shortDescription: 'Secure messaging with direct messages, RMG contacts integration, LDGR file sharing, and encrypted workspace channels.',

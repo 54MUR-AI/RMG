@@ -11,7 +11,7 @@
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",
     "crypto-js": "^4.2.0",
-    "lucide-react": "^0.344.0",
+    "lucide-react": "^0.564.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-markdown": "^10.1.0",
