@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Wallet, Plus, Edit2, Trash2, Eye, EyeOff, Copy, Check, RefreshCw, TrendingUp, TrendingDown, Briefcase, BarChart3, Gem, Link2 } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import FilterDropdown from './FilterDropdown'
@@ -40,7 +40,40 @@ const BLOCKCHAINS = {
 }
 
 export default function CryptoWalletPage() {
+  const { user } = useAuth()
   const [subTab, setSubTab] = useState<AssetSubTab>('wallets')
+  const [wallets, setWallets] = useState<CryptoWalletType[]>([])
+  const [balances, setBalances] = useState<Record<string, WalletBalance | MultiTokenBalance>>({})
+
+  // Load wallets at the page level so the chart can use them
+  const loadWallets = useCallback(async () => {
+    if (!user) return
+    try {
+      const data = await getUserWallets(user.id)
+      setWallets(data)
+      if (data.length > 0) {
+        for (const wallet of data) {
+          try {
+            const multiBalance = await fetchWalletBalanceWithTokens(wallet.address, wallet.blockchain)
+            if (multiBalance) {
+              setBalances(prev => ({ ...prev, [wallet.address]: multiBalance }))
+            } else {
+              const balance = await fetchWalletBalance(wallet.address, wallet.blockchain)
+              if (balance) {
+                setBalances(prev => ({ ...prev, [wallet.address]: balance }))
+              }
+            }
+          } catch (error) {
+            console.error(`Error loading balance for ${wallet.wallet_name}:`, error)
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Error loading wallets:', error)
+    }
+  }, [user])
+
+  useEffect(() => { if (user) loadWallets() }, [user, loadWallets])
 
   const SUB_TABS: { key: AssetSubTab; label: string; icon: typeof Wallet }[] = [
     { key: 'wallets', label: 'Wallets', icon: Wallet },
@@ -61,6 +94,13 @@ export default function CryptoWalletPage() {
           Manage crypto wallets, equities, metals, and tokenized assets
         </p>
       </div>
+
+      {/* Portfolio Performance Chart — persists across all sub-tabs */}
+      <WalletPerformanceChart
+        wallets={wallets}
+        balances={balances}
+        filterBlockchain="all"
+      />
 
       {/* Sub-tab navigation */}
       <div className="flex justify-center gap-1 bg-samurai-grey-darker rounded-lg p-1 border border-samurai-grey">
@@ -84,7 +124,7 @@ export default function CryptoWalletPage() {
       </div>
 
       {/* Sub-tab content */}
-      {subTab === 'wallets' && <CryptoWalletSection />}
+      {subTab === 'wallets' && <CryptoWalletSection onWalletsChanged={loadWallets} />}
       {subTab === 'stocks' && <StockAssets />}
       {subTab === 'metals' && <MetalAssets />}
       {subTab === 'tokenized' && <TokenizedPlaceholder />}
@@ -116,7 +156,7 @@ function TokenizedPlaceholder() {
 
 // ── Crypto Wallets Section (original CryptoWallet component) ──
 
-function CryptoWalletSection() {
+function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => void }) {
   const { user } = useAuth()
   const [wallets, setWallets] = useState<CryptoWalletType[]>([])
   const [balances, setBalances] = useState<Record<string, WalletBalance | MultiTokenBalance>>({})
@@ -184,6 +224,7 @@ function CryptoWalletSection() {
     try {
       await addWallet(user.id, user.email || '', input)
       await loadWallets()
+      onWalletsChanged()
       setShowAddModal(false)
     } catch (error) {
       console.error('Error adding wallet:', error)
@@ -196,6 +237,7 @@ function CryptoWalletSection() {
     try {
       await updateWallet(walletId, user.id, updates)
       await loadWallets()
+      onWalletsChanged()
       setEditingWallet(null)
     } catch (error) {
       console.error('Error updating wallet:', error)
@@ -208,6 +250,7 @@ function CryptoWalletSection() {
     try {
       await deleteWallet(walletId)
       await loadWallets()
+      onWalletsChanged()
     } catch (error) {
       console.error('Error deleting wallet:', error)
       alert('Failed to delete wallet. Please try again.')
@@ -389,13 +432,6 @@ function CryptoWalletSection() {
             icon: chain.icon
           }))
         ]}
-      />
-
-      {/* Performance Chart */}
-      <WalletPerformanceChart 
-        wallets={wallets}
-        balances={balances}
-        filterBlockchain={filterBlockchain}
       />
 
       {/* Wallets List */}
