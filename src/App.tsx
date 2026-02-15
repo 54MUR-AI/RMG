@@ -1,4 +1,5 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import FloatingEmbers from './components/FloatingEmbers'
@@ -14,6 +15,69 @@ import ResetPassword from './pages/ResetPassword'
 import { AuthProvider } from './contexts/AuthContext'
 import { AdminProvider } from './contexts/AdminContext'
 
+// App pages that should persist once visited (iframes + stateful pages)
+const PERSISTENT_APPS: { path: string; Component: React.ComponentType }[] = [
+  { path: '/nsit', Component: NsitPage },
+  { path: '/omni', Component: OmniPage },
+  { path: '/scrp', Component: ScraperPage },
+  { path: '/ldgr', Component: LdgrPage },
+  { path: '/wspr', Component: WsprPage },
+]
+
+const PERSISTENT_PATHS = new Set(PERSISTENT_APPS.map(a => a.path))
+
+/** Renders app pages once visited, hides inactive ones with CSS */
+function PersistentApps() {
+  const location = useLocation()
+  const [visited, setVisited] = useState<Set<string>>(() => {
+    // If we're starting on an app page, mark it visited immediately
+    return PERSISTENT_PATHS.has(location.pathname) ? new Set([location.pathname]) : new Set()
+  })
+
+  const currentPath = location.pathname
+
+  useEffect(() => {
+    if (PERSISTENT_PATHS.has(currentPath) && !visited.has(currentPath)) {
+      setVisited(prev => new Set(prev).add(currentPath))
+    }
+  }, [currentPath])
+
+  const isAppRoute = PERSISTENT_PATHS.has(currentPath)
+
+  return (
+    <>
+      {/* Non-app routes rendered normally via React Router */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden" style={{ display: isAppRoute ? 'none' : undefined }}>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/discord" element={<DiscordPage />} />
+            {/* Catch-all so Router doesn't complain about unmatched app paths */}
+            <Route path="*" element={null} />
+          </Routes>
+        </ErrorBoundary>
+      </div>
+
+      {/* Persistent app pages — rendered once visited, hidden when inactive */}
+      {PERSISTENT_APPS.map(({ path, Component }) => {
+        if (!visited.has(path)) return null
+        return (
+          <div
+            key={path}
+            className="flex-1 overflow-y-auto overflow-x-hidden"
+            style={{ display: currentPath === path ? undefined : 'none' }}
+          >
+            <ErrorBoundary>
+              <Component />
+            </ErrorBoundary>
+          </div>
+        )
+      })}
+    </>
+  )
+}
+
 function App() {
   return (
     <AuthProvider>
@@ -28,21 +92,8 @@ function App() {
             <Navbar />
           </div>
           
-          {/* Scrollable Content */}
-          <main className="flex-1 overflow-y-auto overflow-x-hidden">
-            <ErrorBoundary>
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/reset-password" element={<ResetPassword />} />
-                <Route path="/nsit" element={<NsitPage />} />
-                <Route path="/scrp" element={<ScraperPage />} />
-                <Route path="/ldgr" element={<LdgrPage />} />
-                <Route path="/wspr" element={<WsprPage />} />
-                <Route path="/omni" element={<OmniPage />} />
-                <Route path="/discord" element={<DiscordPage />} />
-              </Routes>
-            </ErrorBoundary>
-          </main>
+          {/* Scrollable Content — persistent app caching */}
+          <PersistentApps />
           
           {/* Fixed Footer */}
           <div className="flex-shrink-0 z-10">

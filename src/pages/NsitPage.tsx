@@ -79,8 +79,8 @@ export default function NsitPage() {
       <div className="bg-samurai-black flex items-center justify-center p-4 py-32">
         <div className="text-center">
           <Lock className="w-16 h-16 text-samurai-red mx-auto mb-4" />
-          <h2 className="text-3xl font-black text-white mb-2 neon-text">NSIT</h2>
-          <p className="text-white/70 mb-6">Please sign in to access NSIT</p>
+          <h2 className="text-3xl font-black text-white mb-2 neon-text">N-SIT</h2>
+          <p className="text-white/70 mb-6">Please sign in to access N-SIT</p>
         </div>
       </div>
     )
