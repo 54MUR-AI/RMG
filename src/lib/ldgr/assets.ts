@@ -4,6 +4,7 @@
  */
 
 import { supabase } from '../supabase'
+import { fetchCryptoPrice } from './cryptoWallets'
 
 // ── Types ──
 
@@ -67,6 +68,13 @@ export const ASSET_TYPE_CONFIG: Record<AssetType, { label: string; icon: string;
 
 export const EQUITY_TYPES: AssetType[] = ['stock', 'etf', 'mutf']
 export const METAL_TYPES: AssetType[] = ['gold', 'silver', 'platinum', 'palladium', 'metal_other']
+
+// Map crypto ticker symbols to blockchain names used by fetchCryptoPrice
+const SYMBOL_TO_BLOCKCHAIN: Record<string, string> = {
+  ETH: 'ethereum', BTC: 'bitcoin', SOL: 'solana', MATIC: 'polygon',
+  BNB: 'binance', AVAX: 'avalanche', ADA: 'cardano', XRP: 'ripple',
+  CRO: 'cronos',
+}
 
 // ── CRUD ──
 
@@ -281,7 +289,12 @@ export async function enrichAssetsWithPrices(assets: LdgrAsset[]): Promise<Asset
   for (const asset of assets) {
     let currentPrice: number | null = null
 
-    if (EQUITY_TYPES.includes(asset.asset_type) && asset.symbol) {
+    if (asset.asset_type === 'crypto' && asset.symbol) {
+      const blockchain = SYMBOL_TO_BLOCKCHAIN[asset.symbol.toUpperCase()]
+      if (blockchain) {
+        currentPrice = await fetchCryptoPrice(blockchain)
+      }
+    } else if (EQUITY_TYPES.includes(asset.asset_type) && asset.symbol) {
       currentPrice = await fetchStockPrice(asset.symbol)
     } else if (METAL_TYPES.includes(asset.asset_type)) {
       const metalType = asset.asset_type === 'metal_other' ? null : asset.asset_type

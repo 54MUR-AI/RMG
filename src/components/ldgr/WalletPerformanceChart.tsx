@@ -30,6 +30,13 @@ const ASSET_COLORS: Record<string, string> = {
   tokenized: '#8b5cf6', // violet
 }
 
+// Map crypto ticker symbols to blockchain names for manual positions
+const SYMBOL_TO_BLOCKCHAIN: Record<string, string> = {
+  ETH: 'ethereum', BTC: 'bitcoin', SOL: 'solana', MATIC: 'polygon',
+  BNB: 'binance', AVAX: 'avalanche', ADA: 'cardano', XRP: 'ripple',
+  CRO: 'cronos',
+}
+
 const BLOCKCHAIN_COLORS: Record<string, string> = {
   ethereum: '#a855f7',    // purple
   bitcoin: '#f59e0b',     // amber/orange (BTC brand)
@@ -61,6 +68,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
   // Equity and metal assets that have a symbol for historical data
   const equityAssets = useMemo(() => assets.filter(a => EQUITY_TYPES.includes(a.asset_type) && a.symbol), [assets])
   const metalAssets = useMemo(() => assets.filter(a => METAL_TYPES.includes(a.asset_type) && a.asset_type !== 'metal_other'), [assets])
+  const cryptoAssets = useMemo(() => assets.filter(a => a.asset_type === 'crypto' && a.symbol), [assets])
 
   const generateChartData = useCallback(async () => {
     setLoading(true)
@@ -91,6 +99,20 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
           }
         })
         .filter((w): w is NonNullable<typeof w> => w !== null)
+
+      // Add manual crypto positions as virtual wallets
+      for (const a of cryptoAssets) {
+        const sym = (a.symbol || '').toUpperCase()
+        const blockchain = SYMBOL_TO_BLOCKCHAIN[sym]
+        if (blockchain && a.quantity > 0) {
+          walletsWithBalances.push({
+            wallet_name: a.asset_name,
+            blockchain,
+            balance: a.quantity,
+            address: `manual-${a.id}`,
+          })
+        }
+      }
 
       const hasCrypto = walletsWithBalances.length > 0
       const hasEquities = equityAssets.length > 0
@@ -175,7 +197,7 @@ export default function WalletPerformanceChart({ wallets, balances, filterBlockc
     } finally {
       setLoading(false)
     }
-  }, [filteredWallets, balances, timeRange, equityAssets, metalAssets])
+  }, [filteredWallets, balances, timeRange, equityAssets, metalAssets, cryptoAssets])
 
   useEffect(() => {
     generateChartData()
