@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Flame, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault, Zap } from 'lucide-react'
+import { Menu, X, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault, Zap } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import AuthPopup from './AuthPopup'
 import ProfileDropdown from './ProfileDropdown'
@@ -57,9 +57,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-3 group">
-              <Flame className="text-white group-hover:text-samurai-red transition-colors animate-flame-flicker" size={38} />
+            <Link to="/" className="flex items-center group">
               <span className="text-lg sm:text-xl md:text-2xl font-black text-white group-hover:text-samurai-red transition-colors">RONIN MEDIA</span>
+              <span className="text-lg sm:text-xl md:text-2xl font-extralight text-white group-hover:text-samurai-red transition-colors ml-2">STUDIO</span>
             </Link>
           </div>
 
