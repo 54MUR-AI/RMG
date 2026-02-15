@@ -11,6 +11,7 @@ export type AssetType =
   | 'stock' | 'etf' | 'mutf'
   | 'gold' | 'silver' | 'platinum' | 'palladium' | 'metal_other'
   | 'commodity'
+  | 'crypto'
   | 'tokenized'
 
 export interface LdgrAsset {
@@ -60,6 +61,7 @@ export const ASSET_TYPE_CONFIG: Record<AssetType, { label: string; icon: string;
   palladium: { label: 'Palladium', icon: '🔘', category: 'metals' },
   metal_other: { label: 'Other Metal', icon: '⚙️', category: 'metals' },
   commodity: { label: 'Commodity', icon: '🛢️', category: 'commodities' },
+  crypto: { label: 'Crypto', icon: '🪙', category: 'crypto' },
   tokenized: { label: 'Tokenized Asset', icon: '🔗', category: 'tokenized' },
 }
 

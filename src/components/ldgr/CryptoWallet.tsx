@@ -9,7 +9,7 @@ import { useAutoLock } from '../../hooks/useAutoLock'
 import ReAuthGate from './ReAuthGate'
 import StockAssets from './StockAssets'
 import MetalAssets from './MetalAssets'
-import { getUserAssets, enrichAssetsWithPrices, type AssetWithPrice } from '../../lib/ldgr/assets'
+import { getUserAssets, enrichAssetsWithPrices, addAsset, type AssetWithPrice, type LdgrAssetInput } from '../../lib/ldgr/assets'
 import {
   getUserWallets,
   addWallet,
@@ -249,6 +249,18 @@ function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => voi
     } catch (error) {
       console.error('Error adding wallet:', error)
       alert('Failed to add wallet. Please try again.')
+    }
+  }
+
+  const handleAddManualCrypto = async (input: LdgrAssetInput) => {
+    if (!user) return
+    try {
+      await addAsset(user.id, input)
+      onWalletsChanged()
+      setShowAddModal(false)
+    } catch (error) {
+      console.error('Error adding manual crypto position:', error)
+      alert('Failed to add position. Please try again.')
     }
   }
 
@@ -663,10 +675,11 @@ function CryptoWalletSection({ onWalletsChanged }: { onWalletsChanged: () => voi
       {(showAddModal || editingWallet) && (
         <WalletModal
           existingWallet={editingWallet}
-          onSave={editingWallet ? 
+          onSaveWallet={editingWallet ? 
             (input) => handleUpdateWallet(editingWallet.id, input) : 
             handleAddWallet
           }
+          onSaveManual={handleAddManualCrypto}
           onClose={() => {
             setShowAddModal(false)
             setEditingWallet(null)
@@ -715,25 +728,32 @@ function SeedPhraseDisplay({ wallet, userEmail, userId }: { wallet: CryptoWallet
   return <>{decrypted}</>
 }
 
-// Modal for adding/editing wallets
+// Modal for adding/editing wallets — supports both wallet (with address) and manual position (ticker + qty)
 function WalletModal({
   existingWallet,
-  onSave,
+  onSaveWallet,
+  onSaveManual,
   onClose
 }: {
   existingWallet: CryptoWalletType | null
-  onSave: (input: CryptoWalletInput) => Promise<void>
+  onSaveWallet: (input: CryptoWalletInput) => Promise<void>
+  onSaveManual: (input: LdgrAssetInput) => Promise<void>
   onClose: () => void
 }) {
   const [walletName, setWalletName] = useState(existingWallet?.wallet_name || '')
   const [blockchain, setBlockchain] = useState(existingWallet?.blockchain || 'ethereum')
   const [address, setAddress] = useState(existingWallet?.address || '')
   const [seedPhrase, setSeedPhrase] = useState('')
+  const [quantity, setQuantity] = useState('')
+  const [costBasis, setCostBasis] = useState('')
   const [notes, setNotes] = useState(existingWallet?.notes || '')
   const [saving, setSaving] = useState(false)
   const [detectedBlockchains, setDetectedBlockchains] = useState<string[]>([])
   const [addressFormatMessage, setAddressFormatMessage] = useState('')
   const [validationError, setValidationError] = useState('')
+
+  const hasAddress = address.trim().length > 0
+  const isEditMode = !!existingWallet
 
   // Auto-detect blockchain when address changes
   const handleAddressChange = (newAddress: string) => {
@@ -771,42 +791,73 @@ function WalletModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!walletName || !blockchain || !address) return
-    
+    if (!walletName || !blockchain) return
+
     try {
       setSaving(true)
-      await onSave({
-        wallet_name: walletName,
-        blockchain,
-        address,
-        seed_phrase: seedPhrase,
-        notes
-      })
+
+      if (hasAddress || isEditMode) {
+        // Wallet path — save to crypto_wallets
+        if (!address && !isEditMode) return
+        await onSaveWallet({
+          wallet_name: walletName,
+          blockchain,
+          address,
+          seed_phrase: seedPhrase,
+          notes
+        })
+      } else {
+        // Manual position path — save to ldgr_assets as crypto type
+        const qty = parseFloat(quantity)
+        const cost = parseFloat(costBasis)
+        if (isNaN(qty) || qty <= 0) return
+
+        const chain = BLOCKCHAINS[blockchain as keyof typeof BLOCKCHAINS]
+        const ticker = chain?.symbol || blockchain.toUpperCase()
+
+        await onSaveManual({
+          asset_name: walletName,
+          asset_type: 'crypto',
+          symbol: ticker,
+          quantity: qty,
+          cost_basis: isNaN(cost) ? 0 : cost,
+          notes: notes || undefined,
+        })
+      }
     } finally {
       setSaving(false)
     }
   }
 
+  const chain = BLOCKCHAINS[blockchain as keyof typeof BLOCKCHAINS]
+
   return (
     <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
       <div className="bg-samurai-grey-darker border-2 border-samurai-red rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
-        <h2 className="text-2xl font-black text-white mb-6">
-          {existingWallet ? 'Edit Wallet' : 'Add Wallet'}
+        <h2 className="text-2xl font-black text-white mb-2">
+          {isEditMode ? 'Edit Wallet' : 'Add Crypto'}
         </h2>
+        {!isEditMode && (
+          <p className="text-white/50 text-sm mb-6">
+            Add a wallet address to auto-track balances, or just enter a ticker and position.
+          </p>
+        )}
         
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Name */}
           <div>
-            <label className="block text-white font-semibold mb-2">Wallet Name</label>
+            <label className="block text-white font-semibold mb-2">Name</label>
             <input
               type="text"
               value={walletName}
               onChange={(e) => setWalletName(e.target.value)}
-              placeholder="e.g., My Main Wallet, Trading Wallet"
+              placeholder="e.g., My BTC Stack, Trading Wallet"
               className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none"
               required
             />
           </div>
-          
+
+          {/* Blockchain */}
           <div>
             <label className="block text-white font-semibold mb-2">
               Blockchain
@@ -826,9 +877,9 @@ function WalletModal({
                   detectedBlockchains.includes(key) ||
                   key === 'other'
                 )
-                .map(([key, chain]) => (
+                .map(([key, bc]) => (
                   <option key={key} value={key}>
-                    {chain.icon} {chain.name}
+                    {bc.icon} {bc.name} {bc.symbol ? `(${bc.symbol})` : ''}
                   </option>
                 ))}
             </select>
@@ -839,26 +890,75 @@ function WalletModal({
             )}
           </div>
           
+          {/* Wallet Address — optional */}
           <div>
-            <label className="block text-white font-semibold mb-2">Wallet Address</label>
+            <label className="block text-white font-semibold mb-2">
+              Wallet Address
+              <span className="text-xs text-white/40 font-normal ml-2">optional — enables auto balance tracking</span>
+            </label>
             <input
               type="text"
               value={address}
               onChange={(e) => handleAddressChange(e.target.value)}
-              placeholder="0x... or blockchain address"
+              placeholder="0x... or blockchain address (leave blank for manual position)"
               className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none font-mono text-sm"
-              required
             />
             {addressFormatMessage && (
               <p className="text-xs text-samurai-red mt-1">
                 {addressFormatMessage}
               </p>
             )}
+            {hasAddress && (
+              <p className="text-xs text-emerald-400/70 mt-1">
+                ✓ Balance will be fetched automatically from the blockchain
+              </p>
+            )}
           </div>
-          
+
+          {/* Manual position fields — shown when no address */}
+          {!hasAddress && !isEditMode && (
+            <div className="bg-samurai-black/50 rounded-lg p-4 border border-samurai-grey/50 space-y-3">
+              <p className="text-xs text-white/60 font-semibold uppercase tracking-wider">Manual Position</p>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-white/70 text-sm mb-1">
+                    Quantity ({chain?.symbol || 'tokens'})
+                  </label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    placeholder="0.5"
+                    className="w-full px-3 py-2.5 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/30 focus:border-samurai-red focus:outline-none font-mono"
+                    required={!hasAddress && !isEditMode}
+                  />
+                </div>
+                <div>
+                  <label className="block text-white/70 text-sm mb-1">Cost Basis ($/unit)</label>
+                  <input
+                    type="number"
+                    step="any"
+                    value={costBasis}
+                    onChange={(e) => setCostBasis(e.target.value)}
+                    placeholder="50000"
+                    className="w-full px-3 py-2.5 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/30 focus:border-samurai-red focus:outline-none font-mono"
+                  />
+                </div>
+              </div>
+              <p className="text-xs text-white/40">
+                Saved as a crypto position in LDGR Assets. Add a wallet address later to auto-track.
+              </p>
+            </div>
+          )}
+
+          {/* Seed Phrase — optional */}
           <div>
             <label className="block text-white font-semibold mb-2">
-              Seed Phrase (optional) {existingWallet && '- leave blank to keep current'}
+              Seed Phrase
+              <span className="text-xs text-white/40 font-normal ml-2">
+                optional{isEditMode ? ' — leave blank to keep current' : ' — securely encrypted'}
+              </span>
             </label>
             <textarea
               value={seedPhrase}
@@ -870,8 +970,9 @@ function WalletModal({
             <p className="text-xs text-white/50 mt-1">⚠️ Never share your seed phrase with anyone!</p>
           </div>
           
+          {/* Notes */}
           <div>
-            <label className="block text-white font-semibold mb-2">Notes (optional)</label>
+            <label className="block text-white font-semibold mb-2">Notes <span className="text-xs text-white/40 font-normal">(optional)</span></label>
             <textarea
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
@@ -880,6 +981,17 @@ function WalletModal({
               className="w-full px-4 py-3 bg-samurai-black border-2 border-samurai-grey rounded-lg text-white placeholder-white/50 focus:border-samurai-red focus:outline-none resize-none"
             />
           </div>
+
+          {/* Summary of what will happen */}
+          {!isEditMode && (
+            <div className="bg-samurai-grey/30 rounded-lg px-4 py-3 text-xs text-white/60">
+              {hasAddress ? (
+                <span>💼 <strong className="text-white/80">Wallet mode:</strong> Saves to Crypto Wallets with auto balance tracking</span>
+              ) : (
+                <span>📊 <strong className="text-white/80">Position mode:</strong> Saves {chain?.symbol || 'crypto'} position to LDGR Assets</span>
+              )}
+            </div>
+          )}
           
           <div className="flex gap-3 pt-4">
             <button
@@ -887,7 +999,7 @@ function WalletModal({
               disabled={saving}
               className="flex-1 px-6 py-3 bg-samurai-red text-white rounded-lg font-bold hover:bg-samurai-red-dark transition-all disabled:opacity-50"
             >
-              {saving ? 'Saving...' : existingWallet ? 'Update Wallet' : 'Add Wallet'}
+              {saving ? 'Saving...' : isEditMode ? 'Update Wallet' : hasAddress ? 'Add Wallet' : 'Add Position'}
             </button>
             <button
               type="button"
