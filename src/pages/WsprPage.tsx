@@ -310,7 +310,7 @@ export default function WsprPage() {
 
     window.addEventListener('message', handleWsprMessage)
     return () => window.removeEventListener('message', handleWsprMessage)
-  }, [])
+  }, [user])
 
   // Listen for footer button events
   useEffect(() => {
