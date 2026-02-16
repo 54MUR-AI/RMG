@@ -1,6 +1,5 @@
-import { Sparkles, Zap, Flame, Hammer, Anvil, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network } from 'lucide-react'
+import { Sparkles, Zap, Flame, Hammer, Anvil, Code2, Database, Container, Server, Cpu, Palette, Layout, Wrench, Bot, MessageSquare, Network, Sword, Swords } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import CrossedKatanasIcon from '../components/CrossedKatanasIcon'
 import DiscordIcon from '../components/DiscordIcon'
 import ReadmePopup from '../components/ReadmePopup'
 import AuthPopup from '../components/AuthPopup'
@@ -8,7 +7,7 @@ import ArsenalCard from '../components/home/ArsenalCard'
 import { ARSENAL_CARDS } from '../components/home/arsenalData'
 import Forum from '../components/Forum'
 import { useAuth } from '../contexts/AuthContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Home() {
   const [readmePopup, setReadmePopup] = useState<{ title: string; url: string } | null>(null)
@@ -16,6 +15,19 @@ export default function Home() {
   const [showAuthPopup, setShowAuthPopup] = useState(false)
   const { user } = useAuth()
   const navigate = useNavigate()
+  const [bridgeDetected, setBridgeDetected] = useState(false)
+
+  // Detect RMG Ollama Bridge extension
+  useEffect(() => {
+    const handler = (event: MessageEvent) => {
+      if (event.data?.type === 'RMG_OLLAMA_MODELS' && event.data?.source === 'rmg-ollama-bridge') {
+        setBridgeDetected(true)
+      }
+    }
+    window.addEventListener('message', handler)
+    window.postMessage({ type: 'RMG_REQUEST_OLLAMA_MODELS' }, '*')
+    return () => window.removeEventListener('message', handler)
+  }, [])
   
   const handleLaunchClick = (e: React.MouseEvent, path: string) => {
     e.stopPropagation()
@@ -49,12 +61,21 @@ export default function Home() {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center animate-slide-up">
-            {/* Crossed Katanas logo with animation */}
+            {/* Hero icon — Sword by default, Swords when RMG Bridge detected */}
             <div className="flex justify-center mb-8 relative" style={{ zIndex: 10, transform: 'translateZ(0)', WebkitTransform: 'translateZ(0)' }}>
-              <CrossedKatanasIcon 
-                size={192}
-                className="text-white drop-shadow-[0_0_25px_rgba(230,57,70,1)] animate-flame-pulse-big"
-              />
+              {bridgeDetected ? (
+                <Swords
+                  size={192}
+                  strokeWidth={1.5}
+                  className="text-white drop-shadow-[0_0_25px_rgba(230,57,70,1)] animate-flame-pulse-big"
+                />
+              ) : (
+                <Sword
+                  size={192}
+                  strokeWidth={1.5}
+                  className="text-white drop-shadow-[0_0_25px_rgba(230,57,70,1)] animate-flame-pulse-big"
+                />
+              )}
             </div>
             
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black mb-6 sm:mb-8 neon-text tracking-tight">
