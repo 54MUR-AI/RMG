@@ -1,19 +1,21 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Github, BookOpen, Settings, Flame } from 'lucide-react'
+import ReadmePopup from './ReadmePopup'
 
-const APP_CONFIG: Record<string, { label: string }> = {
-  '/wspr': { label: 'WSPR' },
-  '/scrp': { label: 'SCRP' },
-  '/ldgr': { label: 'LDGR' },
-  '/omni': { label: 'OMNI' },
-  '/nsit': { label: 'N-SIT' },
+const APP_CONFIG: Record<string, { label: string; readme: string }> = {
+  '/wspr': { label: 'WSPR', readme: '/appReadmes/wspr.md' },
+  '/scrp': { label: 'SCRP', readme: '/appReadmes/scrp.md' },
+  '/ldgr': { label: 'LDGR', readme: '/appReadmes/ldgr.md' },
+  '/omni': { label: 'OMNI', readme: '/appReadmes/omni.md' },
+  '/nsit': { label: 'N-SIT', readme: '/appReadmes/nsit.md' },
 }
 
 export default function Footer() {
   const location = useLocation()
   const appConfig = APP_CONFIG[location.pathname]
   const [embersOn, setEmbersOn] = useState(() => localStorage.getItem('rmg-embers') !== 'off')
+  const [showReadme, setShowReadme] = useState(false)
 
   const toggleEmbers = () => {
     const next = !embersOn
@@ -42,9 +44,9 @@ export default function Footer() {
           <div className="flex items-center gap-2 sm:gap-3">
             {appConfig ? (
               <>
-                {/* README Button */}
+                {/* README Button — handled directly in Footer to avoid multi-popup bug */}
                 <button
-                  onClick={() => window.dispatchEvent(new CustomEvent('rmg:readme'))}
+                  onClick={() => setShowReadme(true)}
                   className="w-7 h-7 steel-texture rounded-lg flex items-center justify-center text-samurai-red hover:bg-samurai-red hover:text-white transition-all"
                   aria-label="README"
                   title="README"
@@ -90,6 +92,13 @@ export default function Footer() {
           </div>
         </div>
       </div>
+      {/* README Popup — single instance, keyed to current app */}
+      {showReadme && appConfig && (
+        <ReadmePopup
+          readmeUrl={appConfig.readme}
+          onClose={() => setShowReadme(false)}
+        />
+      )}
     </footer>
   )
 }

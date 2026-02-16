@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import ReadmePopup from '../components/ReadmePopup'
 
 export default function ScraperPage() {
   const { user } = useAuth()
   const iframeRef = useRef<HTMLIFrameElement>(null)
-  const [showReadme, setShowReadme] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -58,9 +56,8 @@ export default function ScraperPage() {
     }
   }, [])
 
-  // Listen for footer button events
+  // Listen for footer settings button
   useEffect(() => {
-    const onReadme = () => setShowReadme(true)
     const onSettings = () => {
       if (iframeRef.current?.contentWindow) {
         iframeRef.current.contentWindow.postMessage(
@@ -69,10 +66,8 @@ export default function ScraperPage() {
         )
       }
     }
-    window.addEventListener('rmg:readme', onReadme)
     window.addEventListener('rmg:settings', onSettings)
     return () => {
-      window.removeEventListener('rmg:readme', onReadme)
       window.removeEventListener('rmg:settings', onSettings)
     }
   }, [])
@@ -100,13 +95,6 @@ export default function ScraperPage() {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
       />
 
-      {/* README Popup */}
-      {showReadme && (
-        <ReadmePopup
-          readmeUrl="/appReadmes/scrp.md"
-          onClose={() => setShowReadme(false)}
-        />
-      )}
     </div>
   )
 }

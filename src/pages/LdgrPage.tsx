@@ -8,7 +8,6 @@ import FolderView from '../components/ldgr/FolderView'
 import ApiKeyManager from '../components/ldgr/ApiKeyManager'
 import PasswordManager from '../components/ldgr/PasswordManager'
 import CryptoWallet from '../components/ldgr/CryptoWallet'
-import ReadmePopup from '../components/ReadmePopup'
 import LdgrSettings from '../components/ldgr/LdgrSettings'
 import { uploadFile, getUserFiles, getSharedFiles, downloadFile, deleteFile, moveFile } from '../lib/ldgr/storage'
 import type { FileMetadata } from '../lib/ldgr/storage'
@@ -24,7 +23,6 @@ export default function LdgrPage() {
   const [folderSubfolderCounts, setFolderSubfolderCounts] = useState<Record<string, number>>({})
   const [uploading, setUploading] = useState(false)
   const [loading, setLoading] = useState(true)
-  const [showReadme, setShowReadme] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [activeTab, setActiveTab] = useState<'files' | 'passwords' | 'assets' | 'api-keys'>('files')
   const [isDropsFolder, setIsDropsFolder] = useState(false)
@@ -34,14 +32,11 @@ export default function LdgrPage() {
     window.scrollTo(0, 0)
   }, [])
 
-  // Listen for footer button events
+  // Listen for footer settings button
   useEffect(() => {
-    const onReadme = () => setShowReadme(true)
     const onSettings = () => setShowSettings(true)
-    window.addEventListener('rmg:readme', onReadme)
     window.addEventListener('rmg:settings', onSettings)
     return () => {
-      window.removeEventListener('rmg:readme', onReadme)
       window.removeEventListener('rmg:settings', onSettings)
     }
   }, [])
@@ -379,14 +374,6 @@ export default function LdgrPage() {
           <ApiKeyManager />
         )}
       </main>
-
-      {/* README Popup */}
-      {showReadme && (
-        <ReadmePopup
-          readmeUrl="/appReadmes/ldgr.md"
-          onClose={() => setShowReadme(false)}
-        />
-      )}
 
       {/* Settings Modal */}
       <LdgrSettings isOpen={showSettings} onClose={() => setShowSettings(false)} />

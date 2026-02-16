@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { MessageSquare, Loader2, Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import ReadmePopup from '../components/ReadmePopup'
 import LdgrFileBrowserModal from '../components/LdgrFileBrowserModal'
 import { supabase } from '../lib/supabase'
 
@@ -10,7 +9,6 @@ export default function WsprPage() {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [showReadme, setShowReadme] = useState(false)
   const [showFileBrowser, setShowFileBrowser] = useState(false)
 
   // Memoize iframe URL so it doesn't change on unrelated re-renders (e.g. README modal)
@@ -313,18 +311,15 @@ export default function WsprPage() {
     return () => window.removeEventListener('message', handleWsprMessage)
   }, [user])
 
-  // Listen for footer button events
+  // Listen for footer settings button
   useEffect(() => {
-    const onReadme = () => setShowReadme(true)
     const onSettings = () => {
       if (iframeRef.current?.contentWindow) {
         iframeRef.current.contentWindow.postMessage({ type: 'RMG_TOGGLE_SETTINGS' }, 'https://wspr-rmg.onrender.com')
       }
     }
-    window.addEventListener('rmg:readme', onReadme)
     window.addEventListener('rmg:settings', onSettings)
     return () => {
-      window.removeEventListener('rmg:readme', onReadme)
       window.removeEventListener('rmg:settings', onSettings)
     }
   }, [])
@@ -388,14 +383,6 @@ export default function WsprPage() {
             sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-modals"
           />
         </div>
-      )}
-
-      {/* README Popup */}
-      {showReadme && (
-        <ReadmePopup
-          readmeUrl="/appReadmes/wspr.md"
-          onClose={() => setShowReadme(false)}
-        />
       )}
 
       {/* LDGR File Browser Modal */}

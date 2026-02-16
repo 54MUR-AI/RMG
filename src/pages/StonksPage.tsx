@@ -1,23 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useEffect } from 'react'
 import { Lock } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import ReadmePopup from '../components/ReadmePopup'
 
 export default function StonksPage() {
   const { user } = useAuth()
-  const [showPopup, setShowPopup] = useState(true)
 
   useEffect(() => {
     window.scrollTo(0, 0)
-  }, [])
-
-  // Listen for footer button events
-  useEffect(() => {
-    const onReadme = () => setShowPopup(true)
-    window.addEventListener('rmg:readme', onReadme)
-    return () => {
-      window.removeEventListener('rmg:readme', onReadme)
-    }
   }, [])
 
   if (!user) {
@@ -34,14 +23,6 @@ export default function StonksPage() {
 
   return (
     <div className="bg-samurai-black">
-      {/* README Popup */}
-      {showPopup && (
-        <ReadmePopup
-          readmeUrl="/appReadmes/stonks.md"
-          onClose={() => setShowPopup(false)}
-        />
-      )}
-
       {/* Fullscreen iframe */}
       <iframe
         src="https://stonks-app.onrender.com"
