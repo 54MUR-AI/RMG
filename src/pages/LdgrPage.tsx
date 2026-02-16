@@ -383,7 +383,7 @@ export default function LdgrPage() {
       {/* README Popup */}
       {showReadme && (
         <ReadmePopup
-          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/ldgr/main/README.md"
+          readmeUrl="/appReadmes/ldgr.md"
           onClose={() => setShowReadme(false)}
         />
       )}

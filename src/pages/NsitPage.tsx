@@ -98,7 +98,7 @@ export default function NsitPage() {
       {/* README Popup */}
       {showReadme && (
         <ReadmePopup
-          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/inst/master/README.md"
+          readmeUrl="/appReadmes/nsit.md"
           onClose={() => setShowReadme(false)}
         />
       )}

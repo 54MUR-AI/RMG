@@ -103,7 +103,7 @@ export default function OmniPage() {
       {/* README Popup */}
       {showReadme && (
         <ReadmePopup
-          readmeUrl="https://raw.githubusercontent.com/54MUR-AI/omni_lite/main/README.md"
+          readmeUrl="/appReadmes/omni.md"
           onClose={() => setShowReadme(false)}
         />
       )}
