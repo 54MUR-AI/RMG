@@ -11,6 +11,14 @@ const APP_CONFIG: Record<string, { label: string; readme: string }> = {
   '/nsit': { label: 'N-SIT', readme: '/appReadmes/nsit.md' },
 }
 
+const NSIT_TAB_READMES: Record<string, string> = {
+  Conflicts: '/appReadmes/nsit-conflicts.md',
+  Economics: '/appReadmes/nsit-economics.md',
+  Politics: '/appReadmes/nsit-politics.md',
+  Logistics: '/appReadmes/nsit-logistics.md',
+  Disasters: '/appReadmes/nsit-disasters.md',
+}
+
 export default function Footer() {
   const location = useLocation()
   const appConfig = APP_CONFIG[location.pathname]
@@ -104,10 +112,14 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      {/* README Popup — single instance, keyed to current app */}
+      {/* README Popup — tab-specific for N-SIT, generic for other apps */}
       {showReadme && appConfig && (
         <ReadmePopup
-          readmeUrl={appConfig.readme}
+          readmeUrl={
+            location.pathname === '/nsit' && nsitTab && NSIT_TAB_READMES[nsitTab]
+              ? NSIT_TAB_READMES[nsitTab]
+              : appConfig.readme
+          }
           onClose={() => setShowReadme(false)}
         />
       )}
