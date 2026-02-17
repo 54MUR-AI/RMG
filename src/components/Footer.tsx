@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import { Github, BookOpen, Settings, Flame } from 'lucide-react'
 import ReadmePopup from './ReadmePopup'
@@ -16,6 +16,17 @@ export default function Footer() {
   const appConfig = APP_CONFIG[location.pathname]
   const [embersOn, setEmbersOn] = useState(() => localStorage.getItem('rmg-embers') !== 'off')
   const [showReadme, setShowReadme] = useState(false)
+  const [nsitTab, setNsitTab] = useState<string | null>(null)
+
+  useEffect(() => {
+    const handleMessage = (event: MessageEvent) => {
+      if (event.data?.type === 'NSIT_TAB_CHANGE' && typeof event.data.tab === 'string') {
+        setNsitTab(event.data.tab)
+      }
+    }
+    window.addEventListener('message', handleMessage)
+    return () => window.removeEventListener('message', handleMessage)
+  }, [])
 
   const toggleEmbers = () => {
     const next = !embersOn
@@ -36,7 +47,7 @@ export default function Footer() {
           {/* Center: App label when on an app page */}
           {appConfig && (
             <div className="text-xs font-bold text-samurai-red tracking-wider">
-              {appConfig.label}
+              {appConfig.label}{nsitTab && location.pathname === '/nsit' && <span className="text-samurai-steel font-normal ml-1.5">{nsitTab}</span>}
             </div>
           )}
 
