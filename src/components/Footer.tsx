@@ -41,13 +41,14 @@ export default function Footer() {
         <div className="flex items-center justify-between">
           {/* Copyright */}
           <div className="text-xs text-samurai-steel-light">
-            &copy; {new Date().getFullYear()} <span className="font-bold text-white">RONIN MEDIA</span> <span className="font-extralight text-white">GROUP</span>
+            &copy; {new Date().getFullYear()} <span className="font-bold text-white">RONIN MEDIA</span> <span className="font-extralight text-white hidden sm:inline">GROUP</span>
           </div>
 
           {/* Center: App label when on an app page */}
           {appConfig && (
-            <div className="text-xs font-bold text-samurai-red tracking-wider">
-              {appConfig.label}{nsitTab && location.pathname === '/nsit' && <span className="text-samurai-steel font-normal ml-1.5">{nsitTab}</span>}
+            <div className="text-xs font-bold text-samurai-red tracking-wider flex flex-col sm:flex-row items-center sm:gap-1.5">
+              <span>{appConfig.label}</span>
+              {nsitTab && location.pathname === '/nsit' && <span className="text-samurai-steel font-normal text-[10px] sm:text-xs">{nsitTab}</span>}
             </div>
           )}
 
