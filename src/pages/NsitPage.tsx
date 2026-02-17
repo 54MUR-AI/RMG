@@ -87,7 +87,7 @@ export default function NsitPage() {
         src="https://nsit-rmg.onrender.com"
         className="w-full h-full border-none"
         title="N-SIT - Networked - Strategic Intelligence Tool"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; geolocation"
       />
 
     </div>
