@@ -2,70 +2,109 @@
 
 **Your AI-Powered Digital Arsenal**
 
-A comprehensive suite of AI-powered tools for developers, researchers, and power users. Built with modern web technologies and integrated with local AI models via Ollama.
+A comprehensive suite of AI-powered tools for intelligence, security, and research. Built with React + TypeScript + Tailwind CSS, integrated with local AI models via Ollama, and secured with client-side AES-256-GCM encryption.
 
-## 🚀 Featured Applications
+**Live:** [https://roninmedia.studio](https://roninmedia.studio)
+**GitHub:** [54MUR-AI](https://github.com/54MUR-AI)
 
-### 🔐 LDGR (Ledger)
-**Layered Decentralized Global Registry**
+## 🚀 Applications
 
-Your secure, encrypted vault for sensitive data:
-- **🔑 Password Manager** - Encrypted password storage with strength analysis
-- **💰 Crypto Wallets** - Multi-blockchain wallet management with live balance tracking
-  - Supports: Ethereum, Bitcoin, Solana, Polygon, BSC, Avalanche, Cardano, Ripple
-  - Real-time USD price conversion via CoinGecko
-  - Encrypted seed phrase storage
-- **📁 Files** - Secure file storage with encryption
-- **🔐 API Keys** - Centralized API key management with usage tracking
+### 🎯 N-SIT (Networked Strategic Intelligence Tool)
+**Multi-domain intelligence dashboard** — [nsit-rmg.onrender.com](https://nsit-rmg.onrender.com) — [GitHub](https://github.com/54MUR-AI/inst)
 
-All data encrypted client-side before storage in Supabase.
+- 50+ widgets across 5 tabs: Economy, Conflicts, Politics, Logistics, Disasters
+- 20+ live data sources (ACLED, Yahoo Finance, CoinGecko, Kalshi, Polymarket, USGS, GDACS, NOAA, NASA FIRMS, OpenSky, AIS, FRED, etc.)
+- AI-powered briefings, predictions, threat assessment, and disaster forecasting via Ollama
+- Interactive MapLibre maps with conflict heatmaps, aircraft/vessel tracking, and GIS overlays
+- Dual-exchange prediction markets (Polymarket + Kalshi) for economics and politics
+- Portfolio tracker integrated with LDGR assets and crypto wallets
 
-### 🤖 OMNI
-**AI Chat Interface**
+### 🔐 LDGR (Layered Decentralized Global Registry)
+**Encrypted vault** — embedded in RMG at `/ldgr`
 
-Multi-model AI chat platform:
-- Support for GPT-4, Claude, Gemini, and local Ollama models
-- Conversation history and management
-- Model switching on the fly
-- Markdown rendering with syntax highlighting
+- **Password Manager** — AES-256-GCM encrypted storage with strength analysis
+- **Crypto Wallets** — Multi-chain (ETH, BTC, SOL, MATIC, BSC, AVAX, ADA, XRP) with live balances
+- **Asset Tracker** — Stocks, ETFs, metals, tokenized assets with Yahoo Finance pricing
+- **API Keys** — Centralized encrypted key management used by all RMG apps
+- **Files** — Encrypted file storage in Supabase Storage
 
-### 📰 SCRP (Web Scraper)
-**AI-Powered Content Extraction**
+### 🤖 OMNI (Optimized Multi-Model Networked Intelligence)
+**AI chat platform** — [omni-rmg.onrender.com](https://omni-rmg.onrender.com) — [GitHub](https://github.com/54MUR-AI/omni_lite)
 
-Intelligent web scraping with AI summarization:
-- Multi-source scraping (Articles, Videos, PDFs)
-- AI Summarization via Ollama (local), GPT-4, Claude, or Hugging Face
-- Structured bullet-point summaries (3-5 points, max 75 words)
-- Source extraction and reference tracking
-- Auto-save to LDGR for later reference
-- Batch processing support
+- Multi-provider: Ollama (local), OpenAI GPT-4, Anthropic Claude, Google Gemini, Hugging Face
+- Conversation history, model switching, markdown rendering with syntax highlighting
+- LDGR API key integration for cloud providers
 
-### 📡 WSPR (Whisper)
-**Secure Messaging Platform**
+### 📰 SCRP (Smart Content Retrieval & Processing)
+**Web scraper + API proxy** — [scrp-rmg.onrender.com](https://scrp-rmg.onrender.com) — [GitHub](https://github.com/54MUR-AI/scraper)
 
-End-to-end encrypted communication:
-- Real-time messaging
-- Group chats
-- File sharing
-- Voice/video calls (planned)
+- AI-powered scraping and summarization (articles, YouTube, PDFs)
+- Backend proxy for N-SIT data pipelines (ACLED, GDELT, FRED, Yahoo Finance, Federal Register, Polymarket)
+- Server-side SWR cache to protect upstream API rate limits
+- Article analysis: AI translation, source extraction, bias detection
+
+### 📡 WSPR (Web-Secure P2P Relay)
+**Encrypted messaging** — [wspr-rmg.onrender.com](https://wspr-rmg.onrender.com) — [GitHub](https://github.com/54MUR-AI/wspr-web)
+
+- End-to-end encrypted DMs (AES-256-GCM)
+- Workspace channels with real-time delivery
+- Typing indicators, presence, emoji reactions, message search
+- LDGR file sharing integration
 
 ### 🎨 FORGE
 **AI Content Generation**
 
-Creative AI tools:
-- Text generation
-- Image creation
-- Code assistance
-- Content ideation
+- Text generation, image creation, code assistance
+- Integrated with Ollama and cloud AI providers
 
-### 📈 STONKS
-**Financial Machine Learning Platform**
+---
 
-Advanced market analysis:
-- LSTM, Transformer & GNN Models
-- News Intelligence & Sentiment Analysis
-- Portfolio Optimization & Risk Analytics
-- Production-Grade Infrastructure
+## 🏗️ Architecture
+
+```text
+┌─────────────────────────────────────────────────────────┐
+│                    RMG (Parent App)                      │
+│  roninmedia.studio                                      │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐  │
+│  │  N-SIT   │ │  OMNI    │ │  SCRP    │ │  WSPR    │  │
+│  │ (iframe) │ │ (iframe) │ │ (iframe) │ │ (iframe) │  │
+│  └────┬─────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘  │
+│       │ postMessage  │            │            │         │
+│  ┌────┴─────────────┴────────────┴────────────┴─────┐  │
+│  │              Supabase (shared)                    │  │
+│  │  auth · api_keys · ldgr_assets · crypto_wallets   │  │
+│  └───────────────────────────────────────────────────┘  │
+│  ┌──────────────────────────────────────────────────┐   │
+│  │           LDGR (embedded at /ldgr)               │   │
+│  │  Passwords · Assets · Wallets · API Keys · Files │   │
+│  └──────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────┘
+         │                              │
+    RMG Ollama Bridge              scrp-api proxy
+    (Chrome Extension)          (ACLED, GDELT, FRED,
+    localhost:11434 →            Yahoo, Polymarket)
+    local Ollama models
+```
+
+### Render Services
+
+| App | Frontend | Backend | GitHub |
+|-----|----------|---------|--------|
+| N-SIT | nsit-rmg.onrender.com | (proxy rewrite rules) | 54MUR-AI/inst |
+| SCRP | scrp-rmg.onrender.com | scrp-api.onrender.com | 54MUR-AI/scraper |
+| WSPR | wspr-rmg.onrender.com | wspr-api.onrender.com | 54MUR-AI/wspr-web |
+| OMNI | omni-rmg.onrender.com | omni-api.onrender.com | 54MUR-AI/omni_lite |
+| LDGR | (embedded in RMG) | — | (part of RMG) |
+
+### Auth Flow (postMessage)
+
+1. User logs into RMG (Supabase Auth / GitHub OAuth)
+2. RMG embeds child apps in iframes via `{App}Page.tsx`
+3. Parent sends `RMG_AUTH_TOKEN` via `postMessage` on iframe load
+4. Child app stores token, decrypts LDGR API keys client-side
+5. All apps share the same Supabase project with user-scoped RLS
+
+---
 
 ## 🛠️ Tech Stack
 
@@ -317,14 +356,19 @@ Using Ollama means:
 ## 🔗 Links & Resources
 
 ### Repositories
-- [RMG Main](https://github.com/54MUR-AI/RMG) - This repository
-- [STONKS](https://github.com/54MUR-AI/stonks) - Financial ML platform
-- [Scraper](https://github.com/54MUR-AI/scraper) - Web scraper backend
+- [RMG Main](https://github.com/54MUR-AI/RMG) - This repository (parent app + LDGR)
+- [N-SIT](https://github.com/54MUR-AI/inst) - Intelligence dashboard
+- [SCRP](https://github.com/54MUR-AI/scraper) - Web scraper + API proxy
+- [WSPR](https://github.com/54MUR-AI/wspr-web) - Encrypted messaging
+- [OMNI](https://github.com/54MUR-AI/omni_lite) - AI chat platform
 - [GitHub Organization](https://github.com/54MUR-AI)
 
 ### Live Sites
 - [RMG Studio](https://roninmedia.studio) - Main application
-- [SCRP](https://scraper-frontend-3hnj.onrender.com) - Web scraper
+- [N-SIT](https://nsit-rmg.onrender.com) - Intelligence dashboard
+- [SCRP](https://scrp-rmg.onrender.com) - Web scraper
+- [WSPR](https://wspr-rmg.onrender.com) - Messaging
+- [OMNI](https://omni-rmg.onrender.com) - AI chat
 
 ### Documentation
 - [Ollama](https://ollama.ai) - Local AI models
