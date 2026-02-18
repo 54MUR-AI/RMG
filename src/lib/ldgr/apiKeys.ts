@@ -105,6 +105,16 @@ export const API_SERVICES = {
   'vesselfinder': { name: 'VesselFinder', category: 'SIGINT', icon: '⚓' },
   'ais-hub': { name: 'AIS Hub', category: 'SIGINT', icon: '🌊' },
 
+  // Translation & Language
+  'google-translate': { name: 'Google Cloud Translate', category: 'Translation', icon: '🌍' },
+
+  // Weather & Environment
+  'openweathermap': { name: 'OpenWeatherMap', category: 'Weather', icon: '🌤️' },
+  'weatherapi': { name: 'WeatherAPI', category: 'Weather', icon: '⛅' },
+
+  // Aviation & Government
+  'faa-notam': { name: 'FAA NOTAMs (api.faa.gov)', category: 'Aviation', icon: '🛫' },
+
   // OSINT & Intelligence
   'newsapi': { name: 'NewsAPI', category: 'OSINT', icon: '📰' },
   'gdelt': { name: 'GDELT Project', category: 'OSINT', icon: '🌐' },
