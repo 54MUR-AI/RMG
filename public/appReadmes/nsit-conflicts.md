@@ -1,6 +1,6 @@
 # ⚔️ N-SIT — Conflicts
 
-Real-time global conflict monitoring with live aircraft tracking, vessel surveillance, cyber threat intelligence, and AI-powered threat assessment.
+Real-time global conflict monitoring with 14+ widgets: live aircraft tracking, vessel surveillance, ACLED conflict events, CAST 6-month forecasts, cyber threat intelligence, civilian impact tracking, and AI-powered threat assessment.
 
 ---
 
@@ -23,13 +23,26 @@ Toggle any layer on/off via the layers panel. All data refreshes every **2 minut
 
 ---
 
+## 📈 Conflict Forecast
+
+**ACLED CAST** (Conflict Alert System) 6-month predictions:
+
+- Top 15 countries ranked by predicted conflict events
+- Expandable detail per country: battles, explosions/remote violence, violence against civilians
+- Sort toggle between total events and fatality risk
+- User-configurable priority regions
+- Data refreshes every **1 hour** via scrp-api SWR cache
+
+---
+
 ## 🧠 Threat Assessment
 
 AI-generated strategic threat briefing powered by your local **Ollama** instance (via the RMG Bridge Extension).
 
-- Analyzes conflict events, cyber threats, and news sentiment
-- Identifies **hot zones** and assigns a global threat level
-- Requires Ollama running locally with a model selected in Settings
+- Analyzes conflict events, CAST forecasts, cyber threats, CISA KEV, UCDP data, and news sentiment
+- Identifies **hot zones** and assigns a global threat level (LOW / MODERATE / HIGH / CRITICAL)
+- Incorporates vessel, aircraft, and NOTAM data when available
+- Cached to Supabase; requires Ollama running locally
 
 ---
 
@@ -66,16 +79,22 @@ Latest conflict-related news articles from **GDELT** via the scrp-api proxy.
 
 ## 🔒 Cyber Threats
 
-Dual-source cyber intelligence:
+Triple-source cyber intelligence:
 
 - **CVE Feed** — Latest vulnerabilities from CIRCL with CVSS severity scores
+- **CISA KEV** — Known Exploited Vulnerabilities catalog (actively exploited in the wild)
 - **Cyber News** — GDELT articles filtered for ransomware, APT, breach, DDoS, exploit, and zero-day keywords
 
 ---
 
 ## 🛡️ Civilian Tracker
 
-ACLED civilian impact data — tracks violence against civilians, protests, and riots with casualty estimates and geographic distribution.
+ACLED civilian impact data:
+
+- Violence against civilians, protests, and riots
+- Fatality counts and country breakdown bars
+- Top perpetrators by event count
+- Geographic distribution with trend indicators
 
 ---
 
@@ -115,9 +134,12 @@ Use the **Layers** button (top-left of the map) to toggle any combination of dat
 |--------|------|---------|
 | OpenSky Network | LDGR key (or anon) | 1 min |
 | Digitraffic AIS | Public | 2 min |
-| ACLED (via scrp-api) | Server-side | 10 min |
+| ACLED Events (via scrp-api) | Server-side OAuth2 | 10 min |
+| ACLED CAST Forecasts | Server-side | 1 hour |
 | NASA FIRMS | LDGR key (or open) | 10 min |
 | CIRCL CVE | Public | 10 min |
+| CISA KEV | Public | 10 min |
+| UCDP | Public | On demand |
 | GDELT | Public | 10 min |
 | Yahoo Finance | Proxy | 5 min |
 | FAA NOTAMs | LDGR key | 30 min |

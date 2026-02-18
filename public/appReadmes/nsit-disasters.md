@@ -1,6 +1,6 @@
 # 🌋 N-SIT — Disasters
 
-Real-time natural disaster monitoring with earthquake tracking, storm surveillance, volcanic activity alerts, space weather data, and satellite fire detection.
+Real-time natural disaster monitoring with earthquake tracking, storm surveillance, volcanic activity alerts, space weather data, satellite fire detection, and AI-powered disaster forecasting.
 
 ---
 
@@ -18,15 +18,28 @@ Toggle layers via the map controls. All data refreshes every **5 minutes**.
 
 ---
 
+## 🧠 AI Disaster Forecast
+
+AI-generated disaster risk assessment powered by your local **Ollama** instance (via the RMG Bridge Extension):
+
+- Synthesizes earthquakes, GDACS alerts, NASA FIRMS hotspots, solar data, WHO disease outbreaks, ReliefWeb disasters, NWS weather alerts, and disaster news
+- Generates a structured forecast with risk levels and regional hotspots
+- Identifies emerging threats and cascading risk scenarios
+- Requires Ollama running locally with a model selected in Settings
+
+---
+
 ## ⚠️ Disaster Threat Level
 
-AI-assessed global disaster threat level based on:
+Global disaster threat level based on:
 
 - Active earthquake swarms and significant seismic events
 - Tropical cyclone activity and projected impacts
 - Volcanic eruption alerts and ash advisories
 - Wildfire severity and spread patterns
 - Solar storm activity and geomagnetic indices
+- WHO disease outbreak alerts
+- NWS severe weather warnings
 
 ---
 
@@ -106,6 +119,26 @@ Latest disaster declarations and humanitarian updates from **UN OCHA ReliefWeb**
 
 ---
 
+## 🦠 WHO Disease Outbreaks
+
+Disease outbreak notifications from the **WHO Disease Outbreak News** (DON) feed:
+
+- Active outbreaks with disease name, affected countries, and dates
+- Severity classification and response status
+- Fed into the AI Disaster Forecast for pandemic risk assessment
+
+---
+
+## 🌩️ Weather Alerts
+
+Severe weather alerts from the **National Weather Service** (NWS):
+
+- Active warnings, watches, and advisories across the US
+- Severity and certainty classifications
+- Fed into the AI Disaster Forecast for weather risk assessment
+
+---
+
 ## ⚙️ Data Sources
 
 | Source | Auth | Refresh |
@@ -114,8 +147,11 @@ Latest disaster declarations and humanitarian updates from **UN OCHA ReliefWeb**
 | GDACS Alerts | Public | 5 min |
 | NOAA SWPC | Public | 5 min |
 | NASA FIRMS | LDGR key (or open) | 10 min |
-| ReliefWeb (via scrp-api) | Public | 15 min |
+| ReliefWeb | Public | 15 min |
+| WHO DON | Public | 30 min |
+| NWS Alerts | Public | 10 min |
 | GDELT | Public | 10 min |
+| Ollama | Local (RMG Bridge) | On demand |
 
 ---
 

@@ -1,6 +1,6 @@
 # 💹 N-SIT — Economics
 
-Real-time financial markets dashboard with 20+ widgets covering stocks, crypto, commodities, forex, macro indicators, and AI-powered market analysis.
+Real-time financial markets dashboard with 22+ widgets covering stocks, crypto, commodities, forex, macro indicators, prediction markets (Polymarket + Kalshi), and AI-powered market analysis.
 
 ---
 
@@ -60,9 +60,9 @@ Animated SVG gauge from **alternative.me** — classifies market sentiment from 
 
 Local AI-powered market analysis via **Ollama** (RMG Bridge Extension):
 
-- Synthesizes market data, news sentiment, and macro indicators
+- Synthesizes market data, news sentiment, macro indicators, FRED data, Polymarket predictions, and **Kalshi economics odds**
 - Generates a structured briefing with key takeaways
-- **Deep Dive** mode for extended analysis
+- **Deep Dive** mode scrapes top news articles for richer context
 - Cached to Supabase for 24h to avoid redundant LLM calls
 
 ---
@@ -77,9 +77,25 @@ Filter by category: Crypto, Markets, Macro, Defense. Click any headline to open 
 
 ---
 
-## 🔮 Prediction Markets
+## 🔮 Prediction Markets (Polymarket)
 
 Top live events from **Polymarket** (Gamma API) with real-time odds and volume. See what the market thinks about upcoming events.
+
+---
+
+## 🎯 Kalshi Economics Markets
+
+CFTC-regulated prediction market data from **Kalshi** (public API, no key required):
+
+- **Fed Funds Rate** — Target rate bracket probabilities
+- **Fed Decision** — Next FOMC rate cut/hike/hold odds
+- **CPI / Core PCE** — Inflation print predictions
+- **Payrolls / Jobless Claims** — Employment data odds
+- **GDP** — Quarterly and annual growth brackets
+- **Recession** — Probability of US recession
+- **Rate Cuts** — Total cuts in current cycle
+
+Filter tabs: **All** / **Fed** / **Inflation** / **Jobs** / **GDP**. Yes/No probability bars with volume display. Auto-refreshes every 2 minutes.
 
 ---
 
@@ -114,8 +130,9 @@ Biggest gainers, losers, and volume leaders across stocks and crypto. Data from 
 
 AI-generated market predictions via **Ollama**:
 
-- Combines Yahoo Finance data, FRED macro indicators, and market sentiment
-- Generates predictions with confidence scores
+- Combines Yahoo Finance data, FRED macro indicators, Polymarket predictions, **Kalshi economics odds**, and news sentiment
+- Generates trade predictions with confidence scores and timeframes
+- Optionally scrapes top news articles for deeper context
 - Cached to Supabase for 24h
 
 ---
@@ -187,7 +204,8 @@ Global exchange open/close times with a 24-hour timeline. See at a glance which 
 | Yahoo Finance | Proxy | 1–5 min |
 | CoinGecko | LDGR Pro key (or free) | 3 min |
 | FRED API | LDGR key required | 10 min |
-| Polymarket | Public | 5 min |
+| Polymarket | Public (via scrp-api) | 5 min |
+| Kalshi | Public (no key) | 2 min |
 | alternative.me | Public | 5 min |
 | RSS (rss2json) | Public | 5 min |
 | Ollama | Local (RMG Bridge) | On demand |

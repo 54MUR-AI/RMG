@@ -1,6 +1,6 @@
 # 🏛️ N-SIT — Politics
 
-Global political intelligence with interactive governance mapping, election tracking, executive action monitoring, and prediction market integration.
+Global political intelligence with interactive governance mapping, election tracking, executive action monitoring, sanctions tracking, and dual-exchange prediction markets (Polymarket + Kalshi).
 
 ---
 
@@ -40,31 +40,36 @@ Live political news feed from **GDELT** via scrp-api:
 
 ## 🔮 Prediction Markets
 
-Political prediction markets from **Polymarket** (Gamma API):
+Dual-exchange political prediction markets from **Polymarket** + **Kalshi**:
 
 - Live odds on elections, policy decisions, and geopolitical events
-- Volume and liquidity indicators
-- Real-time probability updates
+- **Source badges** — POLY (cyan) and KALSHI (amber) labels on each market
+- **Filter tabs** — All / Polymarket / Kalshi with live counts
+- Yes/No probability bars with volume display
+- Polymarket via Gamma API; Kalshi via public elections API
+- Auto-refreshes every 5 minutes
 
 ---
 
 ## 📜 Executive Actions
 
-Tracker for executive orders, memoranda, and proclamations:
+Tracker for executive orders, memoranda, and proclamations via the **Federal Register API** (scrp-api proxy):
 
 - Chronological feed of recent executive actions
 - Category classification (economy, defense, immigration, environment, etc.)
 - Impact assessment indicators
+- 30-minute SWR cache on the backend
 
 ---
 
 ## 🚫 Sanctions & Trade
 
-International sanctions and trade policy tracker:
+International sanctions and trade policy tracker via the **Federal Register API** (scrp-api proxy):
 
 - Active sanctions programs by country/entity
 - Recent sanctions actions and modifications
 - Trade agreement updates and tariff changes
+- 30-minute SWR cache on the backend
 
 ---
 
@@ -93,7 +98,9 @@ Sortable table with search. Your sort preferences **persist across sessions**.
 | Wikipedia (leaders) | Public | On demand |
 | Wikidata SPARQL | Public | On demand |
 | GDELT | Public | 10 min |
-| Polymarket | Public | 5 min |
+| Polymarket | Public (via scrp-api) | 5 min |
+| Kalshi | Public (no key) | 5 min |
+| Federal Register | via scrp-api | 30 min |
 
 ---
 
