@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Menu, X, Key, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault, MessageSquareLock } from 'lucide-react'
+import { Menu, X, KeyRound, User, LogOut, Shield, ChevronDown, Anvil, ScanEye, Brain, ScanLine, Vault, MessageSquareLock } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import AuthPopup from './AuthPopup'
 import ProfileDropdown from './ProfileDropdown'
@@ -91,12 +91,10 @@ export default function Navbar() {
               <span className="absolute bottom-0 left-0 h-0.5 bg-samurai-red transition-all w-0 group-hover:w-full"></span>
             </a>
             
-            {/* Separator */}
-            <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
-
-            {/* APPS dropdown - Only show when logged in */}
+            {/* APPS dropdown + separator - Only show when logged in */}
             {user && (
               <>
+                <span className="text-samurai-steel-dark text-2xl font-thin">|</span>
                 <div className="relative" ref={appsDropdownRef}>
                   <button
                     onClick={() => setShowAppsDropdown(!showAppsDropdown)}
@@ -208,7 +206,7 @@ export default function Navbar() {
                 className="group transition-all hover:scale-110"
                 aria-label="Sign in"
               >
-                <Key size={28} className="text-samurai-steel-light group-hover:text-samurai-red transition-colors" />
+                <KeyRound size={28} className="text-samurai-steel-light group-hover:text-samurai-red transition-colors" />
               </button>
             )}
           </div>
@@ -369,7 +367,7 @@ export default function Navbar() {
                   }}
                   className="w-full flex items-center justify-center px-4 py-3 rounded-lg font-bold transition-all touch-manipulation bg-samurai-red text-white hover:bg-samurai-red-dark"
                 >
-                  <Key size={24} className="mr-3" />
+                  <KeyRound size={24} className="mr-3" />
                   <span>SIGN IN</span>
                 </button>
               )}
